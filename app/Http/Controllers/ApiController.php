@@ -1117,7 +1117,7 @@ class ApiController extends Controller
                         $orders[$i]['container_price'] =   $order->price ;
                         if($order->container){
                             if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $container->image;
+                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
                             }else{
                                 $orders[$i]['image'] = null ;
                             }
@@ -1174,7 +1174,7 @@ class ApiController extends Controller
                         $orders[$i]['container_price'] =   $order->price ;
                         if($order->container){
                             if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $container->image;
+                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
                             }else{
                                 $orders[$i]['image'] = null ;
                             }
