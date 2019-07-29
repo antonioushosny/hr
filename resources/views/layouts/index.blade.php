@@ -546,6 +546,9 @@ body, html {
             $.get( "{{route('MarkAllSeen') }}" , function(){});
         });
     </script> 
+
+    
+
     @yield('script')
     <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase.js"></script>
     <script>
@@ -577,19 +580,13 @@ body, html {
                         }
                     })
                 }
-                
             })
             .catch(function (err) {
                 console.log("Unable to get permission to notify.", err);
             });
             messaging.onMessage(function(payload) {
-                {{--  var jsonObj = $.parseJSON('[' + payload.data.message + ']');  --}}
-                {{-- var jsonObj1 = $.parseJSON('[' + payload.data + ']'); --}}
-                {{--  console.log("Message received. ", payload);  --}}
                 c = parseInt(count.html());
                 count.html(c+1);
-                {{--  console.log(jsonObj);  --}}
-                {{--  console.log(payload.data);  --}}
                 var start = Date.now();
                     ShowDiv.prepend(`<li>
                             <a href="javascript:void(0);"  class="unread">

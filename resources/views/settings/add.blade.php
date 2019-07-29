@@ -21,7 +21,7 @@
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
                     <li class="breadcrumb-item"><a href="{{route('settings',$type)}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.settings')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{ !isset($data->title_en)?__('admin.add_setting'):__('admin.edit_setting') }} </a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{ !isset($data->id)?__('admin.add_setting'):__('admin.edit_setting') }} </a></li>
                     
                 </ul>
             </div>
@@ -30,16 +30,12 @@
 
      
     <div class="container-fluid">
-        
         <!-- Exportable Table -->
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-               
-
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_setting')}}  </h2>
-                            
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{ !isset($data->id)?__('admin.add_setting'):__('admin.edit_setting') }} </h2>
                         </div>
                         <div class="body">
                             {!! Form::open(['route'=>['storesetting'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
@@ -62,20 +58,29 @@
                                         </div>
                                     </div>
                                     <div class="col-md-1">{{ __('admin.desc_ar') }}</div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-11">
                                         <!-- for desc_ar -->
                                         <div class="form-group form-float">
-                                            <textarea rows="4"  name="desc_ar"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_desc_ar')}}" >{{ !isset($data->title_en)?null:$data->title_en }}</textarea>
-        
+                                            @if($data)
+                                            {!! Form::textarea('desc_ar',$data->disc_ar,['class'=>'form-control ','id' => 'disc_ar_field2','rows'=>7,'placeholder' => trans('admin.placeholder_disc_ar')]) !!}
+                                            @else 
+                                            {!! Form::textarea('desc_ar','',['class'=>'form-control ','id' => 'disc_ar_field2','rows'=>7,'placeholder' => trans('admin.placeholder_disc_ar')]) !!}
+                                            @endif
+                                            
                                             <label id="desc-ar-error" class="error" for="desc_ar" style="">  </label>
                                         </div>
                                     </div>
                                     <div class="col-md-1">{{ __('admin.desc_en') }}</div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-11">
                                         <!-- for desc_en -->
                                         <div class="form-group form-float">
-                                            <textarea rows="4" name="desc_en"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_desc_en')}}" >{{ !isset($data->title_en)?null:$data->title_en }}</textarea>
-        
+                                            
+
+                                            @if($data)
+                                            {!! Form::textarea('desc_en',$data->disc_en,['class'=>'form-control ','id' => 'disc_en_field2','rows'=>7,'placeholder' => trans('admin.placeholder_desc_en')]) !!}
+                                            @else 
+                                            {!! Form::textarea('desc_en','',['class'=>'form-control ','id' => 'disc_en_field2','rows'=>7,'placeholder' => trans('admin.placeholder_desc_en')]) !!}
+                                            @endif
                                             <label id="desc-en-error" class="error" for="desc_en" style="">  </label>
                                         </div>
                                     </div>
@@ -141,9 +146,14 @@
 
 @section('script')
 
-
+<script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script> <!-- Ckeditor --> 
+<script src="{{ asset('assets/js/pages/forms/editors.js') }}"></script>
 <script>
+    CKEDITOR.replace('disc_en_field2');
+    CKEDITOR.config.height = 300;
 
+    CKEDITOR.replace('disc_ar_field2');
+    CKEDITOR.config.height = 300;
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
@@ -157,7 +167,6 @@
               data:  new FormData($("#form_validation")[0]),
               processData: false,
               contentType: false,
-               
               success: function(data) {
                   if ((data.errors)) {                        
                         if (data.errors.title_ar) {
@@ -177,8 +186,37 @@
                             $('#image-error').text(data.errors.image);
                         }
                   } else {
-                        window.location.replace("{{route('settings',$type)}}");
-
+                      
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ URL::route("storesetting") }}',
+                        data:  new FormData($("#form_validation")[0]),
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            if ((data.errors)) {                        
+                                  if (data.errors.title_ar) {
+                                      $('#name-ar-error').css('display', 'inline-block');
+                                      $('#name-ar-error').text(data.errors.title_ar);
+                                  }
+                                  if (data.errors.title_en) {
+                                      $('#name-en-error').css('display', 'inline-block');
+                                      $('#name-en-error').text(data.errors.title_en);
+                                  }
+                                  if (data.errors.city_id) {
+                                      $('#city-id-error').css('display', 'inline-block');
+                                      $('#city-id-error').text(data.errors.city_id);
+                                  }
+                                  if (data.errors.image) {
+                                      $('#image-error').css('display', 'inline-block');
+                                      $('#image-error').text(data.errors.image);
+                                  }
+                            } else {
+                                
+                                  location.reload();
+                               }
+                      },
+                    });
                      }
             },
           });

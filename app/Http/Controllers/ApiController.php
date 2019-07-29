@@ -237,7 +237,6 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////
-
 // login function by Antonious hosny
     public function Login(Request $request){
         // return $request;
@@ -271,7 +270,7 @@ class ApiController extends Controller
 
             ]);
         }
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email',$request->email)->where('role',$request->role)->first();
         // return $user;
         if(!$user){
 
@@ -1012,9 +1011,9 @@ class ApiController extends Controller
                     $ordercenter->save();
 
                     // $msg = "  لديك طلب جديد من " . $user->name ;
-                    $type = "order";
                     // $title = "  لديك طلب جديد من " . $user->name ;
-
+                    
+                    $type = "order";
                     $msg =  [
                         'en' => "  You have a new request from" . $user->name ,
                         'ar' =>  "  لديك طلب جديد من " . $user->name ,
@@ -1253,6 +1252,25 @@ class ApiController extends Controller
                 if($order){
                     $order->status = 'canceled' ;
                     $order->save();
+                    $type = "order";
+                    $msg =  [
+                        'en' =>  $user->name ."  canceled the order"  ,
+                        'ar' =>   $user->name ."  قام بالغاء الطلب"  ,
+                    ];
+                    $title = [
+                        'en' =>  $user->name ."  canceled the order"  ,
+                        'ar' =>   $user->name ."  قام بالغاء الطلب"  , 
+                    ];
+                    $center = User::where('id', $order->center_id)->first(); 
+                    if($center){
+
+                        $center->notify(new Notifications($msg,$type ));
+                        $device_token = $center->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$title,$msg);
+                            $this->webnotification($device_token,$title,$msg,$type);
+                        }
+                    }
                     return response()->json([
                         'success' => 'success',
                         'errors' => null ,
@@ -1389,6 +1407,43 @@ class ApiController extends Controller
                             $orderdriver->accept_date  = $date ;
                             $orderdriver->save(); 
                         }
+                        $type = "order";
+                        $msg =  [
+                            'en' =>  $user->name ."  agreed to deliver the request"  ,
+                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب"  ,
+                        ];
+                        $title = [
+                            'en' =>  $user->name ."  agreed to deliver the request"  ,
+                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب"  ,
+                        ];
+                        $center = User::where('id', $order->center_id)->first(); 
+                        if($center){
+
+                            $center->notify(new Notifications($msg,$type ));
+                            $device_token = $center->device_token ;
+                            if($device_token){
+                                $this->notification($device_token,$title,$msg);
+                                $this->webnotification($device_token,$title,$msg,$type);
+                            }
+                        }
+                        $msg =  [
+                            'en' =>  "  Your order status has changed"  ,
+                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ,
+                        ];
+                        $title = [
+                            'en' =>  "  Your order status has changed"  ,
+                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ,
+                        ];
+                        $center = User::where('id', $order->user_id)->first(); 
+                        if($center){
+
+                            $center->notify(new Notifications($msg,$type ));
+                            $device_token = $center->device_token ;
+                            if($device_token){
+                                $this->notification($device_token,$title,$msg);
+                                $this->webnotification($device_token,$title,$msg,$type);
+                            }
+                        }
                         return response()->json([
                             'success' => 'success',
                             'errors' => null ,
@@ -1408,6 +1463,26 @@ class ApiController extends Controller
                             $orderdriver->decline_date  = $date ;
                             $orderdriver->save(); 
                         }
+                        $type = "order";
+                        $msg =  [
+                            'en' =>  $user->name ."  declined  to deliver the request"  ,
+                            'ar' =>   $user->name ."  رفض تسليم الطلب"  ,
+                        ];
+                        $title = [
+                            'en' =>  $user->name ."  declined  to deliver the request"  ,
+                            'ar' =>   $user->name ."  رفض تسليم الطلب"  ,
+                        ];
+                        $center = User::where('id', $order->center_id)->first(); 
+                        if($center){
+
+                            $center->notify(new Notifications($msg,$type ));
+                            $device_token = $center->device_token ;
+                            if($device_token){
+                                $this->notification($device_token,$title,$msg);
+                                $this->webnotification($device_token,$title,$msg,$type);
+                            }
+                        }
+
                         return response()->json([
                             'success' => 'success',
                             'errors' => null ,
@@ -1420,6 +1495,35 @@ class ApiController extends Controller
                         $user->save();
                         $order->status = 'delivered' ;
                         $order->save();
+                        $type = "order";
+                        $msg =  [
+                            'en' =>  "  The request has been delivered"  ,
+                            'ar' =>   "  تم توصيل الطلب"  ,
+                        ];
+                        $title = [
+                            'en' =>  "  The request has been delivered"  ,
+                            'ar' =>   "  تم توصيل الطلب"  ,
+                        ];
+                        $center = User::where('id', $order->center_id)->first(); 
+                        if($center){
+
+                            $center->notify(new Notifications($msg,$type ));
+                            $device_token = $center->device_token ;
+                            if($device_token){
+                                $this->notification($device_token,$title,$msg);
+                                $this->webnotification($device_token,$title,$msg,$type);
+                            }
+                        }
+                        $center = User::where('id', $order->user_id)->first(); 
+                        if($center){
+
+                            $center->notify(new Notifications($msg,$type ));
+                            $device_token = $center->device_token ;
+                            if($device_token){
+                                $this->notification($device_token,$title,$msg);
+                                $this->webnotification($device_token,$title,$msg,$type);
+                            }
+                        }
                         return response()->json([
                             'success' => 'success',
                             'errors' => null ,
@@ -1427,6 +1531,7 @@ class ApiController extends Controller
                             'data' => null ,
                         ]);
                     }
+
                     return response()->json([
                         'success' => 'failed',
                         'errors' => null ,
@@ -1515,22 +1620,16 @@ class ApiController extends Controller
 // Terms and Conditions function by Antonious hosny
     public function TermsConditions(Request $request){
         $lang = $request->header('lang');
-        $docs = Doc::where('type','terms')->where('status','active')->get();
+        $doc = Doc::where('type','terms')->first();
         $docss =[] ;
-        $i = 0 ;
-        if(sizeof($docs)> 0){
-            foreach($docs as $doc){
-                // $docss[$i]['id'] = $doc->id ; 
-                if($lang == 'ar'){
-                    $docss[$i]['title'] = $doc->title_ar ; 
-                    $docss[$i]['disc'] = $doc->disc_ar ; 
-                }else{
-                    $docss[$i]['title'] = $doc->title_en ;      
-                    $docss[$i]['disc'] = $doc->disc_en ;      
-                }    
-                
-                $i ++ ; 
-            }
+        if($doc){
+            if($lang == 'ar'){
+                $docss['title'] = $doc->title_ar ; 
+                $docss['disc'] = $doc->disc_ar ; 
+            }else{
+                $docss['title'] = $doc->title_en ;      
+                $docss['disc'] = $doc->disc_en ;      
+            }    
         }
         return response()->json([
             'success' => 'success',
@@ -1546,22 +1645,16 @@ class ApiController extends Controller
 // Policy function by Antonious hosny
     public function Policy(Request $request){
         $lang = $request->header('lang');
-        $docs = Doc::where('type','policy')->where('status','active')->get();
+        $doc = Doc::where('type','policy')->first();
         $docss =[] ;
-        $i = 0 ;
-        if(sizeof($docs)> 0){
-            foreach($docs as $doc){
-                // $docss[$i]['id'] = $doc->id ; 
-                if($lang == 'ar'){
-                    $docss[$i]['title'] = $doc->title_ar ; 
-                    $docss[$i]['disc'] = $doc->disc_ar ; 
-                }else{
-                    $docss[$i]['title'] = $doc->title_en ;      
-                    $docss[$i]['disc'] = $doc->disc_en ;      
-                }    
-                
-                $i ++ ; 
-            }
+        if($doc){
+            if($lang == 'ar'){
+                $docss['title'] = $doc->title_ar ; 
+                $docss['disc'] = $doc->disc_ar ; 
+            }else{
+                $docss['title'] = $doc->title_en ;      
+                $docss['disc'] = $doc->disc_en ;      
+            }    
         }
         return response()->json([
             'success' => 'success',
@@ -1577,22 +1670,16 @@ class ApiController extends Controller
 // AboutUs function by Antonious hosny
     public function AboutUs(Request $request){
         $lang = $request->header('lang');
-        $docs = Doc::where('type','about')->where('status','active')->get();
+        $doc = Doc::where('type','about')->first();
         $docss =[] ;
-        $i = 0 ;
-        if(sizeof($docs)> 0){
-            foreach($docs as $doc){
-                // $docss[$i]['id'] = $doc->id ; ي
-                if($lang == 'ar'){
-                    $docss[$i]['title'] = $doc->title_ar ; 
-                    $docss[$i]['disc'] = $doc->disc_ar ; 
-                }else{
-                    $docss[$i]['title'] = $doc->title_en ;      
-                    $docss[$i]['disc'] = $doc->disc_en ;      
-                }    
-                
-                $i ++ ; 
-            }
+        if($doc){
+            if($lang == 'ar'){
+                $docss['title'] = $doc->title_ar ; 
+                $docss['disc'] = $doc->disc_ar ; 
+            }else{
+                $docss['title'] = $doc->title_en ;      
+                $docss['disc'] = $doc->disc_en ;      
+            }    
         }
         return response()->json([
             'success' => 'success',
@@ -1739,16 +1826,15 @@ class ApiController extends Controller
         // $msg = "you have message from backend";
         // $title = "test";
          
-            $msg_ar = 'تم تاكيد استلام الطلب ' ;
-            $msg_en = 'Your order has been Receipt confirmed';
+            
         
         $msg =  [
-            'msg_ar' => $msg_ar ,
-            'msg_en' => $msg_en ,
+            'en' =>  "  agreed to deliver the request"  ,
+            'ar' =>   "  قام بالموافقة علي توصيل الطلب"  ,
         ];
         $title = [
-            'title_ar' => 'تم تحديث حالة طلبك' ,  
-            'title_en' => 'Your order status has been updated' ,   
+            'en' =>  "  agreed to deliver the request"  ,
+            'ar' =>   "  قام بالموافقة علي توصيل الطلب"  ,
         ];
         $this->notification($device_id,$title,$msg);
         

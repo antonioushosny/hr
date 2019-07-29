@@ -171,9 +171,9 @@ class HomeController extends Controller
             $title = "Terms" ;
             $type = "terms" ;
         }
-        $settings      = Doc::where('type',$type)->get();
+        $data      = Doc::where('type',$type)->first();
         // return $about ;
-        return view('settings.index',compact('lang','title','type','settings')) ;
+        return view('settings.add',compact('lang','title','type','data')) ;
     }
     public function add($type){
         $lang = App::getlocale();
@@ -208,7 +208,8 @@ class HomeController extends Controller
     }
     public function store(Request $request)
     {
-        // return $request;
+        $lang = App::getlocale();
+        // return $request->desc_en;
         if($request->id ){
             $rules =
             [
@@ -250,6 +251,7 @@ class HomeController extends Controller
         $doc->title_en         = $request->title_en ;
         $doc->status        = $request->status ;
         $doc->type        = $request->type ;
+     
         $doc->disc_ar        = $request->desc_ar ;
         $doc->disc_en        = $request->desc_en ;
         $doc->save();
@@ -261,6 +263,22 @@ class HomeController extends Controller
             $doc->image   = $name;  
         }
         $doc->save();
+        // return $doc ;
+        $type = $doc->type   ;
+        if($type == 'about'){
+            $title = "AboutUs" ;
+            $type = "about" ;
+        }else if($type == 'policy'){
+            $title = "Policy" ;
+            $type = "policy" ;
+        }else{
+            $title = "Terms" ;
+            $type = "terms" ;
+        }
+      
+        $data =  $doc ;
+
+        // return view('settings.add',compact('title','lang','type','data')) ;
         return response()->json($doc);
 
     }
