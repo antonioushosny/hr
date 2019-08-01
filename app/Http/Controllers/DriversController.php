@@ -57,7 +57,7 @@ class DriversController  extends Controller
 
         $allcenters = User::where('role','center')->get();
         $centers = array_pluck($allcenters,'name', 'id'); 
-       
+    //    return $centers ;
         $allproviders = User::where('role','provider')->get();
         $providers = array_pluck($allproviders,'company_name', 'id');
 

@@ -52,7 +52,7 @@ class ProvidersController extends Controller
         // return $id ;
         if ($request->ajax()) {
             $lang = App::getlocale();
-            $centers = User::where('provider_id', $id)->select('name','id')->get();
+            $centers = User::where('provider_id', $id)->select('name','id')->where('role','center')->get();
             
             return response()->json([
                 'centers' => $centers ,
