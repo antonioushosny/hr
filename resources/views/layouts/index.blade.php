@@ -612,7 +612,14 @@ body, html {
             dom: 'Bfrtip',
             // dom: 'Blfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', {
+                    extend: 'csv',
+                    text: 'csv',
+                    charset: 'utf-8',
+                    extension: '.csv',
+                    filename: 'export',
+                    bom: true
+                }, 'excel', 'pdf', 'print'
             ],   
         });
      </script>

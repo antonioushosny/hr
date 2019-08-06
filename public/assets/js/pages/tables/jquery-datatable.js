@@ -9,12 +9,10 @@ $(function () {
         buttons: [
             'copy', {
                 extend: 'csv',
-                text: 'Export csv',
+                text: 'csv',
                 charset: 'utf-8',
                 extension: '.csv',
-                fieldSeparator: ';',
                 fieldBoundary: '',
-                filename: 'export',
                 bom: true
             }, 'excel', 'pdf', 'print',
           
