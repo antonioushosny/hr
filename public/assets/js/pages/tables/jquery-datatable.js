@@ -7,7 +7,17 @@ $(function () {
     $('.js-exportable').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', {
+                extend: 'csv',
+                text: 'Export csv',
+                charset: 'utf-8',
+                extension: '.csv',
+                fieldSeparator: ';',
+                fieldBoundary: '',
+                filename: 'export',
+                bom: true
+            }, 'excel', 'pdf', 'print',
+          
         ]
     }); 
 

@@ -62,6 +62,8 @@
                             </div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
+                          
+
                         </form>
                     </div>
                 </div>

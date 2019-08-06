@@ -55,9 +55,9 @@
                                     <input type="text" value="{{$area->name_en}}" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
                                     <label id="name-en-error" class="error" for="name_en" style="">  </label>
                                 </div>
-                                <div class= "form-group form-float">
+                                <div class= "form-group form-float"> 
                                     {!! Form::select('city_id',$cities
-                                        ,$area->city_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose'),'required']) !!}
+                                        ,$area->city_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
                                         <label id="city-id-error" class="error" for="city_id" style="">  </label>
                                 </div>
                                 <div class="form-group">

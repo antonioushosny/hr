@@ -128,7 +128,8 @@
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
-           $('.add').disabled =true;
+           $('.btn-round').disabled =true;
+           $(':input[type="submit"]').prop('disabled', true);
           e.preventDefault();
           var form = $(this);
         //    openModal();
@@ -157,8 +158,10 @@
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
                         }
+                        $(':input[type="submit"]').prop('disabled', false);
                   } else {
                         window.location.replace("{{route('containers')}}");
+                        $(':input[type="submit"]').prop('disabled', false);
 
                      }
             },

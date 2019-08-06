@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit" >{{__('admin.edit')}}</button>
                             </form>
                         </div>
                 </div>
@@ -133,7 +133,8 @@
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
-           $('.add').disabled =true;
+           $('.btn').disabled =true;
+           $(':input[type="submit"]').prop('disabled', true);
           e.preventDefault();
           var form = $(this);
         //    openModal();
@@ -162,8 +163,10 @@
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
                         }
+                        $(':input[type="submit"]').prop('disabled', false);
                   } else {
                         window.location.replace("{{route('containers')}}");
+                        $(':input[type="submit"]').prop('disabled', false);
 
                      }
             },
