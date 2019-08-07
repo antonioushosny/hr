@@ -68,6 +68,10 @@
                                             ,'',['class'=>'form-control show-tick select2','id'=>'provider_id' ,'placeholder' =>trans('admin.choose_provider'),'required']) !!}
                                         <label id="provider_id-error" class="error"  for="provider_id" style="">  </label>
                                     </div>
+                                @if(Auth::user()->role == 'center' )
+                                    <<div class="form-group form-float">
+                                        <input type="hidden" value="{{Auth::user()->provider_id}}" id="provider_id" name="provider_id" required>
+                                    </div>
                                 @else 
                                     <div class="form-group form-float">
                                         <input type="hidden" value="{{Auth::user()->id}}" id="provider_id" name="provider_id" required>
@@ -170,6 +174,7 @@
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
            $('.add').disabled =true;
+           $(':input[type="submit"]').prop('disabled', true);
           e.preventDefault();
           var form = $(this);
         //    openModal();
@@ -181,7 +186,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {
+                    $(':input[type="submit"]').prop('disabled', false);                        
                         if (data.errors.center_id) {
                             $('#center_id-error').css('display', 'inline-block');
                             $('#center_id-error').text(data.errors.center_id);

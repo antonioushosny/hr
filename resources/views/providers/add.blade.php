@@ -180,6 +180,10 @@
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
                         }
+                        if (data.errors.email) {
+                            $('#email-error').css('display', 'inline-block');
+                            $('#email-error').text(data.errors.email);
+                        }
                   } else {
                         window.location.replace("{{route('providers')}}");
 

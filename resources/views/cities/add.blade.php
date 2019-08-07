@@ -84,6 +84,7 @@
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
            $('.add').disabled =true;
+           $(':input[type="submit"]').prop('disabled', true);
           e.preventDefault();
           var form = $(this);
         //    openModal();
@@ -95,7 +96,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {              
+                    $(':input[type="submit"]').prop('disabled', false);          
                         if (data.errors.name_ar) {
                             $('#name-ar-error').css('display', 'inline-block');
                             $('#name-ar-error').text(data.errors.name_ar);

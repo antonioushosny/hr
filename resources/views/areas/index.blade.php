@@ -186,6 +186,7 @@
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
+                        window.location.replace("{{route('areas')}}");
                     }
                 });
             } else {
@@ -241,6 +242,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal(Deleted, has_been_deleted, "success");
+                            window.location.replace("{{route('areas')}}");
                         },
                     });
                 }

@@ -70,6 +70,7 @@
                                     <input type="email" value="{{$provider->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
                                     <label id="email-error" class="error" for="email" style=""></label>
                                 </div>
+
                                 <!-- for mobile -->
                                 <div class="form-group form-float">
                                     <input type="text" value="{{$provider->mobile}}" class="form-control" placeholder="{{__('admin.mobile')}}" name="mobile" onkeypress="isNumber(event); ">
@@ -81,12 +82,14 @@
 
                                     <label id="description-error" class="error" for="description" style="">  </label>
                                 </div>
+
                                 <!-- for address -->
                                 <div class="form-group form-float">
                                     <textarea rows="4" name="address"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_address')}}" > {{$provider->address}} </textarea>
 
                                     <label id="address-error" class="error" for="address" style="">  </label>
                                 </div>
+
                                 <div class="input-group join_date">
                                     <span class="input-group-addon">
                                         <i class="zmdi zmdi-calendar"></i>
@@ -94,6 +97,7 @@
                                     <input type="text" name="join_date" value="{{$provider->join_date}}"  class="form-control datetimepicker" placeholder="{{__('admin.join_date')}}">
                                     <label id="join_date-error" class="error" for="join_date" style="">  </label>
                                 </div>
+
                                 <!-- for image  -->
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
@@ -121,6 +125,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($provider->status == 'active') ? "checked=''" : ""; ?> >
@@ -177,6 +182,10 @@
                         if (data.errors.image) {
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
+                        }
+                        if (data.errors.email) {
+                            $('#email-error').css('display', 'inline-block');
+                            $('#email-error').text(data.errors.email);
                         }
                   } else {
                         window.location.replace("{{route('providers')}}");

@@ -310,6 +310,7 @@
     $("#form_validation").submit(function(e){
           e.preventDefault();
           var form = $(this);
+          $(':input[type="submit"]').prop('disabled', true);
         //    openModal();
           $.ajax({
               type: 'POST',
@@ -319,7 +320,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {          
+                    $(':input[type="submit"]').prop('disabled', false);              
                         if (data.errors.company_name) {
                             $('#company_name-error').css('display', 'inline-block');
                             $('#company_name-error').text(data.errors.company_name);
