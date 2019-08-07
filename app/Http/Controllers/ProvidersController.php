@@ -158,9 +158,9 @@ class ProvidersController extends Controller
         $user->save();
 
         $lang = App::getlocale();
-        $title = 'providers';
-        $providers = User::where('role','provider')->orderBy('id', 'DESC')->get();
-        return redirect()->route('providers');
+        // $title = 'providers';
+        // $providers = User::where('role','provider')->orderBy('id', 'DESC')->get();
+        // return redirect()->route('providers');
         // return \Redirect::back();
         // return view('providers.index',compact('admins','title','lang'));
 

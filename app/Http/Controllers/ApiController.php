@@ -247,7 +247,7 @@ class ApiController extends Controller
             "email"=>"required",
             "password"=>"required",
             "device_token"=>"required",
-            "device_type" => "required"  // 1 for ios , 0 for android  
+            "device_type" => "required",  // 1 for ios , 0 for android  
         );
 
         //check the validator true or not
@@ -304,6 +304,8 @@ class ApiController extends Controller
                 $user->generateToken();
                 $user->device_token = $request->device_token ;
                 $user->type = $request->device_type ;
+                $user->available = '1';
+
                 $user->save();
                 $user =  User::where('id',$user->id)->with('City')->with('Area')->first();
                 $users = [] ;
@@ -680,6 +682,7 @@ class ApiController extends Controller
         if ($user) {
             $user->remember_token = null;
             $user->device_token = null;
+            $user->available = '0';
             $user->save();
             return response()->json([
                 'success' => 'success',

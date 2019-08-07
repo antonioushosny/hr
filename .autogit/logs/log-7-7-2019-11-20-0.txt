@@ -1,0 +1,29 @@
+-------------------- Auto-Git Log --------------------
+		Wed Aug 07 2019 11:20:00 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* resources/views/admins/index.blade.php
+* resources/views/areas/add.blade.php
+* resources/views/areas/edit.blade.php
+* resources/views/areas/index.blade.php
+* resources/views/centers/add.blade.php
+* resources/views/centers/edit.blade.php
+* resources/views/centers/index.blade.php
+* resources/views/cities/add.blade.php
+* resources/views/cities/edit.blade.php
+* resources/views/cities/index.blade.php
+* resources/views/containers/index.blade.php
+* resources/views/drivers/add.blade.php
+* resources/views/providers/add.blade.php
+* resources/views/providers/edit.blade.php
+
+
+Created files:
+* .autogit/logs/log-6-7-2019-12-16-51.txt
+
+
+Deleted files:
+
+
+Renamed files:

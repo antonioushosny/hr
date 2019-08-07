@@ -413,7 +413,7 @@ body, html {
                                 <div>{{__('admin.email')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="email" value="{{Auth::user()->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" >
-                                    <label id="email-error" class="error" for="email" style=""></label>
+                                    <label id="emails-error" class="error" for="email" style=""></label>
                                 </div>
                             </li>
                             <li>

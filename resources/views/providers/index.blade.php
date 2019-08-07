@@ -177,6 +177,7 @@
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        window.location.replace("{{route('providers')}}");
                     }
                 });
             } else {
@@ -224,6 +225,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                            window.location.replace("{{route('providers')}}");
                         },
                     });
                 }

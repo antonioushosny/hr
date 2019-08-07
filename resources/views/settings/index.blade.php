@@ -182,6 +182,7 @@
                     success: function(data) {
                         $('.item' + data['id']).remove();
                           swal(Deleted, has_been_deleted, "success");
+                          location.reload();
                     }
                 });
             } else {
@@ -238,6 +239,7 @@
                                 $('.item' + data[i]).remove();
                             }
                              swal(Deleted, has_been_deleted, "success");
+                             location.reload();
                         },
                     });
                 }

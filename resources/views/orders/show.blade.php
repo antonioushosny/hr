@@ -297,6 +297,7 @@
     //this for add new record
     $("#form_validation").submit(function(e){
           e.preventDefault();
+          $(':input[type="submit"]').prop('disabled', true);
           var form = $(this);
         //    openModal();
           $.ajax({
@@ -307,7 +308,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {             
+                    $(':input[type="submit"]').prop('disabled', false);           
                         if (data.errors.driver_id) {
                             $('#driver_id-error').css('display', 'inline-block');
                             $('#driver_id-error').text(data.errors.driver_id);

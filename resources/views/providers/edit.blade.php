@@ -78,14 +78,14 @@
                                 </div>
                    
                                 <div class="form-group form-float">
-                                    <textarea rows="4"  name="description"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_description')}}" >  {{$provider->desc}}</textarea>
+                                    <textarea rows="4"  name="description"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_description')}}" >{{$provider->desc}}</textarea>
 
                                     <label id="description-error" class="error" for="description" style="">  </label>
                                 </div>
 
                                 <!-- for address -->
                                 <div class="form-group form-float">
-                                    <textarea rows="4" name="address"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_address')}}" > {{$provider->address}} </textarea>
+                                    <textarea rows="4" name="address"  class="form-control no-resize"  placeholder="{{__('admin.placeholder_address')}}" >{{$provider->address}}</textarea>
 
                                     <label id="address-error" class="error" for="address" style="">  </label>
                                 </div>
@@ -125,7 +125,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($provider->status == 'active') ? "checked=''" : ""; ?> >
@@ -161,6 +161,7 @@
     $("#form_validation").submit(function(e){
           e.preventDefault();
           var form = $(this);
+          $(':input[type="submit"]').prop('disabled', true);
         //    openModal();
           $.ajax({
               type: 'POST',
@@ -170,7 +171,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {         
+                    $(':input[type="submit"]').prop('disabled', false);               
                         if (data.errors.company_name) {
                             $('#company_name-error').css('display', 'inline-block');
                             $('#company_name-error').text(data.errors.company_name);
@@ -184,7 +186,7 @@
                             $('#image-error').text(data.errors.image);
                         }
                         if (data.errors.email) {
-                            $('#email-error').css('display', 'inline-block');
+                             $('#email-error').css('display', 'inline-block');
                             $('#email-error').text(data.errors.email);
                         }
                   } else {
@@ -194,4 +196,5 @@
             },
           });
     });
+</script>
 @endsection

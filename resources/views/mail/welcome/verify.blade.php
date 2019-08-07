@@ -3,12 +3,12 @@
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
          
-         {{trans('admin.wllcome_in_nasebk')}}
+         {{trans('admin.Welcome to Khazan')}}
         @endcomponent
     @endslot
 {{-- Body --}}
    <h3>
-
+ 
     </h3> <br>
     <h4>كود  تاكيد بريدك الالكتروني هو :- </h4> <br> <h3>{{$code}}</h3> 
 
@@ -24,7 +24,7 @@
 {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} Nasebk.!
+            © {{ date('Y') }} Khazan.!
         @endcomponent
     @endslot
 @endcomponent

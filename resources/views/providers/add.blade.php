@@ -152,6 +152,7 @@
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
            $('.add').disabled =true;
+           $(':input[type="submit"]').prop('disabled', true);
           e.preventDefault();
           var form = $(this);
         //    openModal();
@@ -163,7 +164,8 @@
               contentType: false,
                
               success: function(data) {
-                  if ((data.errors)) {                        
+                  if ((data.errors)) {   
+                    $(':input[type="submit"]').prop('disabled', false);                     
                         if (data.errors.company_name) {
                             $('#company_name-error').css('display', 'inline-block');
                             $('#company_name-error').text(data.errors.company_name);

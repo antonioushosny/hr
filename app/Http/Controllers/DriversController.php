@@ -136,9 +136,9 @@ class DriversController  extends Controller
          $user->name          = $request->responsible_name ;
          $user->email         = $request->email ;
          $user->status        = $request->status ;
-         $user->provider_id       = $request->provider_id ;
-         $user->center_id       = $request->center_id ;
-
+         $user->provider_id   = $request->provider_id ;
+         $user->center_id     = $request->center_id ;
+         $user->available     = '0';
          $user->role          = 'driver';
          $user->save();
         if ($request->hasFile('image')) {
