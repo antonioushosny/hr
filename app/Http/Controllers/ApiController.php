@@ -518,7 +518,7 @@ class ApiController extends Controller
                 'message' => trans('api.logged_out')
             ]; 
             return response()->json([
-                'success' => 'failed',
+                'success' => 'logged',
                 'errors' => $errors ,
                 'message' => trans('api.logged_out'),
                 'user' => null,
@@ -661,7 +661,7 @@ class ApiController extends Controller
                 'message' => trans('api.logged_out')
             ]; 
             return response()->json([
-                'success' => 'failed',
+                'success' => 'logged',
                 'errors' => $errors ,
                 'message' => trans('api.logged_out'),
                 'user' => null,
@@ -1782,7 +1782,7 @@ class ApiController extends Controller
             $errors = trans('api.logged_out');
         
             return response()->json([
-                'success' => 'failed',
+                'success' => 'logged',
                 'errors' => $errors ,
                 'message' => trans('api.logged_out'),
                 'notifications' => null,
@@ -1809,7 +1809,7 @@ class ApiController extends Controller
             $errors = trans('api.logged_out');
         
             return response()->json([
-                'success' => 'failed',
+                'success' => 'logged',
                 'errors' => $errors ,
                 'message' => trans('api.logged_out'),
                 'notifications' => null,

@@ -332,8 +332,7 @@ class OrdersController  extends Controller
             $device_token = $driver->device_token ;
             if($device_token){
                 $this->notification($device_token,$msg,$msg);
-                $this->webnotification($device_token,$msg,$msg,$type);
-            }
+             }
  
             $type = "accepted_order" ;
             
@@ -416,6 +415,7 @@ class OrdersController  extends Controller
                     $device_token = $center->device_token ;
                     if($device_token){
                         $this->notification($device_token,$msg,$msg);
+                        $this->webnotification($device_token,$msg,$msg,$type);
                     }
                     // return \Response::json(array('errors' =>'done'));
                     return \Response::json('canceled') ;
@@ -444,8 +444,7 @@ class OrdersController  extends Controller
                         $device_token = $user->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$msg,$msg,$type);
-                        }
+                         }
                     }
                     return \Response::json('canceled') ;
                     //  return \Response::json(array('errors' =>'done2'));
@@ -477,8 +476,7 @@ class OrdersController  extends Controller
                 $device_token = $user->device_token ;
                 if($device_token){
                     $this->notification($device_token,$msg,$msg);
-                    $this->webnotification($device_token,$msg,$msg,$type);
-                }
+                 }
             }
            return \Response::json('canceled') ;
         }
@@ -538,8 +536,7 @@ class OrdersController  extends Controller
             $device_token = $driver->device_token ;
             if($device_token){
                 $this->notification($device_token,$msg,$msg);
-                $this->webnotification($device_token,$msg,$msg,$type);
-            }
+             }
         }else{
             $order->driver_id =  null ; 
             $order->save();
@@ -643,8 +640,7 @@ class OrdersController  extends Controller
                         $device_token = $user->device_token ;
                         if($device_token){
                             $this->notification($device_token,$title,$msg);
-                            $this->webnotification($device_token,$title,$msg,$type);
-                        }
+                         }
                     }
                     return \Response::json('canceled') ;
                 }
