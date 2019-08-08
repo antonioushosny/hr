@@ -359,7 +359,7 @@ class OrdersController  extends Controller
             $ordercenter->status  = 'decline' ;
             $ordercenter->reason  = $request->reason ;
             $ordercenter->decline_date  = $date ;
-            // $ordercenter->save() ;
+            $ordercenter->save() ;
 
             $container = Container::where('id',$order->container_id)->with('centers')->first();
             $distancess = [] ;
@@ -431,8 +431,6 @@ class OrdersController  extends Controller
                     // $msg = "  تم  رفض طلبك "  ;
                     $type = "canceled_order" ;
                     // $title = "  تم  رفض طلبك " ;
-
-                    
                     $msg =  [
                         
                         'en' =>  "Your request ".$order->id." was declined "  ,
@@ -463,8 +461,6 @@ class OrdersController  extends Controller
             // $msg = "  تم  رفض طلبك "  ;
             $type = "canceled_order" ;
             // $title = "  تم  رفض طلبك " ;
-
-            
             $msg =  [
                 
                 'en' =>  "Your request ".$order->id." was declined "  ,
