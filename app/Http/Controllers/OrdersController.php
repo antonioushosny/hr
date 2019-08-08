@@ -334,10 +334,7 @@ class OrdersController  extends Controller
                 $this->webnotification($device_token,$msg,$msg,$type);
             }
  
-            // $msg = "  تم  قبول طلبك "  ;
             $type = "accepted_order" ;
-            // $title = "  تم  قبول طلبك " ;
-
             
             $msg =  [
                         
@@ -407,12 +404,10 @@ class OrdersController  extends Controller
                     $ordercenter->status = 'pending' ;
                     $ordercenter->save();
     
-                    // $msg = "  لديك طلب جديد من " . $order->user_name ;
-                    $type = "order";
-                    // $title = "  لديك طلب جديد من " . $order->user_name  ;
-                    $msg =  [
-                        'en' => "  You have a new request from " . $order->user_name ,
-                        'ar' =>   "  لديك طلب جديد من " . $order->user_name  ,
+                     $type = "order";
+                     $msg =  [
+                        'en' => "  You have a new request from " . $order->user_name ." Order number ". $order->id ,
+                        'ar' =>   "  لديك طلب جديد من " . $order->user_name ." رقم الطلب " . $order->id ,
                     ];
                     
                     $center = User::where('id', $CenterContainer->center->id)->first(); 
@@ -505,21 +500,17 @@ class OrdersController  extends Controller
             $type = "order";
             // $title = "  لديك طلب جديد من " ;
             $msg =  [
-                'en' => "  You have been selected to delivery a new order "  ,
-                'ar' =>   " تم اختيارك لتوصيل طلب جديد "   ,
+                'en' => "  You have been selected to delivery a new order number " . $order->id ,
+                'ar' =>   " تم اختيارك لتوصيل طلب جديد رقم " . $order->id  ,
             ];
 
-            $title =  [
-                
-                'en' => "  You have a new request from " ,
-                'ar' =>   "  لديك طلب جديد من "  ,
-            ];
+            
             $driver = User::where('id', $request->driver_id)->first(); 
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;
             if($device_token){
-                $this->notification($device_token,$title,$msg);
-                $this->webnotification($device_token,$title,$msg,$type);
+                $this->notification($device_token,$msg,$msg);
+                $this->webnotification($device_token,$msg,$msg,$type);
             }
         }else{
             $order->driver_id =  null ; 
@@ -576,8 +567,8 @@ class OrdersController  extends Controller
                     // $title = "  لديك طلب جديد من " . $order->user_name  ;
 
                     $msg =  [
-                        'en' => "  You have a new request  ". $order->user_name ,
-                        'ar' =>   "  لديك طلب جديد  " . $order->user_name ,
+                        'en' => "  You have a new request  from ". $order->user_name ." Order number ". $order->id  ,
+                        'ar' =>   "  لديك طلب جديد من " . $order->user_name  ."  رقم الطلب ". $order->id,
                     ];
         
                     $title =  [
@@ -590,8 +581,8 @@ class OrdersController  extends Controller
                     $center->notify(new Notifications($msg,$type ));
                     $device_token = $center->device_token ;
                     if($device_token){
-                        $this->notification($device_token,$title,$msg);
-                        $this->webnotification($device_token,$title,$msg,$type);
+                        $this->notification($device_token,$msg,$msg);
+                        $this->webnotification($device_token,$msg,$msg,$type);
                     }
                     return \Response::json('canceled') ;
                 }else{
@@ -635,8 +626,6 @@ class OrdersController  extends Controller
         }
         return \Response::json('accepted') ;
 
-       
-         
     }
     
     public function destroy($id)

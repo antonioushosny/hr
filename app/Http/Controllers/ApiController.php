@@ -1020,8 +1020,8 @@ class ApiController extends Controller
                     
                     $type = "order";
                     $msg =  [
-                        'en' => "  You have a new request from" . $user->name ,
-                        'ar' =>  "  لديك طلب جديد من " . $user->name ,
+                        'en' => "  You have a new request from" . $user->name ." Order number ". $order->id  , 
+                        'ar' =>  "  لديك طلب جديد من " . $user->name ."  رقم الطلب ". $order->id,
                     ];
                     $title = [
                         'en' =>  "  You have a new request from " . $user->name ,
@@ -1031,8 +1031,8 @@ class ApiController extends Controller
                     $center->notify(new Notifications($msg,$type ));
                     $device_token = $center->device_token ;
                     if($device_token){
-                        $this->notification($device_token,$title,$msg);
-                        $this->webnotification($device_token,$title,$msg,$type);
+                        $this->notification($device_token,$msg,$msg);
+                        $this->webnotification($device_token,$msg,$msg,$type);
                     }
                     
                     $order = Order::where('id',$order->id)->with('center')->with('container')->first();
@@ -1259,8 +1259,8 @@ class ApiController extends Controller
                     $order->save();
                     $type = "order";
                     $msg =  [
-                        'en' =>  $user->name ."  canceled the order"  ,
-                        'ar' =>   $user->name ."  قام بالغاء الطلب"  ,
+                        'en' =>  $user->name ."  canceled the order"  ." number ". $order->id  , 
+                        'ar' =>   $user->name ."  قام بالغاء الطلب"   ." رقم ". $order->id  , 
                     ];
                     $title = [
                         'en' =>  $user->name ."  canceled the order"  ,
@@ -1272,8 +1272,8 @@ class ApiController extends Controller
                         $center->notify(new Notifications($msg,$type ));
                         $device_token = $center->device_token ;
                         if($device_token){
-                            $this->notification($device_token,$title,$msg);
-                            $this->webnotification($device_token,$title,$msg,$type);
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
                         }
                     }
                     return response()->json([
@@ -1414,8 +1414,8 @@ class ApiController extends Controller
                         }
                         $type = "order";
                         $msg =  [
-                            'en' =>  $user->name ."  agreed to deliver the request"  ,
-                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب"  ,
+                            'en' =>  $user->name ."  agreed to deliver the request "  ." number ". $order->id  , 
+                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب" ." رقم ". $order->id  ,  
                         ];
                         $title = [
                             'en' =>  $user->name ."  agreed to deliver the request"  ,
@@ -1427,17 +1427,17 @@ class ApiController extends Controller
                             $center->notify(new Notifications($msg,$type ));
                             $device_token = $center->device_token ;
                             if($device_token){
-                                $this->notification($device_token,$title,$msg);
+                                $this->notification($device_token,$msg,$msg);
                                 $this->webnotification($device_token,$title,$msg,$type);
                             }
                         }
                         $msg =  [
-                            'en' =>  "  Your order status has changed"  ,
-                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ,
+                            'en' =>  "  Your order status has changed"  ." number ". $order->id  , 
+                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ." رقم ". $order->id  , 
                         ];
                         $title = [
-                            'en' =>  "  Your order status has changed"  ,
-                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ,
+                            'en' =>  "  Your order status has changed" ." number ". $order->id   ,
+                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ." رقم ". $order->id  , 
                         ];
                         $center = User::where('id', $order->user_id)->first(); 
                         if($center){
@@ -1470,12 +1470,12 @@ class ApiController extends Controller
                         }
                         $type = "order";
                         $msg =  [
-                            'en' =>  $user->name ."  declined  to deliver the request"  ,
-                            'ar' =>   $user->name ."  رفض تسليم الطلب"  ,
+                            'en' =>  $user->name ."  declined  to deliver the request"  ." number ". $order->id   ,
+                            'ar' =>   $user->name ."  رفض تسليم الطلب"   ." رقم ". $order->id   ,
                         ];
                         $title = [
-                            'en' =>  $user->name ."  declined  to deliver the request"  ,
-                            'ar' =>   $user->name ."  رفض تسليم الطلب"  ,
+                            'en' =>  $user->name ."  declined  to deliver the request"   ." number ". $order->id   ,
+                            'ar' =>   $user->name ."  رفض تسليم الطلب"   ." رقم ". $order->id   ,
                         ];
                         $center = User::where('id', $order->center_id)->first(); 
                         if($center){
@@ -1508,12 +1508,12 @@ class ApiController extends Controller
                         }
                         $type = "order";
                         $msg =  [
-                            'en' =>  "  The request has been delivered"  ,
-                            'ar' =>   "  تم توصيل الطلب"  ,
+                            'en' =>  "  The request has been delivered"  ." number ". $order->id   ,
+                            'ar' =>   "  تم توصيل الطلب"  ." رقم ". $order->id   ,
                         ];
                         $title = [
-                            'en' =>  "  The request has been delivered"  ,
-                            'ar' =>   "  تم توصيل الطلب"  ,
+                            'en' =>  "  The request has been delivered" ." number ". $order->id   ,
+                            'ar' =>   "  تم توصيل الطلب"  ." رقم ". $order->id   ,
                         ];
                         $center = User::where('id', $order->center_id)->first(); 
                         if($center){
