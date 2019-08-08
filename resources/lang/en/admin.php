@@ -247,7 +247,7 @@ return [
 
      //orders page 
         'orders'                       => ' Orders', 
-        'neworders'                       => 'Current Orders', 
+        'neworders'                       => 'New Orders', 
         'noworders'                       => 'Current Orders', 
         'lastorders'                       => 'Finished  Orders', 
         'allorders'                       => 'All Orders', 

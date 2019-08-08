@@ -447,7 +447,7 @@ class OrdersController  extends Controller
                         $device_token = $user->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$title,$msg,$type);
+                            $this->webnotification($device_token,$msg,$msg,$type);
                         }
                     }
                     return \Response::json('canceled') ;
