@@ -70,7 +70,7 @@ class ProvidersController extends Controller
                 'responsible_name'  =>'required|max:190',
                 'company_name'  =>'required|max:190',
                 'email'  =>'required|email|max:190',            
-                'status'  =>'required',   
+                'status'  =>'required',  
             ];
         }     
     
@@ -80,7 +80,7 @@ class ProvidersController extends Controller
                 'responsible_name'  =>'required|max:190',
                 'company_name'  =>'required|max:190',
                 'email'  =>'required|email|unique:users,email|max:190',            
-                'status'  =>'required',       
+                'status'  =>'required',     
                 // 'password'  =>'required|min:6|max:190',     
                 // 'logo'  =>'required',      
                 // 'description' =>'required',
@@ -89,7 +89,9 @@ class ProvidersController extends Controller
                 // 'join_date'     =>'required',
             ];
         }
-        
+        if($request->mobile){
+            $rules['mobile'] = "between:8,11" ;
+        }
         
          $validator = \Validator::make($request->all(), $rules);
          if ($validator->fails()) {

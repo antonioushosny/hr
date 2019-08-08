@@ -186,7 +186,7 @@ class ReportsController extends Controller
      */
     public function search(Request $request)
     {
-        // return $request->start->date("m-d-Y");
+        // return $request;
         $title = 'reports' ;
         $lang = App::getlocale();
 
@@ -279,7 +279,7 @@ class ReportsController extends Controller
 
         }
         $reports = $reports->get();
-        // return $reports ;
+        // return $area_id ;
         return view('reports.index',compact('title','reports','cities','areas','providers','centers','drivers','status','lang','provider_id','center_id','driver_id','city_id','area_id','stat','date_from','date_to'));
         
 

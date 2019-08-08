@@ -336,11 +336,12 @@ class OrdersController  extends Controller
             $type = "accepted_order" ;
             // $title = "  تم  قبول طلبك " ;
 
-            $msg =  [
-                'en' => "Your request has been accepted" ,
-                'ar' =>   "  تم  قبول طلبك " ,
-            ];
             
+            $msg =  [
+                        
+                'en' =>  "Your request ".$order->id."  has been accepted "  ,
+                'ar' =>   " طلبك "  .$order->id . " تم قبوله",
+            ];
 
             $user = User::where('id', $order->user_id)->first(); 
             $user->notify(new Notifications($msg,$type ));
@@ -430,11 +431,12 @@ class OrdersController  extends Controller
                     $type = "canceled_order" ;
                     // $title = "  تم  رفض طلبك " ;
 
-                    $msg =  [
-                        'en' =>"Your request was declined",
-                        'ar' => "  تم  رفض طلبك "  ,
-                    ];
                     
+                    $msg =  [
+                        
+                        'en' =>  "Your request ".$order->id." was declined "  ,
+                        'ar' =>   " طلبك "  .$order->id . " تم رفضه",
+                    ];
                     $user = User::where('id', $order->user_id)->first(); 
                     if($user){
                         $user->notify(new Notifications($msg,$type ));
@@ -604,8 +606,13 @@ class OrdersController  extends Controller
      
                     $title =  [
                         
-                        'en' =>  "Your request was declined" ,
-                        'ar' =>   "  تم  رفض طلبك " ,
+                        'en' =>  "Your request ".$order->id." was declined "  ,
+                        'ar' =>   " طلبك "  .$order->id . " تم رفضه",
+                    ];
+                    $msg =  [
+                        
+                        'en' =>  "Your request ".$order->id." was declined "  ,
+                        'ar' =>   " طلبك "  .$order->id . " تم رفضه",
                     ];
                     $user = User::where('id', $order->user_id)->first(); 
                     if($user){

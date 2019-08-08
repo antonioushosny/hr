@@ -88,7 +88,9 @@ class DriversController  extends Controller
             ];
         }
         
-        
+        if($request->mobile){
+            $rules['mobile'] = "between:8,11" ;
+        }
          $validator = \Validator::make($request->all(), $rules);
          if ($validator->fails()) {
              return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));

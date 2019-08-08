@@ -69,7 +69,7 @@
                                   <tbody id="contacttable">
                                       @foreach ($contacts as $data)
                                       <?php  
-                                      $string = substr( $data->message,0,100).'...'; ?>
+                                      $string = substr( $data->message,0,50).'...'; ?>
                                         <tr class="item{{$data->id}}">
                                           <td><input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck"></td>
                                           <td>{{ $data->name }}</td>
@@ -81,6 +81,7 @@
                                            <td>
                                                
                                                 <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                                <button type="button"  class="btn btn-default waves-effect m-r-20 btndefaultModal" data-toggle="modal" data-target="#defaultModal" data-title="{{ $data->title}}" data-content="{{ $data->message }}">{{__('admin.show')}}</button>
                                           </td>  
                         
                                         </tr>
@@ -95,7 +96,20 @@
   
     </div>
 </section>
-  
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel"> </h4>
+            </div>
+            <div class="modal-body" id="defaultModalcontent" >  </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">{{__('admin.close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection 
 
 @section('script')
@@ -103,13 +117,31 @@
 <script src="{{ asset('rtl/plugins/iCheck/icheck.min.js') }}"></script> 
 
 <script>
+    $('.btndefaultModal').on('click',function(){
+        $('#defaultModal').modal('show');
+        console.log('sdgsdg');
+        console.log($(this));
+        $('#defaultModalLabel').html('');
+        $('#defaultModalcontent').html('');
+        $('#defaultModalLabel').html($(this).data('title'));
+        $('#defaultModalcontent').html($(this).data('content'));
+        $('#defaultModal').modal('show');
+    });
 
     $('input').iCheck({
         checkboxClass: 'icheckbox_square-blue',
         radioClass: 'iradio_square-blue',
         increaseArea: '20%' // optional
     });
-        
+
+    {{--  $(document).on('click', '#btndefaultModal', function() {
+        console.log ();
+      $('.modal-title').text('{{trans('admin.delete')}}');
+      $('#id_delete').val($(this).data('id'));
+      $('#deleteModal').modal('show');
+      id = $('#id_delete').val();
+    });  --}}
+
     $('#check-all').on('ifChecked', function(event) {
         $('.check').iCheck('check');
 

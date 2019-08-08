@@ -194,6 +194,10 @@
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
                         }
+                        if (data.errors.mobile) {
+                            $('#mobile-error').css('display', 'inline-block');
+                            $('#mobile-error').text(data.errors.mobile);
+                        }
                   } else {
                         window.location.replace("{{route('drivers')}}");
 

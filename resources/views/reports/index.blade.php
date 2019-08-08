@@ -58,7 +58,7 @@
                                                 <div class="col-md-1">
                                                     {{__('admin.provider')}}
                                                 </div> 
-                                                <div class="col-md-3"> 
+                                                <div class="col-md-2"> 
                                                     <!-- for provider_id -->
                                                     <div class= "form-group form-float">
                                                         {!! Form::select('provider_id',$providers
@@ -70,7 +70,7 @@
                                                 <div class="col-md-1">
                                                     {{__('admin.center')}}
                                                 </div> 
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <!-- for center_id -->
                                                     <div class= "form-group form-float">
                                                         {!! Form::select('center_id',$centers
@@ -82,7 +82,7 @@
                                                 <div class="col-md-1">
                                                     {{__('admin.driver')}}
                                                 </div> 
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <!-- for driver_id -->
                                                     <div class= "form-group form-float">
                                                         {!! Form::select('driver_id',$drivers
@@ -93,7 +93,7 @@
                                                 </div>
                                             @endif
                                             
-                                            <div class="col-md-1">
+                                            {{--  <div class="col-md-1">
                                                 {{__('admin.city')}}
                                             </div> 
                                             <div class="col-md-3"> 
@@ -110,15 +110,15 @@
                                             <div class="col-md-3">
                                                 <!-- for area -->
                                                 <div class= "form-group form-float area_id_div ">
-                                                    {!! Form::select('area_id',$areas
+                                                    {!! Form::select('area_id',[ ]
                                                         ,!isset($area_id)?null:$area_id,['class'=>'form-control show-tick select2' ,'id'=>'area_id','placeholder' =>trans('admin.all')]) !!}
                                                     <label id="area_id-error" class="error" for="area_id" style="">  </label>
                                                 </div>
-                                            </div>
+                                            </div>  --}}
                                             <div class="col-md-1">
                                                 {{__('admin.status')}}
                                             </div> 
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <!-- for status -->
                                                 <div class= "form-group form-float">
                                                     {!! Form::select('status',$status
@@ -129,7 +129,7 @@
                                             <div class="col-md-1">
                                                 {{__('admin.date_from')}}
                                             </div> 
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <!-- for date -->
                                                 <div class= "form-group form-float  ">
                                                     {!! Form::date('date_from',!isset($date_from)?null:$date_from,['class'=>'form-control ' ,'id'=>'date_from','placeholder' =>trans('admin.placeholder_date_from')]) !!}
@@ -140,7 +140,7 @@
                                             <div class="col-md-1">
                                                 {{__('admin.date_to')}}
                                             </div> 
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <!-- for date -->
                                                 <div class= "form-group form-float  ">
                                                     {!! Form::date('date_to',!isset($date_to)?null:$date_to,['class'=>'form-control ' ,'id'=>'date_to','placeholder' =>trans('admin.placeholder_date_to')]) !!}
@@ -164,13 +164,14 @@
             <div class="col-lg-12">
                 <div class="card">
 
-                        <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
-                            <ul class="header-dropdown">
+                    <div class="header">
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
+                        <ul class="header-dropdown">
 
-                            </ul>
-                        </div>
-                        <div class="body">
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
                             @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
                             @else 
@@ -181,14 +182,16 @@
                                         {{--  <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>  --}}
+                                        <th>{{trans('admin.order_no')}}</th>
                                         <th>{{trans('admin.user_name')}}</th>
                                         <th>{{trans('admin.usermobile')}}</th>
                                         <th>{{trans('admin.container_name')}}</th>
                                         <th>{{trans('admin.price')}}</th>
                                         <th>{{trans('admin.no_containers')}}</th>
                                         <th>{{trans('admin.total')}}</th>
-                                        <th>{{trans('admin.city')}}</th>
-                                        <th>{{trans('admin.area')}}</th>
+                                        {{--  <th>{{trans('admin.city')}}</th>  --}}
+                                        {{--  <th>{{trans('admin.area')}}</th>  --}}
+                                        <th>{{trans('admin.date')}}</th>
                                         @if(Auth::user()->role == 'admin')
                                             <th>{{trans('admin.provider')}}</th>
                                         @elseif(Auth::user()->role == 'provider')
@@ -207,14 +210,16 @@
                                         {{--  <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>  --}}
+                                        <td>{{ $data->id }}</td>
                                         <td>{{ $data->user_name }}</td>
                                         <td>{{ $data->user_mobile }}</td>
                                         <td>{{ $data->container_name_ar }}</td>   
                                         <td>{{ $data->price }}</td>     
                                         <td>{{ $data->no_container }}</td>  
                                         <td>{{ $data->total }}</td>     
-                                        <td>{{ $data->city }}</td>     
-                                        <td>{{ $data->area }}</td>     
+                                        {{--  <td>{{ $data->city }}</td>       --}}
+                                        {{--  <td>{{ $data->area }}</td>       --}}
+                                        <td>{{ $data->created_at }}</td>     
                                         @if(Auth::user()->role == 'admin')
                                             @if($data->provider)
                                                 <td>{{ $data->provider->company_name }}</td>
@@ -252,6 +257,7 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                     {{--  </form>  --}}
                 </div>
             </div>
@@ -404,24 +410,14 @@
         // id = $('#id_delete').val();
     });
         
-    id = $('#city_id').val();
-    if(id !=''){
-        $('#area_id').empty();
-        $('#area_id').append(`<option value="">{{__('admin.choose_area')}}</option>`)
-        $.ajax({
-            type: 'GET',
-            url: "<?php echo url('/')?>/cities/"+id+"/areas",
-            success: data => {
-                if(data.areas.length <= 0){
-                    alert("{{trans('admin.notfoundarea')}}");
-                }
-                data.areas.forEach(area =>
-                    // console.log(area.name)
-                    $('#area_id').append(`<option value="${area.id}">${area.name}</option>`)
-                )
-            }
-        })
-    }
+ 
+    @if(isset($area_id)) 
+        {{--  area = "{{$area_id}}" ;
+        area = parseInt(area) ;
+        console.log(area) ;
+        $('#area_id').val(area);
+           --}}
+    @endif
     $('.select2').select2();
     $('#city_id').on('change', e => {
         $('#area_id').empty();

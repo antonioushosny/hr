@@ -121,7 +121,7 @@
                     <div class="body">
                         <h5><strong>{{trans('admin.user_name')}} :- </strong> {{ $order->user_name }}  </h5>
                         <h5><strong>{{trans('admin.user_mobile')}} :- </strong> {{ $order->user_mobile }}  </h5>
-                        @if($order->user && $order->user->City)
+                        {{--  @if($order->user && $order->user->City)
                             @if($lang == 'ar')
                             <h5><strong>{{trans('admin.city')}} :- </strong> {{ $order->user->City->name_ar }}  </h5>
                             <h5><strong>{{trans('admin.area')}} :- </strong> {{ $order->user->Area->name_ar }}  </h5>
@@ -132,7 +132,7 @@
                         @else 
                         <h5><strong>{{trans('admin.city')}} :- </strong> {{ $order->city }}  </h5>
                         <h5><strong>{{trans('admin.area')}} :- </strong> {{ $order->area }}  </h5>
-                        @endif
+                        @endif  --}}
                         <h6><strong>{{trans('admin.location')}} </strong> </h6>
 
                         <!-- {{--  for map      --}}  -->
@@ -166,6 +166,8 @@
                         
                     </div>
                     <div class="body">
+                        <h5><strong>{{trans('admin.order_no')}} :- </strong> {{ $order->id }}  </h5>
+
                         @if($lang == 'ar')
                             <h5><strong>{{trans('admin.container')}} :- </strong> {{ $order->container_name_ar }}  </h5>
                         @else   
@@ -175,6 +177,7 @@
                         <h5><strong>{{trans('admin.price')}} :- </strong> {{ $order->price }}  </h5>
                         <h5><strong>{{trans('admin.no_container')}} :- </strong> {{ $order->no_container }}  </h5>
                         <h5><strong>{{trans('admin.total')}} :- </strong> {{ $order->total }}  </h5>
+                        <h5><strong>{{trans('admin.date')}} :- </strong> {{ $order->created_at }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
                    

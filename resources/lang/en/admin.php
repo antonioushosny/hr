@@ -317,6 +317,11 @@ return [
         'users_solved'                        => 'Users solved',
         'users_not_resolved'                  => 'Users not resolved',
         'contacts_users'                => ' Contacts Users',
+        'show'                            => 'show',
+        'close'                           => 'close',
+        'choose_size'                     =>'Choose size',
+        'logo'                     =>'Logo',
+
     //end contact_us page
     
     //messages 
@@ -327,7 +332,9 @@ return [
 
     //reports page 
         'reports'                       => 'Reports ',   
-        'report'                        => 'Report ',   
+        'report'                        => 'Report ', 
+        'order_no'                      => 'Order number',
+
     //end reports page
 
     //week days 

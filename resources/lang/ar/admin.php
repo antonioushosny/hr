@@ -343,11 +343,17 @@ return [
         'users_not_resolved'                  => 'لم يتم حلها مستخدمين ',
         'contacts_users'                => ' تواصل المستخدمين',
         'contacts_clients'                => 'تواصل الأسر المنتجة',
+        'show'                            => 'عرض',
+        'close'                           => 'أغلاق',
+        'choose_size'                     =>'اختر الحجم',
+        'logo'                     =>'شعار',
+
     //end contact_us page
 
     //reports page 
         'reports'                       => 'تقارير',   
         'report'                        => 'تقرير',   
+        'order_no'                      => 'رقم الطلب',
     //end reports page
 
     //messages 

@@ -70,6 +70,7 @@
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>
 
+                                        <th>{{trans('admin.order_no')}}</th>
                                         <th>{{trans('admin.user_name')}}</th>
                                         <th>{{trans('admin.container')}}</th>
                                         <th>{{trans('admin.size')}}</th>
@@ -88,6 +89,7 @@
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>
+                                        <td>{{ $data->id }}</td>
                                         <td>{{ $data->user_name }}</td>
                                         @if($lang == 'ar')
                                             <td>{{ $data->container_name_ar }}</td>          

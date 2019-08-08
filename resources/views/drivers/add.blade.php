@@ -68,8 +68,8 @@
                                             ,'',['class'=>'form-control show-tick select2','id'=>'provider_id' ,'placeholder' =>trans('admin.choose_provider'),'required']) !!}
                                         <label id="provider_id-error" class="error"  for="provider_id" style="">  </label>
                                     </div>
-                                @if(Auth::user()->role == 'center' )
-                                    <<div class="form-group form-float">
+                                @elseif(Auth::user()->role == 'center' )
+                                    <div class="form-group form-float">
                                         <input type="hidden" value="{{Auth::user()->provider_id}}" id="provider_id" name="provider_id" required>
                                     </div>
                                 @else 
@@ -197,13 +197,18 @@
                             $('#responsible_name-error').text(data.errors.responsible_name);
                         }
                         if (data.errors.email) {
-                            $('#city-id-error').css('display', 'inline-block');
-                            $('#city-id-error').text(data.errors.email);
+                            $('#email-error').css('display', 'inline-block');
+                            $('#email-error').text(data.errors.email);
                         }
                         if (data.errors.image) {
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
                         }
+                        if (data.errors.mobile) {
+                            $('#mobile-error').css('display', 'inline-block');
+                            $('#mobile-error').text(data.errors.mobile);
+                        }
+                         
                   } else {
                         window.location.replace("{{route('drivers')}}");
 

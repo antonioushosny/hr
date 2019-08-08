@@ -186,6 +186,10 @@
                             $('#email-error').css('display', 'inline-block');
                             $('#email-error').text(data.errors.email);
                         }
+                        if (data.errors.mobile) {
+                            $('#mobile-error').css('display', 'inline-block');
+                            $('#mobile-error').text(data.errors.mobile);
+                        }
                   } else {
                         window.location.replace("{{route('providers')}}");
 

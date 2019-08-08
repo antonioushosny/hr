@@ -283,6 +283,10 @@
                             $('#lat-error').css('display', 'inline-block');
                             $('#lat-error').text(data.errors.lat);
                         }
+                        if (data.errors.mobile) {
+                            $('#mobile-error').css('display', 'inline-block');
+                            $('#mobile-error').text(data.errors.mobile);
+                        }
                   } else {
                         // console.log(data);
                         window.location.replace("{{route('centers')}}");

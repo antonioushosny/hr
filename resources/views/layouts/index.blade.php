@@ -299,7 +299,7 @@ body, html {
                             @if(Auth::user()->image != '' || Auth::user()->image != null)
                                 <div class="image"><a href="javascript:void(0);"><img src="{{ asset('img/'.Auth::user()->image) }}" alt="{{Auth::user()->name}}"></a></div>
                             @else 
-                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/profile_av.jpg') }}" alt="{{Auth::user()->name}}"></a></div>
+                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
                             @endif
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
@@ -380,12 +380,12 @@ body, html {
                             @if(Auth::user()->image != '' || Auth::user()->image != null)
                                 <div class="image"><a href="javascript:void(0);"><img src="{{ asset('img/'.Auth::user()->image) }}" alt="{{Auth::user()->name}}"></a></div>
                             @else 
-                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/profile_av.jpg') }}" alt="{{Auth::user()->name}}"></a></div>
+                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
                             @endif
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
                                 @if(Auth::user()->role == 'provider')
-                                <small>{{Auth::user()->company_name}}</small>  
+                                <h2>{{Auth::user()->company_name}}</h2>  
                                 @endif
                                 <small>{{Auth::user()->email}}</small>  
                                              
@@ -403,7 +403,9 @@ body, html {
                         <small class="text-muted">{{__('admin.mobile')}}: </small>
                         <p>{{Auth::user()->mobile}}</p>
                         <hr>
-                        <ul class="list-unstyled">
+                        <button class="btn btn-raised btn-primary btn-round waves-effect" id="btneditprofile">{{__('admin.edit_profile')}}</button>
+
+                        <ul class="list-unstyled " id="ulformeditprofile" style="display:none">
                             {!! Form::open(['route'=>['editprofile'],'method'=>'post','autocomplete'=>'off', 'enctype'=>'multipart/form-data' ])!!} 
 
                             <li>
@@ -420,21 +422,21 @@ body, html {
                                 <div>{{__('admin.mobile')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="text" value="{{Auth::user()->mobile}}" class="form-control" placeholder="{{__('admin.mobile')}}" name="mobile" >
-                                    <label id="mobile-error" class="error" for="mobile" style="">  </label>
+                                    <label id="mobiles-error" class="error" for="mobile" style="">  </label>
                                 </div>
                             </li>
                             <li>
                                 <div>{{__('admin.password')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
-                                    <label id="password-error" class="error" for="password" style=""></label>
+                                    <label id="passwords-error" class="error" for="password" style=""></label>
                                 </div>
                             </li>
                             <li>
                                 <div>{{__('admin.image')}}</div>
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
-                                    <div class= "col-md-6 col-xs-3">
+                                    <div class= "col-md-7 col-xs-12">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:void(0);'  style="color: white;">
@@ -449,7 +451,7 @@ body, html {
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         
                                         @if(Auth::user()->image)
                                             <img id="changeimages" src="{{asset('img/'.Auth::user()->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
@@ -507,6 +509,11 @@ body, html {
 <script src="{{ asset('assets/plugins/jquery-datatable/buttons/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script> 
     <script>
+        $('#btneditprofile').on('click',function(){
+
+            $('#btneditprofile').css('display', 'none');
+            $('#ulformeditprofile').css('display', 'inline-block');
+        })
         function isNumber(e){
             var key = e.charCode;  
             if( key <48 || key >57 )

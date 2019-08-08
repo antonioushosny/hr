@@ -58,7 +58,7 @@
                                 <!-- for size -->
                                 <div class= "form-group form-float">
                                     {!! Form::select('size',['large'=>trans('admin.large'),'small'=>trans('admin.small')]
-                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose'),'required']) !!}
+                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_size'),'required']) !!}
                                         <label id="size-error" class="error" for="size" style="">  </label>
                                 </div>
                                 <!-- for desc_ar -->

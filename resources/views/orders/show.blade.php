@@ -54,6 +54,7 @@
     </style>
     @endif
     <style>
+       
         h5{
             color: #1e2967;
             background-color: #8c99e01f;
@@ -61,18 +62,20 @@
             padding: 4px;
             padding-right: 25px;
             box-shadow: 2px 3px #6b6464;
+            font-size: 15px;
         }
         h6{
             color: #1e2967;
             padding: 4px;
             padding-right: 25px;
-            font-size: 25px;
+            font-size: 16px;
             border-radius: 30px;
             text-align: center;
             box-shadow: 2px 3px #6b6464;
             background-color: #8c99e01f;
             margin-right: 10rem;
             margin-left: 10rem;
+            
         }
         .hidden{
             display: none;
@@ -164,6 +167,7 @@
                         
                     </div>
                     <div class="body">
+                        <h5><strong>{{trans('admin.order_no')}} :- </strong> {{ $order->id }}  </h5>
                         @if($lang == 'ar')
                             <h5><strong>{{trans('admin.container')}} :- </strong> {{ $order->container_name_ar }}  </h5>
                         @else   
@@ -173,6 +177,7 @@
                         <h5><strong>{{trans('admin.price')}} :- </strong> {{ $order->price }}  </h5>
                         <h5><strong>{{trans('admin.no_container')}} :- </strong> {{ $order->no_container }}  </h5>
                         <h5><strong>{{trans('admin.total')}} :- </strong> {{ $order->total }}  </h5>
+                        <h5><strong>{{trans('admin.date')}} :- </strong> {{ $order->created_at }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
                         

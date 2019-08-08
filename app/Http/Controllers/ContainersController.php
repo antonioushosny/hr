@@ -49,8 +49,9 @@ class ContainersController extends Controller
             [
                 'name_ar'  =>'required|max:190',           
                 'name_en'  =>'required|max:190',           
-                'size'  =>'required',           
-                'status'  =>'required',   
+                'size'  =>'required',            
+                'status'  =>'required',  
+                 
             ];
             
         }     
@@ -62,7 +63,8 @@ class ContainersController extends Controller
                 'name_en'  =>'required|max:190', 
                 'size'  =>'required',                
                 // 'country_id'  =>'required',     
-                'status'  =>'required'      
+                'status'  =>'required'    
+
             ];
         }
         

@@ -59,7 +59,7 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-        date_default_timezone_set('UTC');
+        date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
 //////////////////////////////////////////////
@@ -752,8 +752,9 @@ class ApiController extends Controller
 // verify_code function by Antonious hosny
     public function VerifyCode(Request $request){
         $code = $request->code;
+        $email = $request->email;
         if($code){
-            $PasswordReset = PasswordReset::where('token',$code)->first();
+            $PasswordReset = PasswordReset::where('token',$code)->where('email',$email)->first();
             // return $PasswordReset ;
             if ($PasswordReset) {
                 $user = User::where('email',$PasswordReset->email)->first();
@@ -793,8 +794,9 @@ class ApiController extends Controller
 // reset_password function by Antonious hosny
     public function ResetPassword(Request $request){
         $code = $request->code;
+        $email = $request->email;
         if($code){
-            $PasswordReset = PasswordReset::where('token',$code)->first();
+            $PasswordReset = PasswordReset::where('token',$code)->where('email',$email)->first();
             if($PasswordReset){
                 $user = User::where('email',$PasswordReset->email)->first();
             }
@@ -814,7 +816,7 @@ class ApiController extends Controller
                     $user->password = $password ;
                     // $user->generateToken();
                     $user->save();
-                    
+                    $PasswordReset->delete();
                     return response()->json([
                         'success' => 'success',
                         'errors'  => null,
@@ -1498,6 +1500,12 @@ class ApiController extends Controller
                         $user->save();
                         $order->status = 'delivered' ;
                         $order->save();
+                        $orderdriver = OrderDriver::where('order_id',$order->id)->where('driver_id',$user->id)->orderBy('id',"Desc")->first();
+                        if($orderdriver){
+                            $orderdriver->status = 'accept' ;
+                            $orderdriver->accept_date  = $date ;
+                            $orderdriver->save(); 
+                        }
                         $type = "order";
                         $msg =  [
                             'en' =>  "  The request has been delivered"  ,
