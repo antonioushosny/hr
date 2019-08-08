@@ -320,8 +320,8 @@ class OrdersController  extends Controller
             // $title = "  لديك طلب جديد من " ;
 
             $msg =  [
-                'en' => " You have been selected to delivery a new order"  ,
-                'ar' =>  " تم اختيارك لتوصيل طلب جديد  " ,
+                'en' => " You have been selected to delivery a new order number " .$order->id  ,
+                'ar' =>  " تم اختيارك لتوصيل طلب جديد رقم   " . $order->id ,
             ];
             
           
