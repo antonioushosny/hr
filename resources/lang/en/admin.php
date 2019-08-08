@@ -247,9 +247,9 @@ return [
 
      //orders page 
         'orders'                       => ' Orders', 
-        'neworders'                       => 'New Orders', 
-        'noworders'                       => 'Now Orders', 
-        'lastorders'                       => 'Last Orders', 
+        'neworders'                       => 'Current Orders', 
+        'noworders'                       => 'Current Orders', 
+        'lastorders'                       => 'Finished  Orders', 
         'allorders'                       => 'All Orders', 
         'order'                        => ' Order', 
         'add_order'                    => ' Add Order'  ,

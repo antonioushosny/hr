@@ -321,15 +321,17 @@ class OrdersController  extends Controller
 
             $msg =  [
                 'en' => " You have been selected to delivery a new order"  ,
-                'ar' =>  "   تم اختيارك لتوصيل طلب جديد " ,
+                'ar' =>  " تم اختيارك لتوصيل طلب جديد  " ,
             ];
+            
+          
             
             $driver = User::where('id', $request->driver_id)->first(); 
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;
             if($device_token){
                 $this->notification($device_token,$msg,$msg);
-                $this->webnotification($device_token,$title,$msg,$type);
+                $this->webnotification($device_token,$msg,$msg,$type);
             }
  
             // $msg = "  تم  قبول طلبك "  ;
@@ -342,6 +344,8 @@ class OrdersController  extends Controller
                 'en' =>  "Your request ".$order->id."  has been accepted "  ,
                 'ar' =>   " طلبك "  .$order->id . " تم قبوله",
             ];
+            
+          
 
             $user = User::where('id', $order->user_id)->first(); 
             $user->notify(new Notifications($msg,$type ));
