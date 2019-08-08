@@ -180,7 +180,63 @@
                         <h5><strong>{{trans('admin.date')}} :- </strong> {{ $order->created_at }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
-                        
+                        @foreach($order->centers as $center)
+                           @if(Auth::user()->role == 'center')  
+                                @if(Auth::user()->id == $center->center->id )  
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>{{ __('admin.center') }}</th>
+                                        <th>{{ __('admin.status') }}</th>
+                                        @if($center->status == 'accept')
+                                        <th>{{ __('admin.accept_date') }}</th>
+                                        @elseif($center->status == 'decline')
+                                        <th>{{ __('admin.decline_date') }}</th>
+                                        <th>{{ __('admin.reason') }}</th>
+                                        @endif
+                                        
+                                    </thead>
+                                    <tbody>
+                                        <td>{{$center->center->name}}</td>
+                                        <td>{{ __('admin.'.$center->status) }}</td>
+                                        @if($center->status == 'accept')
+                                        <td>{{ $center->accept_date }}</td>
+                                        @elseif($center->status == 'decline')
+                                        <td>{{ $center->decline_date  }}</td>
+                                        <td>{{ $center->reason  }}</td>
+                                        
+                                        @endif
+                                        
+                                    </tbody>
+                                </table>
+                                @endif
+                            @else 
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>{{ __('admin.center') }}</th>
+                                        <th>{{ __('admin.status') }}</th>
+                                        @if($center->status == 'accept')
+                                        <th>{{ __('admin.accept_date') }}</th>
+                                        @elseif($center->status == 'decline')
+                                        <th>{{ __('admin.decline_date') }}</th>
+                                        <th>{{ __('admin.reason') }}</th>
+                                        @endif
+                                        
+                                    </thead>
+                                    <tbody>
+                                        <td>{{$center->center->name}}</td>
+                                        <td>{{ __('admin.'.$center->status) }}</td>
+                                        @if($center->status == 'accept')
+                                        <td>{{ $center->accept_date }}</td>
+                                        @elseif($center->status == 'decline')
+                                        <td>{{ $center->decline_date  }}</td>
+                                        <td>{{ $center->reason  }}</td>
+                                        
+                                        @endif
+                                        
+                                    </tbody>
+                                </table>
+                            @endif
+                        @endforeach
                         @if($order->status == 'pending' && $order->center_id == Auth::user()->id)
                             <h4><strong>{{ trans('admin.take_action') }} :- </strong>  </h4>
                             {!! Form::open(['route'=>['actionfororder'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 

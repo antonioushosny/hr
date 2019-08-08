@@ -180,10 +180,10 @@
                         <h5><strong>{{trans('admin.date')}} :- </strong> {{ $order->created_at }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
-                   
-                        @if(Auth::user()->role != 'center')
-                            @if(sizeof($order->centers) > 0 )    
-                                @foreach($order->centers as $center)
+                        @if(sizeof($order->centers) > 0 )
+                            @foreach($order->centers as $center)
+                                @if(Auth::user()->role == 'center')  
+                                    @if(Auth::user()->id == $center->center->id )  
                                     <table class="table table-striped">
                                         <thead>
                                             <th>{{ __('admin.center') }}</th>
@@ -209,41 +209,68 @@
                                             
                                         </tbody>
                                     </table>
-                                    
-                                @endforeach
-                            @endif
-                        @else 
-                            @if(sizeof($order->drivers) > 0 )    
-                                @foreach($order->drivers as $driver)
+                                    @endif
+                                @else 
                                     <table class="table table-striped">
                                         <thead>
-                                            <th>{{ __('admin.driver') }}</th>
+                                            <th>{{ __('admin.center') }}</th>
                                             <th>{{ __('admin.status') }}</th>
-                                            @if($driver->status == 'accept')
+                                            @if($center->status == 'accept')
                                             <th>{{ __('admin.accept_date') }}</th>
-                                            @elseif($driver->status == 'decline')
+                                            @elseif($center->status == 'decline')
                                             <th>{{ __('admin.decline_date') }}</th>
                                             <th>{{ __('admin.reason') }}</th>
                                             @endif
                                             
                                         </thead>
                                         <tbody>
-                                            <td>{{$driver->driver->name}}</td>
-                                            <td>{{ __('admin.'.$driver->status) }}</td>
-                                            @if($driver->status == 'accept')
-                                            <td>{{ $driver->accept_date }}</td>
-                                            @elseif($driver->status == 'decline')
-                                            <td>{{ $driver->decline_date  }}</td>
-                                            <td>{{ $driver->reason  }}</td>
+                                            <td>{{$center->center->name}}</td>
+                                            <td>{{ __('admin.'.$center->status) }}</td>
+                                            @if($center->status == 'accept')
+                                            <td>{{ $center->accept_date }}</td>
+                                            @elseif($center->status == 'decline')
+                                            <td>{{ $center->decline_date  }}</td>
+                                            <td>{{ $center->reason  }}</td>
                                             
                                             @endif
                                             
                                         </tbody>
                                     </table>
-                                    
-                                @endforeach
-                            @endif
+                                @endif
+                            @endforeach
                         @endif
+                    @if(sizeof($order->drivers) > 0 )    
+                        @foreach($order->drivers as $driver)
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>{{ __('admin.driver') }}</th>
+                                    <th>{{ __('admin.status') }}</th>
+                                    @if($driver->status == 'accept')
+                                    <th>{{ __('admin.accept_date') }}</th>
+                                    @elseif($driver->status == 'decline')
+                                    <th>{{ __('admin.decline_date') }}</th>
+                                    <th>{{ __('admin.reason') }}</th>
+                                    @endif
+                                    
+                                </thead>
+                                <tbody>
+                                    <td>{{$driver->driver->name}}</td>
+                                    <td>{{ __('admin.'.$driver->status) }}</td>
+                                    @if($driver->status == 'accept')
+                                    <td>{{ $driver->accept_date }}</td>
+                                    @elseif($driver->status == 'decline')
+                                    <td>{{ $driver->decline_date  }}</td>
+                                    <td>{{ $driver->reason  }}</td>
+                                    
+                                    @endif
+                                    
+                                </tbody>
+                            </table>
+                            
+                        @endforeach
+                    @endif
+                        
+                            
                         
                     </div>
 

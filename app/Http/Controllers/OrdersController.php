@@ -28,7 +28,7 @@ class OrdersController  extends Controller
      */
     public function __construct()
     {
-    
+        date_default_timezone_set('Asia/Riyadh');
         // if(Auth::user()->role != 'admin' ){
         //     return view('unauthorized',compact('role','admin'));
         // }
@@ -270,6 +270,7 @@ class OrdersController  extends Controller
 
     public function actionfororder(Request $request)
     {
+     
         $rules =
             [
                 'status'   =>'required', 
@@ -298,7 +299,7 @@ class OrdersController  extends Controller
         $ordercenter = OrderCenter::where('order_id',$request->order_id)->where('center_id',Auth::user()->id)->first();
         $dt = Carbon::now();
         $date  = date('Y-m-d H:i:s', strtotime($dt));
-         $order = Order::where('id',$request->order_id)->first();
+        $order = Order::where('id',$request->order_id)->first();
         if($request->status == 'accept'){
             $order->status  = 'accepted' ;
             $order->driver_id  =  $request->driver_id ;
@@ -359,7 +360,7 @@ class OrdersController  extends Controller
             $ordercenter->status  = 'decline' ;
             $ordercenter->reason  = $request->reason ;
             $ordercenter->decline_date  = $date ;
-            $ordercenter->save() ;
+            // $ordercenter->save() ;
 
             $container = Container::where('id',$order->container_id)->with('centers')->first();
             $distancess = [] ;
@@ -385,7 +386,7 @@ class OrdersController  extends Controller
                 // return \Response::json( $distancess) ;
                 // asort($distancess)  ;
                 $first_key = key($distancess);
-                
+            //   return \Response::json(array('errors' => $first_key ));
                 $CenterContainer = CenterContainer::where('center_id',$first_key)->where('container_id',$order->container_id)->with('center')->with('container')->first();
                 if($CenterContainer){
 
@@ -395,9 +396,9 @@ class OrdersController  extends Controller
                     $order->price = $CenterContainer->price ;
                     $order->total = $CenterContainer->price * $order->no_container ;
                     $order->status = 'pending' ;
-                    
+                    // return \Response::json(array('errors' =>'1'));
                     $order->save();
-    
+                    // return \Response::json(array('errors' => $order));
                     $ordercenter = new OrderCenter ;
                     $ordercenter->order_id = $request->order_id ;
                     $ordercenter->center_id = $first_key ;
@@ -416,6 +417,7 @@ class OrdersController  extends Controller
                     if($device_token){
                         $this->notification($device_token,$msg,$msg);
                     }
+                    // return \Response::json(array('errors' =>'done'));
                     return \Response::json('canceled') ;
                 }else{
                     $order->center_id = null ;
@@ -446,20 +448,46 @@ class OrdersController  extends Controller
                         }
                     }
                     return \Response::json('canceled') ;
+                    //  return \Response::json(array('errors' =>'done2'));
                 }
                 
 
             }
+            $order->center_id = null ;
+            $order->provider_id = null ;
+            $order->container_id = $order->container_id ;
+            $order->price =  null ;
+            $order->total = null ;
+            $order->status = 'canceled' ;
+            $order->save();
 
-            return 'success';
+            // $msg = "  تم  رفض طلبك "  ;
+            $type = "canceled_order" ;
+            // $title = "  تم  رفض طلبك " ;
+
+            
+            $msg =  [
+                
+                'en' =>  "Your request ".$order->id." was declined "  ,
+                'ar' =>   " طلبك "  .$order->id . " تم رفضه",
+            ];
+            $user = User::where('id', $order->user_id)->first(); 
+            if($user){
+                $user->notify(new Notifications($msg,$type ));
+                $device_token = $user->device_token ;
+                if($device_token){
+                    $this->notification($device_token,$msg,$msg);
+                    $this->webnotification($device_token,$msg,$msg,$type);
+                }
+            }
+           return \Response::json('canceled') ;
         }
          
     }
 
     public function assignDriver(Request $request)
     {
-
-        if($request->type == 'reassign'){
+         if($request->type == 'reassign'){
 
             $rules =
             [
