@@ -43,8 +43,7 @@ class OrdersController  extends Controller
         }
         $title = 'orders';
         $orders = Order::where('center_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
-        
-        // return $orders ; 
+       
         return view('orders.index',compact('orders','title','lang'));
 
     }
@@ -71,8 +70,10 @@ class OrdersController  extends Controller
             return view('unauthorized',compact('role','center'));
         }
         $title = 'noworders';
-        $orders = Order::where('center_id',Auth::user()->id)->where('status','accepted')->orWhere('status','assigned')->orderBy('id', 'DESC')->get();
-        // return $orders ; 
+        // $orders = Order::where('center_id',Auth::user()->id)->where(['status'=>'accepted','status'=>'assigned'])->orderBy('id', 'DESC')->get();
+        $orders = Order::where('center_id',Auth::user()->id)->whereIn('status',['accepted','assigned'])->orderBy('id', 'DESC')->get();
+
+        // return count($orders) ; 
         return view('orders.index',compact('orders','title','lang'));
 
     }
@@ -84,9 +85,9 @@ class OrdersController  extends Controller
             return view('unauthorized',compact('role','center'));
         }
         $title = 'lastorders';
-        $orders = Order::where('center_id',Auth::user()->id)->where('status','delivered')->orWhere('status','canceled')->orderBy('id', 'DESC')->get();
-        
-        // return $orders ; 
+        // $orders = Order::where('center_id',Auth::user()->id)->where('status','delivered')->orWhere('status','canceled')->orderBy('id', 'DESC')->get();
+         $orders = Order::where('center_id',Auth::user()->id)->whereIn('status',['delivered','canceled'])->orderBy('id', 'DESC')->get();
+        // return count($orders) ; 
         return view('orders.index',compact('orders','title','lang'));
 
     }
@@ -431,6 +432,8 @@ class OrdersController  extends Controller
                     // $msg = "  تم  رفض طلبك "  ;
                     $type = "canceled_order" ;
                     // $title = "  تم  رفض طلبك " ;
+
+                    
                     $msg =  [
                         
                         'en' =>  "Your request ".$order->id." was declined "  ,
@@ -461,6 +464,8 @@ class OrdersController  extends Controller
             // $msg = "  تم  رفض طلبك "  ;
             $type = "canceled_order" ;
             // $title = "  تم  رفض طلبك " ;
+
+            
             $msg =  [
                 
                 'en' =>  "Your request ".$order->id." was declined "  ,

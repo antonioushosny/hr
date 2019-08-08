@@ -304,7 +304,7 @@ body, html {
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
                                 @if(Auth::user()->role == 'provider')
-                                <small>{{Auth::user()->company_name}}</small>  
+                                <h4>{{Auth::user()->company_name}}</h4>  
                                 @endif
                                 <small>{{Auth::user()->email}}</small>  
                             </div>
@@ -385,7 +385,7 @@ body, html {
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
                                 @if(Auth::user()->role == 'provider')
-                                <h2>{{Auth::user()->company_name}}</h2>  
+                                <h4>{{Auth::user()->company_name}}</h4>  
                                 @endif
                                 <small>{{Auth::user()->email}}</small>  
                                              
