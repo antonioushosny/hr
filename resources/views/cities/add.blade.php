@@ -39,32 +39,35 @@
                     <div class="header">
                         <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_citie')}}  </h2>
                         
-                    </div>
-                    <div class="body">
-                        {!! Form::open(['route'=>['storecitie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-                            <div class="form-group form-float">
-                                <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
-                                <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
-                            </div>
-                            <div class="form-group form-float">
-                                <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
-                                <label id="name-en-error" class="error" for="name_en" style="">  </label>
-                            </div>
-                            <div class="form-group">
-                                <div class="radio inlineblock m-r-20">
-                                    <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
-                                    <label for="active">{{__('admin.active')}}</label>
-                                </div>                                
-                                <div class="radio inlineblock">
-                                    <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" >
-                                    <label for="not_active">{{__('admin.not_active')}}</label>
+                    </div> 
+                    <div class="body row">
+                        <div class="col-lg-6">
+                            {!! Form::open(['route'=>['storecitie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                            
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
+                                    <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
                                 </div>
-                            </div>
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
-                          
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
+                                    <label id="name-en-error" class="error" for="name_en" style="">  </label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
+                                        <label for="active">{{__('admin.active')}}</label>
+                                    </div>                                
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" >
+                                        <label for="not_active">{{__('admin.not_active')}}</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
+                            
 
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

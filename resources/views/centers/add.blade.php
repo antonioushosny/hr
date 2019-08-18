@@ -94,10 +94,10 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_center')}}  </h2>
                             
                         </div>
+                        {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                         <div class="body row">
-                                 {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <!-- for company_name -->
                                     @if(Auth::user()->role == 'admin' )
                                     <div class= "form-group form-float">
@@ -183,7 +183,7 @@
                                     </fieldset>
                                     <!-- end for containers -->
                                 </div>
-                                <div class="col-lg-6">      
+                                <div class="col-lg-12">      
                                     <!-- {{--  for map      --}}  -->
 
                                     <div class="form-group form-float">
@@ -206,7 +206,7 @@
                                     </div><br/> 
                                     <!-- end map -->
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <!-- for image  -->
                                     <div class="form-group form-float row"  >
                                         {{--  for image  --}}
@@ -231,7 +231,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="radio inlineblock m-r-20">
                                             <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">

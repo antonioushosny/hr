@@ -493,6 +493,11 @@ class ApiController extends Controller
                     $users['area_id'] = null ;
                     $users['area_name']   = null ;
                 }
+                if($user->image){
+                    $users['image'] = asset('img/').'/'. $user->image;
+                }else{
+                     $users['image'] = null ;
+                }
                 $users['lat'] = $user->lat ;
                 $users['lng'] = $user->lng ;
                 $users['role'] = $user->role ;
@@ -642,6 +647,11 @@ class ApiController extends Controller
                 }else{
                     $users['area_id'] = null ;
                     $users['area_name']   =  null;
+                }
+                if($user->image){
+                    $users['image'] = asset('img/').'/'. $user->image;
+                }else{
+                     $users['image'] = null ;
                 }
                 $users['lat'] = $user->lat ;
                 $users['lng'] = $user->lng ;
