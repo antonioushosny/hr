@@ -1614,7 +1614,24 @@ class ApiController extends Controller
             $contact->message = $request->message ;
             $contact->status = 'new' ;
             $contact->save();
-
+            $type = "user";
+            // $title1 = "  مستخدم جديد قام بالتسجيل" ;
+            $msg =  [
+                'en' => "you have new message from ".  $request->name   ,
+                'ar' => "  لديك رسالة جديدة من " . $request->name   ,
+            ];
+            
+            $admins = User::where('role', 'admin')->get(); 
+            if(sizeof($admins) > 0){
+                foreach($admins as $admin){
+                    $admin->notify(new Notifications($msg,$type ));
+                }
+                $device_token = $admin->device_token ;
+                if($device_token){
+                    $this->notification($device_token,$msg,$msg);
+                    $this->webnotification($device_token,$msg,$msg,$type);
+                }
+            }
             return response()->json([
                 'success' => 'success',
                 'errors' => null ,

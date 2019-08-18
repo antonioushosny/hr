@@ -37,12 +37,13 @@
                 <div class="card">
                
 
-                        <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_admin')}}  </h2>
-                            
-                        </div>
-                        <div class="body">
-                            {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                    <div class="header">
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_admin')}}  </h2>
+                        
+                    </div>
+                    <div class="body row">
+                        <div class="col-lg-6">
+                                {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" required>
                                     <label id="name-error" class="error" for="name" style="">  </label>
@@ -55,9 +56,9 @@
                                     <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password" required  autocomplete="new-password" >
                                     <label id="password-error" class="error" for="password" style=""></label>
                                 </div>
-                               
+                                
                                 <div class="form-group form-float row"  >
-                                         
+                                            
                                     {{--  for image  --}}
                                     <div class= "col-md-2 col-xs-3">
                                 
@@ -76,7 +77,7 @@
                                         </div>
                                     
                                     </div>
-
+    
                                     <div class="col-md-10">
                                         <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                     </div>
@@ -95,6 +96,8 @@
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
                             </form>
                         </div>
+                       
+                    </div>
                 </div>
             </div>
         </div>

@@ -385,7 +385,7 @@
                         }
                   } else {
                         {{--  console.log(data)  --}}
-                        window.location.replace("{{route('orders')}}");
+                        location.reload();
 
                      }
             },
@@ -416,7 +416,7 @@
                      
                 } else {
                       {{--  console.log(data)  --}}
-                      window.location.replace("{{route('orders')}}");
+                      location.reload();
 
                    }
           },
