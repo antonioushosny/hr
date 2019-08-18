@@ -1111,7 +1111,8 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user && $user->role == 'user'){
                 // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
+                // $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
+                $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->get();
                 $count_orders = Order::where('user_id',$user->id)->with('center')->with('container')->count('id');
                 if(sizeof($orderss) > 0){
                     $orders = [];
@@ -1161,7 +1162,8 @@ class ApiController extends Controller
             }
             else if($user && $user->role == 'driver'){
                 // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
+                // $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
+                $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->get();
                 $count_orders = Order::where('driver_id',$user->id)->with('center')->with('container')->count('id');
                 if(sizeof($orderss) > 0){
                     $orders = [];
