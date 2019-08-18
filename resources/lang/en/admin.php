@@ -40,6 +40,8 @@ return [
         'not_active'                    => ' Not Active',
         'available'                     => 'Available', 
         'not_available'                 => ' Not Available',
+        'excuting_order'                => 'excuting order ',
+        'availability_status'           => 'Driver status  ',
         'actions'                       => 'Actions ',
         'save'                          => 'Save',
         'add'                           => 'Add ',
@@ -64,6 +66,7 @@ return [
         'resendlink'                    => 'Sorry, you can not complete the task. Try again' ,
         'notfoundarea'                  => 'There are no areas for this city',
         'edit_profile'                  => 'edit profile',
+        'Generate'                      => ' Generate Password',
         
 
     //end public 
@@ -372,7 +375,7 @@ return [
     //end settings and static pages  
 
     'You cannot access this page!'  => 'You cannot access this page!' ,
-    'Forgot Password Or First Login ?'  => 'Forgot Password Or First Login ?' ,
+    'Forgot Password Or First Login ?'  => 'Forgot Password ?' ,
     'Enter your e-mail address below to reset your password.'  => 'Enter your e-mail address below to reset your password.',
     'Send Password Reset Link'  => 'Send Password Reset Link',
     'Reset Password'            => 'Reset Password',

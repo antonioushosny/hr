@@ -60,7 +60,7 @@
                     </div>
                     <div class="body row">
                         <div class="col-lg-6">
-                            {!! Form::open(['route'=>['storedriver'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                            {!! Form::open(['route'=>['storedriver'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'name'=>"myform",'enctype'=>'multipart/form-data' ])!!} 
 
                                 <div class="form-group form-float">
                                     <input type="hidden" value="{{$driver->id}}" name="id" required>
@@ -104,7 +104,12 @@
                                     <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" value="{{$driver->email}}" required>
                                     <label id="email-error" class="error" for="email" style=""></label>
                                 </div>
-
+                                <!-- for password -->
+                                <div class="form-group form-float">
+                                     <input name="password" class="form-control"  placeholder="{{__('admin.placeholder_password')}}"   readonly type="text"  >
+                                    <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
+                                    <label id="password-error" class="error" for="password" style=""></label>
+                                </div>
                                 <!-- for image  -->
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
@@ -199,6 +204,10 @@
                         if (data.errors.mobile) {
                             $('#mobile-error').css('display', 'inline-block');
                             $('#mobile-error').text(data.errors.mobile);
+                        }
+                        if (data.errors.password) {
+                            $('#password-error').css('display', 'inline-block');
+                            $('#password-error').text(data.errors.password);
                         }
                   } else {
                         window.location.replace("{{route('drivers')}}");

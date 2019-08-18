@@ -219,7 +219,7 @@
                                         <td>{{ $data->total }}</td>     
                                         {{--  <td>{{ $data->city }}</td>       --}}
                                         {{--  <td>{{ $data->area }}</td>       --}}
-                                        <td>{{ $data->created_at }}</td>     
+                                        <td>{{ $data->created_at->format('Y-m-d') }}  </td>     
                                         @if(Auth::user()->role == 'admin')
                                             @if($data->provider)
                                                 <td>{{ $data->provider->company_name }}</td>

@@ -85,6 +85,7 @@ class DriversController  extends Controller
                 'responsible_name'  =>'required|max:190',
                 'email'  =>'required|email|unique:users,email|max:190',            
                 'status'  =>'required',       
+                'password'  =>'required|min:6|max:190',  
             ];
         }
         

@@ -41,8 +41,10 @@ return [
         'notselected_delete'            => 'من فضلك قم بتحديد صف او اكثر للحذف',
         'active'                        => 'نشط', 
         'not_active'                    => 'غير نشط',
-        'available'                     => 'مجاني', 
-        'not_available'                 => ' مدفوع ',
+        'available'                     => 'متاح', 
+        'not_available'                 => ' عير متاح ',
+        'excuting_order'                => 'ينفذ طلب ',
+        'availability_status'           => 'حالة السائق',
         'actions'                       => 'تحكم',
         'save'                          => 'حفظ',
         'add'                           => 'أضافة',
@@ -67,6 +69,7 @@ return [
         'resendlink'                    => 'عفوا لا يمكنك اكمال المهمة حاول مرة اخري' ,
         'notfoundarea'                  => 'لا يوجد مناطق لهذه المدينة' ,
         'edit_profile'                  => 'تعديل الصفحة الشخصية',
+        'Generate'                      => ' توليد كلمة المرور',
     //end public 
 
     //sidebar  
@@ -397,7 +400,7 @@ return [
         'edit_setting'  => 'التعديل   ',
     //end settings and static pages  
         'You cannot access this page!'  => ' !لا يمكنك الوصول إلى هذه الصفحة ',
-        'Forgot Password Or First Login ?'  => 'نسيت كلمة المرور أو أول تسجيل دخول ؟',
+        'Forgot Password Or First Login ?'  => 'نسيت كلمة المرور ؟',
         'Enter your e-mail address below to reset your password.'  => 'ادخل بريدك الإلكتروني لإعادة تعيين كلمة المرور',
         'Send Password Reset Link'  => 'إرسال رابط إعادة تعيين كلمة المرور',
         'Reset Password'        => 'إعادة تعيين كلمة المرور' ,

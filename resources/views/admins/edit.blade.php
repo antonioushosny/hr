@@ -43,9 +43,8 @@
                         </div>
                         <div class="body row">
                             <div class="col-lg-6">
-                                {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-
-                                    <div class="form-group form-float">
+                                {!! Form::open(['route'=>['storeadmin'],'method'=>'post','name'=>"myform",'autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                                     <div class="form-group form-float">
                                         <input type="hidden" value="{{$admin->id}}" name="id" required>
                                     </div>
                                     <div class="form-group form-float">
@@ -56,11 +55,13 @@
                                         <input type="email" value="{{$admin->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
                                         <label id="email-error" class="error" for="email" style=""></label>
                                     </div>
+                                     
                                     <div class="form-group form-float">
-                                        <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
-                                        <label id="password-error" class="error" for="password" style=""></label>
-                                    </div>
-                                
+                                            {{--  <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password" required  autocomplete="new-password" >  --}}
+                                            <input name="password" class="form-control"  readonly type="text"   placeholder="{{__('admin.placeholder_password')}} >
+                                            <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
+                                            <label id="password-error" class="error" for="password" style=""></label>
+                                        </div>
                                     <div class="form-group form-float row"  >
                                             
                                         {{--  for image  --}}
@@ -120,6 +121,7 @@
 
 
 <script>
+    
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}

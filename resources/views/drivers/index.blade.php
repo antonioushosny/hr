@@ -70,6 +70,7 @@
                                         <th>{{trans('admin.email')}}</th>
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
+                                        <th>{{trans('admin.availability_status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
@@ -97,9 +98,17 @@
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
                                         @if($data->status == 'active')
-                                            <td style="text-align:driver"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
+                                            <td style="text-align:center"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
                                         @elseif($data->status == 'not_active')
-                                            <td style="text-align:driver"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
+                                            <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
+                                        @endif
+
+                                        @if($data->available == 2)
+                                            <td style="text-align:center"><span  class="col-red">{{ trans('admin.excutable_request')}}</span></td> 
+                                        @elseif($data->available == 1)
+                                            <td style="text-align:center"><span  class="col-green">{{ trans('admin.available')}}</span></td>
+                                        @else 
+                                            <td style="text-align:center"><span  class="col-black">{{ trans('admin.not_available')}}</span></td>
                                         @endif
                                         <td>
                                             <a href="{{route('editdriver',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>

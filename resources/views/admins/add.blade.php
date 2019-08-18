@@ -44,7 +44,7 @@
                     <div class="body row">
                         <div class="col-lg-6">
                                 {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'name'=>"myform" ,'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-                                <input type="hidden" name="length" value="8">
+                                
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" required>
                                     <label id="name-error" class="error" for="name" style="">  </label>
@@ -55,8 +55,8 @@
                                 </div>
                                 <div class="form-group form-float">
                                     {{--  <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password" required  autocomplete="new-password" >  --}}
-                                    <input name="password" class="form-control"  readonly type="text" >
-                                    <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="Generate" onClick="generate();" tabindex="2">
+                                    <input name="password" class="form-control" required readonly type="text" placeholder="{{__('admin.placeholder_password')}}>
+                                    <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
                                     <label id="password-error" class="error" for="password" style=""></label>
                                 </div>
                                 
@@ -116,23 +116,11 @@
 
 <script>
 
-        function randomPassword(length) {
-            var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
-            var pass = "";
-            for (var x = 0; x < length; x++) {
-                var i = Math.floor(Math.random() * chars.length);
-                pass += chars.charAt(i);
-            }
-            return pass;
-        }
-        
-        function generate() {
-            myform.password.value = randomPassword(myform.length.value);
-        }
-    //this for add new record
+      
+    //this for add new record 
+
     $("#form_validation").submit(function(e){
-           {{--  $('#addModal').modal('hide');  --}}
-           $('.add').disabled =true;
+            $('.add').disabled =true;
           e.preventDefault();
           var form = $(this);
         //    openModal();

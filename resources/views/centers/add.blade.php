@@ -94,7 +94,7 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_center')}}  </h2>
                             
                         </div>
-                        {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                        {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation','name'=>"myform" , 'enctype'=>'multipart/form-data' ])!!} 
                         <div class="body row">
 
                                 <div class="col-lg-6">
@@ -149,6 +149,13 @@
                                         {!! Form::select('area_id',[]
                                             ,'',['class'=>'form-control show-tick select2' ,'id'=>'area_id','placeholder' =>trans('admin.choose_area'),'required']) !!}
                                         <label id="area_id-error" class="error" for="area_id" style="">  </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">   
+                                    <div class="form-group form-float">
+                                        <input name="password" class="form-control"  placeholder="{{__('admin.placeholder_password')}}"   readonly type="text" required>
+                                        <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
+                                        <label id="password-error" class="error" for="password" style=""></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -303,6 +310,10 @@
                         if (data.errors.mobile) {
                             $('#mobile-error').css('display', 'inline-block');
                             $('#mobile-error').text(data.errors.mobile);
+                        }
+                        if (data.errors.password) {
+                            $('#password-error').css('display', 'inline-block');
+                            $('#password-error').text(data.errors.password);
                         }
                   } else {
                         // console.log(data);

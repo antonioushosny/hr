@@ -1114,14 +1114,21 @@ class ApiController extends Controller
                 // $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
                 $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->get();
                 $count_orders = Order::where('user_id',$user->id)->with('center')->with('container')->count('id');
+                $count = count($user->unreadnotifications) ;
                 if(sizeof($orderss) > 0){
                     $orders = [];
                     $i = 0 ;
                     foreach($orderss as $order){
                         $orders[$i]['order_id'] =   $order->id ;
                         $orders[$i]['container_id'] =   $order->container->id ;
-                        $orders[$i]['center_id'] =   $order->center->id ;
-                        $orders[$i]['center_name'] =   $order->center->name ;
+                        if($order->center){
+                            
+                            $orders[$i]['center_id'] =   $order->center->id ;
+                            $orders[$i]['center_name'] =   $order->center->name ;
+                        }else{
+                             $orders[$i]['center_id'] =   ' '  ;
+                            $orders[$i]['center_name'] =  ' ' ;
+                        }
                         if($lang == 'ar'){
                             $orders[$i]['container_name'] =   $order->container->name_ar ;
                         }else{
@@ -1149,7 +1156,8 @@ class ApiController extends Controller
                         'message' => trans('api.fetch'),
                         'data' => [
                             'order' => $orders  , 
-                            'count_orders' => $count_orders
+                            'count_orders' => $count_orders,
+                            'count_notifications' => $count,
                         ]
                     ]);
                 }
@@ -1165,6 +1173,7 @@ class ApiController extends Controller
                 // $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
                 $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->get();
                 $count_orders = Order::where('driver_id',$user->id)->with('center')->with('container')->count('id');
+                 $count = count($user->unreadnotifications) ;
                 if(sizeof($orderss) > 0){
                     $orders = [];
                     $i = 0 ;
@@ -1178,8 +1187,15 @@ class ApiController extends Controller
                         $orders[$i]['city'] =   $order->city ;
                         $orders[$i]['area'] =   $order->area ;
                         $orders[$i]['container_id'] =   $order->container->id ;
-                        $orders[$i]['center_id'] =   $order->center->id ;
-                        $orders[$i]['center_name'] =   $order->center->name ;
+                         if($order->center){
+                            
+                            $orders[$i]['center_id'] =   $order->center->id ;
+                            $orders[$i]['center_name'] =   $order->center->name ;
+                        }else{
+                             $orders[$i]['center_id'] =   ' '  ;
+                            $orders[$i]['center_name'] =  ' ' ;
+                        }
+                       
                         if($lang == 'ar'){
                             $orders[$i]['container_name'] =   $order->container->name_ar ;
                         }else{
@@ -1207,7 +1223,8 @@ class ApiController extends Controller
                         'message' => trans('api.fetch'),
                         'data' => [
                             'order' => $orders  , 
-                            'count_orders' => $count_orders
+                            'count_orders' => $count_orders,
+                            'count_notifications' => $count,
                         ]
                     ]);
                 }
@@ -1414,7 +1431,7 @@ class ApiController extends Controller
                 $date  = date('Y-m-d H:i:s', strtotime($dt));
                 if($order){
                     if($request->status == 'accept'){
-                        $user->available = 0 ;
+                        $user->available = 2 ;
                         $user->save();
                         $order->status = 'assigned' ;
                         $order->save();

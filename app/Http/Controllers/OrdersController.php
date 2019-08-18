@@ -316,6 +316,7 @@ class OrdersController  extends Controller
                 $orderdriver->order_id  =   $ordercenter->order_id ; 
                 $orderdriver->driver_id  =   $request->driver_id ; 
                 $orderdriver->save();  
+                
             }
             // $msg = "  تم اختيارك لتوصيل طلب جديد "  ;
             $type = "order";
@@ -329,6 +330,8 @@ class OrdersController  extends Controller
           
             
             $driver = User::where('id', $request->driver_id)->first(); 
+            $driver->available = 2 ;
+            $driver->save();
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;
             if($device_token){
@@ -533,6 +536,8 @@ class OrdersController  extends Controller
 
             
             $driver = User::where('id', $request->driver_id)->first(); 
+            $driver->available = 2 ;
+            $driver->save();
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;
             if($device_token){
