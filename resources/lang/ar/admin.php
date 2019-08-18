@@ -66,7 +66,7 @@ return [
         'operations'                    => 'عمليات', 
         'resendlink'                    => 'عفوا لا يمكنك اكمال المهمة حاول مرة اخري' ,
         'notfoundarea'                  => 'لا يوجد مناطق لهذه المدينة' ,
-        
+        'edit_profile'                  => 'تعديل الصفحة الشخصية',
     //end public 
 
     //sidebar  

@@ -537,7 +537,7 @@ class ApiController extends Controller
             $user = User::where('id',$user->id)->first();
             if($request->mobile){
                 if( $request->mobile != $user->mobile){
-                    $rules['mobile'] = 'unique:users,mobile';
+                    $rules['mobile'] = 'between:8,11|unique:users,mobile';
                 }
             }
             if($request->email){

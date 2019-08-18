@@ -63,6 +63,7 @@ return [
         'operations'                    => 'Operations',
         'resendlink'                    => 'Sorry, you can not complete the task. Try again' ,
         'notfoundarea'                  => 'There are no areas for this city',
+        'edit_profile'                  => 'edit profile',
         
 
     //end public 

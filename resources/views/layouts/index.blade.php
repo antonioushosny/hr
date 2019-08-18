@@ -13,7 +13,7 @@
         $page ='home';
     }
 ?>
-<html class="no-js " lang="en">
+<h4 class="no-js " lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -631,4 +631,4 @@ body, html {
         });
      </script>
 </body>
-</html>
+</h4>
