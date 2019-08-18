@@ -41,68 +41,70 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_admin')}}  </h2>
                             
                         </div>
-                        <div class="body">
-                            {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                        <div class="body row">
+                            <div class="col-lg-6">
+                                {!! Form::open(['route'=>['storeadmin'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
-                                <div class="form-group form-float">
-                                    <input type="hidden" value="{{$admin->id}}" name="id" required>
-                                </div>
-                                <div class="form-group form-float">
-                                    <input type="text" value="{{$admin->name}}" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" required>
-                                    <label id="name-error" class="error" for="name" style="">  </label>
-                                </div>
-                                <div class="form-group form-float">
-                                    <input type="email" value="{{$admin->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
-                                    <label id="email-error" class="error" for="email" style=""></label>
-                                </div>
-                                <div class="form-group form-float">
-                                    <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
-                                    <label id="password-error" class="error" for="password" style=""></label>
-                                </div>
-                               
-                                <div class="form-group form-float row"  >
-                                         
-                                    {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
+                                    <div class="form-group form-float">
+                                        <input type="hidden" value="{{$admin->id}}" name="id" required>
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <input type="text" value="{{$admin->name}}" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" required>
+                                        <label id="name-error" class="error" for="name" style="">  </label>
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <input type="email" value="{{$admin->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
+                                        <label id="email-error" class="error" for="email" style=""></label>
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
+                                        <label id="password-error" class="error" for="password" style=""></label>
+                                    </div>
                                 
-                                        <div class="form-group form-float  " >
-                                            <div style="position:relative; ">
-                                                <a class='btn btn-primary' href='javascript:;' >
-                                                    {{trans('admin.Choose_Image')}}
-            
-                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
-                                                </a>
-                                                &nbsp;
-                                                <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-center hidden"></span>
-                                            </div>
+                                    <div class="form-group form-float row"  >
                                             
-                                        </div>
+                                        {{--  for image  --}}
+                                        <div class= "col-md-2 col-xs-3">
                                     
-                                    </div>
+                                            <div class="form-group form-float  " >
+                                                <div style="position:relative; ">
+                                                    <a class='btn btn-primary' href='javascript:;' >
+                                                        {{trans('admin.Choose_Image')}}
+                
+                                                        {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
+                                                    </a>
+                                                    &nbsp;
+                                                    <div class='label label-primary' id="upload-file-info" ></div>
+                                                    <span style="color: red " class="image text-center hidden"></span>
+                                                </div>
+                                                
+                                            </div>
+                                        
+                                        </div>
 
-                                    <div class="col-md-10">
-                                       
-                                        @if($admin->image)
-                                            <img id="changeimage" src="{{asset('img/'.$admin->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                        @else 
-                                            <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                        @endif
+                                        <div class="col-md-10">
+                                        
+                                            @if($admin->image)
+                                                <img id="changeimage" src="{{asset('img/'.$admin->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                            @else 
+                                                <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($admin->status == 'active') ? "checked=''" : ""; ?> >
-                                        <label for="active">{{__('admin.active')}}</label>
-                                    </div>                                
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($admin->status == 'not_active') ? "checked=''" : ""; ?> >
-                                        <label for="not_active">{{__('admin.not_active')}}</label>
+                                    <div class="form-group">
+                                        <div class="radio inlineblock m-r-20">
+                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($admin->status == 'active') ? "checked=''" : ""; ?> >
+                                            <label for="active">{{__('admin.active')}}</label>
+                                        </div>                                
+                                        <div class="radio inlineblock">
+                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($admin->status == 'not_active') ? "checked=''" : ""; ?> >
+                                            <label for="not_active">{{__('admin.not_active')}}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
-                            </form>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
+                                </form>
+                            </div>
                         </div>
                 </div>
             </div>

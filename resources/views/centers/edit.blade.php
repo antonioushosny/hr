@@ -92,203 +92,205 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_center')}}  </h2>
                             
                         </div>
-                        <div class="body">
-                            {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                        <div class="body row">
+                            <div class="col-lg-6">
+                                {!! Form::open(['route'=>['storecenter'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
-                                <div class="form-group form-float">
-                                    <input type="hidden" value="{{$center->id}}" name="id" required>
-                                </div>
-                                <!-- for company_name -->
-                                @if(Auth::user()->role == 'admin' )
-                                    <div class= "form-group form-float">
-                                        {!! Form::select('provider_id',$providers
-                                            ,$center->provider_id,['class'=>'form-control show-tick select2' ,'placeholder' =>trans('admin.choose_provider'),'required']) !!}
-                                        <label id="provider_id-error" class="error" for="provider_id" style="">  </label>
-                                    </div>
-                                @else 
                                     <div class="form-group form-float">
-                                        <input type="hidden" value="{{Auth::user()->id}}" name="provider_id" required>
+                                        <input type="hidden" value="{{$center->id}}" name="id" required>
                                     </div>
-                                @endif
-                                <!-- for responsible_name -->
-                                <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_responsible_name')}}" name="responsible_name" value="{{$center->name}}" required>
-                                    <label id="responsible_name-error" class="error" for="responsible_name" style="">  </label>
-                                </div>
-                               
-                                <!-- for email -->
-                                <div class="form-group form-float">
-                                    <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" value="{{$center->email}}" required>
-                                    <label id="email-error" class="error" for="email" style=""></label>
-                                </div>
+                                    <!-- for company_name -->
+                                    @if(Auth::user()->role == 'admin' )
+                                        <div class= "form-group form-float">
+                                            {!! Form::select('provider_id',$providers
+                                                ,$center->provider_id,['class'=>'form-control show-tick select2' ,'placeholder' =>trans('admin.choose_provider'),'required']) !!}
+                                            <label id="provider_id-error" class="error" for="provider_id" style="">  </label>
+                                        </div>
+                                    @else 
+                                        <div class="form-group form-float">
+                                            <input type="hidden" value="{{Auth::user()->id}}" name="provider_id" required>
+                                        </div>
+                                    @endif
+                                    <!-- for responsible_name -->
+                                    <div class="form-group form-float">
+                                        <input type="text" class="form-control" placeholder="{{__('admin.placeholder_responsible_name')}}" name="responsible_name" value="{{$center->name}}" required>
+                                        <label id="responsible_name-error" class="error" for="responsible_name" style="">  </label>
+                                    </div>
+                                
+                                    <!-- for email -->
+                                    <div class="form-group form-float">
+                                        <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" value="{{$center->email}}" required>
+                                        <label id="email-error" class="error" for="email" style=""></label>
+                                    </div>
 
-                                <!-- for mobile -->
-                                <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.mobile')}}" value="{{$center->mobile}}" name="mobile" onkeypress='isNumber(event); ' >
-                                    <label id="mobile-error" class="error" for="mobile" style="">  </label>
-                                </div>
+                                    <!-- for mobile -->
+                                    <div class="form-group form-float">
+                                        <input type="text" class="form-control" placeholder="{{__('admin.mobile')}}" value="{{$center->mobile}}" name="mobile" onkeypress='isNumber(event); ' >
+                                        <label id="mobile-error" class="error" for="mobile" style="">  </label>
+                                    </div>
 
-                                <!-- for city -->
-                                <div class= "form-group form-float">
-                                    {!! Form::select('city_id',$cities
-                                        ,$center->city_id,['class'=>'form-control show-tick select2' ,'id'=>'city_id','placeholder' =>trans('admin.choose_city'),'required']) !!}
-                                    <label id="city_id-error" class="error" for="city_id" style="">  </label>
-                                </div>
-                                        
-                                <!-- for area -->
-                                <div class= "form-group form-float area_id_div ">
-                                    {!! Form::select('area_id',$areas
-                                        ,$center->area_id,['class'=>'form-control show-tick select2' ,'id'=>'area_id','placeholder' =>trans('admin.choose_area'),'required']) !!}
-                                    <label id="area_id-error" class="error" for="area_id" style="">  </label>
-                                </div>
-                                 <!-- for containers  -->
-                                 <h3 style="text-align:center">{{__('admin.containers')}}</h3>
-                                <fieldset>
-                                    <div class="control-group">
-                                        <div class="container-fluid containers-container">
-                                            <?php $c = 0 ?>
-                                            @if(sizeof($center->containers) > 0 )
-                                                @foreach($center->containers as $container)
-                                                    @if($c == 0)
-                                                        <div class="row containers-divrow">
-                                                            <div class="col-sm-5">
-                                                                <!-- for containers -->
-                                                                <div class= "form-group form-float">
-                                                                    {!! Form::select('containers[]',$containers
-                                                                        ,$container->pivot->container_id,['class'=>'form-control show-tick select2' ,'id'=>'containers','placeholder' =>trans('admin.choose_container'),'required']) !!}
-                                                                    <label id="containers-error" class="error" for="containers" style="">  </label>
+                                    <!-- for city -->
+                                    <div class= "form-group form-float">
+                                        {!! Form::select('city_id',$cities
+                                            ,$center->city_id,['class'=>'form-control show-tick select2' ,'id'=>'city_id','placeholder' =>trans('admin.choose_city'),'required']) !!}
+                                        <label id="city_id-error" class="error" for="city_id" style="">  </label>
+                                    </div>
+                                            
+                                    <!-- for area -->
+                                    <div class= "form-group form-float area_id_div ">
+                                        {!! Form::select('area_id',$areas
+                                            ,$center->area_id,['class'=>'form-control show-tick select2' ,'id'=>'area_id','placeholder' =>trans('admin.choose_area'),'required']) !!}
+                                        <label id="area_id-error" class="error" for="area_id" style="">  </label>
+                                    </div>
+                                    <!-- for containers  -->
+                                    <h3 style="text-align:center">{{__('admin.containers')}}</h3>
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <div class="container-fluid containers-container">
+                                                <?php $c = 0 ?>
+                                                @if(sizeof($center->containers) > 0 )
+                                                    @foreach($center->containers as $container)
+                                                        @if($c == 0)
+                                                            <div class="row containers-divrow">
+                                                                <div class="col-sm-5">
+                                                                    <!-- for containers -->
+                                                                    <div class= "form-group form-float">
+                                                                        {!! Form::select('containers[]',$containers
+                                                                            ,$container->pivot->container_id,['class'=>'form-control show-tick select2' ,'id'=>'containers','placeholder' =>trans('admin.choose_container'),'required']) !!}
+                                                                        <label id="containers-error" class="error" for="containers" style="">  </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <!-- for price -->
+                                                                    <div class= "form-group form-float">
+                                                                        <input type="number" step="0.01" class="form-control text-center "  data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" value="{{$container->pivot->price}}" required>
+                                                                        <label id="price-error" class="error" for="price" style="">  </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <span class="btn btn-raised btn-primary btn-round waves-effect" id="add_container">{{__('admin.add_container')}}</span>
+
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-5">
-                                                                <!-- for price -->
-                                                                <div class= "form-group form-float">
-                                                                    <input type="number" step="0.01" class="form-control text-center "  data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" value="{{$container->pivot->price}}" required>
-                                                                    <label id="price-error" class="error" for="price" style="">  </label>
+                                                        @else 
+                                                            <div class="row containers-divrow{{$c}}">
+                                                                <div class="col-sm-5">
+                                                                    <!-- for containers -->
+                                                                    <div class= "form-group form-float">
+                                                                        {!! Form::select('containers[]',$containers
+                                                                            ,$container->pivot->container_id,['class'=>'form-control show-tick select2' ,'id'=>'containers'.$c,'placeholder' =>trans('admin.choose_container'),'required']) !!}
+                                                                        <label id="containers-error" class="error" for="containers" style="">  </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <!-- for price -->
+                                                                    <div class= "form-group form-float">
+                                                                        <input type="number" step="0.01" class="form-control text-center "  data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" value="{{$container->pivot->price}}" required>
+                                                                        <label id="price-error" class="error" for="price" style="">  </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <span class="btn btn-raised btn-warning btn-round waves-effect" id="add_container{{$c}}" onclick="deletecontainer('{{$c}}')">{{__('admin.delete')}}</span>
+
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-2">
-                                                                <span class="btn btn-raised btn-primary btn-round waves-effect" id="add_container">{{__('admin.add_container')}}</span>
-
-                                                            </div>
+                                                        @endif 
+                                                        <?php $c ++; ?>
+                                                    @endforeach
+                                                @else 
+                                                <div class="row containers-divrow">
+                                                    <div class="col-sm-5">
+                                                        <!-- for containers -->
+                                                        <div class= "form-group form-float">
+                                                            {!! Form::select('containers[]',$containers
+                                                                ,'',['class'=>'form-control show-tick select2' ,'id'=>'containers','placeholder' =>trans('admin.choose_container'),'required']) !!}
+                                                            <label id="containers-error" class="error" for="containers" style="">  </label>
                                                         </div>
-                                                    @else 
-                                                        <div class="row containers-divrow{{$c}}">
-                                                            <div class="col-sm-5">
-                                                                <!-- for containers -->
-                                                                <div class= "form-group form-float">
-                                                                    {!! Form::select('containers[]',$containers
-                                                                        ,$container->pivot->container_id,['class'=>'form-control show-tick select2' ,'id'=>'containers'.$c,'placeholder' =>trans('admin.choose_container'),'required']) !!}
-                                                                    <label id="containers-error" class="error" for="containers" style="">  </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                <!-- for price -->
-                                                                <div class= "form-group form-float">
-                                                                    <input type="number" step="0.01" class="form-control text-center "  data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" value="{{$container->pivot->price}}" required>
-                                                                    <label id="price-error" class="error" for="price" style="">  </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <span class="btn btn-raised btn-warning btn-round waves-effect" id="add_container{{$c}}" onclick="deletecontainer('{{$c}}')">{{__('admin.delete')}}</span>
-
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <!-- for price -->
+                                                        <div class= "form-group form-float">
+                                                            <input type="number" step="0.01" class="form-control text-center " value="1" data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" required>
+                                                            <label id="price-error" class="error" for="price" style="">  </label>
                                                         </div>
-                                                    @endif 
-                                                    <?php $c ++; ?>
-                                                @endforeach
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <span class="btn btn-raised btn-primary btn-round waves-effect" id="add_container">{{__('admin.add_container')}}</span>
+
+                                                    </div>
+                                                </div>
+                                                @endif
+
+                                                    
+                                            </div>  
+                                        </div>
+                                    </fieldset>
+                                    <!-- end for containers -->
+                                    <!-- {{--  for map      --}}  -->
+                                    <div class="form-group">
+                                        <span style="color: black "> 
+                                            {!! Form::label('location',trans('admin.location')) !!}
+                                        </span>
+                                        <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
+
+                                        <div class="col-md-12" id="map" style="width:100%;height:400px;"></div>
+                                        <label id="lat-error" class="error" for="lat" style="">  </label>
+                                    </div><br/>        
+
+                                    <div class="form-group">
+                                        {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
+                                        {!! Form::hidden('lat',$center->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
+
+                                        {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
+                                        {!! Form::hidden('lng',$center->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
+
+                                    </div><br/> 
+                                    <!-- end map -->
+
+                                    <!-- for image  -->
+                                    <div class="form-group form-float row" >
+                                        {{--  for image  --}}
+                                        <div class= "col-md-2 col-xs-3">
+                                            <div class="form-group form-float  " >
+                                                <div style="position:relative; ">
+                                                    <a class='btn btn-primary' href='javascript:;' >
+                                                        {{trans('admin.Choose_Image')}}
+                
+                                                        {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
+                                                    </a>
+                                                    &nbsp;
+                                                    <div class='label label-primary' id="upload-file-info" ></div>
+                                                    <span style="color: red " class="image text-center hidden"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-10">
+                                            
+                                            @if($center->image)
+                                                <img id="changeimage" src="{{asset('img/'.$center->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                             @else 
-                                            <div class="row containers-divrow">
-                                                <div class="col-sm-5">
-                                                    <!-- for containers -->
-                                                    <div class= "form-group form-float">
-                                                        {!! Form::select('containers[]',$containers
-                                                            ,'',['class'=>'form-control show-tick select2' ,'id'=>'containers','placeholder' =>trans('admin.choose_container'),'required']) !!}
-                                                        <label id="containers-error" class="error" for="containers" style="">  </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <!-- for price -->
-                                                    <div class= "form-group form-float">
-                                                        <input type="number" step="0.01" class="form-control text-center " value="1" data-rule="currency" placeholder="{{__('admin.price')}}"  name="price[]" required>
-                                                        <label id="price-error" class="error" for="price" style="">  </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <span class="btn btn-raised btn-primary btn-round waves-effect" id="add_container">{{__('admin.add_container')}}</span>
-
-                                                </div>
-                                            </div>
+                                                <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                             @endif
-
-                                                  
-                                        </div>  
+                                        </div>
                                     </div>
-                                </fieldset>
-                                <!-- end for containers -->
-                                 <!-- {{--  for map      --}}  -->
-                                 <div class="form-group">
-                                    <span style="color: black "> 
-                                        {!! Form::label('location',trans('admin.location')) !!}
-                                    </span>
-                                    <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
-
-                                    <div class="col-md-12" id="map" style="width:100%;height:400px;"></div>
-                                    <label id="lat-error" class="error" for="lat" style="">  </label>
-                                </div><br/>        
-
-                                <div class="form-group">
-                                    {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
-                                    {!! Form::hidden('lat',$center->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
-
-                                    {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
-                                    {!! Form::hidden('lng',$center->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
-
-                                </div><br/> 
-                                <!-- end map -->
-
-                                <!-- for image  -->
-                                <div class="form-group form-float row" >
-                                    {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
-                                        <div class="form-group form-float  " >
-                                            <div style="position:relative; ">
-                                                <a class='btn btn-primary' href='javascript:;' >
-                                                    {{trans('admin.Choose_Image')}}
-            
-                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
-                                                </a>
-                                                &nbsp;
-                                                <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-center hidden"></span>
-                                            </div>
+                                    <div class="form-group">
+                                        <div class="radio inlineblock m-r-20">
+                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($center->status == 'active') ? "checked=''" : ""; ?> >
+                                            <label for="active">{{__('admin.active')}}</label>
+                                        </div>                                
+                                        <div class="radio inlineblock">
+                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($center->status == 'not_active') ? "checked=''" : ""; ?> >
+                                            <label for="not_active">{{__('admin.not_active')}}</label>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-10">
-                                        
-                                        @if($center->image)
-                                            <img id="changeimage" src="{{asset('img/'.$center->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                        @else 
-                                            <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($center->status == 'active') ? "checked=''" : ""; ?> >
-                                        <label for="active">{{__('admin.active')}}</label>
-                                    </div>                                
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($center->status == 'not_active') ? "checked=''" : ""; ?> >
-                                        <label for="not_active">{{__('admin.not_active')}}</label>
-                                    </div>
-                                </div>
+                                
 
-                               
-
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
-                            </form>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
+                                </form>
+                            </div>
                         </div>
                 </div>
             </div>

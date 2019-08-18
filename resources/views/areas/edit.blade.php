@@ -36,12 +36,12 @@
             <div class="col-lg-12">
                 <div class="card">
                
-
-                        <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_area')}}  </h2>
-                            
-                        </div>
-                        <div class="body">
+                    <div class="header">
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_area')}}  </h2>
+                        
+                    </div>
+                    <div class="body row">
+                            <div class="col-lg-6">
                             {!! Form::open(['route'=>['storearea'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                 <div class="form-group form-float">
@@ -74,6 +74,7 @@
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
                             </form>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

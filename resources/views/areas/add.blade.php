@@ -50,35 +50,37 @@
                         <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_area')}}  </h2>
                         
                     </div>
-                    <div class="body">
-                        {!! Form::open(['route'=>['storearea'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-                            <div class="form-group form-float">
-                                <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
-                                <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
-                            </div>
-                            <div class="form-group form-float">
-                                <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
-                                <label id="name-en-error" class="error" for="name_en" style="">  </label>
-                            </div>
-                            <div class= "form-group form-float"> 
-                                {!! Form::select('city_id',$cities
-                                    ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
-                                    <label id="city-id-error" class="error" for="city_id" style="">  </label>
-                            </div>
-                          
-                            <div class="form-group">
-                                <div class="radio inlineblock m-r-20">
-                                    <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
-                                    <label for="active">{{__('admin.active')}}</label>
-                                </div>                                
-                                <div class="radio inlineblock">
-                                    <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" >
-                                    <label for="not_active">{{__('admin.not_active')}}</label>
+                    <div class="body row">
+                        <div class="col-lg-6">
+                            {!! Form::open(['route'=>['storearea'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
+                                    <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
                                 </div>
-                            </div>
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
-                        </form>
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
+                                    <label id="name-en-error" class="error" for="name_en" style="">  </label>
+                                </div>
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('city_id',$cities
+                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
+                                        <label id="city-id-error" class="error" for="city_id" style="">  </label>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
+                                        <label for="active">{{__('admin.active')}}</label>
+                                    </div>                                
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" >
+                                        <label for="not_active">{{__('admin.not_active')}}</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
