@@ -10,6 +10,9 @@
   color: #fff !important;
   font-size: .9em !important;
  }
+ .khazantilte{
+   color: #299bff !important;
+ }
 html,
 body {
   width: 100%;
@@ -408,9 +411,12 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 
 .bg-primary {
-  background: #fdcc52;
+    background: url("../img/water.png"), #7b4397;
+  background: url("../img/water.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
+  background: url("../img/water.png"), linear-gradient(to left, #7b4397, #dc2430);
+  /* background: #fdcc52;
   background: -webkit-gradient(linear, left top, left bottom, from(#fdcc52), to(#fdc539));
-  background: linear-gradient(#fdcc52, #fdc539);
+  background: linear-gradient(#fdcc52, #fdc539); */
 }
 
 .text-primary {

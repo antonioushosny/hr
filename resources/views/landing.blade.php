@@ -62,6 +62,9 @@
                 <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-facebook-f"></i> </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-instagram"></i> </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-skype"></i> </a>
             </li>
             <li class="nav-item">
@@ -76,13 +79,18 @@
     </div>
   </nav>
 
-  <header class="masthead">
+   <header class="masthead" id="download">
     <div class="container h-100">
       <div class="row h-100">
         <div class="col-lg-7 my-auto">
           <div class="header-content mx-auto">
-            <h1 class="mb-5">New Age is an app landing page that will help you beautifully showcase your new mobile app, or anything else!</h1>
-            <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Start Now for Free!</a>
+            <h1> <span class="khazantilte"> khazan </span> <span> App </span></h1>  
+            <h6 class="mb-5"> To deliver drinking water of all kinds  </h6>
+            <h3 class="mb-5"> Download App Now </h3>
+           
+           
+            <a href="#download" > <img src="{{ asset('front/img/android.png') }}"  alt=""> </a>
+            <a href="#download" > <img src="{{ asset('front/img/apple.png') }}"    alt=""> </a>
           </div>
         </div>
         <div class="col-lg-5 my-auto">
@@ -104,11 +112,11 @@
     </div>
   </header>
 
-  <section class="download bg-primary text-center" id="download">
+  <section class="download bg-primary text-center" >
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
-          <h2 class="section-heading">Discover what all the buzz is about!</h2>
+          <h2 class="section-heading">About App</h2>
           <p>Our app is available on any mobile device! Download now to get started!</p>
           <div class="badges">
             <a class="badge-link" href="#"><img src="{{ asset('front/img/google-play-badge.svg') }}" alt=""></a>
