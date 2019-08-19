@@ -101,16 +101,22 @@
     </div>
   </header>
 
-  <section class="download bg-primary text-center" id="about-us">
+  <section class="download bg-primary" id="about-us">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-8 mx-auto  text-center">
           <h2 class="section-heading">About App</h2>
-          <p>Our app is available on any mobile device! Download now to get started!</p>
-          <div class="badges">
-            <a class="badge-link" href="#"><img src="{{ asset('front/img/google-play-badge.svg') }}" alt=""></a>
-            <a class="badge-link" href="#"><img src="{{ asset('front/img/app-store-badge.svg') }}" alt=""></a>
-          </div>
+          <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
+  
+        </div>
+        <div class="col-md-6 mt-7">
+                <h3>with khazan App</h3>
+                <h6 class="mb-3">with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App  </h6>
+
+                <h6 class="mb-5">with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App</h6>
+        </div>
+        <div class="col-md-6">
+                <img src="{{ asset('front/img/about.png') }}" class="img-fluid" alt="">
         </div>
       </div>
     </div>

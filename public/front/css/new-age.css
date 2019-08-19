@@ -24,7 +24,9 @@ body {
 body {
   font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
 }
-
+a > i{
+  color: #fff ;
+}
 a {
   color: #fdcc52;
   -webkit-transition: all .35s;
