@@ -955,8 +955,8 @@ class ApiController extends Controller
                     'num_containers'    => 'required',
                     'lat'    => 'required',
                     'lng'    => 'required',
-                    'city_id'    => 'required',
-                    'area_id'    => 'required',
+                    // 'city_id'    => 'required',
+                    // 'area_id'    => 'required',
                 );
                 $validator  = \Validator::make($request->all(),$rules);
                 if($validator->fails())
@@ -1489,6 +1489,7 @@ class ApiController extends Controller
                         $user->available = 1 ;
                         $user->save();
                         $order->status = 'accepted' ;
+                        $order->driver_id = null ;
                         $order->save();
                         $orderdriver = OrderDriver::where('order_id',$order->id)->where('driver_id',$user->id)->orderBy('id',"Desc")->first();
                         if($orderdriver){

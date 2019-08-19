@@ -126,11 +126,15 @@
                                 </div>
                             </div>
                             <!-- for password -->
-                            <div class="form-group form-float">
+                            <div class="col-lg-4">   
+                                <div class="form-group form-float">
                                     <input name="password" class="form-control"  placeholder="{{__('admin.placeholder_password')}}"   readonly type="text"  >
-                                <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
-                                <label id="password-error" class="error" for="password" style=""></label>
+                                </div>
                             </div>
+                            <div class="col-lg-2">
+                                    <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
+                                    <label id="password-error" class="error" for="password" style=""></label>
+                             </div>
                             <div class="col-lg-6">
                                 <!-- for mobile -->
                                 <div class="form-group form-float">
@@ -154,14 +158,7 @@
                                     <label id="area_id-error" class="error" for="area_id" style="">  </label>
                                 </div>
                             </div>
-                            <div class="col-lg-6">   
-                                <div class="form-group form-float">
-                                    {{--  <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password" required  autocomplete="new-password" >  --}}
-                                    <input name="password" class="form-control"  placeholder="{{__('admin.placeholder_password')}}"   readonly type="text" >
-                                    <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
-                                    <label id="password-error" class="error" for="password" style=""></label>
-                                </div>
-                            </div>
+                           
                             <div class="col-lg-12">
                                 <!-- for containers  -->
                                 <h3 style="text-align:center">{{__('admin.containers')}}</h3>

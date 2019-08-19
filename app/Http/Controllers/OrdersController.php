@@ -330,7 +330,7 @@ class OrdersController  extends Controller
           
             
             $driver = User::where('id', $request->driver_id)->first(); 
-            $driver->available = 2 ;
+            $driver->available = 0 ;
             $driver->save();
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;
@@ -536,7 +536,7 @@ class OrdersController  extends Controller
 
             
             $driver = User::where('id', $request->driver_id)->first(); 
-            $driver->available = 2 ;
+            $driver->available = 0 ;
             $driver->save();
             $driver->notify(new Notifications($msg,$type ));
             $device_token = $driver->device_token ;

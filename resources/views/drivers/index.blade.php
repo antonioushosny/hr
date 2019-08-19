@@ -104,7 +104,7 @@
                                         @endif
 
                                         @if($data->available == 2)
-                                            <td style="text-align:center"><span  class="col-red">{{ trans('admin.excutable_request')}}</span></td> 
+                                            <td style="text-align:center"><span  class="col-red">{{ trans('admin.excuting_order')}}</span></td> 
                                         @elseif($data->available == 1)
                                             <td style="text-align:center"><span  class="col-green">{{ trans('admin.available')}}</span></td>
                                         @else 
