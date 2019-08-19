@@ -406,7 +406,7 @@ body, html {
                         <button class="btn btn-raised btn-primary btn-round waves-effect" id="btneditprofile">{{__('admin.edit_profile')}}</button>
 
                         <ul class="list-unstyled " id="ulformeditprofile" style="display:none">
-                            {!! Form::open(['route'=>['editprofile'],'method'=>'post','autocomplete'=>'off', 'enctype'=>'multipart/form-data' ])!!} 
+                            {!! Form::open(['route'=>['editprofile'],'method'=>'post','autocomplete'=>'off', 'enctype'=>'multipart/form-data', 'id'=>'form_validations'])!!} 
 
                             <li>
                                 <input type="hidden" value="{{Auth::user()->id}}" name="id" required>
@@ -415,21 +415,21 @@ body, html {
                                 <div>{{__('admin.email')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="email" value="{{Auth::user()->email}}" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" >
-                                    <label id="emails-error" class="error" for="email" style=""></label>
+                                    <label id="emails-error" class="error" for="email" style="font-size: 12px;"></label>
                                 </div>
                             </li>
                             <li>
                                 <div>{{__('admin.mobile')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="text" value="{{Auth::user()->mobile}}" class="form-control" placeholder="{{__('admin.mobile')}}" name="mobile" >
-                                    <label id="mobiles-error" class="error" for="mobile" style="">  </label>
+                                    <label id="mobiles-error" class="error" for="mobile" style="font-size: 12px;">  </label>
                                 </div>
                             </li>
                             <li>
                                 <div>{{__('admin.password')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
-                                    <label id="passwords-error" class="error" for="password" style=""></label>
+                                    <label id="passwords-error" class="error" for="password" style="font-size: 12px;"></label>
                                 </div>
                             </li>
                             <li>
@@ -566,6 +566,47 @@ body, html {
         function generate() {
             myform.password.value = randomPassword(6);
         }
+        $("#form_validations").submit(function(e){
+            $('.add').disabled =true;
+            e.preventDefault();
+            var form = $(this);
+             $.ajax({
+                type: 'POST',
+                url: '{{ URL::route("editprofile") }}',
+                data:  new FormData($("#form_validations")[0]),
+                processData: false,
+                contentType: false,
+                
+                success: function(data) {
+                    $('.name').addClass('hidden');
+                    $('.email').addClass('hidden');
+                    $('.password').addClass('hidden');
+                    $('.image').addClass('hidden');
+                     $('.mobile').addClass('hidden');
+    
+                    if ((data.errors)) {                        
+                        // toastr.error('{{trans('admin.Validation_error')}}', '{{trans('admin.Error_Alert')}}', {timeOut: 5000});
+                        if (data.errors.mobile) {
+                            $('#mobiles-error').css('display', 'inline-block');
+                            $('#mobiles-error').text(data.errors.mobile);
+                        }
+                        if (data.errors.email) {
+                            $('#emails-error').css('display', 'inline-block');
+                            $('#emails-error').text(data.errors.email);
+                        }
+                        if (data.errors.password) {
+                            $('#passwords-error').css('display', 'inline-block');
+                            $('#passwords-error').text(data.errors.password);
+                        }
+                        
+                    } else {
+                       location.reload();
+    
+                        }
+            },
+            });
+        });
+   
     </script> 
 
     

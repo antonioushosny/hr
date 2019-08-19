@@ -314,82 +314,88 @@ class HomeController extends Controller
 
     public function editprofile(Request $request)
     {
-        // return $request;
-        $user = User::where('id',$request->id)->first();
-
-        $request->validate([
-            'name'  =>'alpha_spaces', 
-            'mobile'  =>'between:8,11',    
-            'email'  =>'required',    
-        ]);
-        if($request->email != $user->email ){
-            $request->validate([
-                'email'  =>'email|unique:users,email',   
-            ]);
+        // return $request ;
+        if($request->id ){
+            $rules =
+            [
+                'email'  =>'required|email|max:190',            
+            ];
+        }     
+    
+        else{
+            $rules =
+            [
+                'email'  =>'required|email|unique:users,email|max:190',            
+                'password'  =>'required|min:6|max:190',     
+  
+            ];
+        }
+        if($request->mobile){
+            $rules['mobile'] = "between:8,11" ;
         }
         
-        if($request->has('name')){
-             $data=$this->validate(request(),
-            [
-                'name'  =>'alpha_spaces',            
-            ],[],[
-                'name' =>trans('admin.name'),
-            ]);
-            $user->name = $request->name;
-        }
-        if($request->has('email')){
-             $data=$this->validate(request(),
-                 [  
-                    'email'  =>'email',
-                ],[],[
-                    'email'    =>trans('admin.email'),
-                ]);
-                if($request->email != $user->email ){
-                    $data=$this->validate(request(),
-                    [
-                        'email'  =>'email|unique:users,email',
+         $validator = \Validator::make($request->all(), $rules);
+         if ($validator->fails()) {
+             return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+         }
 
-                    ],[],[
-                        'email'    =>trans('admin.email'),
-                    ]);
+        // return $request ;
+         if($request->id ){
+            $user = User::find( $request->id );
+
+            if($request->email != $user->email){
+                $rules =
+                [       
+                    'email'  =>'required|email|unique:users,email',     
+                ];
+                $validator = \Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));
                 }
+            }
+            
+            if ($request->hasFile('image')) {
 
-            $user->email = $request->email;
-            
-        }
-        if($request->password){
+                $imageName =  $user->image; 
+                \File::delete(public_path(). '/img/' . $imageName);
+            }
+            if($request->password){
+                $rules =
+                [
+                    'password'  =>'min:6',                    
+                ];
+                $validator = \Validator::make($request->all(), $rules);
+                if ($validator->fails()){
+                    return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+                }
+                $password = \Hash::make($request->password);
+                $user->password      = $password ;
+            }
+         }
+         else{
+            $user = new User ;
             $password = \Hash::make($request->password);
-            $user->password = $password ;
-            
+            $user->password      = $password ;
         }
-        if($request->has('mobile')){
-            $data=$this->validate(request(),
-            [
-                'mobile'  =>'between:8,11',             
-            ],[],[
-                'mobile' =>trans('admin.mobile'),
-            ]);
-            $user->mobile = $request->mobile;
-            
-        }
-        if($request->has('national_id')){
-            $user->national_id = $request->national_id;
-            // return $user;
-        }
+        
+        
+         $user->email         = $request->email ;
+         $user->mobile        = $request->mobile ;
+         $user->save();
         if ($request->hasFile('image')) {
+
             $image = $request->file('image');
             $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $name);
             $user->image   = $name;  
         }
+
         $user->save();
-        $admin = User::where('id',$request->id)->first();
-        // $pass = bcrypt($admin->password);
-        // return $pass ;
-        session()->flash('alert-info', trans('admin.record_updated'));
-        return redirect()->route('home');
-        return view('profile',compact('admin'));
+
+        $lang = App::getlocale();
+        return response()->json($user);
+
     }
     
     public function savetoken($token)

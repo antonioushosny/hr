@@ -129,46 +129,46 @@
 
     //this for add new record
     $("#form_validation").submit(function(e){
-           {{--  $('#addModal').modal('hide');  --}}
-           $('.btn-round').disabled =true;
-           $(':input[type="submit"]').prop('disabled', true);
-          e.preventDefault();
-          var form = $(this);
-        //    openModal();
-          $.ajax({
-              type: 'POST',
-              url: '{{ URL::route("storecontainer") }}',
-              data:  new FormData($("#form_validation")[0]),
-              processData: false,
-              contentType: false,
-               
-              success: function(data) {
-                  if ((data.errors)) {                        
-                        if (data.errors.name_ar) {
-                            $('#name-ar-error').css('display', 'inline-block');
-                            $('#name-ar-error').text(data.errors.name_ar);
-                        }
-                        if (data.errors.name_en) {
-                            $('#name-en-error').css('display', 'inline-block');
-                            $('#name-en-error').text(data.errors.name_en);
-                        }
-                        if (data.errors.city_id) {
-                            $('#city-id-error').css('display', 'inline-block');
-                            $('#city-id-error').text(data.errors.city_id);
-                        }
-                        if (data.errors.image) {
-                            $('#image-error').css('display', 'inline-block');
-                            $('#image-error').text(data.errors.image);
-                        }
-                        $(':input[type="submit"]').prop('disabled', false);
-                  } else {
-                        window.location.replace("{{route('containers')}}");
-                        $(':input[type="submit"]').prop('disabled', false);
+        {{--  $('#addModal').modal('hide');  --}}
+        $('.btn-round').disabled =true;
+        $(':input[type="submit"]').prop('disabled', true);
+        e.preventDefault();
+        var form = $(this);
+    //    openModal();
+        $.ajax({
+            type: 'POST',
+            url: '{{ URL::route("storecontainer") }}',
+            data:  new FormData($("#form_validation")[0]),
+            processData: false,
+            contentType: false,
+            
+            success: function(data) {
+                if ((data.errors)) {                        
+                    if (data.errors.name_ar) {
+                        $('#name-ar-error').css('display', 'inline-block');
+                        $('#name-ar-error').text(data.errors.name_ar);
+                    }
+                    if (data.errors.name_en) {
+                        $('#name-en-error').css('display', 'inline-block');
+                        $('#name-en-error').text(data.errors.name_en);
+                    }
+                    if (data.errors.city_id) {
+                        $('#city-id-error').css('display', 'inline-block');
+                        $('#city-id-error').text(data.errors.city_id);
+                    }
+                    if (data.errors.image) {
+                        $('#image-error').css('display', 'inline-block');
+                        $('#image-error').text(data.errors.image);
+                    }
+                    $(':input[type="submit"]').prop('disabled', false);
+                } else {
+                    window.location.replace("{{route('containers')}}");
+                    $(':input[type="submit"]').prop('disabled', false);
 
-                     }
-            },
-          });
+                    }
+        },
         });
+    });
 
 </script>
     

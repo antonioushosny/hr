@@ -117,47 +117,46 @@
     //this for add new record 
 
     $("#form_validation").submit(function(e){
-            $('.add').disabled =true;
-          e.preventDefault();
-          var form = $(this);
-        //    openModal();
-          $.ajax({
-              type: 'POST',
-              url: '{{ URL::route("storeadmin") }}',
-              data:  new FormData($("#form_validation")[0]),
-              processData: false,
-              contentType: false,
-               
-              success: function(data) {
-                    $('.name').addClass('hidden');
-                    $('.email').addClass('hidden');
-                    $('.password').addClass('hidden');
-                    $('.image').addClass('hidden');
-                    $('.status').addClass('hidden');
-                    $('.roles').addClass('hidden');
-  
-                  if ((data.errors)) {                        
-                        // toastr.error('{{trans('admin.Validation_error')}}', '{{trans('admin.Error_Alert')}}', {timeOut: 5000});
-                        if (data.errors.name) {
-                            $('#name-error').css('display', 'inline-block');
-                            $('#name-error').text(data.errors.name);
-                        }
-                        if (data.errors.email) {
-                            $('#email-error').css('display', 'inline-block');
-                            $('#email-error').text(data.errors.email);
-                        }
-                        if (data.errors.password) {
-                            $('#password-error').css('display', 'inline-block');
-                            $('#password-error').text(data.errors.password);
-                        }
-                        
-                  } else {
-                        window.location.replace("{{route('admins')}}");
+        $('.add').disabled =true;
+        e.preventDefault();
+        var form = $(this);
+         $.ajax({
+            type: 'POST',
+            url: '{{ URL::route("storeadmin") }}',
+            data:  new FormData($("#form_validation")[0]),
+            processData: false,
+            contentType: false,
+            
+            success: function(data) {
+                $('.name').addClass('hidden');
+                $('.email').addClass('hidden');
+                $('.password').addClass('hidden');
+                $('.image').addClass('hidden');
+                $('.status').addClass('hidden');
+                $('.roles').addClass('hidden');
 
-                     }
-            },
-          });
+                if ((data.errors)) {                        
+                    // toastr.error('{{trans('admin.Validation_error')}}', '{{trans('admin.Error_Alert')}}', {timeOut: 5000});
+                    if (data.errors.name) {
+                        $('#name-error').css('display', 'inline-block');
+                        $('#name-error').text(data.errors.name);
+                    }
+                    if (data.errors.email) {
+                        $('#email-error').css('display', 'inline-block');
+                        $('#email-error').text(data.errors.email);
+                    }
+                    if (data.errors.password) {
+                        $('#password-error').css('display', 'inline-block');
+                        $('#password-error').text(data.errors.password);
+                    }
+                    
+                } else {
+                    window.location.replace("{{route('admins')}}");
+
+                    }
+        },
         });
+    });
 
 </script>
     

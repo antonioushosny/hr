@@ -1,5 +1,19 @@
 <!DOCTYPE html>
+
+<?php   
+    $lang = session('lang');
+    App::setLocale($lang);
+    $lang = App::getlocale();
+    if($lang == null){
+        $lang ='ar';
+    }
+     
+?>
+@if($lang == 'ar')
 <html lang="en" dir="rtl">
+@else
+<html lang="en" >
+@endif
 
 <head>
 
@@ -24,8 +38,11 @@
   <link rel="stylesheet" href="{{ asset('front/device-mockups/device-mockups.min.css') }}">
 
   <!-- Custom styles for this template -->
+  @if($lang == 'ar')
+  <link href="{{ asset('front/css/new-age-ar.css') }}" rel="stylesheet">
+  @else
   <link href="{{ asset('front/css/new-age.css') }}" rel="stylesheet">
-
+  @endif
 </head>
 
 <body id="page-top" class="rtl">
@@ -53,6 +70,11 @@
                 <li class="nav-item navright">
                     <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
                 </li>
+                @if($lang == 'ar')
+                <li> <a class="" href=" {{route('setlang',['lang'=>'en'])}}">{{trans('admin.en')}}</a> </li>
+                @else 
+                <li> <a class="" href=" {{route('setlang',['lang'=>'ar'])}}">{{trans('admin.ar')}}</a> </li>
+                @endif
             </ul>
         </div>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

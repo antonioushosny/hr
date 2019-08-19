@@ -235,7 +235,7 @@ header.masthead .device-container .screen img {
   }
   header.masthead .header-content {
     margin-bottom: 0;
-    text-align: left;
+    text-align:  right;
   }
   header.masthead .header-content h1 {
     font-size: 50px;
@@ -325,8 +325,8 @@ section.features .feature-item i {
   margin-bottom: 15px;
   background: -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
   background: linear-gradient(to left, #7b4397, #dc2430);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text ;
+  -webkit-text-fill-color: transparent ;
 }
 
 section.cta {
@@ -455,10 +455,10 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   padding: 5em !important; 
 }
 .feature-middle-left{
-   float: left;
+   float: right;
 }
 .feature-middle-right{
-  float: right;
+  float: left;
 }
 textarea {
   resize: none;
