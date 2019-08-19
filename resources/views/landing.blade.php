@@ -32,51 +32,40 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-        <ul class="navbar-nav  ">
-            <li class="nav-item ">
-                <img src="{{ asset('front/img/logo-en.png') }}" class="img-fluid" alt="">
-            </li>
-            <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger navright" href="#download">About us</a>
-            </li>
-            <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger navright" href="#features">Features</a>
-            </li>
-            <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger navright" href="#download">Download</a>
-            </li>
-            
-            <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
-            </li>
-        </ul>
+    <div class="container" >
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav  ">
+                <li class="nav-item ">
+                    <img src="{{ asset('front/img/logo-en.png') }}" class="img-fluid" alt="">
+                </li>
+                <li class="nav-item navright">
+                    <a class="nav-link js-scroll-trigger navright" href="#about-us">About us</a>
+                </li>
+                <li class="nav-item navright">
+                    <a class="nav-link js-scroll-trigger navright" href="#features">Features</a>
+                </li>
+                <li class="nav-item navright">
+                    <a class="nav-link js-scroll-trigger navright" href="#download">Download</a>
+                </li>
+                
+                <li class="nav-item navright">
+                    <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
+      
+          
+                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-facebook-f"></i> </a>
+                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-instagram"></i> </a>
+                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-skype"></i> </a>
+                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-twitter"></i> </a>
+                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-youtube"></i> </a>
             
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-facebook-f"></i> </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-instagram"></i> </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-skype"></i> </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-twitter"></i> </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-youtube"></i> </a>
-            </li>
-
-        </ul>
-      </div>
-    </div>
+     </div>
   </nav>
 
    <header class="masthead" id="download">
@@ -112,7 +101,7 @@
     </div>
   </header>
 
-  <section class="download bg-primary text-center" >
+  <section class="download bg-primary text-center" id="about-us">
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
