@@ -29,6 +29,8 @@
 </head>
 
 <body id="page-top">
+        <button onclick="topFunction()" id="myBtn" title="Go to top"> <i class="fa fa-arrow-up"  ></i>
+        </button>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -66,7 +68,7 @@
      </div>
   </nav>
 
-   <header class="masthead" id="info">
+   <header class="masthead bg-primary" id="info">
     <div class="container h-100">
       <div class="row h-100">
         <div class="col-lg-7 my-auto">
@@ -99,7 +101,7 @@
     </div>
   </header>
 
-  <section class="about-us bg-primary" id="about-us">
+  <section class="about-us  bg-about" id="about-us">
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto  text-center">
@@ -109,9 +111,11 @@
         </div>
         <div class="col-md-6 about-section-desc">
                 <h3>with khazan App</h3>
-                <h6 class="mb-3">with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App  </h6>
+                <h6 class="mb-3">You can now order drinking water from anywhere at any time without thinking of driving a car, going to the shop and carrying water We save you time and effort
+                    </h6>
 
-                <h6 class="mb-5">with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App</h6>
+                <h6 class="mb-5">  The application of the tank By all water products and all sizes gallons, cartons All you need is to download the application and browse all the products and then order the product you want and we will deliver it to any place you want, whether a house, mosque, office or other  
+                     </h6>
         </div>
         <div class="col-md-6">
                 <img src="{{ asset('front/img/about.png') }}" class="img-fluid" alt="">
@@ -275,7 +279,23 @@
 
   <!-- Custom scripts for this template -->
   <script src="{{ asset('front/js/new-age.min.js') }}"></script>
+  <script>
+        window.onscroll = function() {scrollFunction()};
 
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("myBtn").style.display = "block";
+          } else {
+            document.getElementById("myBtn").style.display = "none";
+          }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+  </script>
 </body>
 
 </html>
