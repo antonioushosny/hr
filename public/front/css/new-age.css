@@ -415,7 +415,22 @@ footer ul li a {
 footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li a.active {
   text-decoration: none;
 }
-
+.feature-text{
+  position: relative;
+  margin-top: -1em;
+  margin-bottom: 5em;
+}
+.feature-text-number{
+  font-size: 5em;
+  position: absolute;
+   margin: -1em;
+}
+.feature-div{
+  padding: 5em !important; 
+}
+.feature-middle{
+  margin-left : 6em !important;
+}
 .bg-primary {
     background: url("../img/water.png"), #7b4397;
   /* background: url("../img/water.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));

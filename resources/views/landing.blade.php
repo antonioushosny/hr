@@ -131,27 +131,47 @@
       <div class="row">
           
         <div class="col-lg-4 my-auto">
-          <div class="device-container">
-            <div class="device-mockup iphone6_plus portrait white">
-              <div class="device">
-                <div class="screen">
-                  <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                  <img src="{{ asset('front/img/demo-screen-1.jpg') }}" class="img-fluid" alt="">
+            <div class="container-fluid">
+                <div class="row">
+                <div class="col-lg-6">
+                    <div class="feature-item">
+                    <i class="icon-screen-smartphone text-primary"></i>
+                    <h3>Device Mockups</h3>
+                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                    </div>
                 </div>
-                <div class="button">
-                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                <div class="col-lg-6">
+                    <div class="feature-item">
+                    <i class="icon-camera text-primary"></i>
+                    <h3>Flexible Use</h3>
+                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                    </div>
                 </div>
-              </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-6">
+                    <div class="feature-item">
+                    <i class="icon-present text-primary"></i>
+                    <h3>Free to Use</h3>
+                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="feature-item">
+                    <i class="icon-lock-open text-primary"></i>
+                    <h3>Open Source</h3>
+                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                    </div>
+                </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-lg-4 my-auto">
-            <div class="device-container">
-                <div class="device-mockup iphone6_plus portrait white">
-                <div class="device">
+        <div class="col-lg-4  ">
+            <div class=" device-container text-center">
+                <div class="  white">
+                <div >
                     <div class="screen">
-                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                    <img src="{{ asset('front/img/how_phone.png') }}" class="img-fluid" alt="">
+                     <img src="{{ asset('front/img/how_phone.png') }}" class="img-fluid" alt="">
                     </div>
                     <div class="button">
                     <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -160,40 +180,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 my-auto">
-          <div class="container-fluid">
+        <div class="col-lg-4  ">
+          <div class=" ">
             <div class="row">
-              <div class="col-lg-6">
-                <div class="feature-item">
-                  <i class="icon-screen-smartphone text-primary"></i>
-                  <h3>Device Mockups</h3>
-                  <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                <div class="col-lg-12">
+                    <div class="feature-item feature-div">
+                        <span class="text-muted feature-text-number">1</span>
+                        <h3 class=" feature-text">Device Mockups</h3>
+                    </div>
                 </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="feature-item">
-                  <i class="icon-camera text-primary"></i>
-                  <h3>Flexible Use</h3>
-                  <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                <div class="col-lg-12">
+                    <div class="feature-item feature-div feature-middle">
+                        <span class="text-muted feature-text-number">2</span>
+                        <h3 class=" feature-text">Device Mockups</h3>
+                    </div>
                 </div>
-              </div>
+                <div class="col-lg-12">
+                    <div class="feature-item feature-div">
+                        <span class="text-muted feature-text-number">3</span>
+                    <h3 class=" feature-text">Device Mockups</h3>
+                    </div>
+                </div
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="feature-item">
-                  <i class="icon-present text-primary"></i>
-                  <h3>Free to Use</h3>
-                  <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="feature-item">
-                  <i class="icon-lock-open text-primary"></i>
-                  <h3>Open Source</h3>
-                  <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
-                </div>
-              </div>
-            </div>
+             
           </div>
         </div>
       </div>
