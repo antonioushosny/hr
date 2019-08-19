@@ -130,40 +130,34 @@
        
       <div class="row">
           
-        <div class="col-lg-4 my-auto">
-            <div class="container-fluid">
+        <div class="col-lg-4 ">
+            <div class=" ">
                 <div class="row">
-                <div class="col-lg-6">
-                    <div class="feature-item">
-                    <i class="icon-screen-smartphone text-primary"></i>
-                    <h3>Device Mockups</h3>
-                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                    <div class="col-lg-12">
+                        <div class="feature-item">
+                        <span style="    position: absolute;
+                        color: #6c757d;
+                        font-weight: bolder;
+                        font-size: 5em;
+                        top: 0px;"> 4 </span>
+                        <h3 class=" feature-text">Device Mockups</h3>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="feature-item">
-                    <i class="icon-camera text-primary"></i>
-                    <h3>Flexible Use</h3>
-                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                    <div class="col-lg-12">
+                        <div class="feature-item feature-middle-left"  >
+                        <span class="feature-text-number"> 5 </span>
+                        <h3 class=" feature-text">Device Mockups</h3>
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="row">
-                <div class="col-lg-6">
-                    <div class="feature-item">
-                    <i class="icon-present text-primary"></i>
-                    <h3>Free to Use</h3>
-                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                    <div class="col-lg-12">
+                        <div class="feature-item">
+                        <span  class="feature-text-number"> 6</span>
+                        <h3 class=" feature-text" >Device Mockups</h3>
+                        </div>
                     </div>
+                 
                 </div>
-                <div class="col-lg-6">
-                    <div class="feature-item">
-                    <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
-                    </div>
-                </div>
-                </div>
+                
             </div>
         </div>
         <div class="col-lg-4  ">
@@ -183,24 +177,24 @@
         <div class="col-lg-4  ">
           <div class=" ">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="feature-item feature-div">
-                        <span class="text-muted feature-text-number">1</span>
+                    <div class="col-lg-12">
+                        <div class="feature-item">
+                        <span class="feature-text-number"> 1 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="feature-item feature-div feature-middle">
-                        <span class="text-muted feature-text-number">2</span>
+                    <div class="col-lg-12">
+                        <div class="feature-item feature-middle-right"  >
+                        <span class="feature-text-number"> 2 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="feature-item feature-div">
-                        <span class="text-muted feature-text-number">3</span>
-                    <h3 class=" feature-text">Device Mockups</h3>
+                    <div class="col-lg-12">
+                        <div class="feature-item">
+                        <span class="feature-text-number"> 3 </span>
+                        <h3 class=" feature-text">Device Mockups</h3>
+                        </div>
                     </div>
-                </div
             </div>
              
           </div>

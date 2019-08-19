@@ -417,19 +417,23 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 .feature-text{
   position: relative;
-  margin-top: -1em;
-  margin-bottom: 5em;
+   
 }
 .feature-text-number{
-  font-size: 5em;
   position: absolute;
-   margin: -1em;
+  color: #6c757d;
+  font-weight: bolder;
+  font-size: 5em;
+  top: 0px;
 }
 .feature-div{
   padding: 5em !important; 
 }
-.feature-middle{
-  margin-left : 6em !important;
+.feature-middle-left{
+   float: left;
+}
+.feature-middle-right{
+  float: right;
 }
 .bg-primary {
     background: url("../img/water.png"), #7b4397;
