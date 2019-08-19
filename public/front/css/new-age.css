@@ -222,7 +222,7 @@ header.masthead .device-container .screen img {
 
 section.download {
   position: relative;
-  padding: 150px 0;
+  /* padding: 150px 0; */
 }
 
 section.download h2 {
@@ -395,7 +395,7 @@ footer {
   padding: 25px 0;
   text-align: center;
   color: rgba(255, 255, 255, 0.3);
-  background-color: #222222;
+  background-color: #002c8f;
 }
 
 footer p {
@@ -448,8 +448,16 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   background-repeat: round;
 }
 .bg-contact {
-  background: url("../img/download.png"), #7b4397;
+  background: url(../img/map.png), #002c8f;
   background-repeat: round;
+}
+.bg-more{
+  background: #25a8f2;
+}
+.form-control{
+
+  background-color: #06153aa6 !important; 
+  border: 1px solid #ced4da00 !important; 
 }
 .features {
   background: url(../img/circles.png), #103ca1;

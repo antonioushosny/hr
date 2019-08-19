@@ -198,12 +198,12 @@
   </section>
 
   <section class="download bg-download" id="download">
-        <div class="container">
-          <div class="row">
+    <div class="container">
+        <div class="row">
             <div class="col-md-8 mx-auto  text-center mb-5">
-              <h3 class="section-heading">Download Now</h3>
-              <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
-      
+                <h3 class="section-heading">Download Now</h3>
+                <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
+        
             </div>
             
             <div class="col-md-8 mx-auto  text-center">
@@ -211,49 +211,58 @@
                 <a href="#" > <img src="{{ asset('front/img/apple.png') }}"    alt=""> </a>
         
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+    </section>
 
-  <section class="contact bg-primary" id="contact">
+  <section class="contact bg-contact" id="contact">
     <div class="container">
-      <h2>We
-        <i class="fas fa-heart"></i>
-        new friends!</h2>
-      <ul class="list-inline list-social">
-        <li class="list-inline-item social-twitter">
-          <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-facebook">
-          <a href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-google-plus">
-          <a href="#">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-        </li>
-      </ul>
+        <div class="row">
+            <div class="col-md-8 mx-auto  text-center mb-5">
+                <h3 class="section-heading"> Contact Us</h3>
+                <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
+        
+            </div>
+            
+            <div class="col-md-8 mx-auto  text-center">
+                    <div class="form-box">
+                            
+                        <form action="https://api.formbucket.com/f/c2K3QTQ" method="post">
+                            <div class="form-group">
+                             <input class="form-control" id="name" type="text" name="Name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                             <input class="form-control" id="email" type="email" name="Email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                             <textarea class="form-control" id="message" rows="6" name="Message" placeholder="Message"></textarea>
+                            </div>
+                            <input class="btn btn-primary" type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+        
+            </div>
+        </div>
     </div>
   </section>
-
+    <section class="more bg-more" id="more">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto  text-center mb-3">
+                    <h2 class="section-heading "> For mor information  </h2>
+                </div>
+                
+                <div class="col-md-8 mx-auto  text-center">
+                    <h3 class="section-heading"> Contact Us  <span style="color:#002c8f ;font-weight: bold;"> +966 123 45 68 </span> </h3>
+                </div>
+            </div>
+        </div>
+    </section>
   <footer>
     <div class="container">
-      <p>&copy; Your Website 2019. All Rights Reserved.</p>
-      <ul class="list-inline">
-        <li class="list-inline-item">
-          <a href="#">Privacy</a>
-        </li>
-        <li class="list-inline-item">
-          <a href="#">Terms</a>
-        </li>
-        <li class="list-inline-item">
-          <a href="#">FAQ</a>
-        </li>
-      </ul>
+      <p>&copy; Khazan 2019. All Rights Reserved.</p>
+       
     </div>
   </footer>
  
