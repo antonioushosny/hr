@@ -665,7 +665,7 @@ class OrdersController  extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $id = User::find( $id );
+        $id = Order::find( $id );
         $imageName =  $id->image; 
         \File::delete(public_path(). '/img/' . $imageName);
         $id ->delete();
@@ -679,11 +679,11 @@ class OrdersController  extends Controller
     {
         if($request->ids){
             foreach($request->ids as $id){
-                $id = User::find($id);
+                $id = Order::find($id);
                 $imageName =  $id->image; 
                 \File::delete(public_path(). '/img/' . $imageName);
             }
-            $ids = User::whereIn('id',$request->ids)->delete();
+            $ids = Order::whereIn('id',$request->ids)->delete();
         }
         return response()->json($request->ids);
         // session()->flash('alert-danger', trans('admin.record_selected_deleted'));

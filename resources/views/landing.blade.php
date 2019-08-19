@@ -36,8 +36,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav  ">
                 <li class="nav-item ">
-                    <img src="{{ asset('front/img/logo-en.png') }}" class="img-fluid" alt="">
+                    <a class="nav-link js-scroll-trigger  " href="#info"> <img src="{{ asset('front/img/logo-en.png') }}" class="img-fluid" alt=""> </a>
                 </li>
+             
                 <li class="nav-item navright">
                     <a class="nav-link js-scroll-trigger navright" href="#about-us">About us</a>
                 </li>
@@ -47,7 +48,6 @@
                 <li class="nav-item navright">
                     <a class="nav-link js-scroll-trigger navright" href="#download">Download</a>
                 </li>
-                
                 <li class="nav-item navright">
                     <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
                 </li>
@@ -57,18 +57,16 @@
         Menu
         <i class="fas fa-bars"></i>
       </button>
-      
-          
-                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-facebook-f"></i> </a>
-                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-instagram"></i> </a>
-                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-skype"></i> </a>
-                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-twitter"></i> </a>
-                <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-youtube"></i> </a>
-            
+            <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-facebook-f"></i> </a>
+            <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-instagram"></i> </a>
+            <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-skype"></i> </a>
+            <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-twitter"></i> </a>
+            <a class="nav-link js-scroll-trigger" href="#"> <i class="fab fa-youtube"></i> </a>
+        
      </div>
   </nav>
 
-   <header class="masthead" id="download">
+   <header class="masthead" id="info">
     <div class="container h-100">
       <div class="row h-100">
         <div class="col-lg-7 my-auto">
@@ -109,7 +107,7 @@
           <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
   
         </div>
-        <div class="col-md-6 mt-7">
+        <div class="col-md-6 about-section-desc">
                 <h3>with khazan App</h3>
                 <h6 class="mb-3">with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App with khazan App  </h6>
 
@@ -125,11 +123,13 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-heading text-center">
-        <h2>Unlimited Features, Unlimited Fun</h2>
-        <p class="text-muted">Check out what you can do with this app theme!</p>
+        <h2>Unlimited Features </h2>
+        <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
         <hr>
       </div>
+       
       <div class="row">
+          
         <div class="col-lg-4 my-auto">
           <div class="device-container">
             <div class="device-mockup iphone6_plus portrait white">
@@ -145,7 +145,22 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 my-auto">
+        <div class="col-lg-4 my-auto">
+            <div class="device-container">
+                <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                    <div class="screen">
+                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                    <img src="{{ asset('front/img/how_phone.png') }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="button">
+                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 my-auto">
           <div class="container-fluid">
             <div class="row">
               <div class="col-lg-6">

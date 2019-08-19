@@ -13,11 +13,14 @@
  .khazantilte{
    color: #299bff !important;
  }
+ .about-section-desc{
+   margin-top: 7em ;
+ }
 html,
 body {
   width: 100%;
   height: 100%;
-  background-color: #344e86 ;
+  background-color: #103ca1 ;
   color: #fff !important;
 }
 
@@ -415,13 +418,19 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 
 .bg-primary {
     background: url("../img/water.png"), #7b4397;
-  background: url("../img/water.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
-  background: url("../img/water.png"), linear-gradient(to left, #7b4397, #dc2430);
+  /* background: url("../img/water.png"), -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
+  background: url("../img/water.png"), linear-gradient(to left, #7b4397, #dc2430); */
   /* background: #fdcc52;
   background: -webkit-gradient(linear, left top, left bottom, from(#fdcc52), to(#fdc539));
   background: linear-gradient(#fdcc52, #fdc539); */
 }
-
+.features {
+  background: url(../img/circles.png), #7b4397;
+  background: url(../img/circles.png), -webkit-gradient(linear, right top, left top, from(#7b4397), to( #002c8f));
+  background: url(../img/circles.png), linear-gradient(to left, #7b4397, #002c8f);
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .text-primary {
   color: #fdcc52;
 }
