@@ -436,7 +436,7 @@ body, html {
                                 <div>{{__('admin.image')}}</div>
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
-                                    <div class= "col-md-7 col-xs-12">
+                                    <div class= "col-md-8 col-xs-12">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:void(0);'  style="color: white;">

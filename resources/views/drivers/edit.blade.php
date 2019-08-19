@@ -113,7 +113,7 @@
                                 <!-- for image  -->
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
+                                    <div class= "col-md-6 col-xs-6">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:;' >
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-6">
                                         
                                         @if($driver->image)
                                             <img id="changeimage" src="{{asset('img/'.$driver->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />

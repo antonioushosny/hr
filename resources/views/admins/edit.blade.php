@@ -57,15 +57,16 @@
                                     </div>
                                      
                                     <div class="form-group form-float">
-                                            {{--  <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password" required  autocomplete="new-password" >  --}}
-                                            <input name="password" class="form-control"  readonly type="text"   placeholder="{{__('admin.placeholder_password')}} >
-                                            <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
-                                            <label id="password-error" class="error" for="password" style=""></label>
-                                        </div>
+                                           
+                                        <input name="password" class="form-control"  readonly type="text"   placeholder="{{__('admin.placeholder_password')}}" >
+                                        
+                                        <label id="password-error" class="error" for="password" style=""></label>
+                                        <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
+                                    </div>
                                     <div class="form-group form-float row"  >
                                             
                                         {{--  for image  --}}
-                                        <div class= "col-md-2 col-xs-3">
+                                        <div class= "col-md-6 col-xs-6">
                                     
                                             <div class="form-group form-float  " >
                                                 <div style="position:relative; ">
@@ -83,7 +84,7 @@
                                         
                                         </div>
 
-                                        <div class="col-md-10">
+                                        <div class="col-md-6">
                                         
                                             @if($admin->image)
                                                 <img id="changeimage" src="{{asset('img/'.$admin->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />

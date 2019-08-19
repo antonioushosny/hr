@@ -317,6 +317,17 @@ class HomeController extends Controller
         // return $request;
         $user = User::where('id',$request->id)->first();
 
+        $request->validate([
+            'name'  =>'alpha_spaces', 
+            'mobile'  =>'between:8,11',    
+            'email'  =>'required',    
+        ]);
+        if($request->email != $user->email ){
+            $request->validate([
+                'email'  =>'email|unique:users,email',   
+            ]);
+        }
+        
         if($request->has('name')){
              $data=$this->validate(request(),
             [
@@ -354,7 +365,7 @@ class HomeController extends Controller
         if($request->has('mobile')){
             $data=$this->validate(request(),
             [
-                'mobile'  =>'digits:10',            
+                'mobile'  =>'between:8,11',             
             ],[],[
                 'mobile' =>trans('admin.mobile'),
             ]);
