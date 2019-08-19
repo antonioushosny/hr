@@ -76,8 +76,8 @@
             <h3 class="mb-5"> Download App Now </h3>
            
            
-            <a href="#download" > <img src="{{ asset('front/img/android.png') }}"  alt=""> </a>
-            <a href="#download" > <img src="{{ asset('front/img/apple.png') }}"    alt=""> </a>
+            <a href="#" > <img src="{{ asset('front/img/android.png') }}"  alt=""> </a>
+            <a href="#" > <img src="{{ asset('front/img/apple.png') }}"    alt=""> </a>
           </div>
         </div>
         <div class="col-lg-5 my-auto">
@@ -99,7 +99,7 @@
     </div>
   </header>
 
-  <section class="download bg-primary" id="about-us">
+  <section class="about-us bg-primary" id="about-us">
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto  text-center">
@@ -131,27 +131,23 @@
       <div class="row">
           
         <div class="col-lg-4 ">
-            <div class=" ">
+            <div class="container-fluid ">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="feature-item">
-                        <span style="    position: absolute;
-                        color: #6c757d;
-                        font-weight: bolder;
-                        font-size: 5em;
-                        top: 0px;"> 4 </span>
+                        <span class="feature-text-number"> 1 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item feature-middle-left"  >
-                        <span class="feature-text-number"> 5 </span>
+                        <span class="feature-text-number"> 2 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item">
-                        <span  class="feature-text-number"> 6</span>
+                        <span  class="feature-text-number"> 3</span>
                         <h3 class=" feature-text" >Device Mockups</h3>
                         </div>
                     </div>
@@ -162,36 +158,34 @@
         </div>
         <div class="col-lg-4  ">
             <div class=" device-container text-center">
-                <div class="  white">
-                <div >
+                <div class="white">
+                <div>
                     <div class="screen">
                      <img src="{{ asset('front/img/how_phone.png') }}" class="img-fluid" alt="">
                     </div>
-                    <div class="button">
-                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                    </div>
+                   
                 </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4  ">
-          <div class=" ">
+          <div class="container-fluid  ">
             <div class="row">
                     <div class="col-lg-12">
                         <div class="feature-item">
-                        <span class="feature-text-number"> 1 </span>
+                        <span class="feature-text-number"> 4 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item feature-middle-right"  >
-                        <span class="feature-text-number"> 2 </span>
+                        <span class="feature-text-number"> 5 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item">
-                        <span class="feature-text-number"> 3 </span>
+                        <span class="feature-text-number"> 6 </span>
                         <h3 class=" feature-text">Device Mockups</h3>
                         </div>
                     </div>
@@ -203,15 +197,23 @@
     </div>
   </section>
 
-  <section class="cta">
-    <div class="cta-content">
-      <div class="container">
-        <h2>Stop waiting.<br>Start building.</h2>
-        <a href="#contact" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>
-      </div>
-    </div>
-    <div class="overlay"></div>
-  </section>
+  <section class="download bg-download" id="download">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 mx-auto  text-center mb-5">
+              <h3 class="section-heading">Download Now</h3>
+              <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
+      
+            </div>
+            
+            <div class="col-md-8 mx-auto  text-center">
+                <a href="#" > <img src="{{ asset('front/img/android.png') }}"  alt=""> </a>
+                <a href="#" > <img src="{{ asset('front/img/apple.png') }}"    alt=""> </a>
+        
+            </div>
+          </div>
+        </div>
+      </section>
 
   <section class="contact bg-primary" id="contact">
     <div class="container">

@@ -421,7 +421,7 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 .feature-text-number{
   position: absolute;
-  color: #6c757d;
+  color: #4568b7;
   font-weight: bolder;
   font-size: 5em;
   top: 0px;
@@ -443,12 +443,23 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   background: -webkit-gradient(linear, left top, left bottom, from(#fdcc52), to(#fdc539));
   background: linear-gradient(#fdcc52, #fdc539); */
 }
+.bg-download {
+  background: url("../img/download.png"), #7b4397;
+  background-repeat: round;
+}
+.bg-contact {
+  background: url("../img/download.png"), #7b4397;
+  background-repeat: round;
+}
 .features {
-  background: url(../img/circles.png), #7b4397;
-  background: url(../img/circles.png), -webkit-gradient(linear, right top, left top, from(#7b4397), to( #002c8f));
-  background: url(../img/circles.png), linear-gradient(to left, #7b4397, #002c8f);
+  background: url(../img/circles.png), #103ca1;
+  background: url(../img/circles.png), -webkit-gradient(linear, right top, left top, from(#103ca1), to( #103ca1));
+  background: url(../img/circles.png), linear-gradient(to left, #103ca1, #103ca1);
   background-position: center;
   background-repeat: no-repeat;
+ 
+  background-position-y: 18em;
+
 }
 .text-primary {
   color: #fdcc52;
