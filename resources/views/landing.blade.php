@@ -34,21 +34,21 @@
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
         <ul class="navbar-nav  ">
-            <li class="nav-item navright">
-                <img src="{{ asset('front/img/logo.png') }}" class="img-fluid" alt="">
+            <li class="nav-item ">
+                <img src="{{ asset('front/img/logo-en.png') }}" class="img-fluid" alt="">
             </li>
             <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger" href="#download">About us</a>
+                <a class="nav-link js-scroll-trigger navright" href="#download">About us</a>
             </li>
             <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger" href="#features">Features</a>
+                <a class="nav-link js-scroll-trigger navright" href="#features">Features</a>
             </li>
             <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+                <a class="nav-link js-scroll-trigger navright" href="#download">Download</a>
             </li>
             
             <li class="nav-item navright">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
             </li>
         </ul>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,14 +59,18 @@
         <ul class="navbar-nav ml-auto">
             
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-facebook-f"></i> </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#features">Features</a>
+                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-skype"></i> </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-twitter"></i> </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#download"> <i class="fab fa-youtube"></i> </a>
+            </li>
+
         </ul>
       </div>
     </div>
@@ -83,11 +87,11 @@
         </div>
         <div class="col-lg-5 my-auto">
           <div class="device-container">
-            <div class="device-mockup iphone6_plus portrait white">
+            <div class="">
               <div class="device">
                 <div class="screen">
                   <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                  <img src="{{ asset('front/img/demo-screen-1.jpg') }}" class="img-fluid" alt="">
+                  <img src="{{ asset('front/img/hero_banner.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="button">
                   <!-- You can hook the "home button" to some JavaScript events or just remove it -->
