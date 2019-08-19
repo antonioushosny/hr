@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 
 <head>
 
@@ -28,7 +28,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="rtl">
         <button onclick="topFunction()" id="myBtn" title="Go to top"> <i class="fa fa-arrow-up"  ></i>
         </button>
 

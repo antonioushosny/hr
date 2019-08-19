@@ -122,18 +122,7 @@
                     <div class="body">
                         <h5><strong>{{trans('admin.user_name')}} :- </strong> {{ $order->user_name }}  </h5>
                         <h5><strong>{{trans('admin.user_mobile')}} :- </strong> {{ $order->user_mobile }}  </h5>
-                        @if($order->user && $order->user->City)
-                            @if($lang == 'ar')
-                            <h5><strong>{{trans('admin.city')}} :- </strong> {{ $order->user->City->name_ar }}  </h5>
-                            <h5><strong>{{trans('admin.area')}} :- </strong> {{ $order->user->Area->name_ar }}  </h5>
-                            @else 
-                            <h5><strong>{{trans('admin.city')}} :- </strong> {{ $order->user->City->name_en }}  </h5>
-                            <h5><strong>{{trans('admin.area')}} :- </strong> {{ $order->user->Area->name_en }}  </h5>
-                            @endif
-                        @else 
-                        <h5><strong>{{trans('admin.city')}} :- </strong> {{ $order->city }}  </h5>
-                        <h5><strong>{{trans('admin.area')}} :- </strong> {{ $order->area }}  </h5>
-                        @endif
+                       
                         <h6><strong>{{trans('admin.location')}} </strong> </h6>
 
                         <!-- {{--  for map      --}}  -->

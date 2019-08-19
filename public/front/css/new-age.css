@@ -36,6 +36,7 @@
  }
  .khazantilte{
    color: #299bff !important;
+   font-weight: bold;
  }
  .about-section-desc{
    margin-top: 7em ;
@@ -458,6 +459,13 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 .feature-middle-right{
   float: right;
+}
+
+.rtl >.feature-middle-left{
+  float: right;
+}
+.rtl >.feature-middle-right{
+ float: left;
 }
 textarea {
   resize: none;
