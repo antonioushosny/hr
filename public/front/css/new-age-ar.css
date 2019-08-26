@@ -5,6 +5,9 @@
  */
  /*background :  #002c8f */
  /* color: #ffffff */
+ @import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+
+
  #myBtn {
   display: none;
   position: fixed;
@@ -30,9 +33,9 @@
 }
 
  .navright{
-  margin: .6em !important;
+  margin: .4em !important;
   color: #fff !important;
-  font-size: .9em !important;
+  font-size: 0.9em !important;
  }
  .khazantilte{
    color: #299bff !important;
@@ -47,10 +50,11 @@ body {
   height: 100%;
   background-color: #103ca1 ;
   color: #fff !important;
+  text-align : initial ;
 }
 
 body {
-  font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: 'Droid Arabic Kufi', sans-serif;
 }
 a > i{
   color: #fff ;
@@ -82,9 +86,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: 'Droid Arabic Kufi', sans-serif;
   font-weight: 200;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
 }
 
 p {
@@ -106,16 +110,16 @@ section h2 {
   background-color: blue;
   -webkit-transition: all .35s;
   transition: all .35s;
-  font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: 'Droid Arabic Kufi', sans-serif;
   font-weight: 200;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
 }
 
 #mainNav .navbar-brand {
   color: #fdcc52;
-  font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: 'Droid Arabic Kufi', sans-serif;
   font-weight: 200;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
 }
 
 #mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
@@ -130,8 +134,8 @@ section h2 {
 
 #mainNav .navbar-nav > li > a {
   font-size: 11px;
-  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
-  letter-spacing: 2px;
+  font-family: 'Droid Arabic Kufi', sans-serif;
+  /* letter-spacing: 2px; */
   text-transform: uppercase;
 }
 
@@ -525,8 +529,8 @@ textarea {
 
 .btn {
   border-radius: 300px;
-  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
-  letter-spacing: 2px;
+  font-family: 'Droid Arabic Kufi', sans-serif;
+  /* letter-spacing: 2px; */
   text-transform: uppercase;
 }
 

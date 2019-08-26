@@ -6,7 +6,9 @@ use App\User;
 use App\Country;
 use App\City;
 use App\Doc;
+use App\ContactUs;
 use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Auth;
 use App ;
@@ -485,4 +487,34 @@ class HomeController extends Controller
         return redirect()->route('messages');
     }
      
+
+    public function contact_us(Request $request)
+    {
+        $contact = new ContactUs ;
+
+        $contact->name = $request->name ;
+        $contact->email = $request->email ;
+        $contact->title = $request->title ;
+        $contact->message = $request->message ;
+        $contact->status = 'new' ;
+        $contact->save();
+        $type = "user";
+         $msg =  [
+            'en' => "you have new message from ".  $request->name   ,
+            'ar' => "  لديك رسالة جديدة من " . $request->name   ,
+        ];
+        
+        $admins = User::where('role', 'admin')->get(); 
+        if(sizeof($admins) > 0){
+            foreach($admins as $admin){
+                $admin->notify(new Notifications($msg,$type ));
+            }
+            $device_token = $admin->device_token ;
+            if($device_token){
+                $this->notification($device_token,$msg,$msg);
+                $this->webnotification($device_token,$msg,$msg,$type);
+            }
+        }
+        return view('landing');
+    }
 }

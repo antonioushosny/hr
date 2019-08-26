@@ -8,13 +8,13 @@ return [
         'dashboard'                     => 'الرئيسية',   
         'home'                          => 'الرئيسية',   
         'Control_panel'                 => 'لوحة التحكم',     
-        'khazan'                           => 'Khazan',   
+        'khazan'                           => 'خزان',   
         'profile'                       => 'الصفحة الشخصية',   
         'logout'                        => 'تسجيل خروج',   
         'notification'                  => 'اشعارات',   
         'en'                            => 'English',   
         'ar'                            => 'عربي',   
-        'Copyright'                    => 'جميع الحقوق  محفوظة',
+        'Copyright'                    => ' جميع الحقوق  محفوظة كودكس جلوبال',
         'All_rights'                     => '  2018-2019 ',
         'More_info'                     => ' مزيد ',
         'not_found'                     => 'غير موجود' ,
@@ -62,7 +62,7 @@ return [
         'your_new_password'             => 'كلمة المرور الجديدة الخاصة بك ',
         'wellcome'                      => 'اهلا ',
         'send_password'                 => 'تم ارسال كلمة المرور لبريدك بنجاح',
-        'Welcome to Khazan'             => 'اهلا بك في Khazan  ' ,
+        'Welcome to Khazan'             => 'اهلا بك في خزان  ' ,
         'Close'                         =>'اغلاق',
         'selectall'                     => 'تحديد الكل',
         'operations'                    => 'عمليات', 
@@ -405,4 +405,31 @@ return [
         'Send Password Reset Link'  => 'إرسال رابط إعادة تعيين كلمة المرور',
         'Reset Password'        => 'إعادة تعيين كلمة المرور' ,
 
+    //landing page 
+
+        'about_us'      => 'عن التطبيق ',
+        'Features'      => 'كيف يعمل؟',
+        'Download'      => 'حمل التطبيق',
+        'Contact_us'       => ' تواصل معنا  ',
+        'App'           => 'تطبيق',
+        'To_deliver_drinking'           => 'لتوصيل مياه الشرب',
+        'Download_App_Now' =>'حمل التطبيق الأن',
+        'About_app'     =>'عن التطبيق ',
+        'with_khazan'   =>'مع تطبيق خزان',
+        'you_can_now_order'   =>'يمكنك الآن طلب مياة الشرب من أى مكان وفى أى وقت دون التفكير فى قيادة السيارة والذهاب للمتجر وحمل المياة نحن نوفر عليك الوقت والجهد ',
+        'he_application_of_the_tank'   =>'تطبيق خزان .. به جميع منتجات المياة وبجميع الأحجام جالونات ,كرتون كل ما عليك هو تحميل التطبيق وقم بتصفح جميع المنتجات ومن ثم قم بطلب المنتج الذى تريده وسوف نقوم بإصاله إلى أى مكان تريده سواء منزل أو مسجد أو مكتب أو غير ذلك  ',
+        'How_the_app_works'   =>'كيف يعمل التطبيق ',
+        'Download_the_app'   =>'حمل التطبيق ',
+        'Record_your_data'   =>'سجل بيناتك' ,
+        'Browse_products'   =>'تصفح المنتجات',
+        'Choose_your_favorite'   =>' اختر منتجك المفضل  ',
+        'Confirm_your_purchase'   =>' اكد عملية الشراء ',
+        'We_deliver_your_request'   =>'نوصل إليك طلبك  ',
+        'For_mor_information'   =>'لمعلومات أكثر',
+        'copyRights'   =>' خزان 2019.جميع الحقوق محفوظة',
+    //end landing page
  ];
+
+
+ 
+

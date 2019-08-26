@@ -17,10 +17,18 @@
 
 <head>
 
-  <meta charset="utf-8">
+      
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Khazan App .">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link href='https://fonts.googleapis.com/css?family=Reem+Kufi:400&subset=arabic,latin' rel='stylesheet' type='text/css'>
+  <title>:: Khazan ::</title>
+ <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >
+
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+   <meta name="author" content="">
 
   <title>New Age - Start Bootstrap Theme</title>
 
@@ -59,21 +67,21 @@
                 </li>
              
                 <li class="nav-item navright">
-                    <a class="nav-link js-scroll-trigger navright" href="#about-us">About us</a>
+                    <a class="nav-link js-scroll-trigger navright" href="#about-us"> {{ __('admin.about_us') }}</a>
                 </li>
                 <li class="nav-item navright">
-                    <a class="nav-link js-scroll-trigger navright" href="#features">Features</a>
+                    <a class="nav-link js-scroll-trigger navright" href="#features">{{ __('admin.Features') }}</a>
                 </li>
                 <li class="nav-item navright">
-                    <a class="nav-link js-scroll-trigger navright" href="#download">Download</a>
+                    <a class="nav-link js-scroll-trigger navright" href="#download">{{ __('admin.Download') }}</a>
                 </li>
                 <li class="nav-item navright">
-                    <a class="nav-link js-scroll-trigger navright" href="#contact">Contact</a>
+                    <a class="nav-link js-scroll-trigger navright" href="#contact">{{ __('admin.Contact_us') }}</a>
                 </li>
                 @if($lang == 'ar')
-                <li> <a class="" href=" {{route('setlang',['lang'=>'en'])}}">{{trans('admin.en')}}</a> </li>
+                <li class="nav-item navright"> <a class="nav-link js-scroll-trigger navright" href=" {{route('setlang',['lang'=>'en'])}}">{{trans('admin.en')}}</a> </li>
                 @else 
-                <li> <a class="" href=" {{route('setlang',['lang'=>'ar'])}}">{{trans('admin.ar')}}</a> </li>
+                <li class="nav-item navright"> <a class="nav-link js-scroll-trigger navright" href=" {{route('setlang',['lang'=>'ar'])}}">{{trans('admin.ar')}}</a> </li>
                 @endif
             </ul>
         </div>
@@ -95,9 +103,13 @@
       <div class="row h-100">
         <div class="col-lg-7 my-auto">
           <div class="header-content mx-auto">
-            <h1> <span class="khazantilte"> khazan </span> <span> App </span></h1>  
-            <h6 class="mb-5"> To deliver drinking water of all kinds  </h6>
-            <h3 class="mb-5"> Download App Now </h3>
+            @if($lang =='ar')
+            <h1>  <span> {{ __('admin.App') }}  </span> <span class="khazantilte"> {{ __('admin.khazan') }} </span></h1>
+            @else  
+            <h1> <span class="khazantilte"> {{ __('admin.khazan') }} </span> <span> {{ __('admin.App') }}  </span></h1>  
+            @endif
+            <h6 class="mb-5"> {{ __('admin.To_deliver_drinking') }}   </h6>
+            <h3 class="mb-5">  {{ __('admin.Download_App_Now') }} </h3>
            
            
             <a href="#" > <img src="{{ asset('front/img/android.png') }}"  alt=""> </a>
@@ -109,12 +121,10 @@
             <div class="">
               <div class="device">
                 <div class="screen">
-                  <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                  
                   <img src="{{ asset('front/img/hero_banner.png') }}" class="img-fluid" alt="">
                 </div>
-                <div class="button">
-                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                </div>
+                 
               </div>
             </div>
           </div>
@@ -127,16 +137,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto  text-center">
-          <h2 class="section-heading">About App</h2>
+          <h2 class="section-heading">{{ __('admin.About_app') }}</h2>
           <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
   
         </div>
         <div class="col-md-6 about-section-desc">
-                <h3>with khazan App</h3>
-                <h6 class="mb-3">You can now order drinking water from anywhere at any time without thinking of driving a car, going to the shop and carrying water We save you time and effort
+                <h3>{{ __('admin.with_khazan') }} </h3>
+                <h6 class="mb-3">{{ __('admin.you_can_now_order') }} 
                     </h6>
 
-                <h6 class="mb-5">  The application of the tank By all water products and all sizes gallons, cartons All you need is to download the application and browse all the products and then order the product you want and we will deliver it to any place you want, whether a house, mosque, office or other  
+                <h6 class="mb-5"> {{ __('admin.he_application_of_the_tank') }}  
                      </h6>
         </div>
         <div class="col-md-6">
@@ -149,7 +159,7 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-heading text-center">
-        <h2>Unlimited Features </h2>
+        <h2>{{ __('admin.How_the_app_works') }} </h2>
         <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
         <hr>
       </div>
@@ -162,19 +172,19 @@
                     <div class="col-lg-12">
                         <div class="feature-item">
                         <span class="feature-text-number"> 1 </span>
-                        <h3 class=" feature-text">Device Mockups</h3>
+                        <h3 class=" feature-text">{{__('admin.Download_the_app')}}</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item feature-middle-left"  >
                         <span class="feature-text-number"> 2 </span>
-                        <h3 class=" feature-text">Device Mockups</h3>
+                        <h3 class=" feature-text">{{__('admin.Record_your_data')}}</h3>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="feature-item">
                         <span  class="feature-text-number"> 3</span>
-                        <h3 class=" feature-text" >Device Mockups</h3>
+                        <h3 class=" feature-text" >{{__('admin.Browse_products')}}</h3>
                         </div>
                     </div>
                  
@@ -197,24 +207,24 @@
         <div class="col-lg-4  ">
           <div class="container-fluid  ">
             <div class="row">
-                    <div class="col-lg-12">
-                        <div class="feature-item">
-                        <span class="feature-text-number"> 4 </span>
-                        <h3 class=" feature-text">Device Mockups</h3>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="feature-item">
+                    <span class="feature-text-number"> 4 </span>
+                    <h3 class=" feature-text">{{__('admin.Choose_your_favorite')}}</h3>
                     </div>
-                    <div class="col-lg-12">
-                        <div class="feature-item feature-middle-right"  >
-                        <span class="feature-text-number"> 5 </span>
-                        <h3 class=" feature-text">Device Mockups</h3>
-                        </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="feature-item feature-middle-right"  >
+                    <span class="feature-text-number"> 5 </span>
+                    <h3 class=" feature-text">{{__('admin.Confirm_your_purchase')}}</h3>
                     </div>
-                    <div class="col-lg-12">
-                        <div class="feature-item">
-                        <span class="feature-text-number"> 6 </span>
-                        <h3 class=" feature-text">Device Mockups</h3>
-                        </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="feature-item">
+                    <span class="feature-text-number"> 6 </span>
+                    <h3 class=" feature-text">{{__('admin.We_deliver_your_request')}}</h3>
                     </div>
+                </div>
             </div>
              
           </div>
@@ -227,7 +237,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto  text-center mb-5">
-                <h3 class="section-heading">Download Now</h3>
+                <h3 class="section-heading">{{__('admin.Download_App_Now')}}</h3>
                 <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
         
             </div>
@@ -245,7 +255,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto  text-center mb-5">
-                <h3 class="section-heading"> Contact Us</h3>
+                <h3 class="section-heading">{{__('admin.Contact_us')}} </h3>
                 <img src="{{ asset('front/img/heading-bg.png') }}" class="img-fluid" alt="">
         
             </div>
@@ -253,17 +263,20 @@
             <div class="col-md-8 mx-auto  text-center">
                     <div class="form-box">
                             
-                        <form action="https://api.formbucket.com/f/c2K3QTQ" method="post">
+                          {!! Form::open(['route'=>['contact_us'],'method'=>'post','autocomplete'=>'off', 'enctype'=>'multipart/form-data' ])!!} 
                             <div class="form-group">
-                             <input class="form-control" id="name" type="text" name="Name" placeholder="Name">
+                             <input class="form-control" id="name" type="text" name="name" placeholder="{{__('admin.name')}}" required>
                             </div>
                             <div class="form-group">
-                             <input class="form-control" id="email" type="email" name="Email" placeholder="Email">
+                              <input class="form-control" id="title" type="text" name="title" placeholder="{{__('admin.title')}}" required>
                             </div>
                             <div class="form-group">
-                             <textarea class="form-control" id="message" rows="6" name="Message" placeholder="Message"></textarea>
+                             <input class="form-control" id="email" type="email" name="email" placeholder="{{__('admin.email')}}" required>
                             </div>
-                            <input class="btn btn-primary" type="submit" value="Submit" />
+                            <div class="form-group">
+                             <textarea class="form-control" id="message" rows="6" name="message" placeholder="{{__('admin.message')}}" required></textarea>
+                            </div>
+                            <input class="btn btn-primary" type="submit" value="{{__('admin.send')}}" />
                             </div>
                         </form>
                     </div>
@@ -276,18 +289,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto  text-center mb-3">
-                    <h2 class="section-heading "> For mor information  </h2>
+                    <h2 class="section-heading "> {{__('admin.For_mor_information')}}   </h2>
                 </div>
                 
                 <div class="col-md-8 mx-auto  text-center">
-                    <h3 class="section-heading"> Contact Us  <span style="color:#002c8f ;font-weight: bold;"> +966 123 45 68 </span> </h3>
+                    <h3 class="section-heading"> {{__('admin.Contact_us')}}    <span style="color:#002c8f ;font-weight: bold;"> +966 123 45 68 </span> </h3>
+
                 </div>
             </div>
         </div>
     </section>
   <footer>
     <div class="container">
-      <p>&copy; Khazan 2019. All Rights Reserved.</p>
+      <p>&copy; {{__('admin.copyRights')}}.</p>
        
     </div>
   </footer>

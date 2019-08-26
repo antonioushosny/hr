@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\User;
+ use App\User;
+use Auth;
 class LoginController extends Controller
 {
     /*
@@ -89,7 +90,10 @@ class LoginController extends Controller
             return back()->with('error',trans('admin.allowed_access'));
         }
     }
-    
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/login');
+      }
     // public function logout(Request $request)
     // {
     //     $token = $request->header('access_token');

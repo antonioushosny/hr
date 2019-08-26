@@ -15,7 +15,7 @@ return [
         'en'                            => 'English',   
         'ar'                            => 'عربي',     
         'All_rights'                    => 'All rights reserved.',
-        'Copyright'                     => 'Copyright  Hala 2018-2019.',   
+        'Copyright'                     => 'Copyright  Codex-global 2018-2019.',   
         'More_info'                     => 'More Info ',
         'not_found'                     =>'Not Found' ,
         'Validation_error'              => ' Validation error ',
@@ -380,4 +380,29 @@ return [
     'Send Password Reset Link'  => 'Send Password Reset Link',
     'Reset Password'            => 'Reset Password',
 
+
+    //landing page 
+
+        'about_us'      => 'About us',
+        'Features'      => 'How Works ?',
+        'Download'      => 'Download',
+        'Contact_us'       => 'Contact Us',
+        'App'           => 'App',
+        'To_deliver_drinking'           => 'To deliver drinking water of all kinds',
+        'Download_App_Now' =>'Download App Now',
+        'About_app'     =>'About App',
+        'with_khazan'   =>'with khazan App',
+        'you_can_now_order'   =>'You can now order drinking water from anywhere at any time without thinking of driving a car, going to the shop and carrying water We save you time and effort ',
+        'he_application_of_the_tank'   =>'The application of the tank By all water products and all sizes gallons, cartons All you need is to download the application and browse all the products and then order the product you want and we will deliver it to any place you want, whether a house, mosque, office or other  ',
+        'How_the_app_works'   =>'How the app works ',
+        'Download_the_app'   =>'Download the app ',
+        'Record_your_data'   =>'Record your data' ,
+        'Browse_products'   =>'Browse products ',
+        'Choose_your_favorite'   =>' Choose your favorite product ',
+        'Confirm_your_purchase'   =>' Confirm your purchase ',
+        'We_deliver_your_request'   =>'We deliver your request ',
+        'For_mor_information'   =>'For More Information',
+        'copyRights'   =>' Khazan 2019. All Rights Reserved',
+      
+    //end landing page
 ];

@@ -134,7 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contacts/delete/{id}', 'ContactsController@destroy')->name('destroycontact');
     Route::post('/contacts/deleteall', 'ContactsController@deleteall')->name('contactsdeleteall');
 
-
+ 
     // routes for reports management
     Route::get('/reports', 'ReportsController@index')->name('reports');
     Route::post('/reports', 'ReportsController@search')->name('reportfilter');
@@ -159,9 +159,10 @@ Route::group(['middleware' => 'auth'], function () {
      // routes for messages management by Antonios hosny for hala company
      Route::get('/messages', 'HomeController@messages')->name('messages');
      Route::post('/messages/send', 'HomeController@send')->name('send_messages');
+     Route::post('/contact_us', 'HomeController@contact_us')->name('contact_us');
 
     //route for ajax 
-
+    
 });
 
 

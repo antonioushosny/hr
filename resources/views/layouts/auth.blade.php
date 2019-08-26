@@ -20,32 +20,7 @@
 <body class="theme-purple authentication sidebar-collapse">
 
 <div class="page-header">
-        @if ($errors->any())
-                
-        @foreach ($errors->all() as $error)
-            {{--  <li>{{ $error }}</li>  --}}
-        @section('script')
-        <script>
-            toastr.error('{{ $error }}', '{{trans('admin.Validation_error')}}', {timeOut: 5000});
-        </script>
-        @endsection
-        @endforeach
-                
-
-    @endif
-    <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-            @section('script')
-                <script>
-                    toastr.success('{{ Session::get('alert-' . $msg) }}', '{{trans('admin.Success_Alert')}}', {timeOut: 5000});
-                </script>
-            @endsection
-            <!--<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>-->
-            @endif
-            
-        @endforeach
-    </div
+    
 
     @yield('content') 
     <footer class="footer">

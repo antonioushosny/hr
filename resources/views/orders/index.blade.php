@@ -101,8 +101,12 @@
                                         <td>{{ $data->no_container }}</td>    
                                         <td>{{ $data->total }}</td>    
                                         
-                                        @if($data->container->image)
-                                            <td><img src="{{asset('img/').'/'.$data->container->image }}" width="50px" height="50px"></td>
+                                        @if($data->container)
+                                            @if($data->container->image)
+                                                <td><img src="{{asset('img/').'/'.$data->container->image }}" width="50px" height="50px"></td>
+                                            @else 
+                                                <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
+                                            @endif
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
