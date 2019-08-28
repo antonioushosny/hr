@@ -1120,7 +1120,7 @@ class ApiController extends Controller
                     $i = 0 ;
                     foreach($orderss as $order){
                         $orders[$i]['order_id'] =   $order->id ;
-                        $orders[$i]['container_id'] =   $order->container->id ;
+                        
                         if($order->center){
                             
                             $orders[$i]['center_id'] =   $order->center->id ;
@@ -1129,20 +1129,30 @@ class ApiController extends Controller
                              $orders[$i]['center_id'] =   ' '  ;
                             $orders[$i]['center_name'] =  ' ' ;
                         }
-                        if($lang == 'ar'){
-                            $orders[$i]['container_name'] =   $order->container->name_ar ;
-                        }else{
-                            $orders[$i]['container_name'] =   $order->container->name_en ;
-                        }
-                        $orders[$i]['container_size'] =   $order->container->size ;
+                         
                         $orders[$i]['num_containers'] =   $order->no_container;
                         $orders[$i]['container_price'] =   $order->price ;
                         if($order->container){
+                            $orders[$i]['container_id'] =   $order->container->id ;
+                            if($lang == 'ar'){
+                                $orders[$i]['container_name'] =   $order->container->name_ar ;
+                            }else{
+                                $orders[$i]['container_name'] =   $order->container->name_en ;
+                            }
+                            $orders[$i]['container_size'] =   $order->container->size ;
                             if($order->container->image){
                                 $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
                             }else{
                                 $orders[$i]['image'] = null ;
                             }
+                        }else{
+                            if($lang == 'ar'){
+                                $orders[$i]['container_name'] =   $order->container_name_ar ;
+                            }else{
+                                $orders[$i]['container_name'] =   $order->container_name_en ;
+                            }
+                            $orders[$i]['container_size'] =   $order->container_size ;
+                             $orders[$i]['image'] = null ;
                         }
                         $orders[$i]['total'] =   $order->total ;
                         // $orders[$i]['status'] =   trans('api.'.$order->status) ;
@@ -1186,8 +1196,8 @@ class ApiController extends Controller
                         $orders[$i]['lng'] =   $order->lng ;
                         $orders[$i]['city'] =   $order->city ;
                         $orders[$i]['area'] =   $order->area ;
-                        $orders[$i]['container_id'] =   $order->container->id ;
-                         if($order->center){
+                        
+                        if($order->center){
                             
                             $orders[$i]['center_id'] =   $order->center->id ;
                             $orders[$i]['center_name'] =   $order->center->name ;
@@ -1196,20 +1206,31 @@ class ApiController extends Controller
                             $orders[$i]['center_name'] =  ' ' ;
                         }
                        
-                        if($lang == 'ar'){
-                            $orders[$i]['container_name'] =   $order->container->name_ar ;
-                        }else{
-                            $orders[$i]['container_name'] =   $order->container->name_en ;
-                        }
-                        $orders[$i]['container_size'] =   $order->container->size ;
+                       
                         $orders[$i]['num_containers'] =   $order->no_container;
                         $orders[$i]['container_price'] =   $order->price ;
                         if($order->container){
+                            $orders[$i]['container_id'] =   $order->container->id ;
+                            if($lang == 'ar'){
+                                $orders[$i]['container_name'] =   $order->container->name_ar ;
+                            }else{
+                                $orders[$i]['container_name'] =   $order->container->name_en ;
+                            }
+                            $orders[$i]['container_size'] =   $order->container->size ;
                             if($order->container->image){
                                 $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
                             }else{
                                 $orders[$i]['image'] = null ;
                             }
+                        }
+                        else{
+                            if($lang == 'ar'){
+                                $orders[$i]['container_name'] =   $order->container_name_ar ;
+                            }else{
+                                $orders[$i]['container_name'] =   $order->container_name_en ;
+                            }
+                            $orders[$i]['container_size'] =   $order->container_size ;
+                             $orders[$i]['image'] = null ;
                         }
                         $orders[$i]['total'] =   $order->total ;
                         // $orders[$i]['status'] =   trans('api.'.$order->status) ;
