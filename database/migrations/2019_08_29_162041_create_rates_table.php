@@ -15,8 +15,8 @@ class CreateRatesTable extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('evaluator_from')->nullable($value = true);
-            $table->unsignedInteger('evaluator_to')->nullable($value = true);
+            $table->unsignedBigInteger('evaluator_from')->nullable($value = true);
+            $table->unsignedBigInteger('evaluator_to')->nullable($value = true);
             $table->string('rate')->nullable($value = true);
             $table->string('contact_rate')->nullable($value = true);
             $table->string('time_rate')->nullable($value = true);

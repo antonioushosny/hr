@@ -18,7 +18,7 @@ class CreateAvailableDaysTable extends Migration
             $table->string('day')->nullable($value = true);
             $table->string('from')->nullable($value = true);
             $table->string('to')->nullable($value = true);
-            $table->string('fannie_id')->nullable($value = true);
+            $table->unsignedBigInteger('fannie_id')->nullable($value = true);
             $table->foreign('fannie_id')->references('id')->on('users')->onDelete('set null'); 
             $table->timestamps();
         });

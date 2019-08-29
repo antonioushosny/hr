@@ -14,9 +14,9 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('user_id')->nullable($value = true);
-            $table->unsignedInteger('fannie_id')->nullable($value = true);
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable($value = true);
+            $table->unsignedBigInteger('fannie_id')->nullable($value = true);
             $table->unsignedInteger('service_id')->nullable($value = true);
             $table->string('lat')->nullable($value = true);
             $table->string('lng')->nullable($value = true);

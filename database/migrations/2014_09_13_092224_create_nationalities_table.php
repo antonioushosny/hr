@@ -17,7 +17,7 @@ class CreateNationalitiesTable extends Migration
             $table->increments('id');
             $table->string('name_ar')->nullable($value = true);
             $table->string('name_en')->nullable($value = true);
-            $table->string('status', ['active', 'not_active'])->nullable($value = true)->default('active');
+            $table->string('status')->nullable($value = true);
  
             $table->timestamps();
         });

@@ -19,7 +19,7 @@ class CreateSubscriptionTypesTable extends Migration
             $table->string('name_en')->nullable($value = true);
             $table->string('no_month')->nullable($value = true);
             $table->string('cost')->nullable($value = true);
-            $table->string('status', ['active', 'not_active'])->nullable($value = true)->default('active');
+            $table->string('status')->nullable($value = true);
             $table->timestamps();
         });
     }

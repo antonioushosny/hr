@@ -14,17 +14,17 @@ class CreateTechniciansTable extends Migration
     public function up()
     {
         Schema::create('technicians', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             
             $table->string('renewal_date')->nullable($value = true);
             $table->string('available')->nullable($value = true);
             $table->text('brief')->nullable($value = true);
-            $table->unsignedInteger('user_id')->nullable($value = true);
+            $table->unsignedBigInteger('user_id')->nullable($value = true);
             $table->unsignedInteger('service_id')->nullable($value = true);
             $table->unsignedInteger('country_id')->nullable($value = true);
             $table->unsignedInteger('city_id')->nullable($value = true);
             $table->unsignedInteger('area_id')->nullable($value = true);
-            $table->unsignedInteger('nationality_id ')->nullable($value = true);
+            $table->unsignedInteger('nationality_id')->nullable($value = true);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('set null'); 

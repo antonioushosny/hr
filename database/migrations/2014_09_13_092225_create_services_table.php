@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('name_ar')->nullable($value = true);
             $table->string('name_en')->nullable($value = true);
             $table->string('image')->nullable($value = true);
-            $table->string('status', ['active', 'not_active'])->nullable($value = true)->default('active');
+            $table->string('status')->nullable($value = true);
             $table->timestamps();
         });
     }
