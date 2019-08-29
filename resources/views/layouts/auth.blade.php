@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: {{__('admin.khazan')}} ::</title>
+    <title>:: {{__('admin.fannie')}} ::</title>
     <!-- Favicon-->
     <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"> -->
     <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >

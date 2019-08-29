@@ -19,10 +19,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="Khazan App .">
+<meta name="description" content="Fannie 4U .">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>:: Khazan ::</title>
+<title>:: fannie ::</title>
 <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">  -->
 <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >
 
@@ -102,7 +102,7 @@ body, html {
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo_0.png') }}" width="48" height="48" alt="Khazan"></div>
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo_0.png') }}" width="48" height="48" alt="fannie"></div>
         <p>{{__('admin.Please_wait')}}...</p>        
     </div>
 </div>
@@ -115,7 +115,7 @@ body, html {
         <li>
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('assets/images/logo.png') }}" width="30" alt="Khazan"><span class="m-l-10">Khazan</span></a>
+                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('assets/images/logo.png') }}" width="30" alt="fannie"><span class="m-l-10">fannie</span></a>
             </div>
         </li>
         <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
@@ -288,7 +288,7 @@ body, html {
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i>{{__('Khazan')}} </a></li>
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i>{{__('fannie')}} </a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user"><i class="zmdi zmdi-account m-r-5"></i> {{Auth::user()->name}} </a></li>
     </ul>
     <div class="tab-content">

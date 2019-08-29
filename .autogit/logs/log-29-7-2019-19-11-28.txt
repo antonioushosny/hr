@@ -1,0 +1,26 @@
+-------------------- Auto-Git Log --------------------
+		Thu Aug 29 2019 19:11:28 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* database/migrations/2014_09_13_092224_create_nationalities_table.php
+* database/migrations/2014_09_13_092225_create_services_table.php
+* database/migrations/2014_10_12_000001_create_users_table.php
+* database/migrations/2014_10_12_000002_create_technicians_table.php
+* database/migrations/2019_05_28_123212_create_orders_table.php
+* database/migrations/2019_08_29_161212_create_subscription_types_table.php
+* database/migrations/2019_08_29_161256_create_subscriptions_table.php
+* database/migrations/2019_08_29_162041_create_rates_table.php
+* database/migrations/2019_08_29_162400_create_available_days_table.php
+* database/migrations/2019_08_29_162522_create_favorites_table.php
+* database/migrations/2019_08_29_162730_create_statuses_table.php
+
+
+Created files:
+* .autogit/logs/log-29-7-2019-18-41-20.txt
+
+
+Deleted files:
+
+
+Renamed files:

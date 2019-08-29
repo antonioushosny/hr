@@ -26,8 +26,12 @@ Route::get('lang/{lang}', function ($lang){
    return redirect()->back();
 })->name('setlang');
 
+// Route::get('/', function () {
+//     return view('landing');
+// });
+
 Route::get('/', function () {
-    return view('landing');
+    return redirect('/login');
 });
 
 Route::get('/admin', function () {

@@ -8,7 +8,7 @@ return [
         'dashboard'                     => 'Dashboard',    
         'home'                          =>  'Home',   
         'Control_panel'                 => 'Control Panel',   
-        'khazan'                           => 'Khazan',    
+        'fannie'                           => 'Fannie 4U',    
         'profile'                       => 'Profile',  
         'logout'                        => 'Logout',   
         'notification'                  => 'Notification',   
@@ -59,7 +59,7 @@ return [
         'your_new_password'             => 'your new password ',
         'wellcome'                      =>  'Welcome ',
         'send_password'                 =>  'Your password has been successfully sent to your mail  ',
-        'Welcome to Khazan'             => 'Welcome to Khazan ' ,
+        'Welcome to fannie'             => 'Welcome to Fannie 4U ' ,
         'Close'                         =>'Close',
         'selectall'                     => 'Select All',
         'operations'                    => 'Operations',
@@ -391,7 +391,7 @@ return [
         'To_deliver_drinking'           => 'To deliver drinking water of all kinds',
         'Download_App_Now' =>'Download App Now',
         'About_app'     =>'About App',
-        'with_khazan'   =>'with khazan App',
+        'with_fannie'   =>'with Fannie 4U App',
         'you_can_now_order'   =>'You can now order drinking water from anywhere at any time without thinking of driving a car, going to the shop and carrying water We save you time and effort ',
         'he_application_of_the_tank'   =>'The application of the tank By all water products and all sizes gallons, cartons All you need is to download the application and browse all the products and then order the product you want and we will deliver it to any place you want, whether a house, mosque, office or other  ',
         'How_the_app_works'   =>'How the app works ',
@@ -402,7 +402,7 @@ return [
         'Confirm_your_purchase'   =>' Confirm your purchase ',
         'We_deliver_your_request'   =>'We deliver your request ',
         'For_mor_information'   =>'For More Information',
-        'copyRights'   =>' Khazan 2019. All Rights Reserved',
+        'copyRights'   =>' Fannie 4U 2019. All Rights Reserved',
       
     //end landing page
 ];
