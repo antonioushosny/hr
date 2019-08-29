@@ -1,0 +1,26 @@
+-------------------- Auto-Git Log --------------------
+		Thu Aug 29 2019 17:10:57 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* database/migrations/2014_09_13_092222_create_cities_table.php
+* database/migrations/2014_09_13_092223_create_areas_table.php
+* database/migrations/2014_10_12_000001_create_users_table.php
+* database/seeds/PermissionTableSeeder.php
+
+
+Created files:
+
+
+Deleted files:
+* app/Http/Controllers/AdvertisementController.php
+* app/Http/Controllers/CenterContainerController.php
+* app/Http/Controllers/CentersController.php
+* app/Http/Controllers/ContainersController.php
+* app/Http/Controllers/DriversController.php
+* app/Http/Controllers/OrderDriverController.php
+* app/Http/Controllers/OrdersController.php
+* app/Http/Controllers/ProvidersController.php
+
+
+Renamed files:
