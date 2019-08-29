@@ -19,7 +19,7 @@ class CreateContactUsTable extends Migration
             $table->string('email')->nullable($value = true);
             $table->string('title')->nullable($value = true);
             $table->string('message')->nullable($value = true);
-            $table->enum('status', ['active', 'not_active'])->default('active');
+            $table->string('status')->nullable($value = true);
             $table->timestamps();
         });
     }
