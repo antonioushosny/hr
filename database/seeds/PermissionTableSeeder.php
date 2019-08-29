@@ -1,9 +1,7 @@
 <?php
 
-
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-
 
 class PermissionTableSeeder extends Seeder
 {
@@ -28,51 +26,61 @@ class PermissionTableSeeder extends Seeder
            'user_list',
            'user_create',
            'user_edit',
-           'user_delete',
-           
-           'client_list',
-           'client_create',
-           'client_edit',
-           'client_delete',
+           'user_delete',           
 
-           'classification_list',
-           'classification_create',
-           'classification_edit',
-           'classification_delete',
+           'technical_list',
+           'technical _create',
+           'technical _edit',
+           'technical _delete',
 
-           'departement_list',
-           'departement_create',
-           'departement_edit',
-           'departement_delete',
-
-           'product_list',
-           'product_create',
-           'product_edit',
-           'product_delete',
-
-           'advertisement_list',
-           'advertisement_create',
-           'advertisement_edit',
-           'advertisement_delete',
+           'service_list',
+           'service _create',
+           'service _edit',
+           'service_delete',
 
            'subscription_list',
            'subscription_create',
            'subscription_edit',
            'subscription_delete',
 
+           'status_list',
+           'status _create',
+           'status _edit',
+           'status _delete',
+
+           'country_list',
+           'country _create',
+           'country _edit',
+           'country _delete',
+
+           'city_list',
+           'city _create',
+           'city _edit',
+           'city _delete',
+
+           'area_list',
+           'area _create',
+           'area _edit',
+           'area _delete',
+
+           'nationality_list',
+           'nationality _create',
+           'nationality _edit',
+           'nationality _delete',
+
+           'static_page_list',
+           'static_page _edit',
+
            'contact_list',
            'contact_edit',
            'contact_delete',
 
            'order_list',
-           'order_create',
-           'order_edit',
-           'order_delete',
+           'rate_list',
 
            'send_message',
            'reports',   
         ];
-
 
         foreach ($permissions as $permission) {
              Permission::create(['name' => $permission]);

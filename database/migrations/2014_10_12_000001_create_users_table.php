@@ -15,8 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company_name')->nullable($value = true);
-            $table->string('name')->nullable($value = true);
+             $table->string('name')->nullable($value = true);
             $table->string('email')->nullable($value = true);
             $table->string('password')->nullable($value = true);
             $table->string('mobile')->unique()->nullable($value = true);
@@ -27,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('lng')->nullable($value = true);
             $table->string('image')->nullable($value = true);
             $table->string('device_token')->nullable($value = true);
-            $table->enum('role', ['admin','user','provider','center','driver']);    
+            $table->enum('role', ['admin','user','fannie']);    
             $table->enum('status', ['active', 'not_active']);        
             $table->tinyInteger('available')->nullable($value = true);       
             $table->tinyInteger('type')->nullable($value = true);       
