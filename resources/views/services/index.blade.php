@@ -68,6 +68,7 @@
                                         </th>
                                         <th>{{trans('admin.name_ar')}}</th>
                                         <th>{{trans('admin.name_en')}}</th>
+                                        <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
@@ -81,6 +82,11 @@
                                         </td>
                                         <td>{{ $data->name_ar }}</td>
                                         <td>{{ $data->name_en }}</td>
+                                        @if($data->image)
+                                        <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
+                                        @else 
+                                        <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
+                                        @endif
                                         @if($data->status == 'active')
                                         <td style="text-align:center"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
                                         @elseif($data->status == 'not_active')
