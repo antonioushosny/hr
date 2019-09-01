@@ -192,6 +192,8 @@ return [
         'provider_id'                        => ' Water Provider', 
         'driver_id'                        => ' Driver', 
         'reason'                        => ' Reason', 
+        'cost'                    =>'Cost',
+        'no-month'                 =>'Number of months',
     ],
     
 ];

@@ -156,6 +156,7 @@ return [
         'placeholder_national_id'       => ' ادخل الرقم القومي   ',
         'Search_Box'                    => 'بحث',
         'Please_wait'                    => 'انتظر من فضلك' ,
+        'placeholder_no_month'           =>'عدد الشهور',
     //end placeholders
 
     //admin page
@@ -311,6 +312,10 @@ return [
         'edit_service'=>'تعديل خدمة',
         //end services pages
      
+        //subscriptions pages
+        'subscriptions'=>'الإشتراكات',
+        'add_subscription'=>' إضافة إشتراك',
+        'edit_subscription'=>' تعديل إشتراك',
  ];
 
 

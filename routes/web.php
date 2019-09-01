@@ -94,6 +94,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/services/delete/{id}', 'ServicesController@destroy')->name('destroyservice');
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall');
     Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
+    
+    
+    //route for subscriptions management
+    Route::get('/subscriptions', 'SubscriptionTypeController@index')->name('subscriptions');
+     Route::get('/subscriptions/add/', 'SubscriptionTypeController@add')->name('addsubscription');
+     Route::post('/subscriptions/update/', 'SubscriptionTypeController@store')->name('storeaddsubscription');
+     Route::get('/subscriptions/edit/{id}', 'SubscriptionTypeController@edit')->name('editsubscription');
+    Route::get('/subscriptions/delete/{id}', 'SubscriptionTypeController@destroy')->name('destroysubscription');
+    Route::post('/subscriptions/deleteall', 'SubscriptionTypeController@deleteall')->name('subscriptionsdeleteall');
+    
+    
+    
     // routes for users management
     Route::get('/users', 'UsersController@index')->name('users');
     Route::post('/users/update/', 'UsersController@store')->name('storeuser');

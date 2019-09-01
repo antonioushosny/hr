@@ -145,6 +145,7 @@ return [
         'placeholder_message'           => 'Enter Message ',
          'Search_Box'                    => 'Search Box',
         'Please_wait'                    => 'Please Wait',
+        'placeholder_no_month'           =>'Number of months',
     //end placeholders
     
     //admin page
@@ -301,4 +302,10 @@ return [
         'add_service'=>'Add Service',
         'edit_service'=>'Edit Service',
         //end services pages
+
+
+        //subscriptions pages
+        'subscriptions'=>'Subscriptions',
+        'add_subscription'=>'Add Subscription',
+        'edit_subscription'=>'Edit Subscription',
 ];

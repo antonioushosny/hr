@@ -337,6 +337,11 @@ body, html {
                     <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.services')}}</span></a></li>
                     @endcan
                     
+
+                    @can('subscription_list')
+                    <li <?php echo ($page == 'subscriptions') ? "class='active open'" : ""; ?> ><a href="{{ route('subscriptions') }}"  ><i class="zmdi zmdi-money"></i> <span> {{trans('admin.subscriptions')}}</span></a></li>
+                    @endcan
+
                     @can('user_list')                    
                     <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li>
                     @endcan

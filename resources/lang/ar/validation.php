@@ -177,6 +177,8 @@ return [
         'provider_id'                        => ' مزود مياه', 
         'driver_id'                        => ' السائق', 
         'reason'                        => ' السبب', 
+        'cost'                    =>'التكلفة',
+        'no_month'                 =>'عدد الشهور',
     ],
     
 
