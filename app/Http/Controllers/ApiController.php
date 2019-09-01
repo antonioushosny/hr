@@ -80,7 +80,7 @@ public function IsRegistered(Request $request){
             return response()->json([
                 'success' => 1,
                 'errors' => null,
-                'message' => trans('api.send_token'),
+                'message' => trans('api.send_code'),
                 'data' => $code
             ]);
         }
