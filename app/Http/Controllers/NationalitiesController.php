@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Notifications\emailnotify;
 use App\City;
 use App\Area;
-use App\Country;
+use App\Nationality;
 use Auth;
 use App;
-class CountriesController extends Controller
+class NationalitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,11 +27,11 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        
-        $countries = Country::orderBy('id', 'DESC')->get();
+        $title = 'nationalities';
+ 
+        $nationalities = Nationality::orderBy('id', 'DESC')->get();
         // return $admins ; 
-        return view('countries.index',compact('countries','title','lang'));
+        return view('nationalities.index',compact('nationalities','title','lang'));
 
     }
 
@@ -40,9 +40,9 @@ class CountriesController extends Controller
         if ($request->ajax()) {
             $lang = App::getlocale();
             if($lang == 'ar'){
-                $cities = City::where('country_id', $id)->select('name_ar AS name','id')->get();
+                $cities = City::where('nationality_id', $id)->select('name_ar AS name','id')->get();
             }else{
-                $cities = City::where('country_id', $id)->select('name_en AS name','id')->get();
+                $cities = City::where('nationality_id', $id)->select('name_en AS name','id')->get();
             }
             return response()->json([
                 'cities' => $cities ,
@@ -56,8 +56,8 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        return view('countries.add',compact('title','lang'));
+        $title = 'nationalities';
+        return view('nationalities.add',compact('title','lang'));
     }
     public function store(Request $request)
     {
@@ -78,7 +78,7 @@ class CountriesController extends Controller
                 'name_ar'  =>'required|max:190',           
                 'name_en'  =>'required|max:190',              
                 // 'image'  =>'required',           
-                // 'country_id'  =>'required',     
+                // 'nationality_id'  =>'required',     
                 'status'  =>'required'      
             ];
         }
@@ -91,28 +91,28 @@ class CountriesController extends Controller
          
         // return $request ;
         if($request->id ){
-            $country = Country::find( $request->id );
+            $nationality = nationality::find( $request->id );
         }
         else{
-            $country = new Country ;
+            $nationality = new nationality ;
 
         }
 
-        $country->name_ar          = $request->name_ar ;
-        $country->name_en         = $request->name_en ;
-        $country->status        = $request->status ;
-        $country->save();
+        $nationality->name_ar          = $request->name_ar ;
+        $nationality->name_en         = $request->name_en ;
+        $nationality->status        = $request->status ;
+        $nationality->save();
         if ($request->hasFile('image')) {
 
             $image = $request->file('image');
             $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $name);
-            $country->image   = $name;  
+            $nationality->image   = $name;  
         }
-        $country->save();
-        $country = Country::where('id',$country->id)->first();
-        return response()->json($country);
+        $nationality->save();
+        $nationality = nationality::where('id',$nationality->id)->first();
+        return response()->json($nationality);
 
     }
 
@@ -130,10 +130,10 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        $countrie = Country::where('id',$id)->orderBy('id', 'DESC')->first();
+        $title = 'nationalities';
+        $nationalitie = nationality::where('id',$id)->orderBy('id', 'DESC')->first();
         // return $admin ; 
-        return view('countries.edit',compact('countrie','title','lang'));
+        return view('nationalities.edit',compact('nationalitie','title','lang'));
     }
 
     public function update(Request $request, $id)
@@ -150,7 +150,7 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $id = Country::find( $id );
+        $id = nationality::find( $id );
         $id ->delete();
         return response()->json($id);
     }
@@ -161,9 +161,9 @@ class CountriesController extends Controller
         
         if($request->ids){
             foreach($request->ids as $id){
-                $id = Country::find($id);
+                $id = nationality::find($id);
             }
-            $ids = Country::whereIn('id',$request->ids)->delete();
+            $ids = nationality::whereIn('id',$request->ids)->delete();
         }
         return response()->json($request->ids);
     }

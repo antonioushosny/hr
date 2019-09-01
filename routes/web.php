@@ -86,6 +86,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/areas/delete/{id}', 'AreasController@destroy')->name('destroyarea');
     Route::post('/areas/deleteall', 'AreasController@deleteall')->name('areasdeleteall');
 
+    // routes for nationalities management
+    Route::get('/nationalities', 'NationalitiesController@index')->name('nationalities');
+    Route::get('/nationalities/add/', 'NationalitiesController@add')->name('addnationalitie');
+    Route::post('/nationalities/update/', 'NationalitiesController@store')->name('storenationalitie');
+    Route::get('/nationalities/edit/{id}', 'NationalitiesController@edit')->name('editnationalitie');
+    Route::get('/nationalities/delete/{id}', 'NationalitiesController@destroy')->name('destroynationalitie');
+    Route::post('/nationalities/deleteall', 'NationalitiesController@deleteall')->name('nationalitiesdeleteall');
+    Route::get('/nationalities/{id}/areas', 'NationalitiesController@areas')->name('nationalityareas');
+
     // routes for services management
     Route::get('/services', 'ServicesController@index')->name('services');
     Route::get('/services/add/', 'ServicesController@add')->name('addservice');
@@ -95,17 +104,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall');
     Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
     
-    
     //route for subscriptions management
     Route::get('/subscriptions', 'SubscriptionTypeController@index')->name('subscriptions');
-     Route::get('/subscriptions/add/', 'SubscriptionTypeController@add')->name('addsubscription');
-     Route::post('/subscriptions/update/', 'SubscriptionTypeController@store')->name('storeaddsubscription');
-     Route::get('/subscriptions/edit/{id}', 'SubscriptionTypeController@edit')->name('editsubscription');
+    Route::get('/subscriptions/add/', 'SubscriptionTypeController@add')->name('addsubscription');
+    Route::post('/subscriptions/update/', 'SubscriptionTypeController@store')->name('storeaddsubscription');
+    Route::get('/subscriptions/edit/{id}', 'SubscriptionTypeController@edit')->name('editsubscription');
     Route::get('/subscriptions/delete/{id}', 'SubscriptionTypeController@destroy')->name('destroysubscription');
     Route::post('/subscriptions/deleteall', 'SubscriptionTypeController@deleteall')->name('subscriptionsdeleteall');
-    
-    
-    
+
     // routes for users management
     Route::get('/users', 'UsersController@index')->name('users');
     Route::post('/users/update/', 'UsersController@store')->name('storeuser');
@@ -116,7 +122,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/users/deleteall', 'UsersController@deleteall')->name('usersdeleteall');
     Route::get('/users/orders/{id}', 'UsersController@orders')->name('userorders');
 
-    
     //  routes for contact_us management
     Route::get('/contact_us', 'ContactsController@index')->name('contacts');
     Route::get('/contacts/delete/{id}', 'ContactsController@destroy')->name('destroycontact');
