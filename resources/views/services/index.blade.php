@@ -63,9 +63,10 @@
                             @endif
                                 <thead>
                                     <tr>
+                                        @can('service_delete')
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
-                                        </th>
+                                        </th>@endcan
                                         <th>{{trans('admin.name_ar')}}</th>
                                         <th>{{trans('admin.name_en')}}</th>
                                         <th>{{trans('admin.image')}}</th>
@@ -77,9 +78,11 @@
                                 <tbody>
                                     @foreach ($services as $data)
                                     <tr class="item{{$data->id}}">
+                                        @can('service_delete')
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>
+                                        @endcan
                                         <td>{{ $data->name_ar }}</td>
                                         <td>{{ $data->name_en }}</td>
                                         @if($data->image)

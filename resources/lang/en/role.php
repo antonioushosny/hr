@@ -22,7 +22,7 @@ return [
     'service_list' => 'View Services',
     'service_create' => 'Add Service',
     'service_edit' => 'Edit Service',
-    'dservice_delete' => 'Delete Service',
+    'service_delete' => 'Delete Service',
 
     'subscription_list' => 'View Subscriptions',
     'subscription_edit' => 'Edit Subscription',

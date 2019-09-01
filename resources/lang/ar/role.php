@@ -22,7 +22,7 @@ return [
     'service_list'  => 'عرض الخدمات',
     'service_create'    => 'اضافة خدمة',
     'service_edit'  => 'تعديل خدمة',
-    'dservice_delete'    => 'حذف خدمة',
+    'service_delete'    => 'حذف خدمة',
 
     'subscription_list' => 'عرض الاشتراكات',
     'subscription_edit' => 'تعديل الاشتراك ',

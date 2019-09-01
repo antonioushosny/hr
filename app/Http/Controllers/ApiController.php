@@ -9,18 +9,20 @@ use Illuminate\Http\Request;
 
 use App\Area ;
 use App\Advertisement ;
-use App\CenterContainer;
+use App\AvailableDay;
 use App\City;
 use App\Contact;
 use App\ContactUs;
-use App\Container;
+use App\Favorite;
 use App\Country ; 
 use App\Doc;
 use App\Order;
-use App\OrderCenter ; 
-use App\OrderDriver ; 
+use App\Subscription ; 
+use App\SubscriptionType ; 
 use App\PasswordReset ; 
 use App\User;
+use App\Technician;
+use App\Service;
 
 use Carbon\Carbon;
 use App\Notifications\Notifications;

@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'company_name', 'name','email', 'password','mobile','address','desc','join_date','city','area','lat','lng','image','device_token','role','status','available','country_id','type','city_id','provider_id','center_id','area_id'
+        'code', 'name','email', 'password','mobile','address','city','area','lat','lng','image','device_token','role','status','lang','type',
     ];
 
     public function sendPasswordResetNotification($token)
@@ -45,32 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Order', 'user_id');
     }
-    public function centersorders()
+    public function fannieorders()
     {
-        return $this->hasMany('App\Order', 'center_id');
+        return $this->hasMany('App\Order', 'fannie_id');
     }
-    public function driversorders()
-    {
-        return $this->hasMany('App\Order', 'driver_id');
-    }
-    public function centers()
-    {
-        return $this->hasMany('App\User', 'provider_id');
-    }
-    public function provider()
-    {
-        return $this->belongsTo('App\User','provider_id');
-    } 
-    public function center()
-    {
-        return $this->belongsTo('App\User','center_id');
-    } 
-    public function containers()
-    {
-        return $this->belongsToMany('App\Container', 'center_containers', 'center_id', 'container_id')->withPivot('price');; 
-    }
-    public function centercontainer()
-    {
-        return $this->belongsTo('App\CenterContainer','center_id');
-    } 
+ 
 }

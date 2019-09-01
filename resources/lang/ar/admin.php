@@ -193,6 +193,14 @@ return [
         'delete_countrie'                 =>  ' حذف دولة',
     //end countries page
 
+    //services page 
+        'services'                       => ' الخدمات', 
+        'service'                       => ' الخدمة', 
+        'add_service'                    => ' اضافة خدمة'  ,
+        'add_service'                    => ' اضافة خدمة'  ,
+        'edit_service'                   => ' تعديل خدمة'  ,
+        'delete_service'                 =>  ' حذف خدمة',
+    //end services page
     //cities page 
         'cities'                       => ' المدن', 
         'city'                       => ' المدينة', 

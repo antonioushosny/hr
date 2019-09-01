@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Term extends Model
+class Nationality extends Model
 {
     use Notifiable;
-    protected $table = 'terms';
 
     protected $fillable = [
-        'title','disc','status'
+        'name_ar','name_en','image','status'
     ];
 
+ 
 }
