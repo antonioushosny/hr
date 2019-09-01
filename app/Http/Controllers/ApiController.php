@@ -120,7 +120,7 @@ class ApiController extends Controller
                 $response =  $this->FailedResponse($message , $transformed) ;
                 return  $response ;
             }
-            $user  = User::where('mobile',$request->mobile)->orderBy('id', 'desc')->first();
+            $user  = User::where('mobile',$request->mobile)->where('role','<>','admin')->orderBy('id', 'desc')->first();
 
             if($user){
                 $code = rand(100000,999999);
