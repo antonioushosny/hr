@@ -66,6 +66,39 @@ class ApiController extends Controller
         date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
+
+    
+//////////////////////////////////////////////
+// IsRegistered function by Antonious hosny
+public function IsRegistered(Request $request){ 
+    $user  = User::where('mobile',$request->id)->orderBy('id', 'desc')->first();
+
+        if($user){
+            $code = rand(100000,999999);
+            $user->code = $code ;
+
+            return response()->json([
+                'success' => 1,
+                'errors' => null,
+                'message' => trans('api.send_token'),
+                'data' => $code
+            ]);
+        }
+        else
+        {
+            // $errors=  trans('api.notfound');
+            $errors[] = trans('api.mobile_notfound');
+            return response()->json([
+                'success' => 0,
+                'errors' => $errors,
+                'message' => trans('api.mobile_notfound'),
+                'data' => null,
+
+            ]);
+        }
+
+
+}
 //////////////////////////////////////////////
 // Advertisement function by Antonious hosny
     public function Advertisements(Request $request){ 

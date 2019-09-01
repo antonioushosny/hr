@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('Advertisements', 'ApiController@Advertisements')->middleware('localization');
+Route::post('IsRegistered', 'ApiController@IsRegistered')->middleware('localization');
 Route::post('Cities', 'ApiController@Cities')->middleware('localization');
 Route::post('Areas', 'ApiController@Areas')->middleware('localization');
 Route::post('Login', 'ApiController@Login')->middleware('localization');
