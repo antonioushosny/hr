@@ -23,6 +23,8 @@ use App\PasswordReset ;
 use App\User;
 use App\Technician;
 use App\Service;
+use App\Rate;
+use App\Nationality;
 
 use Carbon\Carbon;
 use App\Notifications\Notifications;
