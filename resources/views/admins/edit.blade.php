@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to Khazan')}}</small>
+                <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -63,6 +63,14 @@
                                         <label id="password-error" class="error" for="password" style=""></label>
                                         <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
                                     </div>
+                                    <div class="form-group form-float">
+                                           
+                                        {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                                        
+                                        <label id="roles-error" class="error" for="roles" style=""></label>
+                                    </div>
+
+                                     
                                     <div class="form-group form-float row"  >
                                             
                                         {{--  for image  --}}
@@ -122,8 +130,7 @@
 
 
 <script>
-    
-    //this for add new record
+     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
            $('.add').disabled =true;

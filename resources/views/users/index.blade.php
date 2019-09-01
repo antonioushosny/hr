@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to Khazan')}}</small>
+                <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -39,17 +39,20 @@
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
-        
-                                <!-- </li>
+                                @can('user=create')
+                                </li>
                                     <a href="{{route('adduser')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
                                         {{trans('admin.add_user')}}
                                     </a>
-                                </li> -->
+                                </li>
+                                @endcan
+                                @can('user-delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
-                                </li>                                
+                                </li>  
+                                @endcan                              
                             </ul>
                         </div>
                         <div class="body">
@@ -119,9 +122,12 @@
                                             </td> 
                                         @endif
                                         <td>
-                                            <!-- <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> -->
-
+                                            @can('user-edit')
+                                            <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
+                                            @endcan
+                                            @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                            @endcan
                                         </td>
                                     </tr>
                                     

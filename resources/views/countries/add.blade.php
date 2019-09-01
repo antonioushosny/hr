@@ -20,8 +20,8 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('cities')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.cities')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_citie')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('countries')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.countries')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_countrie')}}</a></li>
                     
                 </ul>
             </div>
@@ -37,18 +37,13 @@
                 <div class="card">
                
                     <div class="header">
-                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_citie')}}  </h2>
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_countrie')}}  </h2>
                         
                     </div> 
                     <div class="body row">
                         <div class="col-lg-6">
-                            {!! Form::open(['route'=>['storecitie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                            {!! Form::open(['route'=>['storecountrie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                             
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('country_id',$countries
-                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_country'),'required']) !!}
-                                        <label id="country_id-error" class="error" for="country_id" style="">  </label>
-                                </div>
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
                                     <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
@@ -98,7 +93,7 @@
         //    openModal();
           $.ajax({
               type: 'POST',
-              url: '{{ URL::route("storecitie") }}',
+              url: '{{ URL::route("storecountrie") }}',
               data:  new FormData($("#form_validation")[0]),
               processData: false,
               contentType: false,
@@ -115,7 +110,7 @@
                             $('#name-en-error').text(data.errors.name_en);
                         }
                   } else {
-                        window.location.replace("{{route('cities')}}");
+                        window.location.replace("{{route('countries')}}");
 
                      }
             },

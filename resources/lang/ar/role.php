@@ -14,48 +14,55 @@ return [
     'user_create'   => 'اضافة مستخدم',
     'user_edit'     => 'تعديل مستخدم',
     'user_delete'   => 'حذف مستخدم',
-    
-    'client_list'   => 'عرض مقدمين الخدمة',
-    'client_create' => ' اضافة مقدم خدمة',
-    'client_edit'   => 'تعديل مقدم خدمة',
-    'client_delete' => 'حذف مقدم خدمة',
 
-    'departement_list'  => 'عرض الاقسام',
-    'departement_create'    => 'اضافة قسم',
-    'departement_edit'  => 'تعديل قسم',
-    'departement_delete'    => 'حذف قسم',
-
+    'technical_list'   => 'عرض  الفنيين',
+    'technical_create' => ' اضافة فني ',
+    'technical_edit'   => 'تعديل  فني',
+ 
     'service_list'  => 'عرض الخدمات',
     'service_create'    => 'اضافة خدمة',
     'service_edit'  => 'تعديل خدمة',
-    'service_delete'    => 'حذف خدمة',
-
-    'advertisement_list'    => 'عرض الاعلانات',
-    'advertisement_create'  => 'اضافة اعلان',
-    'advertisement_edit'    => 'تعديل اعلان',
-    'advertisement_delete'  => 'حذف اعلان',
+    'dservice_delete'    => 'حذف خدمة',
 
     'subscription_list' => 'عرض الاشتراكات',
     'subscription_edit' => 'تعديل الاشتراك ',
+    'subscription_create'  => 'اضافة اشتراك',
+    'subscription_delete'  => 'حذف اشتراك',
 
     'contact_list'  => 'عرض الاتصال',
     'contact_edit'  => 'تعديل الاتصال ',
     'contact_delete'    => 'حذف الرسالة',
 
     'order_list'    => 'عرض الطلبات',
-    'order_delete'  => 'حذف الطلب',
-    'order_edit'    => 'تعديل الطلب',
+    'rate_list'  => 'عرض التقييمات',
     'send_message'  => 'ارسال رسائل',
     'reports'   => 'التقارير',
 
-    'classification_list' => 'عرض التصنيفات',
-    'classification_delete' => 'حذف التصنيفات',
-    'classification_edit' => 'تعديل التصنيفات',
-    'classification_create' => 'اضافة التصنيفات',
+    'nationality_list' => 'عرض الجنسيات',
+    'nationality_create' => 'اضافة الجنسيات',
+    'nationality_edit' => 'تعديل الجنسيات',
+    'nationality_delete' => 'حذف الجنسيات',
 
-    'product_list' => 'عرض المنتجات',
-    'product_delete' => 'حذف المنتجات',
-    'product_edit' => 'تعديل المنتجات',
-    'product_create' => 'اضافة المنتجات',   
+    'country_list' => 'عرض الدول',
+    'country_create' => 'اضافة الدول',
+    'country_edit' => 'تعديل الدول',
+    'country_delete' => 'حذف الدول',   
+
+    'city_list' => 'عرض المدن',
+    'city_create' => 'اضافة المدن',
+    'city_edit' => 'تعديل المدن',
+    'city_delete' => 'حذف المدن',   
+
+    'area_list' => 'عرض المناطق',
+    'area_create' => 'اضافة المناطق',
+    'area_edit' => 'تعديل المناطق',
+    'area_delete' => 'حذف المناطق',
+
+    'static_page_list' => 'عرض الصفحات الثابتة',   
+    'static_page_edit' => 'تعديل الصفحات الثابتة',  
     
+
 ];
+
+
+

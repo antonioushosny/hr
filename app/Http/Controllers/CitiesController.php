@@ -31,7 +31,7 @@ class CitiesController extends Controller
         $allcountries = Country::where('id','<>','1')->get();
         $countries = array_pluck($allcountries,'name_ar', 'id'); $allcountries = Country::all();
         $countries = array_pluck($allcountries,'name_ar', 'id');
-        $cities = City::orderBy('id', 'DESC')->get();
+        $cities = City::with('country')->orderBy('id', 'DESC')->get();
         // return $admins ; 
         return view('cities.index',compact('cities','countries','title','lang'));
 
@@ -59,7 +59,13 @@ class CitiesController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'cities';
-        return view('cities.add',compact('title','lang'));
+        $allcountries = Country::all();
+        if($lang == 'ar'){
+            $countries = array_pluck($allcountries,'name_ar', 'id'); 
+        }else{
+            $countries = array_pluck($allcountries,'name_en', 'id');
+        }
+        return view('cities.add',compact('title','countries','lang'));
     }
     public function store(Request $request)
     {
@@ -68,7 +74,8 @@ class CitiesController extends Controller
             $rules =
             [
                 'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',           
+                'name_en'  =>'required|max:190', 
+                'country_id'  =>'required',           
                 'status'  =>'required',   
             ];
             
@@ -80,7 +87,7 @@ class CitiesController extends Controller
                 'name_ar'  =>'required|max:190',           
                 'name_en'  =>'required|max:190',              
                 // 'image'  =>'required',           
-                // 'country_id'  =>'required',     
+                'country_id'  =>'required',     
                 'status'  =>'required'      
             ];
         }
@@ -102,6 +109,7 @@ class CitiesController extends Controller
 
         $city->name_ar          = $request->name_ar ;
         $city->name_en         = $request->name_en ;
+        $city->country_id         = $request->country_id ;
         $city->status        = $request->status ;
         $city->save();
 
@@ -126,9 +134,15 @@ class CitiesController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'cities';
-        $citie = City::where('id',$id)->orderBy('id', 'DESC')->first();
+        $allcountries = Country::all();
+        if($lang == 'ar'){
+            $countries = array_pluck($allcountries,'name_ar', 'id'); 
+        }else{
+            $countries = array_pluck($allcountries,'name_en', 'id');
+        }
+        $citie = City::where('id',$id)->with('country')->orderBy('id', 'DESC')->first();
         // return $admin ; 
-        return view('cities.edit',compact('citie','title','lang'));
+        return view('cities.edit',compact('citie','countries','title','lang'));
     }
 
     public function update(Request $request, $id)

@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to Khazan')}}</small>
+                <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -131,7 +131,10 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.save')}}</button>
+                                @can('static_page_edit')
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.save')}}
+                                @endcan
+                                </button>
                             </form>
                         </div>
                 </div>

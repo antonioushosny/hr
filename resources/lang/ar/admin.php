@@ -44,7 +44,6 @@ return [
         'available'                     => 'متاح', 
         'not_available'                 => ' عير متاح ',
         'excuting_order'                => 'ينفذ طلب ',
-        'availability_status'           => 'حالة السائق',
         'actions'                       => 'تحكم',
         'save'                          => 'حفظ',
         'add'                           => 'أضافة',
@@ -77,8 +76,8 @@ return [
         'usersm'                        => 'إدارة  المستخدمين',
         'advertisementsm'                  => 'إدارة  الاعلانات',
         'contactsm'                     => 'تواصل معنا' ,
-        'messages'                      => 'ارسال رسائل\نقاط' , 
-        'salesreports'  => 'تقارير المبيعات',
+
+        
         
     //end sidebar
 
@@ -115,12 +114,6 @@ return [
         'desc_ar'                          =>' الوصف بالعربية',
         'desc_en'                       =>'الوصف بالانجليزية',
         'date'                          => 'التاريخ',
-        'stage'                         => 'المرحلة' ,
-        'level'                         => 'المستوى' ,
-        'classe'                        => 'الفصل',
-        'client'                        => 'البائع',
-        'section'                       => 'مجموعة',
-        'number'                        => 'رقم الحصة',
         'user_id'                       => ' المستخدم',
         'national_id'                   => ' الرقم القومي   ',
         'images'                        => 'الصور',
@@ -215,122 +208,28 @@ return [
         'edit_area'                   => ' تعديل منطقة'  ,
         'delete_area'                 =>  ' حذف منطقة',
     //end areas page
+ 
+    //roles page 
+        'roles'                       => ' الأدوار', 
+        'role'                        => ' دور', 
+        'Name'                        => ' الأسم', 
+        'no'                        => ' رقم', 
+        'add_role'                    => ' اضافة دور'  ,
+        'edit_role'                   => ' تعديل دور'  ,
+        'delete_role'                 =>  ' حذف دور'  ,
+        'check_all'                 => 'اختر الكل ', 
+        'permissions'                 => 'الصلاحيات', 
 
-    //containers page 
-        'containers'                       => ' الخزانات', 
-        'container'                       => ' الخزان', 
-        'add_container'                    => ' اضافة خزان'  ,
-        'edit_container'                   => '  تعديل خزان'  ,
-        'delete_container'                 =>  '  حذف خزان ',
-        'no_containers'             => 'عدد الخزانات',
-        'container_name'             => 'اسم الخزان',
-        'usermobile'             => 'رقم العميل',
-        'filter'             => 'تصفية',
-    //end containers page
-
-     //providers page 
-        'providers'                       => ' مزودي المياه', 
-        'provider'                        => ' مزود مياه', 
-        'add_provider'                    => ' اضافة مزود'  ,
-        'edit_provider'                   => ' تعديل مزود'  ,
-        'delete_provider'                 =>  ' حذف مزود'  ,
-        'company_name'                    => 'اسم الشركة ',
-        'responsible_name'                => 'اسم المسئول ',
-        'description'                     => 'الوصف',
-        'address'                         => 'العنوان',
-        'join_date'                       => 'ناريخ الانضمام',
-        'placeholder_company_name'              => 'من فضلك ادخل اسم الشركة',
-        'placeholder_responsible_name'              => 'من فضلك ادخل اسم المسئول',
-        'placeholder_description'              => 'من فضلك ادخل الوصف',
-        'placeholder_address'              => 'من فضلك ادخل  العنوان',
-    //end providers page
-
-    //centers page 
-        'centers'                       => ' مراكز التوزيع ', 
-        'center'                        => ' مركو توزيع ', 
-        'center_id'                        => ' مركو توزيع ', 
-        'add_center'                    => ' اضافة مركز'  ,
-        'edit_center'                   => ' تعديل مركز'  ,
-        'delete_center'                 =>  ' حذف مركز'  ,
-        'choose_city'                   => 'اختر المدينة',
-        'choose_provider'               => 'اختر مزود مياه',
-        'choose_area'                   => 'اختر المنطقة',
-        'choose_center'                 => ' اختر مركز توزيع   ',
-        'choose_container'                 => ' اختر الخزان    ',
-        
-    //end centers page
-
-    //drivers page 
-        'drivers'                       => ' السائقين', 
-        'driver'                        => ' السائق', 
-        'add_driver'                    => ' اضافة سائق'  ,
-        'edit_driver'                   => ' تعديل سائق'  ,
-        'delete_driver'                 =>  ' حذف سائق'  ,
-    //end drivers page
-   
-
-    //orders page 
-        'orders'                       => ' الطلبات', 
-        'neworders'                       => ' الطلبات الجديدة', 
-        'noworders'                       => ' الطلبات الحالية', 
-        'lastorders'                       => ' الطلبات المنتهية', 
-        'allorders'                       => ' كل الطلبات ', 
-        'order'                        => ' الطلب', 
-        'add_order'                    => ' اضافة طلب'  ,
-        'edit_order'                   => ' تعديل طلب'  ,
-        'delete_order'                 =>  ' حذف طلب'  ,
-        'pending'   => 'قيد الانتظار ',
-        'accepted'   =>  'مقبول ، في انتظار تعيين سائق' ,
-        'assigned'   =>  'تم تعيين سائق لهذا الأمر ، في انتظار التسليم' ,
-        'delivered'   =>  'تم التوصيل',
-        'canceled'   =>  'ألغيت',
-        'size'       => 'الحجم',
-        'price'       => 'التكلفة',
-        'no_container'       => 'عدد الخزانات ',
-        'total'       => 'الأجمالي',
-        'user_mobile'   => 'رقم الجوال ',
-        'container_size'  => 'حجم الخزان' ,
-        'notes'           => 'ملاحظات أضافية',
-        'small'           => 'صغير',
-        'large'           => 'كبير',
-        'client_detail'           => 'تفاصيل العميل ',
-        'order_detail'           => ' تفاصيل الطلب',
-        'placeholder_reason'    => 'ادخل السبب',
-        'accept'    => 'قبول',
-        'decline'    => 'رفض',
-        'take_action'    => 'رجاء اخذ اجراء',
-        'submit'    => 'تم',
-        'choose_driver'     => 'اختر سائق ',
-        'reason'          => 'سبب الرفض ' ,
-        'decline_date'    => 'وقت وتاريخ الرفض',
-        'accept_date'    => 'وقت وتاريخ القبول',
-        'reassign'       => ' تعيين سائق آخر ',
-        'decline_order'     => 'رفض الطلب',
-        'date_from'      => 'من تاريخ ',
-        'date_to'      => 'الي تاريخ ',
-        'choose_status' => 'اختر الحالة ' ,
-        'all' => 'الكل ' ,
-        'SAR'   => 'ريال',
-        'This_Month_Sales'   => "مبيعات هذا الشهر",
-        'This_Year_Sales'   => "مبيعات هذا العام",
-        'This_Week_Sales'   => "مبيعات هذا الأسبوع",
-        'Today_Sales'   => "مبيعات اليوم",
-        'sales'   => 'مبيعات',
-    //end orders page
-
+    //end roles page
+ 
+ 
     // advertisements page 
         'advertisements'                       => ' الاعلانات', 
         'add_advertisement'                    => '  اضافة اعلان'  ,
         'edit_advertisement'                   => ' تعديل اعلان '  ,
         'delete_advertisement'                 => ' حذف اعلان  ',
-        'coming'                               => ' القادمة ',
-        'current'                              => ' الحالية ',
-        'previous'                             => ' السابقة ',
-        'start_date'                             => ' تاريخ البداية ',
-        'end_date'                             => ' تاريخ الانتهاء ',
-        'time'                 => 'وقت الظهور',
-        'placeholder_time'                 => 'ادخل وقت الظهور بالثواني',
-    // end advertisements page 
+ 
+      // end advertisements page 
 
     //contact_us page
         'delete_contact'                => 'حذف الرسالة',
@@ -338,17 +237,8 @@ return [
         'new'                           => 'جديدة',
         'solved'                        => 'تم حلها',
         'not_resolved'                  => 'لم يتم حلها ',
-        'clients_new'                           => 'جديدة الأسر المنتجة',
-        'clients_solved'                        => 'تم حلها الأسر المنتجة',
-        'clients_not_resolved'                  => 'لم يتم حلها الأسر المنتجة',
-        'users_new'                           => 'جديدة مستخدمين',
-        'users_solved'                        => 'تم حلها مستخدمين',
-        'users_not_resolved'                  => 'لم يتم حلها مستخدمين ',
-        'contacts_users'                => ' تواصل المستخدمين',
-        'contacts_clients'                => 'تواصل الأسر المنتجة',
         'show'                            => 'عرض',
         'close'                           => 'أغلاق',
-        'choose_size'                     =>'اختر الحجم',
         'logo'                     =>'شعار',
 
     //end contact_us page
@@ -364,7 +254,7 @@ return [
         'sendforall'            => 'ارسال للكل  ',
         'send'                  => 'ارسال',
         'alluser'               => 'كل المستخدمين',
-        'allclient'               => 'كل مقدمى المنتجات',
+        'allfannie'               => 'كل  الفنيين',
     //end messages
 
     //week days 
@@ -405,29 +295,7 @@ return [
         'Send Password Reset Link'  => 'إرسال رابط إعادة تعيين كلمة المرور',
         'Reset Password'        => 'إعادة تعيين كلمة المرور' ,
 
-    //landing page 
-
-        'about_us'      => 'عن التطبيق ',
-        'Features'      => 'كيف يعمل؟',
-        'Download'      => 'حمل التطبيق',
-        'Contact_us'       => ' تواصل معنا  ',
-        'App'           => 'تطبيق',
-        'To_deliver_drinking'           => 'لتوصيل مياه الشرب',
-        'Download_App_Now' =>'حمل التطبيق الأن',
-        'About_app'     =>'عن التطبيق ',
-        'with_fannie'   =>'مع تطبيق فني',
-        'you_can_now_order'   =>'يمكنك الآن طلب مياة الشرب من أى مكان وفى أى وقت دون التفكير فى قيادة السيارة والذهاب للمتجر وحمل المياة نحن نوفر عليك الوقت والجهد ',
-        'he_application_of_the_tank'   =>'تطبيق خزان .. به جميع منتجات المياة وبجميع الأحجام جالونات ,كرتون كل ما عليك هو تحميل التطبيق وقم بتصفح جميع المنتجات ومن ثم قم بطلب المنتج الذى تريده وسوف نقوم بإصاله إلى أى مكان تريده سواء منزل أو مسجد أو مكتب أو غير ذلك  ',
-        'How_the_app_works'   =>'كيف يعمل التطبيق ',
-        'Download_the_app'   =>'حمل التطبيق ',
-        'Record_your_data'   =>'سجل بيناتك' ,
-        'Browse_products'   =>'تصفح المنتجات',
-        'Choose_your_favorite'   =>' اختر منتجك المفضل  ',
-        'Confirm_your_purchase'   =>' اكد عملية الشراء ',
-        'We_deliver_your_request'   =>'نوصل إليك طلبك  ',
-        'For_mor_information'   =>'لمعلومات أكثر',
-        'copyRights'   =>' فني 2019.جميع الحقوق محفوظة',
-    //end landing page
+     
  ];
 
 

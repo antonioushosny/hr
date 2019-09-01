@@ -1,62 +1,69 @@
 @extends('layouts.index')
+
 @section('style')
 <link rel="stylesheet" href="{{ asset('rtl/plugins/iCheck/square/blue.css') }}">
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script> -->
-
+ 
 @endsection
- @section('content')
-<!-- Main Content -->
-<section class="content home">
-    <div class="block-header">
-        <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-12">
-                <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to fannie')}}</small>
-                </h2>
-            </div>            
-                @if($lang =='ar')
-                <div class="col-lg-7 col-md-7 col-sm-12 text-left">
-                <ul class="breadcrumb float-md-left" style=" padding: 0.6rem; direction: ltr; ">
-                @else 
-                <div class="col-lg-7 col-md-7 col-sm-12 text-right">
-                <ul class="breadcrumb float-md-right">
-                @endif
-                    <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.areas')}}</a></li>
-                </ul>
+@section('content')
+    <section class="content home">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>{{__('admin.dashboard')}}
+                    <small>{{__('admin.Welcome to fannie')}}</small>
+                    </h2>
+                </div>            
+                    @if($lang =='ar')
+                    <div class="col-lg-7 col-md-7 col-sm-12 text-left">
+                    <ul class="breadcrumb float-md-left" style=" padding: 0.6rem; direction: ltr; ">
+                    @else 
+                    <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+                    <ul class="breadcrumb float-md-right">
+                    @endif
+                        <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.roles')}}</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+        
 
-     
-    <div class="container-fluid">
-        <!-- Exportable Table -->
-        <div class="row clearfix">
-            <div class="col-lg-12">
-                <div class="card">
-                {!! Form::open(['route'=>['areasdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'areass_form' ])!!}
-
+        <div class="container-fluid">
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                    {!! Form::open(['route'=>['rolesdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'roless_form' ])!!}
+    
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
-                                @can('area_create')
-                                
+                                @can('role_create')
                                 </li>
-                                    <a href="{{route('addarea')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_area')}}">
-                                        {{trans('admin.add_area')}}
+                                    <a href="{{route('roles.create')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_role')}}">
+                                        {{trans('admin.add_role')}}
                                     </a>
-                                </li>
+                                </li>  
                                 @endcan
-                                @can('area_delete')
-                                
+                                @can('role_delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
-                                </li>    
-                                @endcan                            
+                                </li>     
+                                @endcan
+
                             </ul>
                         </div>
+                        @if ($message = Session::get('success'))
+
+                            <div class="alert alert-success">
+                    
+                                <p>{{ $message }}</p>
+                    
+                            </div>
+                
+                        @endif
                         <div class="body">
                             @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
@@ -68,63 +75,52 @@
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>
-                                        <th>{{trans('admin.city_id')}}</th>
-                                        <th>{{trans('admin.name_ar')}}</th>
-                                        <th>{{trans('admin.name_en')}}</th>
-                                        <th>{{trans('admin.status')}}</th>
+                                        <th>{{trans('admin.no')}}</th>
+                                        <th>{{trans('admin.Name')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($areas as $data)
-                                    <tr class="item{{$data->id}}">
-                                        <td> 
-                                            <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
-                                        </td>
-                                        @if($data->city)
-                                            @if($lang == 'ar')
-                                                <td>{{ $data->city->name_ar }}</td>
-                                            @else 
-                                                <td>{{ $data->city->name_en }}</td>
-                                            @endif
-                                        @else
-                                            <td> </td>
-                                        @endif
-                                        <td>{{ $data->name_ar }}</td>
-                                        <td>{{ $data->name_en }}</td>
-                                        
-                                        @if($data->status == 'active')
-                                        <td style="text-align:center"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
-                                        @elseif($data->status == 'not_active')
-                                        <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
-                                        @endif
-
-                                        <td>
-                                            @can('area_edit')
-
-                                            <a href="{{route('editarea',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
-                                            @endcan
-                                            @can('area_delete')
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
-
-                                        </td>
-                                    </tr>
+                                      
+                                           
+                                    @foreach ($roles as $key => $role)
+                                
+                                    <tr class="item{{$role->id}}">
+                                        @if($role->id != '1')
+                                            <td> 
+                                                <input type="checkbox" name="ids[]" value={{$role->id}} class="check icheck">
+                                            </td>
+                                            <td>{{ ++$i }}</td>
                                     
+                                            <td>{{ $role->name }}</td>
+                                    
+                                            <td>
+                                                @can('role_edit')
+                                                    <a href="{{route('roles.edit',$role->id)}}" class="btn btn-info waves-effect waves-float waves-blue btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>  
+                                                @endcan
+                                                @can('role_delete')
+                                                    <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$role->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                                @endcan
+                                            </td>
+                                        @endif
+                                
+                                    </tr>
+                                
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
+        
         </div>
-  
-    </div>
-</section>
-  
-@endsection 
+    </section>
+
+
+@endsection
 
 @section('script')
 
@@ -159,7 +155,7 @@
         }
         $('#check-all').iCheck('update');
     });
-    
+    //this for delete
     $(document).on('click', '.delete-modal', function() {
 
         titlet ="{{__('admin.alert_title')}}" ;
@@ -189,14 +185,14 @@
             if (isConfirm) {
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo url('/')?>/areas/delete/" + id,
+                    url: "<?php echo url('/')?>/roles/delete/" + id,
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
-                        window.location.replace("{{route('areas')}}");
+                        location.reload();
                     }
                 });
             } else {
@@ -206,6 +202,7 @@
         // $('#deleteModal').modal('show');
         // id = $('#id_delete').val();
     });
+    //this for delete all selected
     $(document).on('click', '.deleteall-modal', function() {
 
         titlet ="{{__('admin.alert_title')}}" ;
@@ -243,8 +240,8 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("areasdeleteall") }}',
-                        data:  new FormData($("#areass_form")[0]),
+                        url: '{{ URL::route("rolesdeleteall") }}',
+                        data:  new FormData($("#roless_form")[0]),
                         processData: false,
                         contentType: false,
                         success: function(data) {
@@ -252,7 +249,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal(Deleted, has_been_deleted, "success");
-                            window.location.replace("{{route('areas')}}");
+                            location.reload();
                         },
                     });
                 }

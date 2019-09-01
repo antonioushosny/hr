@@ -44,6 +44,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('roles','RoleController');
+    Route::get('/roles/delete/{id}', 'RoleController@destroy')->name('destroyrole');
+    Route::post('/roles/deleteall', 'RoleController@deleteall')->name('rolesdeleteall');
     
     //route public
     Route::get('/home', 'HomeController@index')->name('home');
@@ -58,6 +60,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admins/delete/{id}', 'AdminsController@destroy')->name('destroyadmin');
     Route::post('/admins/deleteall', 'AdminsController@deleteall')->name('adminsdeleteall');
     
+    // routes for countries management
+    Route::get('/countries', 'CountriesController@index')->name('countries');
+    Route::get('/countries/add/', 'CountriesController@add')->name('addcountrie');
+    Route::post('/countries/update/', 'CountriesController@store')->name('storecountrie');
+    Route::get('/countries/edit/{id}', 'CountriesController@edit')->name('editcountrie');
+    Route::get('/countries/delete/{id}', 'CountriesController@destroy')->name('destroycountrie');
+    Route::post('/countries/deleteall', 'CountriesController@deleteall')->name('countriesdeleteall');
+    Route::get('/countries/{id}/areas', 'CountriesController@areas')->name('countryareas');
+
     // routes for cities management
     Route::get('/cities', 'CitiesController@index')->name('cities');
     Route::get('/cities/add/', 'CitiesController@add')->name('addcitie');
@@ -75,51 +86,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/areas/delete/{id}', 'AreasController@destroy')->name('destroyarea');
     Route::post('/areas/deleteall', 'AreasController@deleteall')->name('areasdeleteall');
 
-    // routes for containers management
-    Route::get('/containers', 'ContainersController@index')->name('containers');
-    Route::get('/containers/add/', 'ContainersController@add')->name('addcontainer');
-    Route::post('/containers/update/', 'ContainersController@store')->name('storecontainer');
-    Route::get('/containers/edit/{id}', 'ContainersController@edit')->name('editcontainer');
-    Route::get('/containers/delete/{id}', 'ContainersController@destroy')->name('destroycontainer');
-    Route::post('/containers/deleteall', 'ContainersController@deleteall')->name('containersdeleteall');
-    
-    // routes for providers management
-    Route::get('/providers', 'ProvidersController@index')->name('providers');
-    Route::get('/providers/add/', 'ProvidersController@add')->name('addprovider');
-    Route::post('/providers/update/', 'ProvidersController@store')->name('storeprovider');
-    Route::get('/providers/edit/{id}', 'ProvidersController@edit')->name('editprovider');
-    Route::get('/providers/delete/{id}', 'ProvidersController@destroy')->name('destroyprovider');
-    Route::post('/providers/deleteall', 'ProvidersController@deleteall')->name('providersdeleteall');
-    Route::get('/providers/{id}/centers', 'ProvidersController@centers')->name('providercenters');
-
-    // routes for centers management
-    Route::get('/centers', 'CentersController@index')->name('centers');
-    Route::get('/centers/add/', 'CentersController@add')->name('addcenter');
-    Route::post('/centers/update/', 'CentersController@store')->name('storecenter');
-    Route::get('/centers/edit/{id}', 'CentersController@edit')->name('editcenter');
-    Route::get('/centers/delete/{id}', 'CentersController@destroy')->name('destroycenter');
-    Route::post('/centers/deleteall', 'CentersController@deleteall')->name('centersdeleteall');
-
-    // routes for drivers management
-    Route::get('/drivers', 'DriversController@index')->name('drivers');
-    Route::get('/drivers/add/', 'DriversController@add')->name('adddriver');
-    Route::post('/drivers/update/', 'DriversController@store')->name('storedriver');
-    Route::get('/drivers/edit/{id}', 'DriversController@edit')->name('editdriver');
-    Route::get('/drivers/delete/{id}', 'DriversController@destroy')->name('destroydriver');
-    Route::post('/drivers/deleteall', 'DriversController@deleteall')->name('driversdeleteall');
-
-
-    // routes for orders management
-    Route::get('/orders', 'OrdersController@index')->name('orders');
-    Route::get('/neworders', 'OrdersController@neworders')->name('neworders');
-    Route::get('/noworders', 'OrdersController@noworders')->name('noworders');
-    Route::get('/lastorders', 'OrdersController@lastorders')->name('lastorders');
-    Route::get('/orders/add/', 'OrdersController@add')->name('addorder');
-    Route::post('/orders/update/', 'OrdersController@actionfororder')->name('actionfororder');
-    Route::post('/orders/assignDriver/', 'OrdersController@assignDriver')->name('assignDriver');
-    Route::get('/orders/edit/{id}', 'OrdersController@edit')->name('editorder');
-    Route::get('/orders/delete/{id}', 'OrdersController@destroy')->name('destroyorder');
-    Route::post('/orders/deleteall', 'OrdersController@deleteall')->name('ordersdeleteall');
     
     // routes for users management
     Route::get('/users', 'UsersController@index')->name('users');
@@ -132,7 +98,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/orders/{id}', 'UsersController@orders')->name('userorders');
 
     
-    //  routes for contact_us management
     //  routes for contact_us management
     Route::get('/contact_us', 'ContactsController@index')->name('contacts');
     Route::get('/contacts/delete/{id}', 'ContactsController@destroy')->name('destroycontact');

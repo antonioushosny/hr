@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to Khazan')}}</small>
+                <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -39,17 +39,22 @@
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
+                                @can('city_create')
         
                                 </li>
                                     <a href="{{route('addcitie')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_citie')}}">
                                         {{trans('admin.add_citie')}}
                                     </a>
                                 </li>
+                                @endcan
+                                @can('city_delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
-                                </li>                                
+                                </li>        
+                                @endcan
+
                             </ul>
                         </div>
                         <div class="body">
@@ -63,6 +68,7 @@
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>
+                                        <th>{{trans('admin.country')}}</th>
                                         <th>{{trans('admin.name_ar')}}</th>
                                         <th>{{trans('admin.name_en')}}</th>
                                         <th>{{trans('admin.status')}}</th>
@@ -76,6 +82,16 @@
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>
+                                        
+                                        @if($data->country)
+                                            @if($lang == 'ar')
+                                                <td>{{ $data->country->name_ar }}</td>
+                                            @else 
+                                                <td>{{ $data->country->name_en }}</td>
+                                            @endif
+                                        @else
+                                            <td> </td>
+                                        @endif
                                         <td>{{ $data->name_ar }}</td>
                                         <td>{{ $data->name_en }}</td>
                                         @if($data->status == 'active')
@@ -85,9 +101,14 @@
                                         @endif
 
                                         <td>
-                                            <a href="{{route('editcitie',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
+                                            @can('city_edit')
 
+                                            <a href="{{route('editcitie',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
+                                            @endcan
+                                            @can('city_delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                            @endcan
+
                                         </td>
                                     </tr>
                                     

@@ -44,8 +44,9 @@ class AdminsController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
+        $roles = Role::pluck('name','name')->all();
         $title = 'admins';
-        return view('admins.add',compact('title','lang'));
+        return view('admins.add',compact('title','lang','roles'));
     }
     public function store(Request $request)
     {
@@ -81,7 +82,8 @@ class AdminsController extends Controller
         // return $request ;
         if($request->id ){
             $user = User::find( $request->id );
-
+            DB::table('model_has_roles')->where('model_id',$request->id)->delete();
+            $user->assignRole($request->input('roles'));
             if($request->email != $user->email){
                 $rules =
                 [       
@@ -115,6 +117,7 @@ class AdminsController extends Controller
             $user = new User ;
             $password = \Hash::make($request->password);
             $user->password      = $password ;
+            $user->assignRole($request->input('roles'));
         }        
         $user->name          = $request->name ;
         $user->email         = $request->email ;
@@ -159,9 +162,12 @@ class AdminsController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'admins';
+        $roles = Role::pluck('name','name')->all();
+
         $admin = User::where('id',$id)->orderBy('id', 'DESC')->first();
+        $userRole = $admin->roles->pluck('name','name')->all();
         // return $admin ; 
-        return view('admins.edit',compact('admin','title','lang'));
+        return view('admins.edit',compact('admin','title','lang','roles','userRole'));
     }
 
     public function update(Request $request, $id)
@@ -196,7 +202,8 @@ class AdminsController extends Controller
         // return $request ;
          if($request->id ){
             $user = User::find( $request->id );
-
+            DB::table('model_has_roles')->where('model_id',$id)->delete();
+            $user->assignRole($request->input('roles'));
             if($request->email != $user->email){
                 $rules =
                 [       
@@ -230,6 +237,8 @@ class AdminsController extends Controller
             $user = new User ;
             $password = \Hash::make($request->password);
             $user->password      = $password ;
+            $user->assignRole($request->input('roles'));
+
         }
         
         

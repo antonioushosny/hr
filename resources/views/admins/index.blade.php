@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to Khazan')}}</small>
+                <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -40,17 +40,21 @@
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
-        
+                                @can('admin_create')
                                 </li>
                                     <a href="{{route('addadmin')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_admin')}}">
                                         {{trans('admin.add_admin')}}
                                     </a>
                                 </li>
+                                @endcan
+                                @can('admin_delete')
+
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
-                                </li>                                
+                                </li>    
+                                @endcan                            
                             </ul>
                         </div>
                         <div class="body">
@@ -66,6 +70,7 @@
                                         </th>
                                         <th>{{trans('admin.name')}}</th>
                                         <th>{{trans('admin.email')}}</th>
+                                        <th>{{trans('admin.roles')}}</th>
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
@@ -81,6 +86,19 @@
                                         </td>
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->email }}</td>
+                                        <td>
+
+                                            @if(!empty($data->getRoleNames()))
+                                        
+                                                @foreach($data->getRoleNames() as $v)
+                                        
+                                                    <label class="badge badge-success">{{ $v }}</label>
+                                        
+                                                @endforeach
+                                        
+                                            @endif
+                                        
+                                            </td>
                                         @if($data->image)
                                         <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
                                         @else 
@@ -93,9 +111,14 @@
                                         @endif
                                         
                                         <td>
+                                            @can('admin_edit')
+
                                             <a href="{{route('editadmin',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
+                                            @endcan
+                                            @can('admin_delete')
 
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                            @endcan
  
                                         </td>
                     

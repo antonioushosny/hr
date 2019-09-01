@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                    <small>{{__('admin.Welcome to Khazan')}}</small>
+                    <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -65,19 +65,9 @@
                                     <input type="hidden" value="{{$user->id}}" name="id" required>
                                 </div>
                                 
-                                <!-- for center_id -->
-                                <div class= "form-group form-float">
-                                    {!! Form::select('center_id',$centers
-                                        ,$user->center_id,['class'=>'form-control show-tick select2' ,'placeholder' =>trans('admin.choose_center'),'required']) !!}
-                                    <label id="center_id-error" class="error" for="center_id" style="">  </label>
-                                </div>
+                                
                                
-                                <!-- for responsible_name -->
-                                <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_responsible_name')}}" name="responsible_name" value="{{$user->name}}" required>
-                                    <label id="responsible_name-error" class="error" for="responsible_name" style="">  </label>
-                                </div>
-                               
+                                 
                                 <!-- for email -->
                                 <div class="form-group form-float">
                                     <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" value="{{$user->email}}" required>

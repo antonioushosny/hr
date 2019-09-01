@@ -304,55 +304,44 @@ body, html {
                             @endif
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
-                                @if(Auth::user()->role == 'provider')
-                                <h4>{{Auth::user()->company_name}}</h4>  
-                                @endif
+                                
                                 <small>{{Auth::user()->email}}</small>  
                             </div>
                         </div>
                     </li>
                     <!-- <li class="header">MAIN</li> -->
+                    
                     <li <?php echo ($page == 'home') ? "class='active open'" : ""; ?> ><a href="{{ route('home') }}"  ><i class="zmdi zmdi-home"></i> <span> {{trans('admin.dashboard')}}</span></a></li>
-                    @if(Auth::user()->role == 'admin')
+                    
+                    @can('role_list')
+                    <li <?php echo ($page == 'roles') ? "class='active open'" : ""; ?> ><a href="{{ route('roles.index') }}"  ><i class="zmdi zmdi-accounts-add"></i> <span> {{trans('admin.roles')}}</span></a></li>
+                    @endcan
 
+                    @can('admin_list')
                     <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-accounts-add"></i> <span> {{trans('admin.admins')}}</span></a></li>
+                    @endcan
 
+                    @can('country_list')
+                    <li <?php echo ($page == 'countries') ? "class='active open'" : ""; ?> ><a href="{{ route('countries') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.countries')}}</span></a></li>
+                    @endcan
+
+                    @can('city_list')
                     <li <?php echo ($page == 'cities') ? "class='active open'" : ""; ?> ><a href="{{ route('cities') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.cities')}}</span></a></li>
+                    @endcan
 
+                    @can('area_list')
                     <li <?php echo ($page == 'areas') ? "class='active open'" : ""; ?> ><a href="{{ route('areas') }}"  ><i class="zmdi zmdi-pin"></i> <span> {{trans('admin.areas')}}</span></a></li>
-
-                    <li <?php echo ($page == 'containers') ? "class='active open'" : ""; ?> ><a href="{{ route('containers') }}"  ><i class="zmdi zmdi-local-drink"></i> <span> {{trans('admin.containers')}}</span></a></li>
-
-                    <li <?php echo ($page == 'providers') ? "class='active open'" : ""; ?> ><a href="{{ route('providers') }}"  ><i class="zmdi zmdi-accounts-list"></i> <span> {{trans('admin.providers')}}</span></a></li>
-                    @endif
+                    @endcan         
                     
-                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'provider')
-                    <li <?php echo ($page == 'centers') ? "class='active open'" : ""; ?> ><a href="{{ route('centers') }}"  ><i class="zmdi zmdi-truck"></i> <span> {{trans('admin.centers')}}</span></a></li>
-                    @endif
-
-                    <li <?php echo ($page == 'drivers') ? "class='active open'" : ""; ?> ><a href="{{ route('drivers') }}"  ><i class="zmdi zmdi-car"></i> <span> {{trans('admin.drivers')}}</span></a></li>
-                    
-                    @if(Auth::user()->role == 'center')
-                   <!--  <li <?php echo ($page == 'orders') ? "class='active open'" : ""; ?> ><a href="{{ route('orders') }}"  ><i class="zmdi zmdi-accounts-add"></i> <span> {{trans('admin.orders')}}</span></a></li>  -->
-
-                    <li <?php echo ($page == 'orders' ||$page == 'neworders' ||$page == 'noworders' ||$page == 'lastorders' ) ? "class='active open'" : ""; ?>   > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart"></i><span>{{trans('admin.orders')}}</span> </a>
-                        <ul class="ml-menu">
-                            <li <?php echo ($page == 'orders') ? "class='active '" : ""; ?>><a href="{{ route('orders') }}">{{trans('admin.allorders')}}</a></li>
-
-                            <li <?php echo ($page == 'neworders') ? "class='active '" : ""; ?>><a href="{{ route('neworders') }}">{{trans('admin.neworders')}}</a></li>
-
-                            <li <?php echo ($page == 'noworders') ? "class='active '" : ""; ?>><a href="{{ route('noworders') }}">{{trans('admin.noworders')}}</a></li>
-
-                            <li <?php echo ($page == 'lastorders') ? "class='active '" : ""; ?>><a href="{{ route('lastorders') }}">{{trans('admin.lastorders')}}</a></li>
-                        </ul>
-                    </li> 
-                    @endif
-                   
-                    @if(Auth::user()->role == 'admin')
+                    @can('user_list')                    
                     <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li>
+                    @endcan
 
+                    @can('contact_list')
                     <li <?php echo ($page == 'contacts') ? "class='active open'" : ""; ?> ><a href="{{ route('contacts') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.contacts')}}</span></a></li>
-                   
+                    @endcan
+
+                    @can('static_page_list')
                     <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">
                             <li <?php echo ($page == 'AboutUs') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','about') }}"  > <span> {{trans('admin.AboutUs')}}</span></a></li>
@@ -362,13 +351,9 @@ body, html {
                             <li <?php echo ($page == 'Policy') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','policy') }}"  > <span> {{trans('admin.Policy')}}</span></a></li>
                         </ul>
                     </li> 
-                    @endif
+                    @endcan
 
-                    <li <?php echo ($page == 'reports') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>{{trans('admin.reports')}}</span> </a>
-                        <ul class="ml-menu">
-                            <li <?php echo ($page == 'reports') ? "class='active open'" : ""; ?> ><a href="{{ route('reports') }}"  > <span> {{trans('admin.salesreports')}}</span></a></li>
-                        </ul>
-                    </li> 
+
                     
                 </ul>
             </div>

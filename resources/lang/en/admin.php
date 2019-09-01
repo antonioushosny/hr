@@ -40,8 +40,6 @@ return [
         'not_active'                    => ' Not Active',
         'available'                     => 'Available', 
         'not_available'                 => ' Not Available',
-        'excuting_order'                => 'excuting order ',
-        'availability_status'           => 'Driver status  ',
         'actions'                       => 'Actions ',
         'save'                          => 'Save',
         'add'                           => 'Add ',
@@ -145,8 +143,7 @@ return [
         'placeholder_day'               => 'Enter Day ',
         'placeholder_title'             => 'Enter Title ',
         'placeholder_message'           => 'Enter Message ',
-        'placeholder_cost'              => 'Enter Course Cost ',
-        'Search_Box'                    => 'Search Box',
+         'Search_Box'                    => 'Search Box',
         'Please_wait'                    => 'Please Wait',
     //end placeholders
     
@@ -199,115 +196,29 @@ return [
         'delete_area'                 =>  '  Delete Area',
     //end areas page
 
-    //containers page 
-        'containers'                       => ' Containers', 
-        'container'                        => ' Container', 
-        'add_container'                    => ' Add Container'  ,
-        'edit_container'                   => ' Edit Container'  ,
-        'delete_container'                 =>  ' Delete Container'  ,
-        'no_containers'             => 'Num Container',
-        'container_name'             => 'Container Name',
-        'usermobile'             => 'User Mobile',
-        'filter'             => 'Filter',
-    //end containers page
+ 
 
-     //providers page 
-        'providers'                       => 'Water Providers', 
-        'provider'                        => ' Water Provider', 
-        'add_provider'                    => ' Add Provider'  ,
-        'edit_provider'                   => ' Edit Provider'  ,
-        'delete_provider'                 =>  ' Delete Provider'  ,
-        'company_name'                    => 'Company Name',
-        'responsible_name'                => 'Responsible Name',
-        'description'                     => 'Description',
-        'address'                         => 'Address',
-        'join_date'                       => 'Join Date',
-        'placeholder_company_name'              => 'Enter Company Name ',
-        'placeholder_responsible_name'              => 'Enter Responsible Name ',
-        'placeholder_description'              => 'Enter Description  ',
-        'placeholder_address'              => 'Enter Address  ',
-    //end providers page
+    //roles page 
+        'roles'                       => ' roles', 
+        'role'                        => ' role', 
+        'Name'                        => ' Name',
+        'no'                        => ' No', 
+        'add_role'                    => ' Add role'  ,
+        'edit_role'                   => ' Edit role'  ,
+        'delete_role'                 =>  ' Delete role'  ,
+        'check_all'                 => 'Check All', 
+        'permissions'                 => 'Permissions', 
 
-    //centers page 
-        'centers'                       => ' Distribution  Centers', 
-        'center'                        => ' Distribution  Center', 
-        'add_center'                    => ' Add Center'  ,
-        'edit_center'                   => ' Edit Center'  ,
-        'delete_center'                 =>  ' Delete Center'  ,
-        'choose_city'                   => 'Choose City',
-        'choose_provider'               => 'Choose Water Provider',
-        'choose_area'                   => 'Choose Area',
-        'choose_center'                 => ' Choose Distribution  Center ',
-        'choose_container'              => 'Choose Container',
-    //end centers page
-
-    //drivers page 
-        'drivers'                       => ' Drivers', 
-        'driver'                        => ' Driver', 
-        'add_driver'                    => ' Add Driver'  ,
-        'edit_driver'                   => ' Edit Driver'  ,
-        'delete_driver'                 =>  ' Delete Driver'  ,
-    //end drivers page
-
-     //orders page 
-        'orders'                       => ' Orders', 
-        'neworders'                       => 'New Orders', 
-        'noworders'                       => 'Current Orders', 
-        'lastorders'                       => 'Finished  Orders', 
-        'allorders'                       => 'All Orders', 
-        'order'                        => ' Order', 
-        'add_order'                    => ' Add Order'  ,
-        'edit_order'                   => ' Edit Order'  ,
-        'delete_order'                 =>  ' Delete Order'  ,
-        'pending'   => 'Pending',
-        'accepted'   => 'Accepted, Waiting for assign driver',
-        'assigned'   => 'Driver assigned to the order, waiting for delivery',
-        'delivered'   => 'Delivered',
-        'canceled'   => 'Canceled',
-        'size'       => 'Size',
-        'price'       => 'Price',
-        'no_container'       => 'Containers Numbers',
-        'total'       => 'Total',
-        'user_mobile'   => 'User Mobile',
-        'container_size'  => 'Container Size' ,
-        'notes'           => 'Notes',
-        'small'           => 'Small',
-        'large'           => 'Large',
-        'client_detail'           => 'Client Detail',
-        'order_detail'           => ' Detail of request',
-        'placeholder_reason'    => 'Enter Your Reason',
-        'accept'    => 'Accept',
-        'decline'    => 'Decline',
-        'take_action'    => 'Take Action',
-        'submit'    => 'Submit',
-        'choose_driver'     => 'Choose Driver',
-        'reason'          => 'Reason' ,
-        'decline_date'    => 'ٌReject Date/Time',
-        'accept_date'    => 'Accept Date/Time',
-        'reassign'       => ' Assign Other Driver ',
-        'decline_order'     => 'Reject Order',
-        'date_from'      => 'From Date',
-        'date_to'      => 'To Date',
-        'choose_status' => ' Choose Status ' ,
-        'all' => 'All ' ,
-        'SAR'   => 'SAR',
-        'This_Month_Sales'   => "This Month's Sales",
-        'This_Year_Sales'   => "This Year's Sales",
-        'This_Week_Sales'   => "This Week's Sales",
-        'Today_Sales'   => "Today's Sales",
-        'sales'   => 'Sales',
-    //end orders page
+        
+    //end roles page
+ 
  
     // advertisements page 
         'advertisements'                       => ' Advertisements', 
         'add_advertisement'                    => '  Add Advertisement '  ,
         'edit_advertisement'                   => '  Edit Advertisement '  ,
         'delete_advertisement'                 => '  Delete Advertisement '  ,
-        'coming'                               => ' Coming ',
-        'current'                              => ' Current ',
-        'previous'                             => ' Previous ',
-        'start_date'                             => 'Start Date',
-        'end_date'                             => ' end_date',
+ 
  
     // end advertisements page 
 
@@ -317,14 +228,9 @@ return [
         'new'                           => 'new',
         'solved'                        => 'solved',
         'not_resolved'                  => 'not resolved ',
-        'users_new'                           => 'Users new',
-        'users_solved'                        => 'Users solved',
-        'users_not_resolved'                  => 'Users not resolved',
-        'contacts_users'                => ' Contacts Users',
-        'show'                            => 'show',
+         'show'                            => 'show',
         'close'                           => 'close',
-        'choose_size'                     =>'Choose size',
-        'logo'                     =>'Logo',
+         'logo'                     =>'Logo',
 
     //end contact_us page
     
@@ -381,28 +287,5 @@ return [
     'Reset Password'            => 'Reset Password',
 
 
-    //landing page 
-
-        'about_us'      => 'About us',
-        'Features'      => 'How Works ?',
-        'Download'      => 'Download',
-        'Contact_us'       => 'Contact Us',
-        'App'           => 'App',
-        'To_deliver_drinking'           => 'To deliver drinking water of all kinds',
-        'Download_App_Now' =>'Download App Now',
-        'About_app'     =>'About App',
-        'with_fannie'   =>'with Fannie 4U App',
-        'you_can_now_order'   =>'You can now order drinking water from anywhere at any time without thinking of driving a car, going to the shop and carrying water We save you time and effort ',
-        'he_application_of_the_tank'   =>'The application of the tank By all water products and all sizes gallons, cartons All you need is to download the application and browse all the products and then order the product you want and we will deliver it to any place you want, whether a house, mosque, office or other  ',
-        'How_the_app_works'   =>'How the app works ',
-        'Download_the_app'   =>'Download the app ',
-        'Record_your_data'   =>'Record your data' ,
-        'Browse_products'   =>'Browse products ',
-        'Choose_your_favorite'   =>' Choose your favorite product ',
-        'Confirm_your_purchase'   =>' Confirm your purchase ',
-        'We_deliver_your_request'   =>'We deliver your request ',
-        'For_mor_information'   =>'For More Information',
-        'copyRights'   =>' Fannie 4U 2019. All Rights Reserved',
-      
-    //end landing page
+ 
 ];

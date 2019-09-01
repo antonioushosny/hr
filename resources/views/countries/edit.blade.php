@@ -20,8 +20,8 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('cities')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.cities')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_citie')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('countries')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.countries')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_countrie')}}</a></li>
                     
                 </ul>
             </div>
@@ -38,37 +38,32 @@
                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_citie')}}  </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_countrie')}}  </h2>
                             
                         </div>
                         <div class="body row">
                             <div class="col-lg-6">
-                                {!! Form::open(['route'=>['storecitie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                                {!! Form::open(['route'=>['storecountrie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                     <div class="form-group form-float">
-                                        <input type="hidden" value="{{$citie->id}}" name="id" required>
-                                    </div>
-                                    <div class= "form-group form-float"> 
-                                        {!! Form::select('country_id',$countries
-                                            ,$citie->country_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_country'),'required']) !!}
-                                            <label id="country_id-error" class="error" for="country_id" style="">  </label>
+                                        <input type="hidden" value="{{$countrie->id}}" name="id" required>
                                     </div>
                                     <div class="form-group form-float">
-                                        <input type="text" value="{{$citie->name_ar}}" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
+                                        <input type="text" value="{{$countrie->name_ar}}" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
                                         <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
                                     </div>
                                     <div class="form-group form-float">
-                                        <input type="text" value="{{$citie->name_en}}" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
+                                        <input type="text" value="{{$countrie->name_en}}" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
                                         <label id="name-en-error" class="error" for="name_en" style="">  </label>
                                     </div>
                                 
                                     <div class="form-group">
                                         <div class="radio inlineblock m-r-20">
-                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($citie->status == 'active') ? "checked=''" : ""; ?> >
+                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($countrie->status == 'active') ? "checked=''" : ""; ?> >
                                             <label for="active">{{__('admin.active')}}</label>
                                         </div>                                
                                         <div class="radio inlineblock">
-                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($citie->status == 'not_active') ? "checked=''" : ""; ?> >
+                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($countrie->status == 'not_active') ? "checked=''" : ""; ?> >
                                             <label for="not_active">{{__('admin.not_active')}}</label>
                                         </div>
                                     </div>
@@ -102,7 +97,7 @@
         //    openModal();
           $.ajax({
               type: 'POST',
-              url: '{{ URL::route("storecitie") }}',
+              url: '{{ URL::route("storecountrie") }}',
               data:  new FormData($("#form_validation")[0]),
               processData: false,
               contentType: false,
@@ -120,7 +115,7 @@
                         }
                         
                   } else {
-                        window.location.replace("{{route('cities')}}");
+                        window.location.replace("{{route('countries')}}");
 
                      }
             },

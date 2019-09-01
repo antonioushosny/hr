@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                    <small>{{__('admin.Welcome to Khazan')}}</small>
+                    <small>{{__('admin.Welcome to fannie')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -36,8 +36,8 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('drivers')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.drivers')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_driver')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('users')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.users')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_user')}}</a></li>
                     
                 </ul>
             </div>
@@ -54,26 +54,14 @@
                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_driver')}}  </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_user')}}  </h2>
                             
                         </div>
                         <div class="body">
-                            {!! Form::open(['route'=>['storedriver'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                            {!! Form::open(['route'=>['storeuser'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                 <!-- for center_id -->
-
-                                <div class= "form-group form-float">
-                                    {!! Form::select('center_id',$centers
-                                        ,'',['class'=>'form-control show-tick select2' ,'placeholder' =>trans('admin.choose_center'),'required']) !!}
-                                    <label id="center_id-error" class="error" for="center_id" style="">  </label>
-                                </div>
-                               
-                                <!-- for responsible_name -->
-                                <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_responsible_name')}}" name="responsible_name" required>
-                                    <label id="responsible_name-error" class="error" for="responsible_name" style="">  </label>
-                                </div>
-                               
+                                
                                 <!-- for email -->
                                 <div class="form-group form-float">
                                     <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
@@ -93,7 +81,7 @@
                                                 </a>
                                                 &nbsp;
                                                 <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-driver hidden"></span>
+                                                <span style="color: red " class="image text-user hidden"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +128,7 @@
         //    openModal();
           $.ajax({
               type: 'POST',
-              url: '{{ URL::route("storedriver") }}',
+              url: '{{ URL::route("storeuser") }}',
               data:  new FormData($("#form_validation")[0]),
               processData: false,
               contentType: false,
@@ -165,7 +153,7 @@
                             $('#image-error').text(data.errors.image);
                         }
                   } else {
-                        window.location.replace("{{route('drivers')}}");
+                        window.location.replace("{{route('users')}}");
 
                      }
             },

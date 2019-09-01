@@ -40,11 +40,6 @@ class PermissionTableSeeder extends Seeder
            'subscription_edit',
            'subscription_delete',
 
-           'subscription_list',
-           'subscription_create',
-           'subscription_edit',
-           'subscription_delete',
-
            'country_list',
            'country_create',
            'country_edit',
@@ -80,7 +75,14 @@ class PermissionTableSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-             Permission::create(['name' => $permission]);
+            if($permission == 'role_list'){
+                Permission::create(['name' => $permission,'guard_name' => 'app']);
+
+            }else{
+                Permission::create(['name' => $permission]);
+
+            }
+
         }
     }
 }
