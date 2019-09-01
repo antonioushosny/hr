@@ -3,7 +3,7 @@
 return [
 
     'failed_login'          => 'failed in login'  ,
-    'mobile_notfound'       => 'mobile or username not found',
+    'mobile_notfound'       => 'The mobile you entered does not exist',
     'login'                 => 'login successfully',
     'password_failed'       => 'password not correct',
     'fail_login'            => 'These credentials do not match our records.',
@@ -18,7 +18,7 @@ return [
     'logout'                => 'logged out successfully.',
     'failed_registered'     => 'register failed',
     'success_registered'    => 'register successfully',
-    'send_code'             => 'You have been sent a code to confirm your email to your mail' ,
+    'send_code'             => 'You have been sent a code to confirm your mobile ' ,
     'incorrect_code'        => 'The code you entered is incorrect ' ,
     'code_requird'          => 'please enter Verification Code ',
     'success_code'          => 'Confirmed successfully',
