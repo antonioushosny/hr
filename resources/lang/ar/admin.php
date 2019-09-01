@@ -31,7 +31,7 @@ return [
         'about'                        => ' من نحن',
         'Success_Alert'                 => 'تم بنجاح!',
         'successfully_edited'           => 'تم التعديل بنجاح  ',
-        'successfully_added'            => 'تم الاضافة بنجاح   ',
+        'successfully_added'            => 'تم الإضافة بنجاح   ',
         'successfully_deleted'          => 'تم الحذف بنجاح  ',
         'record_updated'                => 'تم التحديث بنجاح',
         'record_deleted'                => 'تم الحذف بنجاح',
@@ -46,7 +46,7 @@ return [
         'excuting_order'                => 'ينفذ طلب ',
         'actions'                       => 'تحكم',
         'save'                          => 'حفظ',
-        'add'                           => 'أضافة',
+        'add'                           => 'إضافة',
         'edit'                          => 'تعديل',
         'delete'                        => 'حذف',
         'more'                          => 'المزيد',
@@ -160,18 +160,18 @@ return [
 
     //admin page
         'admins'                        => 'المشرفين',  
-        'add_admins'                    => 'اضافة مشرف'  ,
+        'add_admins'                    => 'إضافة مشرف'  ,
         'edit_admins'                   => 'تعديل مشرف'  ,
         'delete_admins'                 => 'حذف مشرف',
         'admin'                         => 'المشرف',        
-        'add_admin'                     => 'أضافة مشرف ',
+        'add_admin'                     => 'إضافة مشرف ',
         'edit_admin'                    => 'تعديل مشرف',
         'delete_admin'                  => 'حذف مشرف',
     //end admin page  
 
     //users page 
         'users'             => ' المستخدمين ',
-        'add_user'          => ' أضافة مستخدم ',
+        'add_user'          => ' إضافة مستخدم ',
         'edit_user'         => ' تعديل مستخدم ',
         'delete_user'       => '  حذف مستخدم',
         
@@ -179,7 +179,7 @@ return [
 
      //statics page 
  
-        'add_static'          => ' أضافة  ',
+        'add_static'          => ' إضافة  ',
         'edit_static'         => ' تعديل  ',
         'delete_static'       => '  حذف ',
     //end statics page
@@ -187,8 +187,8 @@ return [
      //countries page 
         'countries'                       => ' الدول', 
         'country'                       => ' الدولة', 
-        'add_country'                    => ' اضافة دولة'  ,
-        'add_countrie'                    => ' اضافة دولة'  ,
+        'add_country'                    => ' إضافة دولة'  ,
+        'add_countrie'                    => ' إضافة دولة'  ,
         'edit_countrie'                   => ' تعديل دولة'  ,
         'delete_countrie'                 =>  ' حذف دولة',
     //end countries page
@@ -197,7 +197,7 @@ return [
         'cities'                       => ' المدن', 
         'city'                       => ' المدينة', 
         'city_id'                       => ' المدينة', 
-        'add_citie'                    => ' اضافة مدينة'  ,
+        'add_citie'                    => ' إضافة مدينة'  ,
         'edit_citie'                   => ' تعديل مدينة'  ,
         'delete_citie'                 =>  ' حذف مدينة',
     //end cities page
@@ -205,7 +205,7 @@ return [
     //areas page 
         'areas'                       => ' المناطق', 
         'area'                       => ' المنطقة', 
-        'add_area'                    => ' اضافة منطقة'  ,
+        'add_area'                    => ' إضافة منطقة'  ,
         'edit_area'                   => ' تعديل منطقة'  ,
         'delete_area'                 =>  ' حذف منطقة',
     //end areas page
@@ -215,7 +215,7 @@ return [
         'role'                        => ' دور', 
         'Name'                        => ' الأسم', 
         'no'                        => ' رقم', 
-        'add_role'                    => ' اضافة دور'  ,
+        'add_role'                    => ' إضافة دور'  ,
         'edit_role'                   => ' تعديل دور'  ,
         'delete_role'                 =>  ' حذف دور'  ,
         'check_all'                 => 'اختر الكل ', 
@@ -226,7 +226,7 @@ return [
  
     // advertisements page 
         'advertisements'                       => ' الاعلانات', 
-        'add_advertisement'                    => '  اضافة اعلان'  ,
+        'add_advertisement'                    => '  إضافة اعلان'  ,
         'edit_advertisement'                   => ' تعديل اعلان '  ,
         'delete_advertisement'                 => ' حذف اعلان  ',
  
@@ -287,7 +287,7 @@ return [
         'AboutUs'  =>' من نحن' ,
         'Terms'  =>' شروط واحكام ' ,
         'Policy'  =>' سياسة الخصوصية' ,
-        'add_setting'  => 'الاضافة ',
+        'add_setting'  => 'الإضافة ',
         'edit_setting'  => 'التعديل   ',
     //end settings and static pages  
         'You cannot access this page!'  => ' !لا يمكنك الوصول إلى هذه الصفحة ',
@@ -296,6 +296,12 @@ return [
         'Send Password Reset Link'  => 'إرسال رابط إعادة تعيين كلمة المرور',
         'Reset Password'        => 'إعادة تعيين كلمة المرور' ,
 
+
+        //services pages
+        'services'=>'الخدمات',
+        'add_service'=>'إضافة خدمة',
+        'edit_service'=>'تعديل خدمة',
+        //end services pages
      
  ];
 

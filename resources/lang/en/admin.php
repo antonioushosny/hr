@@ -288,5 +288,9 @@ return [
     'Reset Password'            => 'Reset Password',
 
 
- 
+        //services pages
+        'services'=>'Services',
+        'add_service'=>'Add Service',
+        'edit_service'=>'Edit Service',
+        //end services pages
 ];
