@@ -181,6 +181,14 @@ return [
         
     //end countries page
 
+    //services page 
+        'services'                       => ' services', 
+        'service'                       => ' service', 
+        'add_service'                    => ' Add service'  ,
+        'edit_service'                   => '  Edit service'  ,
+        'delete_service'                 =>  '  Delete service',
+    //end services page
+
     //cities page 
         'cities'                       => ' Cities', 
         'city'                       => ' City', 
