@@ -174,6 +174,7 @@ return [
     //countries page 
         'countries'                       => ' Countries', 
         'country'                       => ' Country', 
+        'add_country'                    => ' Add country'  ,
         'add_countrie'                    => ' Add country'  ,
         'edit_countrie'                   => '  Edit country'  ,
         'delete_countrie'                 =>  '  Delete country',

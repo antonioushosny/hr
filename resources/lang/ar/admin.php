@@ -188,6 +188,7 @@ return [
         'countries'                       => ' الدول', 
         'country'                       => ' الدولة', 
         'add_country'                    => ' اضافة دولة'  ,
+        'add_countrie'                    => ' اضافة دولة'  ,
         'edit_countrie'                   => ' تعديل دولة'  ,
         'delete_countrie'                 =>  ' حذف دولة',
     //end countries page
