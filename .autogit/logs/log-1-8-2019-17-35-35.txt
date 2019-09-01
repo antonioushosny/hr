@@ -1,0 +1,18 @@
+-------------------- Auto-Git Log --------------------
+		Sun Sep 01 2019 17:35:35 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Http/Controllers/CountriesController.php
+* routes/web.php
+
+
+Created files:
+* .autogit/logs/log-1-8-2019-17-5-31.txt
+* app/Http/Controllers/NationalitiesController.php
+
+
+Deleted files:
+
+
+Renamed files:

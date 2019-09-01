@@ -194,6 +194,15 @@ return [
         'delete_countrie'                 =>  ' حذف دولة',
     //end countries page
 
+     //nationalities page 
+        'nationalities'                       => ' الجنسيات', 
+        'nationality'                       => ' الجنسية', 
+        'add_nationality'                    => ' إضافة جنسية'  ,
+        'add_nationalitie'                    => ' إضافة جنسية'  ,
+        'edit_nationalitie'                   => ' تعديل جنسية'  ,
+        'delete_nationalitie'                 =>  ' حذف جنسية',
+    //end nationalities page
+
     //services page 
         'services'                       => ' الخدمات', 
         'service'                       => ' الخدمة', 

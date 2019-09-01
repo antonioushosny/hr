@@ -34,21 +34,7 @@ class NationalitiesController extends Controller
         return view('nationalities.index',compact('nationalities','title','lang'));
 
     }
-
-    public function cities(Request $request, $id) {
-        // return $id ;
-        if ($request->ajax()) {
-            $lang = App::getlocale();
-            if($lang == 'ar'){
-                $cities = City::where('nationality_id', $id)->select('name_ar AS name','id')->get();
-            }else{
-                $cities = City::where('nationality_id', $id)->select('name_en AS name','id')->get();
-            }
-            return response()->json([
-                'cities' => $cities ,
-            ]);
-        }
-    }
+ 
     public function add()
     {
         $lang = App::getlocale();
@@ -77,8 +63,7 @@ class NationalitiesController extends Controller
             [
                 'name_ar'  =>'required|max:190',           
                 'name_en'  =>'required|max:190',              
-                // 'image'  =>'required',           
-                // 'nationality_id'  =>'required',     
+     
                 'status'  =>'required'      
             ];
         }
@@ -91,28 +76,19 @@ class NationalitiesController extends Controller
          
         // return $request ;
         if($request->id ){
-            $nationality = nationality::find( $request->id );
+            $nationality = Nationality::find( $request->id );
         }
         else{
-            $nationality = new nationality ;
+            $nationality = new Nationality ;
 
         }
 
         $nationality->name_ar          = $request->name_ar ;
         $nationality->name_en         = $request->name_en ;
         $nationality->status        = $request->status ;
+      
         $nationality->save();
-        if ($request->hasFile('image')) {
-
-            $image = $request->file('image');
-            $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/img');
-            $image->move($destinationPath, $name);
-            $nationality->image   = $name;  
-        }
-        $nationality->save();
-        $nationality = nationality::where('id',$nationality->id)->first();
-        return response()->json($nationality);
+         return response()->json($nationality);
 
     }
 
@@ -131,7 +107,7 @@ class NationalitiesController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'nationalities';
-        $nationalitie = nationality::where('id',$id)->orderBy('id', 'DESC')->first();
+        $nationalitie = Nationality::where('id',$id)->orderBy('id', 'DESC')->first();
         // return $admin ; 
         return view('nationalities.edit',compact('nationalitie','title','lang'));
     }
@@ -150,7 +126,7 @@ class NationalitiesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $id = nationality::find( $id );
+        $id = Nationality::find( $id );
         $id ->delete();
         return response()->json($id);
     }
@@ -161,9 +137,9 @@ class NationalitiesController extends Controller
         
         if($request->ids){
             foreach($request->ids as $id){
-                $id = nationality::find($id);
+                $id = Nationality::find($id);
             }
-            $ids = nationality::whereIn('id',$request->ids)->delete();
+            $ids = Nationality::whereIn('id',$request->ids)->delete();
         }
         return response()->json($request->ids);
     }

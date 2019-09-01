@@ -333,6 +333,10 @@ body, html {
                     <li <?php echo ($page == 'areas') ? "class='active open'" : ""; ?> ><a href="{{ route('areas') }}"  ><i class="zmdi zmdi-pin"></i> <span> {{trans('admin.areas')}}</span></a></li>
                     @endcan  
 
+                    @can('nationality_list')
+                    <li <?php echo ($page == 'nationalities') ? "class='active open'" : ""; ?> ><a href="{{ route('nationalities') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.nationalities')}}</span></a></li>
+                    @endcan
+                    
                     @can('service_list')
                     <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.services')}}</span></a></li>
                     @endcan

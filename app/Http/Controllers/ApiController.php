@@ -66,39 +66,82 @@ class ApiController extends Controller
         date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
+    protected function SuccessResponse($message ,$data)
+    {
+        return response()->json([
+            'success' => 1,
+            'errors'=>[],
+            'message' =>$message,
+            'data' => $data,
 
-    
+        ]);
+    }
+    protected function FailedResponse($message ,$errors)
+    {
+       
+        return response()->json([
+            'success' => 0,
+            'errors'=>$errors,
+            'message' =>$message,
+            'data' => null,
+
+        ]);
+    }
+
+    protected function LoggedResponse($message )
+    {
+        return response()->json([
+            'success' => -1,
+            'errors'=>[],
+            'message' =>$message,
+            'data' => null,
+
+        ]);
+    }
 //////////////////////////////////////////////
 // IsRegistered function by Antonious hosny
-public function IsRegistered(Request $request){ 
-    $user  = User::where('mobile',$request->id)->orderBy('id', 'desc')->first();
+    public function IsRegistered(Request $request){ 
+            $rules=array(
+                "mobile"=>"required",
+             );
 
-        if($user){
-            $code = rand(100000,999999);
-            $user->code = $code ;
+            //check the validator true or not
+            $validator  = \Validator::make($request->all(),$rules);
+            if($validator->fails())
+            {
+                $messages = $validator->messages();
+                $transformed = [];
+                foreach ($messages->all() as $field => $message) {
+                    $transformed[] = [
+                        'message' => $message
+                    ];
+                }
+                $message = trans('api.failed_login') ;
+                $response =  $this->FailedResponse($message , $transformed) ;
+                return  $response ;
+            }
+            $user  = User::where('mobile',$request->mobile)->orderBy('id', 'desc')->first();
 
-            return response()->json([
-                'success' => 1,
-                'errors' => null,
-                'message' => trans('api.send_code'),
-                'data' => $code
-            ]);
-        }
-        else
-        {
-            // $errors=  trans('api.notfound');
-            $errors[] = trans('api.mobile_notfound');
-            return response()->json([
-                'success' => 0,
-                'errors' => $errors,
-                'message' => trans('api.mobile_notfound'),
-                'data' => null,
-
-            ]);
-        }
+            if($user){
+                $code = rand(100000,999999);
+                $user->code = $code ;
+                $message = trans('api.send_code') ;
+                $response = $this->SuccessResponse($message , $code) ;
+                return  $response ;
+            }
+            else
+            {
+                // $errors=  trans('api.notfound');
+                $errors[] =[
+                    'message' => trans('api.mobile_notfound')
+                ];
+                $message = trans('api.failed_login') ;
+                $response = $this->FailedResponse($message , $errors) ;
+                return  $response ;
+            }
 
 
-}
+    }
 //////////////////////////////////////////////
 // Advertisement function by Antonious hosny
     public function Advertisements(Request $request){ 

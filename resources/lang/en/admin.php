@@ -182,6 +182,16 @@ return [
         
     //end countries page
 
+    //nationalities page 
+        'nationalities'                       => ' Nationalities', 
+        'nationality'                       => ' Nationality', 
+        'add_nationality'                    => ' Add Nationality'  ,
+        'add_nationalitie'                    => ' Add Nationality'  ,
+        'edit_nationalitie'                   => '  Edit Nationality'  ,
+        'delete_nationalitie'                 =>  '  Delete Nationality',
+        
+    //end nationalities page
+
     //services page 
         'services'                       => ' services', 
         'service'                       => ' service', 
