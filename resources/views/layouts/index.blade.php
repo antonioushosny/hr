@@ -331,7 +331,11 @@ body, html {
 
                     @can('area_list')
                     <li <?php echo ($page == 'areas') ? "class='active open'" : ""; ?> ><a href="{{ route('areas') }}"  ><i class="zmdi zmdi-pin"></i> <span> {{trans('admin.areas')}}</span></a></li>
-                    @endcan         
+                    @endcan  
+
+                    @can('service_list')
+                    <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.services')}}</span></a></li>
+                    @endcan
                     
                     @can('user_list')                    
                     <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li>

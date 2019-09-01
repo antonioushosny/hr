@@ -86,7 +86,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/areas/delete/{id}', 'AreasController@destroy')->name('destroyarea');
     Route::post('/areas/deleteall', 'AreasController@deleteall')->name('areasdeleteall');
 
-    
+    // routes for services management
+    Route::get('/services', 'ServicesController@index')->name('services');
+    Route::get('/services/add/', 'ServicesController@add')->name('addservice');
+    Route::post('/services/update/', 'ServicesController@store')->name('storeservice');
+    Route::get('/services/edit/{id}', 'ServicesController@edit')->name('editservice');
+    Route::get('/services/delete/{id}', 'ServicesController@destroy')->name('destroyservice');
+    Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall');
+    Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
     // routes for users management
     Route::get('/users', 'UsersController@index')->name('users');
     Route::post('/users/update/', 'UsersController@store')->name('storeuser');

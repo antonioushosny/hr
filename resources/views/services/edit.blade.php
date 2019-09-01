@@ -20,8 +20,8 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('countries')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.countries')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_countrie')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('services')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.services')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_service')}}</a></li>
                     
                 </ul>
             </div>
@@ -38,22 +38,22 @@
                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_countrie')}}  </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_service')}}  </h2>
                             
                         </div>
                         <div class="body row">
                             <div class="col-lg-6">
-                                {!! Form::open(['route'=>['storecountrie'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                                {!! Form::open(['route'=>['storeservice'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                     <div class="form-group form-float">
-                                        <input type="hidden" value="{{$countrie->id}}" name="id" required>
+                                        <input type="hidden" value="{{$service->id}}" name="id" required>
                                     </div>
                                     <div class="form-group form-float">
-                                        <input type="text" value="{{$countrie->name_ar}}" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
+                                        <input type="text" value="{{$service->name_ar}}" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
                                         <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
                                     </div>
                                     <div class="form-group form-float">
-                                        <input type="text" value="{{$countrie->name_en}}" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
+                                        <input type="text" value="{{$service->name_en}}" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
                                         <label id="name-en-error" class="error" for="name_en" style="">  </label>
                                     </div>
                                     <div class="form-group form-float row"  >
@@ -79,8 +79,8 @@
 
                                         <div class="col-md-6">
                                         
-                                            @if($countrie->image)
-                                                <img id="changeimage" src="{{asset('img/'.$countrie->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                            @if($service->image)
+                                                <img id="changeimage" src="{{asset('img/'.$service->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                             @else 
                                                 <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                             @endif
@@ -88,11 +88,11 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="radio inlineblock m-r-20">
-                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($countrie->status == 'active') ? "checked=''" : ""; ?> >
+                                            <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($service->status == 'active') ? "checked=''" : ""; ?> >
                                             <label for="active">{{__('admin.active')}}</label>
                                         </div>                                
                                         <div class="radio inlineblock">
-                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($countrie->status == 'not_active') ? "checked=''" : ""; ?> >
+                                            <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($service->status == 'not_active') ? "checked=''" : ""; ?> >
                                             <label for="not_active">{{__('admin.not_active')}}</label>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
         //    openModal();
           $.ajax({
               type: 'POST',
-              url: '{{ URL::route("storecountrie") }}',
+              url: '{{ URL::route("storeservice") }}',
               data:  new FormData($("#form_validation")[0]),
               processData: false,
               contentType: false,
@@ -144,7 +144,7 @@
                         }
                         
                   } else {
-                        window.location.replace("{{route('countries')}}");
+                        window.location.replace("{{route('services')}}");
 
                      }
             },

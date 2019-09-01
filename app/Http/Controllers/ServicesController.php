@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Notifications\emailnotify;
 use App\City;
 use App\Area;
-use App\Country;
+use App\Service;
 use Auth;
 use App;
-class CountriesController extends Controller
+class ServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,30 +27,15 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        $allcountries = Country::where('id','<>','1')->get();
-        $countries = array_pluck($allcountries,'name_ar', 'id'); $allcountries = Country::all();
-        $countries = array_pluck($allcountries,'name_ar', 'id');
-        $countries = Country::orderBy('id', 'DESC')->get();
+        $title = 'services';
+ 
+        $services = service::orderBy('id', 'DESC')->get();
         // return $admins ; 
-        return view('countries.index',compact('countries','countries','title','lang'));
+        return view('services.index',compact('services','title','lang'));
 
     }
 
-    public function cities(Request $request, $id) {
-        // return $id ;
-        if ($request->ajax()) {
-            $lang = App::getlocale();
-            if($lang == 'ar'){
-                $cities = City::where('country_id', $id)->select('name_ar AS name','id')->get();
-            }else{
-                $cities = City::where('country_id', $id)->select('name_en AS name','id')->get();
-            }
-            return response()->json([
-                'cities' => $cities ,
-            ]);
-        }
-    }
+   
     public function add()
     {
         $lang = App::getlocale();
@@ -58,8 +43,8 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        return view('countries.add',compact('title','lang'));
+        $title = 'services';
+        return view('services.add',compact('title','lang'));
     }
     public function store(Request $request)
     {
@@ -79,8 +64,7 @@ class CountriesController extends Controller
             [
                 'name_ar'  =>'required|max:190',           
                 'name_en'  =>'required|max:190',              
-                // 'image'  =>'required',           
-                // 'country_id'  =>'required',     
+                'image'  =>'required',           
                 'status'  =>'required'      
             ];
         }
@@ -93,28 +77,28 @@ class CountriesController extends Controller
          
         // return $request ;
         if($request->id ){
-            $country = Country::find( $request->id );
+            $service = Service::find( $request->id );
         }
         else{
-            $country = new Country ;
+            $service = new Service ;
 
         }
 
-        $country->name_ar          = $request->name_ar ;
-        $country->name_en         = $request->name_en ;
-        $country->status        = $request->status ;
-        $country->save();
+        $service->name_ar          = $request->name_ar ;
+        $service->name_en         = $request->name_en ;
+        $service->status        = $request->status ;
+        $service->save();
         if ($request->hasFile('image')) {
 
             $image = $request->file('image');
             $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img');
             $image->move($destinationPath, $name);
-            $country->image   = $name;  
+            $service->image   = $name;  
         }
-        $country->save();
-        $country = Country::where('id',$country->id)->first();
-        return response()->json($country);
+        $service->save();
+        $service = service::where('id',$service->id)->first();
+        return response()->json($service);
 
     }
 
@@ -132,10 +116,10 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'countries';
-        $countrie = Country::where('id',$id)->orderBy('id', 'DESC')->first();
+        $title = 'services';
+        $service = Service::where('id',$id)->orderBy('id', 'DESC')->first();
         // return $admin ; 
-        return view('countries.edit',compact('countrie','title','lang'));
+        return view('services.edit',compact('service','title','lang'));
     }
 
     public function update(Request $request, $id)
@@ -152,7 +136,7 @@ class CountriesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $id = Country::find( $id );
+        $id = Service::find( $id );
         $id ->delete();
         return response()->json($id);
     }
@@ -163,9 +147,9 @@ class CountriesController extends Controller
         
         if($request->ids){
             foreach($request->ids as $id){
-                $id = Country::find($id);
+                $id = Service::find($id);
             }
-            $ids = Country::whereIn('id',$request->ids)->delete();
+            $ids = Service::whereIn('id',$request->ids)->delete();
         }
         return response()->json($request->ids);
     }
