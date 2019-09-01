@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Sun Sep 01 2019 19:10:21 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Http/Controllers/ApiController.php
+
+
+Created files:
+* .autogit/logs/log-1-8-2019-18-5-46.txt
+
+
+Deleted files:
+
+
+Renamed files:
