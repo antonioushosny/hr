@@ -161,13 +161,21 @@ class AdminsController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'admins';
-        $roles = Role::pluck('name','name')->all();
-
         $admin = User::where('id',$id)->orderBy('id', 'DESC')->first();
-        $userRole = $admin->roles->pluck('name','name')->all();
-        // return $admin ; 
-        return view('admins.edit',compact('admin','title','lang','roles','userRole'));
+        if($admin)
+        {
+            $title = 'admins';
+            $roles = Role::pluck('name','name')->all();
+    
+            $userRole = $admin->roles->pluck('name','name')->all();
+            // return $admin ; 
+            return view('admins.edit',compact('admin','title','lang','roles','userRole'));
+
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     public function update(Request $request, $id)

@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/delete/{id}', 'UsersController@destroy')->name('destroyuser');
     Route::post('/users/deleteall', 'UsersController@deleteall')->name('usersdeleteall');
     Route::get('/users/orders/{id}', 'UsersController@orders')->name('userorders');
+    
 
     //  routes for contact_us management
     Route::get('/contact_us', 'ContactsController@index')->name('contacts');

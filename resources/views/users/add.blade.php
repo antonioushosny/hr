@@ -57,17 +57,56 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_user')}}  </h2>
                             
                         </div>
-                        <div class="body">
+                        <div class="body row">
+                            <div class="col-lg-6">
                             {!! Form::open(['route'=>['storeuser'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-
-                                <!-- for center_id -->
                                 
                                 <!-- for email -->
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" autocomplete="off" required>
+                                    <label id="name-error" class="error" for="name" style=""></label>
+                                </div>
+
                                 <div class="form-group form-float">
                                     <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
                                     <label id="email-error" class="error" for="email" style=""></label>
                                 </div>
+
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_mobile')}}" name="mobile" maxlength= 14 onkeypress="isNumber(event);" autocomplete="off" required>
+                                    <label id="mobile-error" class="error" for="mobile" style=""></label>
+                                </div>
                                 
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" id="address-field1" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off" required>
+                                    <label id="address-error" class="error" for="address" style=""></label>
+                                </div>
+
+                            <!-- {{--  for map      --}}  -->
+
+                                <div class="form-group form-float">
+                                    <span style="color: black "> 
+                                        {!! Form::label('location[]',trans('admin.placeholder_location')) !!}
+                                    </span>
+                                    <!-- <label id="location-error" class="error" for="location[]" style=""></label> -->
+                                    <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
+
+                                    <div class="col-lg-12" id="map" style="width:100%;height:400px;"></div>
+                                    <label id="lat-error" class="error" for="lat" style="">  </label>
+                                </div><br/>        
+
+                                <div class="form-group">
+                                    {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
+                                    {!! Form::hidden('location[0]','',['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
+
+                                    {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
+                                    {!! Form::hidden('location[1]','',['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
+
+                                </div><br/> 
+                                <!-- end map -->
+
+                              
+
                                 <!-- for image  -->
                                 <div class="form-group form-float row"  >
                                     {{--  for image  --}}
@@ -81,7 +120,7 @@
                                                 </a>
                                                 &nbsp;
                                                 <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-user hidden"></span>
+                                                <span style="color: red " id="image-error" class="image text-user hidden"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -104,6 +143,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
                             </form>
+                            </div>
                         </div>
                 </div>
             </div>
@@ -117,7 +157,141 @@
 
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
+
+function initMap() {
+    $('form').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+ var map = new google.maps.Map(document.getElementById('map'), {
+     center: {lat: 29.967176910157654, lng: 31.21215951392594},
+     zoom: 18,
+     mapTypeId: 'terrain'
+ });
+ var marker = new google.maps.Marker({
+     position: {lat: 29.967176910157654, lng: 31.21215951392594},
+     map: map
+ });
+ var infoWindow = new google.maps.InfoWindow({map: map});
+
+ // Try HTML5 geolocation.
+ if (navigator.geolocation) {
+ navigator.geolocation.getCurrentPosition(function(position) {
+ var pos = {
+     lat: position.coords.latitude,
+     lng: position.coords.longitude
+ };
+ document.getElementById('lat').value = position.coords.latitude;
+ document.getElementById('lng').value = position.coords.longitude;
+ infoWindow.setPosition(pos);
+ 
+ infoWindow.setContent('<div>location found</div>');
+ map.setCenter(pos);
+ }, function() {
+ handleLocationError(true, infoWindow, map.getCenter());
+ });
+
+ } else {
+ // Browser doesn't support Geolocation
+ handleLocationError(false, infoWindow, map.getCenter());
+ }
+
+ // Create the search box and link it to the UI element.
+ var input = document.getElementById('pac-input');
+ var searchBox = new google.maps.places.SearchBox(input);
+ map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+ // Bias the SearchBox results towards current map's viewport.
+ map.addListener('bounds_changed', function() {
+ searchBox.setBounds(map.getBounds());
+ });
+
+ map.addListener('click', function(event) {
+     console.log(event);
+ //clear previous marker
+ marker.setMap(null);
+ //set new marker
+ marker = new google.maps.Marker({
+ position: event.latLng,
+ map: map
+ });
+ document.getElementById('lat').value = event.latLng.lat();
+ document.getElementById('lng').value = event.latLng.lng();
+
+
+ });
+
+ var markers = [];
+ // Listen for the event fired when the user selects a prediction and retrieve
+ // more details for that place.
+ searchBox.addListener('places_changed', function() {
+ var places = searchBox.getPlaces();
+ if (places.length == 0) {
+ return;
+ }
+
+ // Clear out the old markers.
+ markers.forEach(function(marker) {
+ marker.setMap(null);
+ });
+ markers = [];
+
+ // For each place, get the icon, name and location.
+ var bounds = new google.maps.LatLngBounds();
+ places.forEach(function(place) {
+     console.log("place ",place);
+     var address=$( "#pac-input" ).val();
+     $('#address-field1').val(address);
+     console.log(address);
+     
+ var icon = {
+ url: place.icon,
+ size: new google.maps.Size(71, 71),
+ origin: new google.maps.Point(0, 0),
+ anchor: new google.maps.Point(17, 34),
+ scaledSize: new google.maps.Size(25, 25)
+ };
+
+ // Create a marker for each place.
+ markers.push(new google.maps.Marker({
+ map: map,
+ icon: icon,
+ title: place.name,
+ position: place.geometry.location
+ }));
+
+ document.getElementById('lat').value = place.geometry.location.lat();
+ document.getElementById('lng').value = place.geometry.location.lng();
+ if (place.geometry.viewport) {
+ // Only geocodes have viewport.
+ bounds.union(place.geometry.viewport);
+ } else {
+ bounds.extend(place.geometry.location);
+ }
+ });
+ map.fitBounds(bounds);
+ }); 
+
+}
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    console.log("jheeee");
+infoWindow.setPosition(pos);
+infoWindow.setContent(browserHasGeolocation ?
+     'The Geolocation service failed.  ' :
+     'Your browser doesnt support geolocation. ');
+}
+// var addresschange=document.getElementsByClassName("gm-style-iw");
+ 
+//  $('.gm-style-iw').change(function(e){
+//     console.log($('.gm-style-iw'));
+
+//  })
+
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
@@ -134,25 +308,39 @@
               contentType: false,
                
               success: function(data) {
+                  console.log(data);
                   if ((data.errors)) {   
-                    $(':input[type="submit"]').prop('disabled', false);                     
-                        if (data.errors.center_id) {
-                            $('#center_id-error').css('display', 'inline-block');
-                            $('#center_id-error').text(data.errors.center_id);
+                    $(':input[type="submit"]').prop('disabled', false); 
+                    if (data.errors.email) {
+                            $('#email-error').css('display', 'inline-block');
+                            $('#email-error').text(data.errors.email);
+                        }                    
+                        if (data.errors.address) {
+                            $('#address-error').css('display', 'inline-block');
+                            $('#address-error').text(data.errors.address);
                         }
-                        if (data.errors.responsible_name) {
-                            $('#responsible_name-error').css('display', 'inline-block');
-                            $('#responsible_name-error').text(data.errors.responsible_name);
+                        if (data.errors.mobile) {
+                            $('#mobile-error').css('display', 'inline-block');
+                            $('#mobile-error').text(data.errors.mobile);
                         }
                         if (data.errors.email) {
-                            $('#city-id-error').css('display', 'inline-block');
-                            $('#city-id-error').text(data.errors.email);
+                            $('#email-error').css('display', 'inline-block');
+                            $('#email-error').text(data.errors.email);
                         }
-                        if (data.errors.image) {
-                            $('#image-error').css('display', 'inline-block');
-                            $('#image-error').text(data.errors.image);
+                        if (data.errors.name) {
+                            $('#name-error').css('display', 'inline-block');
+                            $('#name-error').text(data.errors.name);
                         }
-                  } else {
+                        if (data.errors.status) {
+                            $('#status-error').css('display', 'inline-block');
+                            $('#status-error').text(data.errors.status);
+                        }
+                        if (data.errors["location."+0]) {
+                            $('#location-error').css('display', 'inline-block');
+                            $('#location-error').text( data.errors["location."+0]);
+                        }
+                  } 
+                  else {
                         window.location.replace("{{route('users')}}");
 
                      }

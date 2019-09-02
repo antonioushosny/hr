@@ -104,8 +104,16 @@ class SubscriptionTypeController extends Controller
         }
         $title = 'subscriptions';
         $subscription = SubscriptionType::where('id',$id)->orderBy('id', 'DESC')->first();
-        // return $admin ; 
-        return view('subscriptions.edit',compact('subscription','title','lang'));
+        if($subscription)
+        {
+            // return $admin ; 
+            return view('subscriptions.edit',compact('subscription','title','lang'));
+            
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     public function destroy($id)

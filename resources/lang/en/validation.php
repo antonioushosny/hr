@@ -194,6 +194,7 @@ return [
         'reason'                        => ' Reason', 
         'cost'                    =>'Cost',
         'no-month'                 =>'Number of months',
+        'location.*'               =>'Location',
     ],
     
 ];

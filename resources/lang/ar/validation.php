@@ -59,7 +59,7 @@ return [
     'image'                => '  :attribute must be an image.',
     'in'                   => '  selected :attribute is invalid.',
     'in_array'             => '  :attribute field does not exist in :o r.',
-    'integer'              => '  :attribute must be an integer.',
+    'integer'              => 'يجب أن يكون :attribute عددًا صحيحًا',
     'ip'                   => '  :attribute must be a valid IP address.',
     'ipv4'                 => '  :attribute must be a valid IPv4 address.',
     'ipv6'                 => '  :attribute must be a valid IPv6 address.',
@@ -122,7 +122,7 @@ return [
     ],
 
     'attributes' => [
-        "mobile"                => "رقم الموبايل",
+        "mobile"                => "رقم التليفون",
         "password"              => "الباسورد",
         "name_ar"               => "الاسم بالعربي",
         "name_en"               => "الاسم بالانجليزية",
@@ -179,6 +179,7 @@ return [
         'reason'                        => ' السبب', 
         'cost'                    =>'التكلفة',
         'no_month'                 =>'عدد الشهور',
+        'location.*'               =>'الموقع',
     ],
     
 

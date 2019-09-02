@@ -39,7 +39,7 @@
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
-                                @can('user=create')
+                                @can('user_create')
                                 </li>
                                     <a href="{{route('adduser')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
                                         {{trans('admin.add_user')}}
@@ -69,8 +69,8 @@
                                         <th>{{trans('admin.name')}}</th>
                                         <th>{{trans('admin.mobile')}}</th>
                                         <th>{{trans('admin.email')}}</th>
-                                        <th>{{trans('admin.city')}}</th>
-                                        <th>{{trans('admin.area')}}</th>
+                                        <!-- <th>{{trans('admin.city')}}</th>
+                                        <th>{{trans('admin.area')}}</th> -->
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
@@ -86,7 +86,7 @@
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->mobile }}</td>
                                         <td>{{ $data->email }}</td>          
-                                        @if($data->City)
+                                        <!-- @if($data->City)
                                             @if($lang == 'ar')
                                                 <td>{{ $data->City->name_ar }}</td> 
                                             @else 
@@ -103,7 +103,7 @@
                                             @endif
                                         @else 
                                             <td> </td> 
-                                        @endif
+                                        @endif -->
 
                                         @if($data->image)
                                             <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
@@ -122,9 +122,13 @@
                                             </td> 
                                         @endif
                                         <td>
-                                            @can('user-edit')
+                                            @can('user_edit')
                                             <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
                                             @endcan
+
+                                            <!-- @can('user_edit')
+                                            <a href="{{route('userorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
+                                            @endcan -->
                                             @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
                                             @endcan

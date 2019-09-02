@@ -118,8 +118,16 @@ class ServicesController extends Controller
         }
         $title = 'services';
         $service = Service::where('id',$id)->orderBy('id', 'DESC')->first();
-        // return $admin ; 
-        return view('services.edit',compact('service','title','lang'));
+        if($service)
+        {
+            // return $admin ; 
+            return view('services.edit',compact('service','title','lang'));
+
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     public function update(Request $request, $id)
