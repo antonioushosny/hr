@@ -190,6 +190,84 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////
+// Countries function by Antonious hosny
+public function Countries(Request $request){ 
+    $lang = $request->header('lang');
+    if($lang == 'ar'){
+        $countries  = Country::where('status','active')->with('cities')->orderBy('name_ar', 'asc')->get();
+    }else{
+        $countries  = Country::where('status','active')->with('cities')->orderBy('name_en', 'asc')->get();
+    }
+        if(sizeof($countries) > 0){
+            $countriess =[];
+            $i = 0 ;
+
+            foreach($countries as $country){
+                if($country){
+                    $Citiess[$i]['country_id']   = $country->id;
+                    if($lang == 'ar'){
+                        $countriess[$i]['country_name']   = $country->name_ar;
+                    }else{
+                        $countriess[$i]['country_name']   =  $country->name_en;
+                    }
+                    $citiess = [] ;
+                    $n  = 0 ;
+                    if(sizeOf($country->cities) > 0){
+
+                        foreach($country->cities as $city){
+                            $citiess[$n]['city_id']   = $city->id;
+                            if($lang == 'ar'){
+                                $citiess[$n]['city_name']   = $city->name_ar;
+                            }else{
+                                $citiess[$n]['city_name']   =  $city->name_en;
+                            }
+                            $areass = [] ;
+                            $j  = 0 ;
+                            if(sizeOf($city->areas) > 0){
+    
+                                foreach($city->areas as $area){
+                                    $areass[$j]['area_id']   = $area->id;
+                                    if($lang == 'ar'){
+                                        $areass[$j]['area_name']   = $area->name_ar;
+                                    }else{
+                                        $areass[$j]['area_name']   =  $area->name_en;
+                                    }
+                                    $j ++ ;
+                            
+                                }
+                            }
+                            $citiess[$n]['areas'] = $areass ;
+                            $n ++ ;
+
+                        }
+                    }
+                    $countriess[$i]['cities'] = $citiess ;
+                    $i ++ ;
+                
+                }
+            }
+            return response()->json([
+                'success' => 'success',
+                'errors' => null,
+                'message' => trans('api.fetch'),
+                'data' => $Citiess
+            ]);
+        }
+        else
+        {
+            $errors=  trans('api.notfound');
+            return response()->json([
+                'success' => 'failed',
+                'errors' => $errors,
+                'message' => trans('api.notfound'),
+                'data' => null,
+
+            ]);
+        }
+
+}
+//////////////////////////////////////////////
+//////////////////////////////////////////////
 // Cities function by Antonious hosny
     public function Cities(Request $request){ 
         $lang = $request->header('lang');
@@ -1807,50 +1885,40 @@ class ApiController extends Controller
 // Terms and Conditions function by Antonious hosny
     public function TermsConditions(Request $request){
         $lang = $request->header('lang');
-        $doc = Doc::where('type','terms')->first();
-        $docss =[] ;
-        if($doc){
+        $term = Doc::where('type','terms')->first();
+        $terms =[] ;
+        if($term){
             if($lang == 'ar'){
-                $docss['title'] = $doc->title_ar ; 
-                $docss['disc'] = $doc->disc_ar ; 
+                $terms['title'] = $term->title_ar ; 
+                $terms['disc'] = $term->disc_ar ; 
             }else{
-                $docss['title'] = $doc->title_en ;      
-                $docss['disc'] = $doc->disc_en ;      
+                $terms['title'] = $term->title_en ;      
+                $terms['disc'] = $term->disc_en ;      
+            }    
+        }
+
+        $polcy = Doc::where('type','policy')->first();
+        $policies =[] ;
+        if($polcy){
+            if($lang == 'ar'){
+                $policies['title'] = $polcy->title_ar ; 
+                $policies['disc'] = $polcy->disc_ar ; 
+            }else{
+                $policies['title'] = $polcy->title_en ;      
+                $policies['disc'] = $polcy->disc_en ;      
             }    
         }
         return response()->json([
             'success' => 'success',
             'errors' => null ,
             'message' => trans('api.fetch'),
-            'data' =>  $docss,
+            'data' => [
+                'terms' =>  $terms,
+                'policies'=>  $policies ,
+            ],
                 
         ]);
     
-
-    }
-///////////////////////////////////////////////////
-// Policy function by Antonious hosny
-    public function Policy(Request $request){
-        $lang = $request->header('lang');
-        $doc = Doc::where('type','policy')->first();
-        $docss =[] ;
-        if($doc){
-            if($lang == 'ar'){
-                $docss['title'] = $doc->title_ar ; 
-                $docss['disc'] = $doc->disc_ar ; 
-            }else{
-                $docss['title'] = $doc->title_en ;      
-                $docss['disc'] = $doc->disc_en ;      
-            }    
-        }
-        return response()->json([
-            'success' => 'success',
-            'errors' => null ,
-            'message' => trans('api.fetch'),
-            'data' =>  $docss,
-                
-        ]);
-
 
     }
 ///////////////////////////////////////////////////
