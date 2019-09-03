@@ -17,12 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('IsRegistered', 'ApiController@IsRegistered')->middleware('localization');
+Route::post('SendCode', 'ApiController@SendCode')->middleware('localization');
 Route::post('Login', 'ApiController@Login')->middleware('localization');
 Route::get('Countries', 'ApiController@Countries')->middleware('localization');
- Route::post('Register', 'ApiController@Register')->middleware('localization');
+Route::post('Register', 'ApiController@Register')->middleware('localization');
  
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
-Route::post('Logout', 'ApiController@Logout')->middleware('localization');
+Route::get('Logout', 'ApiController@Logout')->middleware('localization');
 Route::post('ForgetPassword', 'ApiController@ForgetPassword')->middleware('localization');
 Route::post('VerifyCode', 'ApiController@VerifyCode')->middleware('localization');
 Route::post('ResetPassword', 'ApiController@ResetPassword')->middleware('localization');
@@ -39,8 +40,8 @@ Route::get('AboutUs', 'ApiController@AboutUs')->middleware('localization');
 Route::post('SocialContacts', 'ApiController@SocialContacts')->middleware('localization');
 
 
-Route::Post('count_notification','ApiController@count_notification')->middleware('localization');
-Route::Post('get_notification','ApiController@get_notification')->middleware('localization');
+Route::get('count_notification','ApiController@count_notification')->middleware('localization');
+Route::get('get_notification','ApiController@get_notification')->middleware('localization');
 
 Route::Post('send_notification','ApiController@send_notification')->middleware('localization');
 
