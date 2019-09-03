@@ -118,8 +118,8 @@ class ApiController extends Controller
                     ];
                 }
                 $message = trans('api.failed_login') ;
-                $response =  $this->FailedResponse($message , $transformed) ;
-                return  $response ;
+                return   $this->FailedResponse($message , $transformed) ;
+                 
             }
             $user  = User::where('mobile',$request->mobile)->where('role','<>','admin')->orderBy('id', 'desc')->first();
 
@@ -1701,12 +1701,9 @@ class ApiController extends Controller
                     'message' => $message
                 ];
             }
-            return response()->json([
-                'success' => 'failed',
-                'errors'  => $transformed,
-                'message' => trans('api.failed'),
-                'user'    => null ,
-            ]);
+            $message = trans('api.failed') ;
+            return   $this->FailedResponse($message , $transformed) ;
+             
         }
         else{
             $contact = new ContactUs ;
@@ -1735,14 +1732,10 @@ class ApiController extends Controller
                     $this->webnotification($device_token,$msg,$msg,$type);
                 }
             }
-            return response()->json([
-                'success' => 'success',
-                'errors' => null ,
-                'message' => trans('api.save'),
-                'data' => [
-                    "contact" => $contact,
-                    ],
-            ]);
+            $message = trans('api.save') ;
+            return $this->SuccessResponse($message , $contact) ;
+
+        
         }
         
 
@@ -1774,16 +1767,15 @@ class ApiController extends Controller
                 $policies['disc'] = $polcy->disc_en ;      
             }    
         }
-        return response()->json([
-            'success' => 'success',
-            'errors' => null ,
-            'message' => trans('api.fetch'),
-            'data' => [
-                'terms' =>  $terms,
-                'policies'=>  $policies ,
-            ],
+        
+        $data['terms'] = $terms ;
+        $data['policies'] = $policies ;
+
+        $message = trans('api.fetch') ;
+        return $this->SuccessResponse($message , $data) ;
+           
                 
-        ]);
+   
     
 
     }
@@ -1802,13 +1794,11 @@ class ApiController extends Controller
                 $docss['disc'] = $doc->disc_en ;      
             }    
         }
-        return response()->json([
-            'success' => 'success',
-            'errors' => null ,
-            'message' => trans('api.fetch'),
-            'data' =>  $docss,
-                
-        ]);
+        $data['about'] = $docss ;
+         
+        $message = trans('api.fetch') ;
+        return $this->SuccessResponse($message , $data) ;
+       
 
 
     }
