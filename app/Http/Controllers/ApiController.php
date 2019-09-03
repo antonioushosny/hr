@@ -341,8 +341,7 @@ class ApiController extends Controller
             $transformed = [];
             foreach ($messages->all() as $field => $message) {
                 $transformed[] = [
-                    // 'field' => $field,
-                    'message' => $message
+                     'message' => $message
                 ];
             }
             $message = trans('api.failed_login') ;
@@ -380,52 +379,87 @@ class ApiController extends Controller
                 $user->available = '1';
 
                 $user->save();
-                $user =  User::where('id',$user->id)->with('City')->with('Area')->first();
-                $users = [] ;
-                if($user){
-                    $users['id'] = $user->id ;
-                    $users['name'] = $user->name ;
-                    $users['email'] = $user->email ;
-                    $users['mobile'] = $user->mobile ;
-                    if($user->City){
-                        
-                        if($lang == 'ar'){
-                            $users['city_id'] = $user->City->id ;
-                            $users['city_name']   = $user->City->name_ar;
-                        }else{
-                            $users['city_id'] = $user->City->id ;
-                            $users['city_name']   = $user->City->name_en;
+                if($user->role == 'user'){
+                    $user =  User::where('id',$user->id)->first();
+                    $users = [] ;
+                    if($user){
+                        $users['id'] = $user->id ;
+                        $users['name'] = $user->name ;
+                        $users['email'] = $user->email ;
+                        $users['mobile'] = $user->mobile ;
+                        $users['address'] = $user->address ;
+                        $users['lat'] = $user->lat ;
+                        $users['lng'] = $user->lng ;
+                        $users['role'] = $user->role ;
+                        if($user->image){
+                            $users['image'] = asset('img/').'/'. $user->image;
                         }
-                    }else{
-                        $users['city_id'] = null ;
-                        $users['city_name']   =  null;
-                    }
-                    if($user->Area){
-                        
-                        if($lang == 'ar'){
-                            $users['area_id'] = $user->Area->id ;
-                            $users['area_name']   = $user->Area->name_ar;
-                        }else{
-                            $users['area_id'] = $user->Area->id ;
-                            $users['area_name']   = $user->Area->name_en;
+                        else {
+                            $users['image'] = null;
                         }
-                    }else{
-                        $users['area_id'] = null ;
-                        $users['area_name']   =  null;
+    
+                        $users['remember_token'] = $user->remember_token ;
+                        
                     }
-                    $users['lat'] = $user->lat ;
-                    $users['lng'] = $user->lng ;
-                    $users['role'] = $user->role ;
-                    if($user->image){
-                        $users['image'] = asset('img/').'/'. $user->image;
+                }else{
+                    $user =  User::where('id',$user->id)->with('country')->with('city')->with('area')->first();
+                    $users = [] ;
+                    if($user){
+                        $users['id'] = $user->id ;
+                        $users['name'] = $user->name ;
+                        $users['email'] = $user->email ;
+                        $users['mobile'] = $user->mobile ;
+                        if($user->country){
+                            
+                            $users['country_id'] = $user->country->id ;
+                            if($lang == 'ar'){
+                                $users['country_name']   = $user->country->name_ar;
+                            }else{
+                                $users['country_name']   = $user->country->name_en;
+                            }
+                        }else{
+                            $users['city_id'] = null ;
+                            $users['city_name']   =  null;
+                        }
+                        if($user->city){
+                            
+                            $users['city_id'] = $user->city->id ;
+                            if($lang == 'ar'){
+                                $users['city_name']   = $user->city->name_ar;
+                            }else{
+                                $users['city_name']   = $user->city->name_en;
+                            }
+                        }else{
+                            $users['city_id'] = null ;
+                            $users['city_name']   =  null;
+                        }
+                        if($user->area){
+                            
+                            $users['area_id'] = $user->area->id ;
+                            if($lang == 'ar'){
+                                $users['area_name']   = $user->area->name_ar;
+                            }else{
+                                 $users['area_name']   = $user->area->name_en;
+                            }
+                        }else{
+                            $users['area_id'] = null ;
+                            $users['area_name']   =  null;
+                        }
+                        $users['lat'] = $user->lat ;
+                        $users['lng'] = $user->lng ;
+                        $users['role'] = $user->role ;
+                        if($user->image){
+                            $users['image'] = asset('img/').'/'. $user->image;
+                        }
+                        else {
+                            $users['image'] = null;
+                        }
+    
+                        $users['remember_token'] = $user->remember_token ;
+                        
                     }
-                    else {
-                        $users['image'] = null;
-                    }
-
-                    $users['remember_token'] = $user->remember_token ;
-                    
                 }
+               
                 return response()->json([
                     'success' => 'success',
                     'errors' => null,
