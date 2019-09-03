@@ -125,8 +125,14 @@ class ApiController extends Controller
 
             if($user){
                 $code = rand(100000,999999);
-                $user->code = $code ;
-                $user->save();
+                $UserCode = PasswordReset::where('email',$request->mobile)->first();
+                if(!$UserCode){
+                    $UserCode = new PasswordReset ;
+                }
+                $UserCode->email = $request->mobile ;
+                $UserCode->token = $code ;
+                $UserCode->save();
+ 
                 $message = trans('api.send_code') ;
                 $response = $this->SuccessResponse($message , $code) ;
                 return  $response ;
@@ -266,8 +272,8 @@ class ApiController extends Controller
  
         }
         else{
-            
-            if ( $request->code == $user->code) {
+            $UserCode = PasswordReset::where('email',$request->mobile)->first();
+            if (  $UserCode && $request->code == $UserCode->token) {
                 if($user->status == 'not_active'|| $user->status == 'not_active' ||$user->role == 'admin'  ){
                     // $errors[] =[
                     //     'message' => trans('api.allowed')
@@ -284,7 +290,7 @@ class ApiController extends Controller
                 // $user->available = '1';
 
                 $user->save();
-               
+                $UserCode->delete() ;
                 $user =  User::where('id',$user->id)->with('technician')->first();
                 $users = [] ;
                 if($user){
@@ -419,6 +425,7 @@ class ApiController extends Controller
             $rules['area_id'] = "required" ;
             $rules['nationality_id'] = "required" ;
             $rules['service_id'] = "required" ;
+            $rules['identity_photo'] = "required" ;
         }
         //check the validator true or not
         $validator  = \Validator::make($request->all(),$rules);
@@ -432,30 +439,30 @@ class ApiController extends Controller
                     'message' => $message
                 ];
             }
-            return response()->json([
-                'success' => 'failed',
-                'errors'  => $transformed,
-                'message' => trans('api.failed_registered'),
-                'data'    => null ,
-            ]);
-        }
 
+            $errors = [] ;
+            $message = trans('api.failed_registered') ;
+            return  $this->FailedResponse($message , $transformed) ;
+        
+             
+        }
+        $UserCode = PasswordReset::where('email',$request->mobile)->first();
+        if (  $UserCode && $request->code == $UserCode->token) {
             $user = new User;
 
-            $password            = \Hash::make($request->password);
-            $user->password      = $password ;
             $user->name          = $request->name ;
             $user->email         = $request->email ;
             $user->mobile        = $request->mobile ;
-            $user->area_id        = $request->area_id ;
-            $user->city_id        = $request->city_id ;
-            $user->lat        = $request->lat ;
-            $user->lng        = $request->lng ;
+            $user->address       = $request->address ;
+            $user->lat           = $request->lat ;
+            $user->lng           = $request->lng ;
             $user->status        = 'active';
-            $user->role          = 'user';
+            $user->role          = $request->role ;
+            $user->device_token = $request->device_id ;
+            $user->type = $request->device_type ;
             $user->save();
             $user->generateToken();
-
+            $UserCode->delete() ;
             // $msg1 = "  مستخدم جديد قام بالتسجيل" ;
             $type = "user";
             // $title1 = "  مستخدم جديد قام بالتسجيل" ;
@@ -478,66 +485,110 @@ class ApiController extends Controller
                     $this->webnotification($device_token,$title,$msg,$type);
                 }
             }
-            /////// this for verify email addreess/////////
-
-            // $token = rand(100000,999999);
-            // $PasswordReset = PasswordReset::where('email',$user->email)->first();
-            // if(!$PasswordReset){
-            //     $PasswordReset = new PasswordReset ;
-            // }
-            // $PasswordReset->email = $user->email ;
-            // $PasswordReset->token = $token ;
-            // $PasswordReset->save();
-            // User::find($user->id)->notify(new verify_code($token));
-            /////// end verify email addreess/////////
-            $user =  User::where('id',$user->id)->with('country')->with('city')->first();
+            
+            $user =  User::where('id',$user->id)->with('technician')->first();
+            $users = [] ;
             if($user){
-                $users = [] ;
                 $users['id'] = $user->id ;
                 $users['name'] = $user->name ;
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
-                if($user->City){
-                    if($lang == 'ar'){
-                        $users['city_id'] = $user->City->id ;
-                        $users['city_name']   = $user->City->name_ar;
+                if($user->technician){
+
+                    if($user->technician->country){
+                        
+                        $users['country_id'] = $user->technician->country->id ;
+                        if($lang == 'ar'){
+                            $users['country_name']   = $user->technician->country->name_ar;
+                        }else{
+                            $users['country_name']   = $user->technician->country->name_en;
+                        }
                     }else{
-                        $users['city_id'] = $user->City->id ;
-                        $users['city_name']   = $user->City->name_en;
+                        $users['country_id'] = null ;
+                        $users['country_name']   =  null;
                     }
-                }else{
-                    $users['city_id'] = null ;
-                    $users['city_name']   = null ;
-                }
-                if($user->Area){
-                    if($lang == 'ar'){
-                        $users['area_id'] = $user->Area->id ;
-                        $users['area_name']   = $user->Area->name_ar;
+                    if($user->technician->city){
+                        
+                        $users['city_id'] = $user->technician->city->id ;
+                        if($lang == 'ar'){
+                            $users['city_name']   = $user->technician->city->name_ar;
+                        }else{
+                            $users['city_name']   = $user->technician->city->name_en;
+                        }
                     }else{
-                        $users['area_id'] = $user->Area->id ;
-                        $users['area_name']   = $user->Area->name_en;
+                        $users['city_id'] = null ;
+                        $users['city_name']   =  null;
                     }
-                }else{
-                    $users['area_id'] = null ;
-                    $users['area_name']   = null ;
-                }
-                if($user->image){
-                    $users['image'] = asset('img/').'/'. $user->image;
-                }else{
-                     $users['image'] = null ;
+                    if($user->area){
+                        
+                        $users['area_id'] = $user->technician->area->id ;
+                        if($lang == 'ar'){
+                            $users['area_name']   = $user->technician->area->name_ar;
+                        }else{
+                                $users['area_name']   = $user->technician->area->name_en;
+                        }
+                    }else{
+                        $users['area_id'] = null ;
+                        $users['area_name']   =  null;
+                    }
+                    if($user->technician->nationality){
+                        
+                        $users['nationality_id'] = $user->technician->nationality->id ;
+                        if($lang == 'ar'){
+                            $users['nationality_name']   = $user->technician->nationality->name_ar;
+                        }else{
+                            $users['nationality_name']   = $user->technician->nationality->name_en;
+                        }
+                    }else{
+                        $users['nationality_id'] = null ;
+                        $users['nationality_name']   =  null;
+                    }
+                    if($user->technician->service){
+                        
+                        $users['service_id'] = $user->technician->service->id ;
+                        if($lang == 'ar'){
+                            $users['service_name']   = $user->technician->service->name_ar;
+                        }else{
+                            $users['service_name']   = $user->technician->service->name_en;
+                        }
+                    }else{
+                        $users['service_id'] = null ;
+                        $users['service_name']   =  null;
+                    }
+                    $users['brief'] = $user->technician->brief ;
+                    if($user->technician->identity_photo){
+                        $users['identity_photo'] = asset('img/').'/'. $user->technician->identity_photo;
+                    }
+                    else {
+                        $users['identity_photo'] = null;
+                    }
                 }
                 $users['lat'] = $user->lat ;
                 $users['lng'] = $user->lng ;
                 $users['role'] = $user->role ;
                 $users['remember_token'] = $user->remember_token ;
+                if($user->image){
+                    $users['image'] = asset('img/').'/'. $user->image;
+                }
+                else {
+                    $users['image'] = null;
+                }
+
                 
             }
-            return response()->json([
-                'success' => 'success',
-                'errors'=> null ,
-                'message' => trans('api.success_registered'),
-                'data' => $users ,
-            ]);
+            $message = trans('api.success_registered') ;
+            return  $this->SuccessResponse($message , $users) ;
+           
+        } 
+        else
+        {
+            // $errors[] =[
+            //     'message' => trans('api.code_failed')
+            // ];
+            $errors = [] ;
+            $message = trans('api.code_failed') ;
+            return  $this->FailedResponse($message , $errors) ;
+        }
         
     }
 //////////////////////////////////////////////
