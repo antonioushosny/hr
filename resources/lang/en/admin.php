@@ -316,7 +316,17 @@ return [
 
 
         //subscriptions pages
-        'subscriptions'=>'Subscriptions',
-        'add_subscription'=>'Add Subscription',
-        'edit_subscription'=>'Edit Subscription',
+        'subscriptions'=>'Subscriptions Types',
+        'add_subscription'=>'Add Subscription Type',
+        'edit_subscription'=>'Edit Subscription Type',
+
+
+        //technicians pages
+        'technicians'=>'Technicians',
+        'add_technician'=>' Add Technician',
+        'edit_technician'=>'Edit Technician',
+        'choose_country'  =>'Choose Country',
+        'choose_city'    =>'Choose City',
+        'choose_area'   =>'Choose Area',
+        'choose_nationality'=>'Choose Nationality',
 ];

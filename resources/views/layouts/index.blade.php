@@ -372,12 +372,17 @@ body, html {
                     @endcan
                     
 
-                    @can('subscription_list')
+                    @can('subscription_type_list')
                     <li <?php echo ($page == 'subscriptions') ? "class='active open'" : ""; ?> ><a href="{{ route('subscriptions') }}"  ><i class="zmdi zmdi-money"></i> <span> {{trans('admin.subscriptions')}}</span></a></li>
                     @endcan
 
                     @can('user_list')                    
                     <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li>
+                    @endcan
+
+                    
+                    @can('technical_list')                    
+                    <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  ><i class="zmdi zmdi-accounts-alt"></i> <span> {{trans('admin.technicians')}}</span></a></li>
                     @endcan
 
                     @can('contact_list')

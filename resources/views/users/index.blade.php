@@ -22,7 +22,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.users')}}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
                 </ul>
             </div>
         </div>
@@ -110,6 +110,7 @@
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
+                                        @can('user_edit')
                                         @if($data->status == 'active')
                                             <td style="text-align:user">
                                                 <a href="{{route('userstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
@@ -121,14 +122,29 @@
                                                 
                                             </td> 
                                         @endif
+
+                                        @else
+                                            @if($data->status == 'active')
+                                                <td style="text-align:user">
+                                                    <mark class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></mark>
+                                                    
+                                                </td> 
+                                            @elseif($data->status == 'not_active')
+                                                <td style="text-align:user">
+                                                    <mark class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></mark>
+                                                    
+                                                </td> 
+                                            @endif
+
+                                        @endcan
                                         <td>
                                             @can('user_edit')
                                             <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
                                             @endcan
 
-                                            <!-- @can('user_edit')
+                                            @can('order_list')
                                             <a href="{{route('userorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
-                                            @endcan -->
+                                            @endcan
                                             @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
                                             @endcan

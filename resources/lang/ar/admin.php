@@ -323,9 +323,18 @@ return [
         //end services pages
      
         //subscriptions pages
-        'subscriptions'=>'الإشتراكات',
-        'add_subscription'=>' إضافة إشتراك',
-        'edit_subscription'=>' تعديل إشتراك',
+        'subscriptions'=>' انواع الإشتراكات',
+        'add_subscription'=>' إضافة  نوع إشتراك',
+        'edit_subscription'=>' تعديل  نوع إشتراك',
+
+        //technicians pages
+        'technicians'=>'الفنيين',
+        'add_technician'=>' إضافة فني',
+        'edit_technician'=>' تعديل  فني',
+        'choose_country'  =>'اختر الدولة',
+        'choose_city'    =>'اختر المدينة',
+        'choose_area'   =>'اختر المنطقة',
+        'choose_nationality'=>'اختر الجنسية',
  ];
 
 

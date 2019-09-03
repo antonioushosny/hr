@@ -36,8 +36,8 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('users')}}"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_user')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('technicians')}}"><i class="zmdi zmdi-accounts-alt"></i> {{__('admin.technicians')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_technician')}}</a></li>
                     
                 </ul>
             </div>
@@ -54,7 +54,7 @@
                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_user')}}  </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_technician')}}  </h2>
                             
                         </div>
                         <div class="body row">
@@ -77,15 +77,42 @@
                                     <label id="mobile-error" class="error" for="mobile" style=""></label>
                                 </div>
                                 
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('nationality_id',$nationalites
+                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_nationality'),'required']) !!}
+                                        <label id="nationality_id-error" class="error" for="nationality_id" style="">  </label>
+                                </div>               
+
+
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('country_id',$countries
+                                        ,'',['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country'),'required']) !!}
+                                        <label id="country_id-error" class="error" for="country_id" style="">  </label>
+                                </div>
+
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('city_id',[]
+                                        ,'',['class'=>'form-control selectpicker  show-tick ','id'=>'city_info' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
+                                        <label id="city_id-error" class="error" for="city_id" style="">  </label>
+                                </div>
+
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('area_id',[]
+                                        ,'',['class'=>'form-control show-tick','id'=>'area_info' ,'placeholder' =>trans('admin.choose_area'),'required']) !!}
+                                        <label id="area_id-error" class="error" for="area_id" style="">  </label>
+                                </div>
+
+
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" id="address-field1" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off" required>
                                     <label id="address-error" class="error" for="address" style=""></label>
-                                </div>
+                                </div>      
+
 
                             <!-- {{--  for map      --}}  -->
 
-                                <div class="form-group form-float">
-                                    <span style="color: black "> 
+                            <div class="form-group form-float">
+                                            <span style="color: black "> 
                                         {!! Form::label('location[]',trans('admin.placeholder_location')) !!}
                                     </span>
                                     <!-- <label id="location-error" class="error" for="location[]" style=""></label> -->
@@ -104,8 +131,6 @@
 
                                 </div><br/> 
                                 <!-- end map -->
-
-                              
 
                                 <!-- for image  -->
                                 <div class="form-group form-float row"  >
@@ -159,7 +184,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
-
 function initMap() {
     $('form').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
@@ -285,12 +309,45 @@ infoWindow.setContent(browserHasGeolocation ?
      'The Geolocation service failed.  ' :
      'Your browser doesnt support geolocation. ');
 }
-// var addresschange=document.getElementsByClassName("gm-style-iw");
- 
-//  $('.gm-style-iw').change(function(e){
-//     console.log($('.gm-style-iw'));
 
-//  })
+
+$('#country_info').change(function(){
+    console.log($('#country_info').val());
+    $('#city_info').empty();
+    $('#city_info').append(`<option value="">{{trans('admin.choose_city')}}</option>`); 
+    $('#area_info').empty();
+    $('#area_info').append(`<option value="">{{trans('admin.choose_area')}}</option>`); 
+    cityids=[];
+    console.log("{{$allcities}}");
+    @foreach ($allcities as $data)
+    console.log("{{$data->country_id}}");
+    if("{{$data->country_id}}"==$('#country_info').val())
+    {
+        $('#city_info').append(`<option value="{{$data->id}}">{{$data->name}}</option>`); 
+    }
+            
+        @endforeach
+        $('#city_info').selectpicker('refresh');
+    $('#city_info').selectpicker('render');
+    $('#area_info').selectpicker('refresh');
+    $('#area_info').selectpicker('render');
+        
+});
+
+$('#city_info').change(function(){
+    $('#area_info').empty();
+    $('#area_info').append(`<option value="">{{trans('admin.choose_area')}}</option>`); 
+    @foreach ($allareas as $data)
+    if("{{$data->city_id}}"==$('#city_info').val())
+    {
+        $('#area_info').append(`<option value="{{$data->id}}">{{$data->name}}</option>`); 
+    }
+            
+        @endforeach
+    $('#area_info').selectpicker('refresh');
+    $('#area_info').selectpicker('render');
+        
+});
 
     //this for add new record
     $("#form_validation").submit(function(e){
@@ -340,10 +397,10 @@ infoWindow.setContent(browserHasGeolocation ?
                             $('#location-error').text( data.errors["location."+0]);
                         }
                   } 
-                  else {
-                        window.location.replace("{{route('users')}}");
+                //   else {
+                //         window.location.replace("{{route('technicians')}}");
 
-                     }
+                //      }
             },
         });
     });
