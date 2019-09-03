@@ -23,7 +23,7 @@ Route::get('Countries', 'ApiController@Countries')->middleware('localization');
 Route::post('Register', 'ApiController@Register')->middleware('localization');
  
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
-Route::post('Logout', 'ApiController@Logout')->middleware('localization');
+Route::get('Logout', 'ApiController@Logout')->middleware('localization');
 Route::post('ForgetPassword', 'ApiController@ForgetPassword')->middleware('localization');
 Route::post('VerifyCode', 'ApiController@VerifyCode')->middleware('localization');
 Route::post('ResetPassword', 'ApiController@ResetPassword')->middleware('localization');

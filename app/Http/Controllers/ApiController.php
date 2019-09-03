@@ -563,7 +563,6 @@ class ApiController extends Controller
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
                 $users['address'] = $user->address ;
-
                 if($user->technician){
 
                     if($user->technician->country){
@@ -667,27 +666,19 @@ class ApiController extends Controller
     public function EditProfile(Request $request){
         // return $request ;
         $lang = $request->header('lang');
-        $token = $request->token;
+        $token = $request->header('token');
         if($token == ''){
-            $errors[] = [
-                'message' => trans('api.logged_out')
-            ]; 
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'user' => null,
-
-            ]);
+ 
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+           
         }  
         $user = User::where('remember_token',$token)->first();
         if($user){      
             $rules=array(  
                 "name"=>"min:3",
-                // 'profile_pic' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                // "mobile"=>"digits:10",
-                "password" => "min:6",
-                "email"=> 'email'
+                "email"=> 'email',
+                "image" => 'file',
             );
             $user = User::where('id',$user->id)->first();
             if($request->mobile){
@@ -713,18 +704,10 @@ class ApiController extends Controller
                         'message' => $message
                     ];
                 }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors'=>$transformed,
-                    'message' => trans('api.failed'),
-                    'user' =>  null ,
-                ]);
+                $message = trans('api.failed') ;
+                return  $this->FailedResponse($message , $transformed) ;
             }
-
-            if($request->password){
-                $password = \Hash::make($request->password);
-                $user->password = $password ;
-            }
+ 
             if($request->name){
                 $user->name          = $request->name ;
             }
@@ -734,17 +717,15 @@ class ApiController extends Controller
             if($request->mobile){
                 $user->mobile        = $request->mobile ;
             }
-            if($request->city_id){
-                $user->city_id           = $request->city_id ;
-            }
+            
             if($request->lat){
                 $user->lat           = $request->lat ;
             }
             if($request->lng){
                 $user->lng           = $request->lng ;
             }
-            if($request->area_id){
-                $user->area_id           = $request->area_id ;
+            if($request->address){
+                $user->address           = $request->address ;
             }
             
             // if ($request->profile_pic){
@@ -764,70 +745,105 @@ class ApiController extends Controller
                 $user->image   = $name;  
             }
             $user->save();
-            $user =  User::where('id',$user->id)->with('City')->with('Area')->first();
+
+            $user =  User::where('id',$user->id)->with('technician')->first();
             $users = [] ;
             if($user){
                 $users['id'] = $user->id ;
                 $users['name'] = $user->name ;
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
-                if($user->City){
-                    
-                    if($lang == 'ar'){
+                $users['address'] = $user->address ;
+                if($user->technician){
+
+                    if($user->technician->country){
                         
-                        $users['city_id'] = $user->City->id ;
-                        $users['city_name']   = $user->City->name_ar;
+                        $users['country_id'] = $user->technician->country->id ;
+                        if($lang == 'ar'){
+                            $users['country_name']   = $user->technician->country->name_ar;
+                        }else{
+                            $users['country_name']   = $user->technician->country->name_en;
+                        }
                     }else{
-                        $users['city_id'] = $user->City->id ;
-                        $users['city_name']   = $user->City->name_en;
+                        $users['country_id'] = null ;
+                        $users['country_name']   =  null;
                     }
-                }else{
-                    $users['city_id'] = null ;
-                    $users['city_name']   =  null;
-                }
-                if($user->Area){
-                    
-                    if($lang == 'ar'){
-                        $users['area_id'] = $user->Area->id ;
-                        $users['area_name']   = $user->Area->name_ar;
+                    if($user->technician->city){
+                        
+                        $users['city_id'] = $user->technician->city->id ;
+                        if($lang == 'ar'){
+                            $users['city_name']   = $user->technician->city->name_ar;
+                        }else{
+                            $users['city_name']   = $user->technician->city->name_en;
+                        }
                     }else{
-                        $users['area_id'] = $user->Area->id ;
-                        $users['area_name']   = $user->Area->name_en;
+                        $users['city_id'] = null ;
+                        $users['city_name']   =  null;
                     }
-                }else{
-                    $users['area_id'] = null ;
-                    $users['area_name']   =  null;
-                }
-                if($user->image){
-                    $users['image'] = asset('img/').'/'. $user->image;
-                }else{
-                     $users['image'] = null ;
+                    if($user->technician->area){
+                        
+                        $users['area_id'] = $user->technician->area->id ;
+                        if($lang == 'ar'){
+                            $users['area_name']   = $user->technician->area->name_ar;
+                        }else{
+                                $users['area_name']   = $user->technician->area->name_en;
+                        }
+                    }else{
+                        $users['area_id'] = null ;
+                        $users['area_name']   =  null;
+                    }
+                    if($user->technician->nationality){
+                        
+                        $users['nationality_id'] = $user->technician->nationality->id ;
+                        if($lang == 'ar'){
+                            $users['nationality_name']   = $user->technician->nationality->name_ar;
+                        }else{
+                            $users['nationality_name']   = $user->technician->nationality->name_en;
+                        }
+                    }else{
+                        $users['nationality_id'] = null ;
+                        $users['nationality_name']   =  null;
+                    }
+                    if($user->technician->service){
+                        
+                        $users['service_id'] = $user->technician->service->id ;
+                        if($lang == 'ar'){
+                            $users['service_name']   = $user->technician->service->name_ar;
+                        }else{
+                            $users['service_name']   = $user->technician->service->name_en;
+                        }
+                    }else{
+                        $users['service_id'] = null ;
+                        $users['service_name']   =  null;
+                    }
+                    $users['brief'] = $user->technician->brief ;
+                    if($user->technician->identity_photo){
+                        $users['identity_photo'] = asset('img/').'/'. $user->technician->identity_photo;
+                    }
+                    else {
+                        $users['identity_photo'] = null;
+                    }
                 }
                 $users['lat'] = $user->lat ;
                 $users['lng'] = $user->lng ;
                 $users['role'] = $user->role ;
                 $users['remember_token'] = $user->remember_token ;
+                if($user->image){
+                    $users['image'] = asset('img/').'/'. $user->image;
+                }
+                else {
+                    $users['image'] = null;
+                }
+
                 
             }
-            return response()->json([
-                'success' => 'success',
-                'errors'=> null ,
-                'message' => trans('api.save'),
-                'user' => $users ,
-            ]);
+            $message = trans('api.save') ;
+            return  $this->SuccessResponse($message , $users) ;
+
         }
         else{
-            $errors[] = [
-                'message' => trans('api.logged_out')
-            ]; 
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'user' => null,
-
-            ]);
-
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
     }
@@ -835,26 +851,27 @@ class ApiController extends Controller
 // logout function by Antonious hosny
     public function Logout(Request $request){
         $token = $request->token;
+        
+        $token = $request->header('token');
         if($token == ''){
-        }
+ 
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+           
+        }  
         // $token = $request->header('access_token');
         $user = User::where('remember_token',$token)->first();
         if ($user) {
             $user->remember_token = null;
             $user->device_token = null;
-            $user->available = '0';
-            $user->save();
-            return response()->json([
-                'success' => 'success',
-                'errors' => null,
-                "message"=>trans('api.logout'),
-                ]);
+             $user->save();
+
+            $message = trans('api.logout') ;
+            return  $this->SuccessResponse($message , $user) ;
+          
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
     }
