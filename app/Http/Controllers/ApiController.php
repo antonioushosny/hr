@@ -745,7 +745,36 @@ class ApiController extends Controller
                 $user->image   = $name;  
             }
             $user->save();
+            if($user->role == 'fannie'){
+                $fannie =  Technician::where('user_id',$user->id)->first() ;
 
+                if(Country::find($request->country_id)){
+                    $fannie->country_id = $request->country_id ;
+                }
+                if(City::find($request->city_id)){
+                    $fannie->city_id = $request->city_id ;
+                }
+                if(Area::find($request->area_id)){
+                    $fannie->area_id = $request->area_id ;
+                }
+                if(Nationality::find($request->nationality_id)){
+                    $fannie->nationality_id = $request->nationality_id ;
+                }
+                if(Service::find($request->service_id)){
+                    $fannie->service_id = $request->service_id ;
+                }
+ 
+                $fannie->brief = $request->brief ;
+
+                if ($request->hasFile('identity_photo')) {
+                    $image = $request->file('identity_photo');
+                    $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/img');
+                    $image->move($destinationPath, $name);
+                    $fannie->identity_photo   = $name;  
+                }
+                $fannie->save(); 
+            }
             $user =  User::where('id',$user->id)->with('technician')->first();
             $users = [] ;
             if($user){
@@ -850,7 +879,7 @@ class ApiController extends Controller
 ///////////////////////////////////////////////////
 // logout function by Antonious hosny
     public function Logout(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         
         $token = $request->header('token');
         if($token == ''){
@@ -1041,7 +1070,7 @@ class ApiController extends Controller
         }else{
             $skip = 0 ;
         }
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1108,7 +1137,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // MakeOrder function by Antonious hosny
     public function MakeOrder(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1262,7 +1291,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // MyOrders function by Antonious hosny
     public function MyOrders(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1441,7 +1470,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // CanceledOrders function by Antonious hosny
     public function CanceleOrder(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1524,7 +1553,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // OrdersHistory function by Antonious hosny
     public function OrdersHistory(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1584,7 +1613,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // ChangeStatusOrders function by Antonious hosny
     public function ChangeStatusOrders(Request $request){
-        $token = $request->token;
+        $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1954,18 +1983,12 @@ class ApiController extends Controller
 // count_notification function by Antonious hosny
     public function count_notification(Request $request){
         $lang = $request->header('lang');
+        $token = $request->header('token');
         date_default_timezone_set('Africa/Cairo');
-        $token = $request->token;
-        // return $token ;
+         // return $token ;
         if($token == ''){
-            $errors =  trans('api.logged_out');
-            
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'count' => null,
-            ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
         $user = User::where('remember_token',$token)->first();
         // $user->notify(new Notifications());
@@ -1975,23 +1998,14 @@ class ApiController extends Controller
             $user->save();
             $count = count($user->unreadnotifications) ;
             // return $count ;
-            return response()->json([
-                'success' => 'success',
-                'errors' => null ,
-                'message' => trans('api.fetch'),
-                'count' => $count ,
-            ]);
+
+            $message = trans('api.fetch') ;
+            return  $this->SuccessResponse($message , $count) ;
+             
         }
         else{
-            $errors[] = [
-                'message' => trans('api.logged_out')
-            ]; 
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'count' => null,
-            ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
     }
@@ -1999,16 +2013,10 @@ class ApiController extends Controller
 // get_notification function by Antonious hosny
     public function get_notification(Request $request){
         date_default_timezone_set('Africa/Cairo');
-        $token = $request->token;
+        $token = $request->header('token');
         if($token == ''){
-            $errors = trans('api.logged_out');
-        
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'notifications' => null,
-            ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
         $user = User::where('remember_token',$token)->first();
         // $user->notify(new Notifications());
@@ -2019,23 +2027,13 @@ class ApiController extends Controller
                 $note->markAsRead();
             }
             // return $count ;
-    
-            return response()->json([
-                'success' => 'success',
-                'errors' => null ,
-                'message' => trans('api.fetch'),
-                'notifications' => $notifications ,
-            ]);
+            $message = trans('api.fetch') ;
+            return  $this->SuccessResponse($message , $notifications) ;
+            
         }
         else{
-            $errors = trans('api.logged_out');
-        
-            return response()->json([
-                'success' => 'logged',
-                'errors' => $errors ,
-                'message' => trans('api.logged_out'),
-                'notifications' => null,
-            ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
     }

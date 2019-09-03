@@ -40,8 +40,8 @@ Route::get('AboutUs', 'ApiController@AboutUs')->middleware('localization');
 Route::post('SocialContacts', 'ApiController@SocialContacts')->middleware('localization');
 
 
-Route::Post('count_notification','ApiController@count_notification')->middleware('localization');
-Route::Post('get_notification','ApiController@get_notification')->middleware('localization');
+Route::get('count_notification','ApiController@count_notification')->middleware('localization');
+Route::get('get_notification','ApiController@get_notification')->middleware('localization');
 
 Route::Post('send_notification','ApiController@send_notification')->middleware('localization');
 
