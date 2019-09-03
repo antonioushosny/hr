@@ -125,6 +125,7 @@ class ApiController extends Controller
             if($user){
                 $code = rand(100000,999999);
                 $user->code = $code ;
+                $user->save();
                 $message = trans('api.send_code') ;
                 $response = $this->SuccessResponse($message , $code) ;
                 return  $response ;
@@ -132,9 +133,10 @@ class ApiController extends Controller
             else
             {
                 // $errors=  trans('api.notfound');
-                $errors[] =[
-                    'message' => trans('api.mobile_notfound')
-                ];
+                // $errors[] =[
+                //     'message' => trans('api.mobile_notfound')
+                // ];
+                $errors = [] ;
                 $message = trans('api.failed_login') ;
                 $response = $this->FailedResponse($message , $errors) ;
                 return  $response ;
@@ -324,9 +326,10 @@ class ApiController extends Controller
         $lang = $request->header('lang');
         // $this->validateLogin($request);
         $rules=array(
-            "email"=>"required",
-            "password"=>"required",
-            "device_token"=>"required",
+            "mobile"=>"required",
+            "code"=>"required",
+            "device_id"=>"required",
+            "role"=>"required",
             "device_type" => "required",  // 1 for ios , 0 for android  
         );
 
@@ -342,47 +345,37 @@ class ApiController extends Controller
                     'message' => $message
                 ];
             }
-            return response()->json([
-                'success' => 'failed',
-                'errors'=>$transformed,
-                'message' => trans('api.failed_login'),
-                'data' => null,
-
-            ]);
+            $message = trans('api.failed_login') ;
+            return  $this->FailedResponse($message , $transformed) ;
+ 
         }
-        $user = User::where('email',$request->email)->where('role',$request->role)->first();
+
+        $user = User::where('mobile',$request->mobile)->where('role',$request->role)->first();
         // return $user;
         if(!$user){
 
-            $errors =  trans('admin.email_notfound');
-            return response()->json([
-                'success' => 'failed',
-                'errors' => $errors ,
-                'message' => trans('admin.email_notfound'),
-                'data' => null,
-
-            ]);
+            // $errors[] =[
+            //     'message' => trans('api.mobile_notfound')
+            // ];
+            $errors = [] ;
+            $message = trans('api.mobile_notfound') ;
+            return  $this->FailedResponse($message , $errors) ;
+ 
         }
         else{
-            if($user->password == null || $user->password == ''){
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.activate_account'),
-                    'message' => trans('api.activate_account'),
-                    'data' => null,
-                ]);
-            }
-            if (\Hash::check( $request->password,$user->password)) {
-                if($user->status == 'not_active'||$user->role == 'admin' ||$user->role == 'provider' ||$user->role == 'center'){
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors' => trans('api.allowed'),
-                        'message' => trans('api.allowed'),
-                        'data' => null,
-                    ]);
+            
+            if ( $request->code == $user->code) {
+                if($user->status == 'not_active'|| $user->status == 'not_active' ||$user->role == 'admin'  ){
+                    // $errors[] =[
+                    //     'message' => trans('api.allowed')
+                    // ];
+                    $errors = [] ;
+                    $message = trans('api.allowed') ;
+                    return  $this->FailedResponse($message , $errors) ;
+                   
                 }
                 $user->generateToken();
-                $user->device_token = $request->device_token ;
+                $user->device_token = $request->device_id ;
                 $user->type = $request->device_type ;
                 $user->available = '1';
 
@@ -442,14 +435,12 @@ class ApiController extends Controller
             }
             else
             {
-                $errors=  trans('api.password_failed');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => $errors,
-                    'message' => trans('api.password_failed'),
-                    'data' => null,
-
-                ]);
+                // $errors[] =[
+                //     'message' => trans('api.code_failed')
+                // ];
+                $errors = [] ;
+                $message = trans('api.code_failed') ;
+                return  $this->FailedResponse($message , $errors) ;
             }
                 
             
