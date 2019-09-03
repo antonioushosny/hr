@@ -98,6 +98,7 @@ class ApiController extends Controller
 
         ]);
     }
+
 //////////////////////////////////////////////
 // IsRegistered function by Antonious hosny
     public function IsRegistered(Request $request){ 
@@ -376,58 +377,38 @@ class ApiController extends Controller
                 $user->generateToken();
                 $user->device_token = $request->device_id ;
                 $user->type = $request->device_type ;
-                $user->available = '1';
+                // $user->available = '1';
 
                 $user->save();
-                if($user->role == 'user'){
-                    $user =  User::where('id',$user->id)->first();
-                    $users = [] ;
-                    if($user){
-                        $users['id'] = $user->id ;
-                        $users['name'] = $user->name ;
-                        $users['email'] = $user->email ;
-                        $users['mobile'] = $user->mobile ;
-                        $users['address'] = $user->address ;
-                        $users['lat'] = $user->lat ;
-                        $users['lng'] = $user->lng ;
-                        $users['role'] = $user->role ;
-                        if($user->image){
-                            $users['image'] = asset('img/').'/'. $user->image;
-                        }
-                        else {
-                            $users['image'] = null;
-                        }
-    
-                        $users['remember_token'] = $user->remember_token ;
-                        
-                    }
-                }else{
-                    $user =  User::where('id',$user->id)->with('country')->with('city')->with('area')->first();
-                    $users = [] ;
-                    if($user){
-                        $users['id'] = $user->id ;
-                        $users['name'] = $user->name ;
-                        $users['email'] = $user->email ;
-                        $users['mobile'] = $user->mobile ;
-                        if($user->country){
+               
+                $user =  User::where('id',$user->id)->with('technician')->first();
+                $users = [] ;
+                if($user){
+                    $users['id'] = $user->id ;
+                    $users['name'] = $user->name ;
+                    $users['email'] = $user->email ;
+                    $users['mobile'] = $user->mobile ;
+                    if($user->technician){
+
+                        if($user->technician->country){
                             
-                            $users['country_id'] = $user->country->id ;
+                            $users['country_id'] = $user->technician->country->id ;
                             if($lang == 'ar'){
-                                $users['country_name']   = $user->country->name_ar;
+                                $users['country_name']   = $user->technician->country->name_ar;
                             }else{
-                                $users['country_name']   = $user->country->name_en;
+                                $users['country_name']   = $user->technician->country->name_en;
                             }
                         }else{
-                            $users['city_id'] = null ;
-                            $users['city_name']   =  null;
+                            $users['country_id'] = null ;
+                            $users['country_name']   =  null;
                         }
-                        if($user->city){
+                        if($user->technician->city){
                             
-                            $users['city_id'] = $user->city->id ;
+                            $users['city_id'] = $user->technician->city->id ;
                             if($lang == 'ar'){
-                                $users['city_name']   = $user->city->name_ar;
+                                $users['city_name']   = $user->technician->city->name_ar;
                             }else{
-                                $users['city_name']   = $user->city->name_en;
+                                $users['city_name']   = $user->technician->city->name_en;
                             }
                         }else{
                             $users['city_id'] = null ;
@@ -435,37 +416,59 @@ class ApiController extends Controller
                         }
                         if($user->area){
                             
-                            $users['area_id'] = $user->area->id ;
+                            $users['area_id'] = $user->technician->area->id ;
                             if($lang == 'ar'){
-                                $users['area_name']   = $user->area->name_ar;
+                                $users['area_name']   = $user->technician->area->name_ar;
                             }else{
-                                 $users['area_name']   = $user->area->name_en;
+                                    $users['area_name']   = $user->technician->area->name_en;
                             }
                         }else{
                             $users['area_id'] = null ;
                             $users['area_name']   =  null;
                         }
-                        $users['lat'] = $user->lat ;
-                        $users['lng'] = $user->lng ;
-                        $users['role'] = $user->role ;
-                        if($user->image){
-                            $users['image'] = asset('img/').'/'. $user->image;
+                        if($user->technician->nationality){
+                            
+                            $users['nationality_id'] = $user->technician->nationality->id ;
+                            if($lang == 'ar'){
+                                $users['nationality_name']   = $user->technician->nationality->name_ar;
+                            }else{
+                                $users['nationality_name']   = $user->technician->nationality->name_en;
+                            }
+                        }else{
+                            $users['nationality_id'] = null ;
+                            $users['nationality_name']   =  null;
                         }
-                        else {
-                            $users['image'] = null;
+                        if($user->technician->service){
+                            
+                            $users['service_id'] = $user->technician->service->id ;
+                            if($lang == 'ar'){
+                                $users['service_name']   = $user->technician->service->name_ar;
+                            }else{
+                                $users['service_name']   = $user->technician->service->name_en;
+                            }
+                        }else{
+                            $users['service_id'] = null ;
+                            $users['service_name']   =  null;
                         }
-    
-                        $users['remember_token'] = $user->remember_token ;
-                        
+                        $users['brief'] = $user->technician->brief ;
                     }
+                    $users['lat'] = $user->lat ;
+                    $users['lng'] = $user->lng ;
+                    $users['role'] = $user->role ;
+                    $users['remember_token'] = $user->remember_token ;
+                    if($user->image){
+                        $users['image'] = asset('img/').'/'. $user->image;
+                    }
+                    else {
+                        $users['image'] = null;
+                    }
+
+                    
                 }
+                $message = trans('api.login') ;
+                return  $this->SuccessResponse($message , $users) ;
+                  
                
-                return response()->json([
-                    'success' => 'success',
-                    'errors' => null,
-                    'message' => trans('api.login'),
-                    'data' => $users
-                ]);
             }
             else
             {

@@ -29,18 +29,10 @@ class User extends Authenticatable
         $this->save();
         return $this->api_token;
     }
-    public function country()
+    public function technician()
     {
-        return $this->belongsTo('App\Country','country_id');
-    }
-    public function City()
-    {
-        return $this->belongsTo('App\City','city_id');
-    }             
-    public function Area()
-    {
-        return $this->belongsTo('App\Area','area_id');
-    }                            
+        return $this->hasOne('App\Technician', 'user_id')->with('nationality')->with('country')->with('city')->with('area')->with('service');
+    }                     
     public function usersorders()
     {
         return $this->hasMany('App\Order', 'user_id');
