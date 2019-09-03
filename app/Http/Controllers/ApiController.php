@@ -905,231 +905,60 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
-// forget_password function by Antonious hosny
-    public function ForgetPassword(Request $request){
-        $rules['email'] = 'required';
-        $validator  = \Validator::make($request->all(),$rules);
-        if($validator->fails())
-        {
-            $messages = $validator->messages();
-            $transformed = [];
+// Services function by Antonious hosny
+    public function Services(Request $request){
 
-            foreach ($messages->all() as $field => $message) {
-                $transformed[] = [
-                    'message' => $message
-                ];
-            }
-            return response()->json([
-                'success' => 'failed',
-                'errors'=>$transformed,
-                'message' => trans('api.failed'), 
-                'user' =>  null ,
-            ]);
-        }
-        $email = $request->email;
-        $user = User::where('email',$email)->first();
-        if($user){
-            $token = rand(100000,999999);
-            $PasswordReset = PasswordReset::where('email',$user->email)->first();
-            if(!$PasswordReset){
-                $PasswordReset = new PasswordReset ;
-            }
-            $PasswordReset->email = $user->email ;
-            $PasswordReset->token = $token ;
-            $PasswordReset->save();
-            User::find($user->id)->notify(new verify_code($token));
-            return response()->json([
-                'success' => 'success',
-                'errors'  => null,
-                "message"=>trans('api.send_token'), 
-                ]);
-
-        }
-        $error = trans('api.user_notfound');
-        return response()->json([
-            'success' => 'failed',
-            'errors'  =>  $error,
-            "message"=>trans('api.user_notfound'),
-
-            ]);
-        
-    }
-//////////////////////////////////////////////////
-// verify_code function by Antonious hosny
-    public function VerifyCode(Request $request){
-        $code = $request->code;
-        $email = $request->email;
-        if($code){
-            $PasswordReset = PasswordReset::where('token',$code)->where('email',$email)->first();
-            // return $PasswordReset ;
-            if ($PasswordReset) {
-                $user = User::where('email',$PasswordReset->email)->first();
-                if($user){
-                    $user->status = 'active' ;
-                    $user->save();
-                }
-                return response()->json([
-                    'success' => 'success',
-                    'errors'  => null,
-                    "message"=>trans('api.success_code'),
-                    'code' => $code 
-
-                ]);
-            }
-            else{
-                $error = trans('api.incorrect_code');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors'  =>  $error,
-                    "message"=>trans('api.incorrect_code'),
-                    'code' => null
-                ]);
-            }
-            
-        }
-        $error = trans('api.code_requird');
-        return response()->json([
-            'success' => 'failed',
-            'errors'  =>  $error,
-            "message"=>trans('api.code_requird'),
-            'code' => null
-        ]);
-        
-    }
-///////////////////////////////////////////////////
-// reset_password function by Antonious hosny
-    public function ResetPassword(Request $request){
-        $code = $request->code;
-        $email = $request->email;
-        if($code){
-            $PasswordReset = PasswordReset::where('token',$code)->where('email',$email)->first();
-            if($PasswordReset){
-                $user = User::where('email',$PasswordReset->email)->first();
-            }
-            
-            else{
-                $error = trans('api.code_notfound');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors'  => $error,
-                    "message"=>trans('api.code_notfound'),
-
-                ]);
-            }
-            if ($user) {
-                if($request->password){
-                    $password = \Hash::make($request->password);
-                    $user->password = $password ;
-                    // $user->generateToken();
-                    $user->save();
-                    $PasswordReset->delete();
-                    return response()->json([
-                        'success' => 'success',
-                        'errors'  => null,
-                        "message"=>trans('api.passwordsucces')
-                    ]);
-                }
-                else{
-                    $error = trans('api.password_requird');
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors'  => $error,
-                        "message"=>trans('api.password_requird'),
-                
-                    ]);
-                }
-            
-                // User::find($user->id)->notify(new verify_code($user->verify_code ));
-                // return $user;
-                
-            }
-            $error = trans('api.code_notfound');
-            return response()->json([
-                'success' => 'failed',
-                'errors'  => $error,
-                "message"=>trans('api.code_notfound'),
-                
-
-            ]);
-        }
-        $error = trans('api.code_required');
-        return response()->json([
-            'success' => 'failed',
-            'errors'  => $error,
-            "message"=>trans('api.code_required'),
-        
-
-        ]);
-        
-    }
-/////////////////////////////////////////////////
-// Containers function by Antonious hosny
-    public function Containers(Request $request){
         if($request->page && $request->page > 0 ){
-            $skip = $request->page.'0' ;
+            $page = $request->page * $request->skip ;
         }else{
-            $skip = 0 ;
+            $page = 0 ;
         }
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
+    
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
 
-                $containers = Container::where('status','active')->orderBy('id', 'desc')->skip($skip)->limit(10)->get();
-                $containers_count = Container::where('status','active')->count('id');
+                $services = Service::where('status','active')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $services_count = Service::where('status','active')->count('id');
                 // return $containers_count ;
-                $containerss = [] ;
+                $servicess = [] ;
                 $i =0 ;
-                if(sizeof($containers) > 0 ){
-                    foreach($containers as $container){
+                if(sizeof($services) > 0 ){
+                    foreach($services as $service){
                         
-                        $containerss[$i]['container_id'] = $container->id ;    
+                        $servicess[$i]['service_id'] = $service->id ;    
                         if($lang == 'ar'){
-                            $containerss[$i]['container_name'] = $container->name_ar ; 
-                            $containerss[$i]['container_desc'] = $container->desc_ar ; 
+                            $servicess[$i]['service_name'] = $service->name_ar ; 
+                         }else{
+                            $servicess[$i]['service_name'] = $service->name_en ; 
+                         }
+                        if($service->image){
+                            $servicess[$i]['image'] = asset('img/').'/'. $service->image;
                         }else{
-                            $containerss[$i]['container_name'] = $container->name_en ; 
-                            $containerss[$i]['container_desc'] = $container->desc_en ; 
+                            $servicess[$i]['image'] = null ;
                         }
-                        if($container->image){
-                            $containerss[$i]['image'] = asset('img/').'/'. $container->image;
-                        }else{
-                            $containerss[$i]['image'] = null ;
-                        }
-                        $containerss[$i]['size'] = $container->size ; 
-
+ 
                         $i ++ ;                    
                         
                     }
                 }
-                return response()->json([
-                    'success' => 'success',
-                    'errors' => null ,
-                    'message' => trans('api.fetch'),
-                    'data' => [
-                        'containers' => $containerss,
-                        'containers_count' => $containers_count,
-                        ],
-    
-                ]);
+                $count = count($user->unreadnotifications) ;
+                $data['services_count'] = $services_count ;
+                $data['services'] = $servicess ;
+                $data['count_notification'] = $count ;
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                 
             }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                ]);
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
             
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-            ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
 

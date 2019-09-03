@@ -21,14 +21,12 @@ Route::post('SendCode', 'ApiController@SendCode')->middleware('localization');
 Route::post('Login', 'ApiController@Login')->middleware('localization');
 Route::get('Countries', 'ApiController@Countries')->middleware('localization');
 Route::post('Register', 'ApiController@Register')->middleware('localization');
- 
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
 Route::get('Logout', 'ApiController@Logout')->middleware('localization');
-Route::post('ForgetPassword', 'ApiController@ForgetPassword')->middleware('localization');
-Route::post('VerifyCode', 'ApiController@VerifyCode')->middleware('localization');
-Route::post('ResetPassword', 'ApiController@ResetPassword')->middleware('localization');
+Route::get('Services', 'ApiController@Services')->middleware('localization');
+
+
 Route::post('HomePage', 'ApiController@HomePage')->middleware('localization');
-Route::post('Containers', 'ApiController@Containers')->middleware('localization');
 Route::post('MakeOrder', 'ApiController@MakeOrder')->middleware('localization');
 Route::post('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localization');
