@@ -195,6 +195,8 @@ return [
         'cost'                    =>'Cost',
         'no-month'                 =>'Number of months',
         'location.*'               =>'Location',
+        'nationality_id' =>'Nationality',
+        'service_id' =>'Service',
     ],
     
 ];

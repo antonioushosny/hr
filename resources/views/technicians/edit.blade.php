@@ -83,23 +83,13 @@
                                         <label id="service_id-error" class="error" for="service_id" style="">  </label>
                                 </div> 
 
-  
 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('nationality_id',$nationalites
                                         ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_nationality'),'required']) !!}
                                         <label id="nationality_id-error" class="error" for="nationality_id" style="">  </label>
-                                </div>              
+                                </div>               
                                 
-
-                                <div class= "form-group form-float"> 
-                                <input type="date" class="form-control" placeholder="{{__('admin.renewal_date')}}" name="renewal_date">
-                                 <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
-                                </div>
-
-                                <div class="form-group">
-                             <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}" required></textarea>
-                            </div>
 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('country_id',$countries
@@ -207,19 +197,6 @@
                                         <label for="not_active">{{__('admin.not_active')}}</label>
                                     </div>
                                 </div>
-
-
-                                <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="available" id="online" class="with-gap" value="1" checked="">
-                                        <label for="online">{{__('admin.online')}}</label>
-                                    </div>                                
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="available" id="offline" class="with-gap" value="0"  >
-                                        <label for="offline">{{__('admin.offline')}}</label>
-                                    </div>
-                                </div>
-
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
                             </form>
@@ -468,10 +445,10 @@ $('#city_info').change(function(){
                             $('#nationality_id-error').text(data.errors.nationality_id);
                         }
                   } 
-                  else {
-                        window.location.replace("{{route('technicians')}}");
+                //   else {
+                //         window.location.replace("{{route('technicians')}}");
 
-                     }
+                //      }
             },
         });
     });

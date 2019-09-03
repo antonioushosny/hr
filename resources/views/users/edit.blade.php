@@ -173,134 +173,181 @@
 
 <script>
 function initMap() {
-    console.log( document.getElementById('lat').value);
-    $('form').on('keyup keypress', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) {
-            e.preventDefault();
-            return false;
-        }
+@if($user->lat != null &&  $user->lng != null)    
+    var lat1 = {{$user->lat}};
+    var lng1 = {{$user->lng}}
+    var haightAshbury = {lat: lat1 , lng:lng1 };
+    console.log(haightAshbury) ;
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 18,
+        center: haightAshbury,
+        mapTypeId: 'terrain'
     });
- var map = new google.maps.Map(document.getElementById('map'), {
-     center: {lat: 29.967176910157654, lng: 31.21215951392594},
-     zoom: 18,
-     mapTypeId: 'terrain'
- });
- var marker = new google.maps.Marker({
-     position: {lat: 29.967176910157654, lng: 31.21215951392594},
-     map: map
- });
- var infoWindow = new google.maps.InfoWindow({map: map});
-
- // Try HTML5 geolocation.
- if (navigator.geolocation) {
- navigator.geolocation.getCurrentPosition(function(position) {
- var lat1=document.getElementById('lat').value;
- var lng1=document.getElementById('lng').value
- var lat2 =+lat1;
- var lng2 =+lng1;
- var pos = {
-     lat: lat2,//position.coords.latitude,
-     lng: lng2
- };
-//  document.getElementById('lat').value = position.coords.latitude;
-//  document.getElementById('lng').value = position.coords.longitude;
- infoWindow.setPosition(pos);
- 
- infoWindow.setContent('<div>location found</div>');
- map.setCenter(pos);
- }, function() {
- handleLocationError(true, infoWindow, map.getCenter());
- });
-
- } else {
- // Browser doesn't support Geolocation
- handleLocationError(false, infoWindow, map.getCenter());
- }
-
- // Create the search box and link it to the UI element.
- var input = document.getElementById('pac-input');
- var searchBox = new google.maps.places.SearchBox(input);
- map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
- // Bias the SearchBox results towards current map's viewport.
- map.addListener('bounds_changed', function() {
- searchBox.setBounds(map.getBounds());
- });
-
- map.addListener('click', function(event) {
-     console.log(event);
- //clear previous marker
- marker.setMap(null);
- //set new marker
- marker = new google.maps.Marker({
- position: event.latLng,
- map: map
- });
- document.getElementById('lat').value = event.latLng.lat();
- document.getElementById('lng').value = event.latLng.lng();
-
-
- });
-
- var markers = [];
- // Listen for the event fired when the user selects a prediction and retrieve
- // more details for that place.
- searchBox.addListener('places_changed', function() {
- var places = searchBox.getPlaces();
- if (places.length == 0) {
- return;
- }
-
- // Clear out the old markers.
- markers.forEach(function(marker) {
- marker.setMap(null);
- });
- markers = [];
-
- // For each place, get the icon, name and location.
- var bounds = new google.maps.LatLngBounds();
- places.forEach(function(place) {
-     console.log("place ",place);
+    var marker = new google.maps.Marker({
+        position: haightAshbury,
+        map: map
+    });
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    map.addListener('click', function(event) {
+        //clear previous marker
+        marker.setMap(null);
+        //set new marker
+        marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+        });
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+    });
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+    return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+    marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+        console.log("place ",place);
      var address=$( "#pac-input" ).val();
      $('#address-field1').val(address);
      console.log(address);
-     
- var icon = {
- url: place.icon,
- size: new google.maps.Size(71, 71),
- origin: new google.maps.Point(0, 0),
- anchor: new google.maps.Point(17, 34),
- scaledSize: new google.maps.Size(25, 25)
- };
+    var icon = {
+    url: place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
+    };
+    // Create a marker for each place.
+    markers.push(new google.maps.Marker({
+    map: map,
+    icon: icon,
+    title: place.name,
+    position: place.geometry.location
+    }));
+    document.getElementById('lat').value = place.geometry.location.lat();
+    document.getElementById('lng').value = place.geometry.location.lng();
+    if (place.geometry.viewport) {
+    // Only geocodes have viewport.
+    bounds.union(place.geometry.viewport);
+    } else {
+    bounds.extend(place.geometry.location);
+    }
+    });
+    map.fitBounds(bounds);
+    });
+@else 
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 29.967176910157654, lng: 31.21215951392594},
+        zoom: 18,
+        mapTypeId: 'terrain'
+    });
+    var marker = new google.maps.Marker({
+        position: {lat: 29.967176910157654, lng: 31.21215951392594},
+        map: map
+    });
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+    var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+    document.getElementById('lat').value = position.coords.latitude;
+    document.getElementById('lng').value = position.coords.longitude;
+    infoWindow.setPosition(pos);    
 
- // Create a marker for each place.
- markers.push(new google.maps.Marker({
- map: map,
- icon: icon,
- title: place.name,
- position: place.geometry.location
- }));
-
- document.getElementById('lat').value = place.geometry.location.lat();
- document.getElementById('lng').value = place.geometry.location.lng();
- if (place.geometry.viewport) {
- // Only geocodes have viewport.
- bounds.union(place.geometry.viewport);
- } else {
- bounds.extend(place.geometry.location);
- }
- });
- map.fitBounds(bounds);
- }); 
-
+    infoWindow.setContent('location found');
+    map.setCenter(pos);
+    }, function() {
+    handleLocationError(true, infoWindow, map.getCenter());
+    });
+    } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+    }
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+    });
+    map.addListener('click', function(event) {
+    //clear previous marker
+    marker.setMap(null);
+    //set new marker
+    marker = new google.maps.Marker({
+    position: event.latLng,
+    map: map
+    });
+    document.getElementById('lat').value = event.latLng.lat();
+    document.getElementById('lng').value = event.latLng.lng();
+    });
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+    return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+    marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+    var icon = {
+    url: place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
+    };
+    // Create a marker for each place.
+    markers.push(new google.maps.Marker({
+    map: map,
+    icon: icon,
+    title: place.name,
+    position: place.geometry.location
+    }));
+    document.getElementById('lat').value = place.geometry.location.lat();
+    document.getElementById('lng').value = place.geometry.location.lng();
+    if (place.geometry.viewport) {
+    // Only geocodes have viewport.
+    bounds.union(place.geometry.viewport);
+    } else {
+    bounds.extend(place.geometry.location);
+    }
+    });
+    map.fitBounds(bounds);
+    }); 
+@endif
 }
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    console.log("jheeee");
 infoWindow.setPosition(pos);
 infoWindow.setContent(browserHasGeolocation ?
-     'The Geolocation service failed.  ' :
-     'Your browser doesnt support geolocation. ');
+        'The Geolocation service failed.' :
+        'Your browser doesnt support geolocation. ');
 }
     $('.select2').select2();
     //this for add new record

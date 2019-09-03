@@ -335,6 +335,12 @@ return [
         'choose_city'    =>'اختر المدينة',
         'choose_area'   =>'اختر المنطقة',
         'choose_nationality'=>'اختر الجنسية',
+        'Choose_identity'=>'اختر صورة البطاقة',
+        'choose_service'=>'اختر الخدمة',
+        'renewal_date'=>'تاريخ التجديد',
+        'brief_technician'=>'نبذة عن الفني',
+        'online'=>' متصل',
+        'offline'=>'غير متصل',
  ];
 
 

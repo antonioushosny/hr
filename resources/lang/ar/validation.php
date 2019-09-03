@@ -180,6 +180,9 @@ return [
         'cost'                    =>'التكلفة',
         'no_month'                 =>'عدد الشهور',
         'location.*'               =>'الموقع',
+        'nationality_id' =>'الجنسية',
+        'service_id' =>'الخدمة',
+
     ],
     
 

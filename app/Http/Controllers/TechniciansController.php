@@ -10,6 +10,7 @@ use App\Area;
 use App\Order; 
 use App\Technician;
 use App\Nationality;
+use App\Service;
 use Auth;
 use App;
 use DB;
@@ -58,6 +59,7 @@ class TechniciansController extends Controller
             $allcities = City::select('id','country_id',DB::raw('name_ar AS name'))->get();
             $allareas = Area::select('id','city_id',DB::raw('name_ar AS name'))->get();
             $allnationalites = Nationality::select('id',DB::raw('name_ar AS name'))->get();
+            $allservices = Service::select('id',DB::raw('name_ar AS name'))->get();
             
         }
         else
@@ -66,13 +68,15 @@ class TechniciansController extends Controller
             $allcities = City::select('id','country_id',DB::raw('name_en AS name'))->get();
             $allareas = Area::select('id','city_id',DB::raw('name_en AS name'))->get();
             $allnationalites = Nationality::select('id',DB::raw('name_en AS name'))->get();
+            $allservices = Service::select('id',DB::raw('name_en AS name'))->get();
         }
             $countries = array_pluck($allcountries,'name', 'id');
             $cities = array_pluck($allcities,'name', 'id');
             $areas = array_pluck($allareas,'name', 'id');
             $nationalites = array_pluck($allnationalites,'name', 'id');
+            $services = array_pluck($allservices,'name', 'id');
         //return $countries;
-        return view('technicians.add',compact('title','lang','countries','cities','areas','nationalites','allcities','allareas','allnationalites'));
+        return view('technicians.add',compact('title','lang','countries','cities','areas','nationalites','services','allcities','allareas','allnationalites','allservices'));
     }
     public function create()
     {
@@ -89,6 +93,117 @@ class TechniciansController extends Controller
     public function store(Request $request)
     {
         //
+        //return $request;
+
+       if($request->id ){
+        $rules =
+        [
+            'name'  =>'required|max:190',
+           'email'  =>'required|email|max:190', 
+            'mobile'=>'between:8,14',  
+            'address'=>'required|max:200',
+            'location.*'=>'required',         
+            'status'  =>'required',  
+            'country_id'  =>'required',  
+                'city_id'  =>'required',  
+                'area_id'  =>'required',  
+                'nationality_id'  =>'required',  
+                'service_id'=>'required', 
+        ];
+        
+    }     
+
+        else{
+            $rules =
+            [
+                'name'  =>'required|max:190',
+                'email'  =>'required|email|unique:users,email|max:190',  
+                'mobile'=>'required|between:8,14|unique:users,mobile',
+                'address'=>'required|max:200',
+                'location.*'=>'required',
+                'status'  =>'required',  
+                'country_id'  =>'required',  
+                'city_id'  =>'required',  
+                'area_id'  =>'required',  
+                'nationality_id'  =>'required', 
+                'service_id'=>'required',       
+            ];
+        }
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+
+        if($request->id ){
+            $user = User::find( $request->id );
+            if($user->mobile != $request->mobile)
+            {
+               $rules=['mobile'=>'required|between:8,14|unique:users,mobile',];
+            }
+            if($user->email != $request->email)
+            {
+                $rules=['email'=>'required|email|unique:users,email|max:190',];
+            }
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return \Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+            }
+            $user->email=$request->email;
+            $user->mobile=$request->mobile;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                \File::delete(public_path(). '/img/' . $imageName);
+            }
+        }
+        else{
+            $user = new User ;
+            $user->email=$request->email;
+            $user->mobile=$request->mobile;
+            $technical=new Technician;
+
+
+        }
+
+        $user->name          = $request->name ;
+        $user->address         = $request->address ;
+        $user->status        = $request->status ;
+        $user->lat          =$request->location[0];
+        $user->lng         =$request->location[1];
+        $user->role         ='fannie';
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image');
+            $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $name);
+            $user->image   = $name;  
+        }
+        
+        if($user->save())
+        {
+            if ($request->hasFile('identity')) {
+    
+                $image = $request->file('identity');
+                $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/img');
+                $image->move($destinationPath, $name);
+                $technical->identity_photo   = $name;  
+            }
+            $technical->user_id   = $user->id; 
+
+            $technical->renewal_date   = $request->renewal_date; 
+            $technical->available   = $request->available; 
+            $technical->brief   = $request->brief; 
+            $technical->service_id   = $request->service_id; 
+            $technical->city_id   = $request->city_id;
+            $technical->area_id   = $request->area_id; 
+            $technical->country_id   = $request->country_id;
+            $technical->nationality_id   = $request->nationality_id;   
+            $technical->save();
+        }
+        
+        $user = User::where('id',$user->id)->first();
+        return response()->json($user);
     }
 
     /**

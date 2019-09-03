@@ -124,9 +124,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //technicians
     Route::get('/technicians', 'TechniciansController@index')->name('technicians');
-    // Route::post('/users/update/', 'TechniciansController@store')->name('storeuser');
+    Route::post('/technicians/update/', 'TechniciansController@store')->name('storetechnician');
      Route::get('/technicians/add', 'TechniciansController@add')->name('addtechnician');
-    // Route::get('/users/edit/{id}', 'TechniciansController@edit')->name('edituser');
+     Route::get('/technicians/edit/{id}', 'TechniciansController@edit')->name('edittechnician');
     // Route::get('/users/userstatus/{id}', 'TechniciansController@changestatus')->name('userstatus');
     // Route::get('/users/delete/{id}', 'TechniciansController@destroy')->name('destroyuser');
     // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');

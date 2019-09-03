@@ -329,4 +329,10 @@ return [
         'choose_city'    =>'Choose City',
         'choose_area'   =>'Choose Area',
         'choose_nationality'=>'Choose Nationality',
+        'Choose_identity'=>'Choose Identity Photo',
+        'choose_service'=>'Choose Service',
+        'renewal_date'=>'Renewal Date',
+        'brief_technician'=>'Bief About Technician',
+        'online'=>'Online',
+        'offline'=>'Offline',
 ];

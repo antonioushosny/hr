@@ -138,8 +138,8 @@
 
                                         @endcan
                                         <td>
-                                            @can('user_edit')
-                                            <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
+                                            <!-- @can('user_edit')
+                                            <a href="{{route('edittechnician',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
                                             @endcan
 
                                             @can('order_list')
@@ -147,7 +147,7 @@
                                             @endcan
                                             @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
+                                            @endcan -->
                                         </td>
                                     </tr>
                                     
