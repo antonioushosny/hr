@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Tue Sep 03 2019 10:19:33 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+
+
+Created files:
+* .autogit/logs/log-1-8-2019-22-40-57.txt
+* database/seeds/SubscriptionType.php
+
+
+Deleted files:
+
+
+Renamed files:

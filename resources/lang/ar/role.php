@@ -20,15 +20,19 @@ return [
     'technical_edit'   => 'تعديل  فني',
  
     'service_list'  => 'عرض الخدمات',
-    'service_create'    => 'اضافة خدمة',
-    'service_edit'  => 'تعديل خدمة',
-    'service_delete'    => 'حذف خدمة',
+    'service_create'    => 'اضافة الخدمات',
+    'service_edit'  => 'تعديل الخدمات',
+    'service_delete'    => 'حذف الخدمات',
 
     'subscription_list' => 'عرض الاشتراكات',
-    'subscription_edit' => 'تعديل الاشتراك ',
-    'subscription_create'  => 'اضافة اشتراك',
-    'subscription_delete'  => 'حذف اشتراك',
+    'subscription_edit' => 'تعديل الاشتراكات ',
+    'subscription_create'  => 'اضافة الاشتراكات',
+    'subscription_delete'  => 'حذف الاشتراكات',
 
+    'subscription_type_list' => 'عرض انواع الاشتراكات',
+    'subscription_type_edit' => 'تعديل انواع الاشتراكات ',
+    'subscription_type_create'  => 'اضافة انواع الاشتراكات',
+ 
     'contact_list'  => 'عرض الاتصال',
     'contact_edit'  => 'تعديل الاتصال ',
     'contact_delete'    => 'حذف الرسالة',

@@ -28,6 +28,10 @@ return [
     'subscription_edit' => 'Edit Subscription',
     'subscription_create' => 'Add Subscription',
     'subscription_delete' => 'Delete Subscription',
+    
+    'subscription_type_list' => 'View Subscriptions Types',
+    'subscription_type_edit' => 'Edit Subscription Types',
+    'subscription_type_create' => 'Add Subscription Types',
 
     'contact_list' => 'View Contact',
     'contact_edit' => 'Edit Connection',
