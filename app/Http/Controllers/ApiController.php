@@ -146,50 +146,6 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////
-// Advertisement function by Antonious hosny
-    public function Advertisements(Request $request){ 
-        $advertisements  = Advertisement::where('status','active')->orderBy('id', 'desc')->get();
-            if(sizeof($advertisements) > 0){
-                $advertisementss =[];
-                $i = 0 ;
-
-                foreach($advertisements as $advertisement){
-                    if($advertisement){
-                        // $advertisementss[$i]['link'] = $advertisement->link;
-                        // $advertisementss[$i]['time'] = $advertisement->time;
-                        if($advertisement->image != null){
-                            $advertisementss[$i]['image']   = asset('img/').'/'. $advertisement->image;
-                        }
-                        else{
-                            $advertisementss[$i]['image']   = null;
-                        }
-                        $i ++ ;
-                       
-                    }
-                }
-                return response()->json([
-                    'success' => 'success',
-                    'errors' => null,
-                    'message' => trans('api.fetch'),
-                    'data' => $advertisementss
-                ]);
-            }
-            else
-            {
-                $errors=  trans('api.notfound');
-                // $errors[] = trans('api.fail_login');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => $errors,
-                    'message' => trans('api.notfound'),
-                    'data' => null,
-
-                ]);
-            }
-
-
-    }
-//////////////////////////////////////////////
 // Countries function by Antonious hosny
     public function Countries(Request $request){ 
         $lang = $request->header('lang');
@@ -442,7 +398,13 @@ class ApiController extends Controller
             "name"=>"required",
             "email"=>"required|unique:users,email",
             "mobile"=>"required|between:8,11|unique:users,mobile", 
-            "password"=>"required|min:6",
+            "code"=>"required",
+            "address"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+            "role"=>"required",
+            "device_id"=>"required",
+            "device_type"=>"required",
         );
         //check the validator true or not
         $validator  = \Validator::make($request->all(),$rules);
@@ -1682,60 +1644,67 @@ class ApiController extends Controller
 /////////////////////////////////////////////////////
 // ContactUs function by Antonious hosny
     public function ContactUs(Request $request){
-
-        $rules=array(   
-            "message"=>"required",
-            "title"=>"required",
-            "email"=>"required|email",
-            "name"=>"required",
-        );
-
-        $validator  = \Validator::make($request->all(),$rules);
-        if($validator->fails())
-        {
-            $messages = $validator->messages();
-            $transformed = [];
-
-            foreach ($messages->all() as $field => $message) {
-                $transformed[] = [
-                    'message' => $message
-                ];
-            }
-            $message = trans('api.failed') ;
-            return   $this->FailedResponse($message , $transformed) ;
-             
-        }
-        else{
-            $contact = new ContactUs ;
-
-            $contact->name = $request->name ;
-            $contact->email = $request->email ;
-            $contact->title = $request->title ;
-            $contact->message = $request->message ;
-            $contact->status = 'new' ;
-            $contact->save();
-            $type = "user";
-            // $title1 = "  مستخدم جديد قام بالتسجيل" ;
-            $msg =  [
-                'en' => "you have new message from ".  $request->name   ,
-                'ar' => "  لديك رسالة جديدة من " . $request->name   ,
-            ];
-            
-            $admins = User::where('role', 'admin')->get(); 
-            if(sizeof($admins) > 0){
-                foreach($admins as $admin){
-                    $admin->notify(new Notifications($msg,$type ));
-                }
-                $device_token = $admin->device_token ;
-                if($device_token){
-                    $this->notification($device_token,$msg,$msg);
-                    $this->webnotification($device_token,$msg,$msg,$type);
-                }
-            }
-            $message = trans('api.save') ;
-            return $this->SuccessResponse($message , $contact) ;
-
+        $lang = $request->header('lang');
+        $token = $request->header('token');
+        if($token){
+            $user =User::where('remember_token',$token)->first();
+            if($user){
+                $rules=array(   
+                    "message"=>"required",
+                    "title"=>"required",
+                );
         
+                $validator  = \Validator::make($request->all(),$rules);
+                if($validator->fails())
+                {
+                    $messages = $validator->messages();
+                    $transformed = [];
+        
+                    foreach ($messages->all() as $field => $message) {
+                        $transformed[] = [
+                            'message' => $message
+                        ];
+                    }
+                    $message = trans('api.failed') ;
+                    return   $this->FailedResponse($message , $transformed) ;
+                     
+                }
+                else{
+                    $contact = new ContactUs ;
+        
+                    $contact->name = $user->name ;
+                    $contact->email = $user->email ;
+                    $contact->title = $request->title ;
+                    $contact->message = $request->message ;
+                    $contact->status = 'new' ;
+                    $contact->save();
+                    $type = "contact";
+                    // $title1 = "  مستخدم جديد قام بالتسجيل" ;
+                    $msg =  [
+                        'en' => "you have new message from ".  $request->name   ,
+                        'ar' => "  لديك رسالة جديدة من " . $request->name   ,
+                    ];
+                    
+                    $admins = User::where('role', 'admin')->get(); 
+                    if(sizeof($admins) > 0){
+                        foreach($admins as $admin){
+                            $admin->notify(new Notifications($msg,$type ));
+                        }
+                        $device_token = $admin->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
+                        }
+                    }
+                    $message = trans('api.send') ;
+                    return $this->SuccessResponse($message , $contact) ;
+        
+                
+                }
+                
+            }
+            $message = trans('api.logout') ;
+            return   $this->LoggedResponse($message ) ;
         }
         
 
