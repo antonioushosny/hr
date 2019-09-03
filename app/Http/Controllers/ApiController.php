@@ -132,7 +132,7 @@ class ApiController extends Controller
                 $UserCode->email = $request->mobile ;
                 $UserCode->token = $code ;
                 $UserCode->save();
- 
+                
                 $message = trans('api.send_code') ;
                 $response = $this->SuccessResponse($message , $code) ;
                 return  $response ;
@@ -148,6 +148,44 @@ class ApiController extends Controller
                 $response = $this->FailedResponse($message , $errors) ;
                 return  $response ;
             }
+
+
+    }
+//////////////////////////////////////////////
+// SendCode function by Antonious hosny
+    public function SendCode(Request $request){ 
+        $rules=array(
+            "mobile"=>"required",
+        );
+
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed_login') ;
+            return   $this->FailedResponse($message , $transformed) ;
+            
+        }
+        $code = rand(100000,999999);
+        $UserCode = PasswordReset::where('email',$request->mobile)->first();
+        if(!$UserCode){
+            $UserCode = new PasswordReset ;
+        }
+        $UserCode->email = $request->mobile ;
+        $UserCode->token = $code ;
+        $UserCode->save();
+        
+        $message = trans('api.send_code') ;
+        return $this->SuccessResponse($message , $code) ;
+          
+        
 
 
     }
@@ -298,6 +336,7 @@ class ApiController extends Controller
                     $users['name'] = $user->name ;
                     $users['email'] = $user->email ;
                     $users['mobile'] = $user->mobile ;
+                    $users['address'] = $user->address ;
                     if($user->technician){
 
                         if($user->technician->country){
@@ -324,7 +363,7 @@ class ApiController extends Controller
                             $users['city_id'] = null ;
                             $users['city_name']   =  null;
                         }
-                        if($user->area){
+                        if($user->technician->area){
                             
                             $users['area_id'] = $user->technician->area->id ;
                             if($lang == 'ar'){
@@ -462,6 +501,36 @@ class ApiController extends Controller
             $user->type = $request->device_type ;
             $user->save();
             $user->generateToken();
+            if($user->role == 'fannie'){
+                $fannie = new Technician ;
+                $fannie->user_id = $user->id ;
+                if(Country::find($request->country_id)){
+                    $fannie->country_id = $request->country_id ;
+                }
+                if(City::find($request->city_id)){
+                    $fannie->city_id = $request->city_id ;
+                }
+                if(Area::find($request->area_id)){
+                    $fannie->area_id = $request->area_id ;
+                }
+                if(Nationality::find($request->nationality_id)){
+                    $fannie->nationality_id = $request->nationality_id ;
+                }
+                if(Service::find($request->service_id)){
+                    $fannie->service_id = $request->service_id ;
+                }
+ 
+                $fannie->brief = $request->brief ;
+
+                if ($request->hasFile('identity_photo')) {
+                    $image = $request->file('identity_photo');
+                    $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/img');
+                    $image->move($destinationPath, $name);
+                    $fannie->identity_photo   = $name;  
+                }
+                $fannie->save(); 
+            }
             $UserCode->delete() ;
             // $msg1 = "  مستخدم جديد قام بالتسجيل" ;
             $type = "user";
@@ -493,6 +562,8 @@ class ApiController extends Controller
                 $users['name'] = $user->name ;
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
+                $users['address'] = $user->address ;
+
                 if($user->technician){
 
                     if($user->technician->country){
@@ -519,13 +590,13 @@ class ApiController extends Controller
                         $users['city_id'] = null ;
                         $users['city_name']   =  null;
                     }
-                    if($user->area){
+                    if($user->technician->area){
                         
                         $users['area_id'] = $user->technician->area->id ;
                         if($lang == 'ar'){
                             $users['area_name']   = $user->technician->area->name_ar;
                         }else{
-                                $users['area_name']   = $user->technician->area->name_en;
+                            $users['area_name']   = $user->technician->area->name_en;
                         }
                     }else{
                         $users['area_id'] = null ;

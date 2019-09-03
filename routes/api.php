@@ -17,9 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('IsRegistered', 'ApiController@IsRegistered')->middleware('localization');
+Route::post('SendCode', 'ApiController@SendCode')->middleware('localization');
 Route::post('Login', 'ApiController@Login')->middleware('localization');
 Route::get('Countries', 'ApiController@Countries')->middleware('localization');
- Route::post('Register', 'ApiController@Register')->middleware('localization');
+Route::post('Register', 'ApiController@Register')->middleware('localization');
  
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
 Route::post('Logout', 'ApiController@Logout')->middleware('localization');
