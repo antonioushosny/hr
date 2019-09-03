@@ -17,10 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('IsRegistered', 'ApiController@IsRegistered')->middleware('localization');
-Route::post('Cities', 'ApiController@Cities')->middleware('localization');
-Route::post('Areas', 'ApiController@Areas')->middleware('localization');
 Route::post('Login', 'ApiController@Login')->middleware('localization');
-Route::post('Register', 'ApiController@Register')->middleware('localization');
+Route::get('Countries', 'ApiController@Countries')->middleware('localization');
+ Route::post('Register', 'ApiController@Register')->middleware('localization');
+ 
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
 Route::post('Logout', 'ApiController@Logout')->middleware('localization');
 Route::post('ForgetPassword', 'ApiController@ForgetPassword')->middleware('localization');
@@ -34,9 +34,8 @@ Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localiz
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
 Route::post('ChangeStatusOrders', 'ApiController@ChangeStatusOrders')->middleware('localization');
 Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
-Route::post('TermsConditions', 'ApiController@TermsConditions')->middleware('localization');
-Route::post('Policy', 'ApiController@Policy')->middleware('localization');
-Route::post('AboutUs', 'ApiController@AboutUs')->middleware('localization');
+Route::get('TermsConditions', 'ApiController@TermsConditions')->middleware('localization');
+Route::get('AboutUs', 'ApiController@AboutUs')->middleware('localization');
 Route::post('SocialContacts', 'ApiController@SocialContacts')->middleware('localization');
 
 
