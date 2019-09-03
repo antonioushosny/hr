@@ -191,212 +191,81 @@ class ApiController extends Controller
     }
 //////////////////////////////////////////////
 // Countries function by Antonious hosny
-public function Countries(Request $request){ 
-    $lang = $request->header('lang');
-    if($lang == 'ar'){
-        $countries  = Country::where('status','active')->with('cities')->orderBy('name_ar', 'asc')->get();
-    }else{
-        $countries  = Country::where('status','active')->with('cities')->orderBy('name_en', 'asc')->get();
-    }
-        if(sizeof($countries) > 0){
-            $countriess =[];
-            $i = 0 ;
-
-            foreach($countries as $country){
-                if($country){
-                    $Citiess[$i]['country_id']   = $country->id;
-                    if($lang == 'ar'){
-                        $countriess[$i]['country_name']   = $country->name_ar;
-                    }else{
-                        $countriess[$i]['country_name']   =  $country->name_en;
-                    }
-                    $citiess = [] ;
-                    $n  = 0 ;
-                    if(sizeOf($country->cities) > 0){
-
-                        foreach($country->cities as $city){
-                            $citiess[$n]['city_id']   = $city->id;
-                            if($lang == 'ar'){
-                                $citiess[$n]['city_name']   = $city->name_ar;
-                            }else{
-                                $citiess[$n]['city_name']   =  $city->name_en;
-                            }
-                            $areass = [] ;
-                            $j  = 0 ;
-                            if(sizeOf($city->areas) > 0){
-    
-                                foreach($city->areas as $area){
-                                    $areass[$j]['area_id']   = $area->id;
-                                    if($lang == 'ar'){
-                                        $areass[$j]['area_name']   = $area->name_ar;
-                                    }else{
-                                        $areass[$j]['area_name']   =  $area->name_en;
-                                    }
-                                    $j ++ ;
-                            
-                                }
-                            }
-                            $citiess[$n]['areas'] = $areass ;
-                            $n ++ ;
-
-                        }
-                    }
-                    $countriess[$i]['cities'] = $citiess ;
-                    $i ++ ;
-                
-                }
-            }
-            return response()->json([
-                'success' => 'success',
-                'errors' => null,
-                'message' => trans('api.fetch'),
-                'data' => $Citiess
-            ]);
-        }
-        else
-        {
-            $errors=  trans('api.notfound');
-            return response()->json([
-                'success' => 'failed',
-                'errors' => $errors,
-                'message' => trans('api.notfound'),
-                'data' => null,
-
-            ]);
-        }
-
-}
-//////////////////////////////////////////////
-//////////////////////////////////////////////
-// Cities function by Antonious hosny
-    public function Cities(Request $request){ 
+    public function Countries(Request $request){ 
         $lang = $request->header('lang');
         if($lang == 'ar'){
-            $Cities  = City::where('status','active')->with('areas')->orderBy('name_ar', 'asc')->get();
+            $countries  = Country::where('status','active')->with('cities')->orderBy('name_ar', 'asc')->get();
         }else{
-            $Cities  = City::where('status','active')->with('areas')->orderBy('name_en', 'asc')->get();
+            $countries  = Country::where('status','active')->with('cities')->orderBy('name_en', 'asc')->get();
         }
-            if(sizeof($Cities) > 0){
-                $Citiess =[];
+            if(sizeof($countries) > 0){
+                $countriess =[];
                 $i = 0 ;
 
-                foreach($Cities as $City){
-                    if($City){
-                        $Citiess[$i]['city_id']   = $City->id;
+                foreach($countries as $country){
+                    if($country){
+                        $countriess[$i]['country_id']   = $country->id;
                         if($lang == 'ar'){
-                            $Citiess[$i]['city_name']   = $City->name_ar;
+                            $countriess[$i]['country_name']   = $country->name_ar;
                         }else{
-                            $Citiess[$i]['city_name']   =  $City->name_en;
+                            $countriess[$i]['country_name']   =  $country->name_en;
                         }
-                        $areass = [] ;
+                        if($country->image){
+                            $countriess[$i]['logo'] = asset('img/').'/'. $country->image;
+                        }else{
+                            $countriess[$i]['logo'] = null ;
+                        }
+                        $citiess = [] ;
                         $n  = 0 ;
-                        if(sizeOf($City->areas) > 0){
+                        if(sizeOf($country->cities) > 0){
 
-                            foreach($City->areas as $area){
-                                $areass[$n]['area_id']   = $area->id;
+                            foreach($country->cities as $city){
+                                $citiess[$n]['city_id']   = $city->id;
                                 if($lang == 'ar'){
-                                    $areass[$n]['area_name']   = $area->name_ar;
+                                    $citiess[$n]['city_name']   = $city->name_ar;
                                 }else{
-                                    $areass[$n]['area_name']   =  $area->name_en;
+                                    $citiess[$n]['city_name']   =  $city->name_en;
                                 }
+                                $areass = [] ;
+                                $j  = 0 ;
+                                if(sizeOf($city->areas) > 0){
+        
+                                    foreach($city->areas as $area){
+                                        $areass[$j]['area_id']   = $area->id;
+                                        if($lang == 'ar'){
+                                            $areass[$j]['area_name']   = $area->name_ar;
+                                        }else{
+                                            $areass[$j]['area_name']   =  $area->name_en;
+                                        }
+                                        $j ++ ;
+                                
+                                    }
+                                }
+                                $citiess[$n]['areas'] = $areass ;
                                 $n ++ ;
-                        
+
                             }
                         }
-                        $Citiess[$i]['areas'] = $areass ;
+                        $countriess[$i]['cities'] = $citiess ;
                         $i ++ ;
                     
                     }
                 }
-                return response()->json([
-                    'success' => 'success',
-                    'errors' => null,
-                    'message' => trans('api.fetch'),
-                    'data' => $Citiess
-                ]);
+                $message = trans('api.fetch') ;
+                return $this->SuccessResponse($message , $countriess) ;
+                
             }
             else
             {
-                $errors=  trans('api.notfound');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => $errors,
-                    'message' => trans('api.notfound'),
-                    'data' => null,
-
-                ]);
+                $errors=  [];
+                $message = trans('api.notfound') ;
+                return $this->FailedResponse($message , $errors) ;
+            
+                
             }
 
     }
 //////////////////////////////////////////////
-// Areas function by Antonious hosny
-    public function Areas(Request $request){ 
-        $lang = $request->header('lang');
-        $rules=array(
-            "city_id"=>"required",
-        );
-
-        //check the validator true or not
-        $validator  = \Validator::make($request->all(),$rules);
-        if($validator->fails())
-        {
-            $messages = $validator->messages();
-            $transformed = [];
-
-            foreach ($messages->all() as $field => $message) {
-                $transformed[] = [
-                    'message' => $message
-                ];
-            }
-            return response()->json([
-                'success' => 'failed',
-                'errors'=>$transformed,
-                'message' => trans('api.failed_login'),
-                'data' => null,
-
-            ]);
-        }
-        if($lang == 'ar'){
-            $areas  = Area::where('status','active')->where('city_id',$request->city_id)->orderBy('name_ar', 'asc')->get();
-        }else{
-            $areas  = Area::where('status','active')->where('city_id',$request->city_id)->orderBy('name_en', 'asc')->get();
-        }
-            if(sizeof($areas) > 0){
-                $areass =[];
-                $i = 0 ;
-
-                foreach($areas as $area){
-                    if($area){
-                        $areass[$i]['area_id']   = $area->id;
-                        if($lang == 'ar'){
-                            $areass[$i]['area_name']   = $area->name_ar;
-                        }else{
-                            $areass[$i]['area_name']   =  $area->name_en;
-                        }
-                        $i ++ ;
-                    
-                    }
-                }
-                return response()->json([
-                    'success' => 'success',
-                    'errors' => null,
-                    'message' => trans('api.fetch'),
-                    'data' => $areass
-                ]);
-            }
-            else
-            {
-                $errors=  trans('api.notfound');
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => $errors,
-                    'message' => trans('api.notfound'),
-                    'data' => null,
-
-                ]);
-            }
-
-    }
 //////////////////////////////////////////////
 // login function by Antonious hosny
     public function Login(Request $request){
@@ -455,6 +324,7 @@ public function Countries(Request $request){
                 $user->generateToken();
                 $user->device_token = $request->device_id ;
                 $user->type = $request->device_type ;
+                $user->code = '' ;
                 // $user->available = '1';
 
                 $user->save();
@@ -573,10 +443,6 @@ public function Countries(Request $request){
             "email"=>"required|unique:users,email",
             "mobile"=>"required|between:8,11|unique:users,mobile", 
             "password"=>"required|min:6",
-            // "area_id"=>"required",
-            // "city_id"=>"required",
-            // "lat"=>"required",
-            // "lng"=>"required",
         );
         //check the validator true or not
         $validator  = \Validator::make($request->all(),$rules);
