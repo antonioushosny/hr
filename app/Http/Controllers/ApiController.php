@@ -355,6 +355,12 @@ class ApiController extends Controller
                             $users['service_name']   =  null;
                         }
                         $users['brief'] = $user->technician->brief ;
+                        if($user->technician->identity_photo){
+                            $users['identity_photo'] = asset('img/').'/'. $user->technician->identity_photo;
+                        }
+                        else {
+                            $users['identity_photo'] = null;
+                        }
                     }
                     $users['lat'] = $user->lat ;
                     $users['lng'] = $user->lng ;
@@ -406,6 +412,14 @@ class ApiController extends Controller
             "device_id"=>"required",
             "device_type"=>"required",
         );
+
+        if($request->role == 'fannie'){
+            $rules['country_id'] = "required" ;
+            $rules['city_id'] = "required" ;
+            $rules['area_id'] = "required" ;
+            $rules['nationality_id'] = "required" ;
+            $rules['service_id'] = "required" ;
+        }
         //check the validator true or not
         $validator  = \Validator::make($request->all(),$rules);
         if($validator->fails())
