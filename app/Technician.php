@@ -12,7 +12,7 @@ class Technician extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'renewal_date', 'available','brief', 'user_id','service_id','country_id','city_id','area_id','nationality_id',
+        'renewal_date', 'available','brief', 'user_id','service_id','country_id','city_id','area_id','nationality_id','identity_photo'
     ];
  
     
@@ -43,3 +43,4 @@ class Technician extends Authenticatable
     }
  
 }
+
