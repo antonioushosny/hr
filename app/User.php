@@ -48,7 +48,7 @@ class User extends Authenticatable
     public function availabledate()
     {
         // return $this->day ;
-        return  $this->hasMany('App\AvailableDay', 'fannie_id')->where('day',$this->day);
+        return  $this->hasMany('App\AvailableDay', 'fannie_id');
     }
  
 }

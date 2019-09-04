@@ -63,9 +63,9 @@ class ApiController extends Controller
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->objuser = $user ;
+        
         date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
@@ -1203,11 +1203,15 @@ class ApiController extends Controller
             return  $this->FailedResponse($message , $transformed) ;
 
         }
+        if($request->page && $request->page > 0 ){
+            $page = $request->page * $request->skip ;
+        }else{
+            $page = 0 ;
+        }
+        
         $day  = date('D', strtotime($request->date));
-        $this->objuser->day =  $day; 
-        // return  $this->objuser->day ;
-        $user = $this->objuser::with('availabledate')->get();
-        return $user ;
+        $time  =  $request->time;
+        $service =  $request->service_id;
         $token = $request->header('token');
         $lang = $request->header('lang');
 
@@ -1215,53 +1219,54 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
                 // return $user ;
-                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->get();
+                $technicians = User::where('status','active')->whereHas('availabledate', function ($query) use ($day,$time) {
+                    $query->where('day', $day)->where('from','<',$time)->where('to','>',$time);
+                })->with('availabledate')->whereHas('technician', function ($query) use ($service) {
+                    $query->where('service_id', $service);
+                })->with('technician')->get();
                 // return $technicians ;
                 $technicianss = [] ;
                 $i =0 ;
                 if(sizeof($technicians) > 0 ){
                     foreach($technicians as $technician){
-                        $distance = $this->GetDistance($request->lat,$technician->hasuser->lat,$request->lng,$technician->hasuser->lng,'k');
-                        // return $distance ;
-                        if($distance <= 20){
+                        
 
-                            $ratecount = Rate::where('evaluator_to',$technician->hasuser->id)->count('id');
-                            $sumrates = Rate::where('evaluator_to',$technician->hasuser->id)->sum('rate');
-                            if($ratecount != 0){
-                                $rate =  $sumrates / $ratecount ;
-                            }else{
-                                $rate = 0 ;
-                            }
-                            $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->hasuser->id)->first();
-                            if($favorite){
-                                $isFavorate = 1 ;
-                            }else{
-                                $isFavorate = 0 ;
-                            }
-
-                            $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
-                            $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
-                            $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
-                            $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
-                            $technicianss[$i]['rate'] =   $rate ; 
-                            $technicianss[$i]['isFavorate'] =  $isFavorate; 
-                            $technicianss[$i]['distance'] =  round($distance,2). __('api.km'); 
-                            if($technician->nationality){
-                                if($lang == 'ar'){
-                                    $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
-                                }else{
-                                    $technicianss[$i]['nationality'] = $technician->nationality->name_en ; 
-                                }
-                            }
-                            $technicianss[$i]['available'] = $technician->available ; 
-                            if($technician->hasuser->image){
-                                $technicianss[$i]['image'] = asset('img/').'/'. $technician->hasuser->image;
-                            }else{
-                                $technicianss[$i]['image'] = null ;
-                            }
-
-                            $i ++ ;                    
+                        $ratecount = Rate::where('evaluator_to',$technician->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$technician->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
                         }
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
+                        if($favorite){
+                            $isFavorate = 1 ;
+                        }else{
+                            $isFavorate = 0 ;
+                        }
+
+                        $technicianss[$i]['worker_id'] = $technician->id ;    
+                        $technicianss[$i]['worker_name'] = $technician->name ; 
+                        $technicianss[$i]['lat'] = $technician->lat ; 
+                        $technicianss[$i]['lng'] = $technician->lng ; 
+                        $technicianss[$i]['rate'] =   $rate ; 
+                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        if($technician->technician->nationality){
+                            if($lang == 'ar'){
+                                $technicianss[$i]['nationality'] = $technician->technician->nationality->name_ar ; 
+                            }else{
+                                $technicianss[$i]['nationality'] = $technician->technician->nationality->name_en ; 
+                            }
+                        }
+                        $technicianss[$i]['available'] = $technician->technician->available ; 
+                        if($technician->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->image;
+                        }else{
+                            $technicianss[$i]['image'] = null ;
+                        }
+
+                        $i ++ ;                    
+                      
                         
                     }
                 }
