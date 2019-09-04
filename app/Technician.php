@@ -30,6 +30,10 @@ class Technician extends Authenticatable
     }                     
     public function user()
     {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    public function hasuser()
+    {
         return $this->belongsTo('App\User', 'user_id')->where('status', 'active');
     }
     public function service()

@@ -1016,19 +1016,30 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
                 
-                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('user')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
-                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->count('id');
-                return $technicians ;
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->count('id');
+                // return $technicians ;
                 $technicianss = [] ;
                 $i =0 ;
                 if(sizeof($technicians) > 0 ){
                     foreach($technicians as $technician){
-                        if($technician->user && $technician->user->status == 'active')
-                        $technicianss[$i]['service_id'] = $technician->id ;    
-                        $technicianss[$i]['service_name'] = $technician->name_ar ; 
-                        $technicianss[$i]['service_name'] = $technician->name_en ; 
-                         if($technician->image){
-                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->image;
+                        
+                        $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
+                        $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
+                        $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
+                        $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
+                        $technicianss[$i]['rate'] = 4 ; 
+                        $technicianss[$i]['isFavorate'] = 0; 
+                        if($technician->nationality){
+                            if($lang == 'ar'){
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
+                            }else{
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_en ; 
+                            }
+                        }
+                        $technicianss[$i]['available'] = $technician->available ; 
+                        if($technician->hasuser->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->hasuser->image;
                         }else{
                             $technicianss[$i]['image'] = null ;
                         }
@@ -1037,10 +1048,9 @@ class ApiController extends Controller
                         
                     }
                 }
-                $count = count($user->unreadnotifications) ;
-                $data['services_count'] = $services_count ;
-                $data['services'] = $servicess ;
-                $data['count_notification'] = $count ;
+                $data['technicians'] = $technicianss ;
+                $data['count_technicians'] = $technicians_count ;
+
                 $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
