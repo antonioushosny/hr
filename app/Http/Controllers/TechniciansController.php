@@ -84,6 +84,25 @@ class TechniciansController extends Controller
         
     }
 
+    public function changestatus($id)
+    {
+        $title =  'technicians' ;
+        $user = User::where('id',$id)->first();
+        if($user){
+            if($user->status == 'active'){
+                $user->status = 'not_active' ;
+            }
+            else{
+                $user->status = 'active' ;                    
+            }
+            $user->save();
+            return redirect()->route('technicians');
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -99,11 +118,11 @@ class TechniciansController extends Controller
         $rules =
         [
             'name'  =>'required|max:190',
-           'email'  =>'required|email|max:190', 
-            'mobile'=>'between:8,14',  
-            'address'=>'required|max:200',
-            'location.*'=>'required',         
-            'status'  =>'required',  
+            'email'  =>'required|email|max:190', 
+             'mobile'=>'between:8,14',  
+             'address'=>'required|max:200',
+             'location.*'=>'required',         
+             'status'  =>'required',    
             'country_id'  =>'required',  
                 'city_id'  =>'required',  
                 'area_id'  =>'required',  
@@ -135,7 +154,7 @@ class TechniciansController extends Controller
         }
 
         if($request->id ){
-            $user = User::find( $request->id );
+            $user = User::find( $request->user_id );
             if($user->mobile != $request->mobile)
             {
                $rules=['mobile'=>'required|between:8,14|unique:users,mobile',];
@@ -150,9 +169,24 @@ class TechniciansController extends Controller
             }
             $user->email=$request->email;
             $user->mobile=$request->mobile;
+
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                \File::delete(public_path(). '/img/' . $imageName);
+                if($user->image)
+                {
+                    \File::delete(public_path(). '/img/' . $user->image);
+
+                }
+            }
+
+            $technical=Technician::find( $request->id );
+            if ($request->hasFile('identity')) {
+                $image = $request->file('identity');
+                if($technical->identity_photo)
+                {
+                    \File::delete(public_path(). '/img/' . $technical->identity_photo);
+
+                }
             }
         }
         else{
@@ -226,6 +260,46 @@ class TechniciansController extends Controller
     public function edit($id)
     {
         //
+
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'technicians';
+        $technical = Technician::where('user_id',$id)->with('user')->orderBy('id', 'DESC')->first();
+        //return $technical;
+        if($technical)
+        {
+            if($lang=='ar')
+            {
+                $allcountries = Country::select('id',DB::raw('name_ar AS name'))->get();
+                $allcities = City::select('id','country_id',DB::raw('name_ar AS name'))->get();
+                $allareas = Area::select('id','city_id',DB::raw('name_ar AS name'))->get();
+                $allnationalites = Nationality::select('id',DB::raw('name_ar AS name'))->get();
+                $allservices = Service::select('id',DB::raw('name_ar AS name'))->get();
+                
+            }
+            else
+            {
+                $allcountries = Country::select('id',DB::raw('name_en AS name'))->get();
+                $allcities = City::select('id','country_id',DB::raw('name_en AS name'))->get();
+                $allareas = Area::select('id','city_id',DB::raw('name_en AS name'))->get();
+                $allnationalites = Nationality::select('id',DB::raw('name_en AS name'))->get();
+                $allservices = Service::select('id',DB::raw('name_en AS name'))->get();
+            }
+                $countries = array_pluck($allcountries,'name', 'id');
+                $cities = array_pluck($allcities,'name', 'id');
+                $areas = array_pluck($allareas,'name', 'id');
+                $nationalites = array_pluck($allnationalites,'name', 'id');
+                $services = array_pluck($allservices,'name', 'id');
+            return view('technicians.edit',compact('technical','title','lang','countries','cities','areas','nationalites','services','allcities','allareas','allnationalites','allservices'));
+            
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     /**

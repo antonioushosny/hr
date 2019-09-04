@@ -129,7 +129,11 @@ class UsersController extends Controller
             $user->mobile=$request->mobile;
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                \File::delete(public_path(). '/img/' . $imageName);
+                if($user->image)
+                {
+                    \File::delete(public_path(). '/img/' . $user->image);
+
+                }
             }
         }
         else{

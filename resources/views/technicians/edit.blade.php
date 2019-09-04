@@ -37,7 +37,7 @@
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
                     <li class="breadcrumb-item"><a href="{{route('technicians')}}"><i class="zmdi zmdi-accounts-alt"></i> {{__('admin.technicians')}}</a></li>
-                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_technician')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_technician')}}</a></li>
                     
                 </ul>
             </div>
@@ -54,46 +54,61 @@
                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_technician')}}  </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_technician')}}  </h2>
                             
                         </div>
                         <div class="body row">
                             <div class="col-lg-6">
                             {!! Form::open(['route'=>['storetechnician'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
-                                
+                                <!-- technical id -->
+                                <div class="form-group form-float">
+                                    <input type="hidden" value="{{$technical->id}}" name="id" required>
+                                </div>
+                                <div class="form-group form-float">
+                                    <input type="hidden" value="{{$technical->user->id}}" name="user_id" required>
+                                </div>
                                 <!-- for email -->
                                 <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name')}}" name="name" autocomplete="off" required>
+                                    <input type="text" class="form-control" value="{{$technical->user->name}}" placeholder="{{__('admin.placeholder_name')}}" name="name" autocomplete="off" required>
                                     <label id="name-error" class="error" for="name" style=""></label>
                                 </div>
 
                                 <div class="form-group form-float">
-                                    <input type="email" class="form-control" placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
+                                    <input type="email" class="form-control"  value="{{$technical->user->email}}"  placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
                                     <label id="email-error" class="error" for="email" style=""></label>
                                 </div>
 
                                 <div class="form-group form-float">
-                                    <input type="text" class="form-control" placeholder="{{__('admin.placeholder_mobile')}}" name="mobile" maxlength= 14 onkeypress="isNumber(event);" autocomplete="off" required>
+                                    <input type="text" class="form-control" value="{{$technical->user->mobile}}" placeholder="{{__('admin.placeholder_mobile')}}" name="mobile" maxlength= 14 onkeypress="isNumber(event);" autocomplete="off" required>
                                     <label id="mobile-error" class="error" for="mobile" style=""></label>
                                 </div>
                                 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('service_id',$services
-                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_service'),'required']) !!}
+                                        ,$technical->service_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_service'),'required']) !!}
                                         <label id="service_id-error" class="error" for="service_id" style="">  </label>
                                 </div> 
 
 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('nationality_id',$nationalites
-                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_nationality'),'required']) !!}
+                                        ,$technical->nationality_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_nationality'),'required']) !!}
                                         <label id="nationality_id-error" class="error" for="nationality_id" style="">  </label>
                                 </div>               
-                                
+                                <div class= "form-group form-float"> 
+                                <input type="date" class="form-control" value="{{$technical->renewal_date}}" placeholder="{{__('admin.renewal_date')}}" name="renewal_date">
+                                 <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
+                                </div>
+
+                                <div class="form-group">
+                             <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}">
+                             {{$technical->brief}}
+                             </textarea>
+                            </div>
 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('country_id',$countries
-                                        ,'',['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
+                                        ,$technical->country_id,['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
                                         <label id="country_id-error" class="error" for="country_id" style="">  </label>
                                 </div>
 
@@ -111,7 +126,7 @@
 
 
                                 <div class="form-group form-float">
-                                    <input type="text" class="form-control" id="address-field1" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off">
+                                    <input type="text" class="form-control" id="address-field1"  value="{{$technical->user->address}}" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off">
                                     <label id="address-error" class="error" for="address" style=""></label>
                                 </div>      
 
@@ -131,16 +146,17 @@
 
                                 <div class="form-group">
                                     {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
-                                    {!! Form::hidden('location[0]','',['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
+                                    {!! Form::hidden('location[0]',$technical->user->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
 
                                     {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
-                                    {!! Form::hidden('location[1]','',['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
+                                    {!! Form::hidden('location[1]',$technical->user->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
 
                                 </div><br/> 
                                 <!-- end map -->
 
+
                                 <!-- for image  -->
-                                <div class="form-group form-float row"  >
+                                <div class="form-group form-float row" >
                                     {{--  for image  --}}
                                     <div class= "col-md-2 col-xs-3">
                                         <div class="form-group form-float  " >
@@ -152,14 +168,18 @@
                                                 </a>
                                                 &nbsp;
                                                 <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " id="image-error" class="image text-user hidden"></span>
+                                                <span style="color: red " class="image text-user hidden"></span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-10">
                                         
-                                        <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @if($technical->user->image)
+                                            <img id="changeimage" src="{{asset('img/'.$technical->user->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @else 
+                                            <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @endif
                                     </div>
                                 </div>
 
@@ -182,21 +202,37 @@
                                     </div>
 
                                     <div class="col-md-9">
-                                        
-                                        <img id="changeidentity" src="{{asset('images/vcard.png')}}" width="50px" height="50px" alt=" {{trans('admin.image')}}" />
+                                    @if($technical->identity_photo)
+                                            <img id="changeidentity" src="{{asset('img/'.$technical->identity_photo)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @else 
+                                            <img id="changeidentity" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @endif
+                                      
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
+                                        <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($technical->user->status == 'active') ? "checked=''" : ""; ?> >
                                         <label for="active">{{__('admin.active')}}</label>
                                     </div>                                
                                     <div class="radio inlineblock">
-                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active"  >
+                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ($technical->user->status == 'not_active') ? "checked=''" : ""; ?> >
                                         <label for="not_active">{{__('admin.not_active')}}</label>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="available" id="online" class="with-gap" value="1" <?php echo ($technical->available == '1') ? "checked=''" : ""; ?>>
+                                        <label for="online">{{__('admin.online')}}</label>
+                                    </div>                                
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="available" id="offline" class="with-gap" value="0"  <?php echo ($technical->available == '0') ? "checked=''" : ""; ?> >
+                                        <label for="offline">{{__('admin.offline')}}</label>
+                                    </div>
+                                </div>
+
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
                             </form>
@@ -217,131 +253,225 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
 function initMap() {
-    $('form').on('keyup keypress', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) {
-            e.preventDefault();
-            return false;
-        }
+@if($technical->user->lat != null &&  $technical->user->lng != null)    
+    var lat1 = {{$technical->user->lat}};
+    var lng1 = {{$technical->user->lng}}
+    var haightAshbury = {lat: lat1 , lng:lng1 };
+    console.log(haightAshbury) ;
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 18,
+        center: haightAshbury,
+        mapTypeId: 'terrain'
     });
- var map = new google.maps.Map(document.getElementById('map'), {
-     center: {lat: 29.967176910157654, lng: 31.21215951392594},
-     zoom: 18,
-     mapTypeId: 'terrain'
- });
- var marker = new google.maps.Marker({
-     position: {lat: 29.967176910157654, lng: 31.21215951392594},
-     map: map
- });
- var infoWindow = new google.maps.InfoWindow({map: map});
-
- // Try HTML5 geolocation.
- if (navigator.geolocation) {
- navigator.geolocation.getCurrentPosition(function(position) {
- var pos = {
-     lat: position.coords.latitude,
-     lng: position.coords.longitude
- };
- document.getElementById('lat').value = position.coords.latitude;
- document.getElementById('lng').value = position.coords.longitude;
- infoWindow.setPosition(pos);
- 
- infoWindow.setContent('<div>location found</div>');
- map.setCenter(pos);
- }, function() {
- handleLocationError(true, infoWindow, map.getCenter());
- });
-
- } else {
- // Browser doesn't support Geolocation
- handleLocationError(false, infoWindow, map.getCenter());
- }
-
- // Create the search box and link it to the UI element.
- var input = document.getElementById('pac-input');
- var searchBox = new google.maps.places.SearchBox(input);
- map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
- // Bias the SearchBox results towards current map's viewport.
- map.addListener('bounds_changed', function() {
- searchBox.setBounds(map.getBounds());
- });
-
- map.addListener('click', function(event) {
-     console.log(event);
- //clear previous marker
- marker.setMap(null);
- //set new marker
- marker = new google.maps.Marker({
- position: event.latLng,
- map: map
- });
- document.getElementById('lat').value = event.latLng.lat();
- document.getElementById('lng').value = event.latLng.lng();
-
-
- });
-
- var markers = [];
- // Listen for the event fired when the user selects a prediction and retrieve
- // more details for that place.
- searchBox.addListener('places_changed', function() {
- var places = searchBox.getPlaces();
- if (places.length == 0) {
- return;
- }
-
- // Clear out the old markers.
- markers.forEach(function(marker) {
- marker.setMap(null);
- });
- markers = [];
-
- // For each place, get the icon, name and location.
- var bounds = new google.maps.LatLngBounds();
- places.forEach(function(place) {
-     console.log("place ",place);
-     var address=$( "#pac-input" ).val();
+    var marker = new google.maps.Marker({
+        position: haightAshbury,
+        map: map
+    });
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+    map.addListener('click', function(event) {
+        //clear previous marker
+        marker.setMap(null);
+        //set new marker
+        marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+        });
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+    });
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+    return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+    marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+        var address=$( "#pac-input" ).val();
      $('#address-field1').val(address);
      console.log(address);
-     
- var icon = {
- url: place.icon,
- size: new google.maps.Size(71, 71),
- origin: new google.maps.Point(0, 0),
- anchor: new google.maps.Point(17, 34),
- scaledSize: new google.maps.Size(25, 25)
- };
+    var icon = {
+    url: place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
+    };
+    // Create a marker for each place.
+    markers.push(new google.maps.Marker({
+    map: map,
+    icon: icon,
+    title: place.name,
+    position: place.geometry.location
+    }));
+    document.getElementById('lat').value = place.geometry.location.lat();
+    document.getElementById('lng').value = place.geometry.location.lng();
+    if (place.geometry.viewport) {
+    // Only geocodes have viewport.
+    bounds.union(place.geometry.viewport);
+    } else {
+    bounds.extend(place.geometry.location);
+    }
+    });
+    map.fitBounds(bounds);
+    });
+@else 
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 29.967176910157654, lng: 31.21215951392594},
+        zoom: 18,
+        mapTypeId: 'terrain'
+    });
+    var marker = new google.maps.Marker({
+        position: {lat: 29.967176910157654, lng: 31.21215951392594},
+        map: map
+    });
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+    var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+    document.getElementById('lat').value = position.coords.latitude;
+    document.getElementById('lng').value = position.coords.longitude;
+    infoWindow.setPosition(pos);    
 
- // Create a marker for each place.
- markers.push(new google.maps.Marker({
- map: map,
- icon: icon,
- title: place.name,
- position: place.geometry.location
- }));
-
- document.getElementById('lat').value = place.geometry.location.lat();
- document.getElementById('lng').value = place.geometry.location.lng();
- if (place.geometry.viewport) {
- // Only geocodes have viewport.
- bounds.union(place.geometry.viewport);
- } else {
- bounds.extend(place.geometry.location);
- }
- });
- map.fitBounds(bounds);
- }); 
-
+    infoWindow.setContent('location found');
+    map.setCenter(pos);
+    }, function() {
+    handleLocationError(true, infoWindow, map.getCenter());
+    });
+    } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+    }
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+    });
+    map.addListener('click', function(event) {
+    //clear previous marker
+    marker.setMap(null);
+    //set new marker
+    marker = new google.maps.Marker({
+    position: event.latLng,
+    map: map
+    });
+    document.getElementById('lat').value = event.latLng.lat();
+    document.getElementById('lng').value = event.latLng.lng();
+    });
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+    return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+    marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+    var icon = {
+    url: place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
+    };
+    // Create a marker for each place.
+    markers.push(new google.maps.Marker({
+    map: map,
+    icon: icon,
+    title: place.name,
+    position: place.geometry.location
+    }));
+    document.getElementById('lat').value = place.geometry.location.lat();
+    document.getElementById('lng').value = place.geometry.location.lng();
+    if (place.geometry.viewport) {
+    // Only geocodes have viewport.
+    bounds.union(place.geometry.viewport);
+    } else {
+    bounds.extend(place.geometry.location);
+    }
+    });
+    map.fitBounds(bounds);
+    }); 
+@endif
 }
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    console.log("jheeee");
 infoWindow.setPosition(pos);
 infoWindow.setContent(browserHasGeolocation ?
-     'The Geolocation service failed.  ' :
-     'Your browser doesnt support geolocation. ');
+        'The Geolocation service failed.' :
+        'Your browser doesnt support geolocation. ');
 }
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#city_info').empty();
+    $('#city_info').append(`<option value="">{{trans('admin.choose_city')}}</option>`); 
+    $('#area_info').empty();
+    $('#area_info').append(`<option value="">{{trans('admin.choose_area')}}</option>`); 
+    cityids=[];
+    console.log("{{$allcities}}");
+    @foreach ($allcities as $data)
+    console.log("{{$data->country_id}}");
+    if("{{$data->country_id}}"==$('#country_info').val())
+    {
+        if("{{$technical->city_id}}"=="{{$data->id}}")
+        {
+            $('#city_info').append(`<option value="{{$data->id}}" selected>{{$data->name}}</option>`);
+        }
+        else
+        {
+            $('#city_info').append(`<option value="{{$data->id}}">{{$data->name}}</option>`);
+        }
+         
+    }
+            
+        @endforeach
+        $('#city_info').selectpicker('refresh');
+    $('#city_info').selectpicker('render');
 
+    @foreach ($allareas as $data)
+    if("{{$data->city_id}}"==$('#city_info').val())
+    {
+        if("{{$technical->area_id}}"=="{{$data->id}}")
+        {
+            $('#area_info').append(`<option value="{{$data->id}}" selected>{{$data->name}}</option>`);
+        }
+        else
+        {
+            $('#area_info').append(`<option value="{{$data->id}}">{{$data->name}}</option>`);
+        }
+    }
+            
+        @endforeach
+    $('#area_info').selectpicker('refresh');
+    $('#area_info').selectpicker('render');
+});
 
 $('#country_info').change(function(){
     console.log($('#country_info').val());
@@ -445,10 +575,10 @@ $('#city_info').change(function(){
                             $('#nationality_id-error').text(data.errors.nationality_id);
                         }
                   } 
-                //   else {
-                //         window.location.replace("{{route('technicians')}}");
+                  else {
+                        window.location.replace("{{route('technicians')}}");
 
-                //      }
+                     }
             },
         });
     });

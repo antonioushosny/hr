@@ -97,9 +97,9 @@
                                  <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
                                 </div>
 
-                                <div class="form-group">
-                             <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}" required></textarea>
-                            </div>
+                                    <div class="form-group">
+                                <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}"></textarea>
+                                </div>
 
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('country_id',$countries

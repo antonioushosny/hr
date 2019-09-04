@@ -173,6 +173,13 @@
 
 <script>
 function initMap() {
+    $('form').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 @if($user->lat != null &&  $user->lng != null)    
     var lat1 = {{$user->lat}};
     var lng1 = {{$user->lng}}
@@ -221,6 +228,9 @@ function initMap() {
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
     places.forEach(function(place) {
+        var address=$( "#pac-input" ).val();
+     $('#address-field1').val(address);
+     console.log(address);
     var icon = {
     url: place.icon,
     size: new google.maps.Size(71, 71),

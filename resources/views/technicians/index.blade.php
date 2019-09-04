@@ -110,15 +110,15 @@
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                        @can('user_edit')
+                                        @can('technical_edit')
                                         @if($data->status == 'active')
                                             <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
+                                                <a href="{{route('techicianstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
                                                 
                                             </td> 
                                         @elseif($data->status == 'not_active')
                                             <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></a>
+                                                <a href="{{route('techicianstatus',$data->id)}}" class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></a>
                                                 
                                             </td> 
                                         @endif
@@ -138,16 +138,16 @@
 
                                         @endcan
                                         <td>
-                                            <!-- @can('user_edit')
+                                            @can('technical_edit')
                                             <a href="{{route('edittechnician',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
                                             @endcan
 
-                                            @can('order_list')
+                                            <!-- @can('order_list')
                                             <a href="{{route('userorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
-                                            @endcan
+                                            @endcan -->
                                             @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan -->
+                                            @endcan
                                         </td>
                                     </tr>
                                     
