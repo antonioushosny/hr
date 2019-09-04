@@ -57,9 +57,9 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_technician')}}  </h2>
                             
                         </div>
+                            {!! Form::open(['route'=>['storetechnician'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                         <div class="body row">
                             <div class="col-lg-6">
-                            {!! Form::open(['route'=>['storetechnician'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                                 <!-- technical id -->
                                 <div class="form-group form-float">
                                     <input type="hidden" value="{{$technical->id}}" name="id" required>
@@ -106,57 +106,9 @@
                              </textarea>
                             </div>
 
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('country_id',$countries
-                                        ,$technical->country_id,['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
-                                        <label id="country_id-error" class="error" for="country_id" style="">  </label>
-                                </div>
 
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('city_id',[]
-                                        ,'',['class'=>'form-control selectpicker  show-tick ','id'=>'city_info' ,'placeholder' =>trans('admin.choose_city')]) !!}
-                                        <label id="city_id-error" class="error" for="city_id" style="">  </label>
-                                </div>
-
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('area_id',[]
-                                        ,'',['class'=>'form-control show-tick','id'=>'area_info' ,'placeholder' =>trans('admin.choose_area')]) !!}
-                                        <label id="area_id-error" class="error" for="area_id" style="">  </label>
-                                </div>
-
-
-                                <div class="form-group form-float">
-                                    <input type="text" class="form-control" id="address-field1"  value="{{$technical->user->address}}" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off">
-                                    <label id="address-error" class="error" for="address" style=""></label>
-                                </div>      
-
-
-                            <!-- {{--  for map      --}}  -->
-
-                            <div class="form-group form-float">
-                                            <span style="color: black "> 
-                                        {!! Form::label('location[]',trans('admin.placeholder_location')) !!}
-                                    </span>
-                                    <!-- <label id="location-error" class="error" for="location[]" style=""></label> -->
-                                    <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
-
-                                    <div class="col-lg-12" id="map" style="width:100%;height:400px;"></div>
-                                    <label id="lat-error" class="error" for="lat" style="">  </label>
-                                </div><br/>        
-
-                                <div class="form-group">
-                                    {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
-                                    {!! Form::hidden('location[0]',$technical->user->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
-
-                                    {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
-                                    {!! Form::hidden('location[1]',$technical->user->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
-
-                                </div><br/> 
-                                <!-- end map -->
-
-
-                                <!-- for image  -->
-                                <div class="form-group form-float row" >
+<!-- for image  -->
+<div class="form-group form-float row" >
                                     {{--  for image  --}}
                                     <div class= "col-md-2 col-xs-3">
                                         <div class="form-group form-float  " >
@@ -210,8 +162,7 @@
                                       
                                     </div>
                                 </div>
-
-                                <div class="form-group">
+                            <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="status" id="active" class="with-gap" value="active" <?php echo ($technical->user->status == 'active') ? "checked=''" : ""; ?> >
                                         <label for="active">{{__('admin.active')}}</label>
@@ -222,7 +173,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="available" id="online" class="with-gap" value="1" <?php echo ($technical->available == '1') ? "checked=''" : ""; ?>>
                                         <label for="online">{{__('admin.online')}}</label>
@@ -231,13 +182,67 @@
                                         <input type="radio" name="available" id="offline" class="with-gap" value="0"  <?php echo ($technical->available == '0') ? "checked=''" : ""; ?> >
                                         <label for="offline">{{__('admin.offline')}}</label>
                                     </div>
+                                </div> -->
+
+                            </div> <!--col-6-->
+
+
+                            <div class="col-lg-6">
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('country_id',$countries
+                                        ,$technical->country_id,['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
+                                        <label id="country_id-error" class="error" for="country_id" style="">  </label>
                                 </div>
 
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('city_id',[]
+                                        ,'',['class'=>'form-control selectpicker  show-tick ','id'=>'city_info' ,'placeholder' =>trans('admin.choose_city')]) !!}
+                                        <label id="city_id-error" class="error" for="city_id" style="">  </label>
+                                </div>
+
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('area_id',[]
+                                        ,'',['class'=>'form-control show-tick','id'=>'area_info' ,'placeholder' =>trans('admin.choose_area')]) !!}
+                                        <label id="area_id-error" class="error" for="area_id" style="">  </label>
+                                </div>
+
+
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" id="address-field1"  value="{{$technical->user->address}}" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off">
+                                    <label id="address-error" class="error" for="address" style=""></label>
+                                </div>      
+
+
+                            <!-- {{--  for map      --}}  -->
+
+                            <div class="form-group form-float">
+                                            <span style="color: black "> 
+                                        {!! Form::label('location[]',trans('admin.placeholder_location')) !!}
+                                    </span>
+                                    <!-- <label id="location-error" class="error" for="location[]" style=""></label> -->
+                                    <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
+
+                                    <div class="col-lg-12" id="map" style="width:100%;height:400px;"></div>
+                                    <label id="lat-error" class="error" for="lat" style="">  </label>
+                                </div><br/>        
+
+                                <div class="form-group">
+                                    {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
+                                    {!! Form::hidden('location[0]',$technical->user->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
+
+                                    {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
+                                    {!! Form::hidden('location[1]',$technical->user->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
+
+                                </div><br/> 
+                                <!-- end map -->
+
+                                </div> <!--col-6-->
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
-                            </form>
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
+                            
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>

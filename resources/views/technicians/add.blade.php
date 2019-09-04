@@ -57,9 +57,9 @@
                             <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_technician')}}  </h2>
                             
                         </div>
+                            {!! Form::open(['route'=>['storetechnician'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                         <div class="body row">
                             <div class="col-lg-6">
-                            {!! Form::open(['route'=>['storetechnician'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                                 
                                 <!-- for email -->
                                 <div class="form-group form-float">
@@ -101,6 +101,57 @@
                                 <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}"></textarea>
                                 </div>
 
+                                 <!-- for image  -->
+                                 <div class="form-group form-float row"  >
+                                    {{--  for image  --}}
+                                    <div class= "col-md-2 col-xs-3">
+                                        <div class="form-group form-float  " >
+                                            <div style="position:relative; ">
+                                                <a class='btn btn-primary' href='javascript:;' >
+                                                    {{trans('admin.Choose_Image')}}
+            
+                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
+                                                </a>
+                                                &nbsp;
+                                                <div class='label label-primary' id="upload-file-info" ></div>
+                                                <span style="color: red " id="image-error" class="image text-user hidden"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-10">
+                                        
+                                        <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
+                                        <label for="active">{{__('admin.active')}}</label>
+                                    </div>                                
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active"  >
+                                        <label for="not_active">{{__('admin.not_active')}}</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="available" id="online" class="with-gap" value="1" checked="">
+                                        <label for="online">{{__('admin.online')}}</label>
+                                    </div>                                
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="available" id="offline" class="with-gap" value="0"  >
+                                        <label for="offline">{{__('admin.offline')}}</label>
+                                    </div>
+                                </div>
+
+
+                            </div> <!--col-6-->
+
+                            <div class="col-lg-6">
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('country_id',$countries
                                         ,'',['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
@@ -149,29 +200,7 @@
                                 </div><br/> 
                                 <!-- end map -->
 
-                                <!-- for image  -->
-                                <div class="form-group form-float row"  >
-                                    {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
-                                        <div class="form-group form-float  " >
-                                            <div style="position:relative; ">
-                                                <a class='btn btn-primary' href='javascript:;' >
-                                                    {{trans('admin.Choose_Image')}}
-            
-                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
-                                                </a>
-                                                &nbsp;
-                                                <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " id="image-error" class="image text-user hidden"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-10">
-                                        
-                                        <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                    </div>
-                                </div>
+                               
 
                                  <!-- for identity phone  -->
                                  <div class="form-group form-float row"  >
@@ -197,34 +226,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
-                                        <label for="active">{{__('admin.active')}}</label>
-                                    </div>                                
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active"  >
-                                        <label for="not_active">{{__('admin.not_active')}}</label>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="available" id="online" class="with-gap" value="1" checked="">
-                                        <label for="online">{{__('admin.online')}}</label>
-                                    </div>                                
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="available" id="offline" class="with-gap" value="0"  >
-                                        <label for="offline">{{__('admin.offline')}}</label>
-                                    </div>
-                                </div>
-
+                                
+                            </div> <!--col-6-->
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
-                            </form>
                             </div>
                         </div>
+                            </form>
                 </div>
             </div>
         </div>

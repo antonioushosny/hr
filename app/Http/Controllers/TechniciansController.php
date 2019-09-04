@@ -124,10 +124,10 @@ class TechniciansController extends Controller
              'location.*'=>'required',         
              'status'  =>'required',    
             'country_id'  =>'required',  
-                'city_id'  =>'required',  
-                'area_id'  =>'required',  
-                'nationality_id'  =>'required',  
-                'service_id'=>'required', 
+            'city_id'  =>'required',  
+            'area_id'  =>'required',  
+            'nationality_id'  =>'required',  
+            'service_id'=>'required', 
         ];
         
     }     
