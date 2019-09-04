@@ -1449,17 +1449,22 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
                 // return $user ;
+                $data['isFavorite'] = 0;
                 $technician = User::where('id',$request->fannie_id)->first();
                 $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
                 if($favorite){
-                    $favorite->delete() ;
+                     $favorite->delete() ;
+                    $data['isFavorite'] = 0 ;
+
                 }else{
+
                     $favorite = new Favorite;
                     $favorite->user_id = $user->id ;
                     $favorite->fannie_id = $technician->id ;
-                    $favorite->save ;
+                    $favorite->save() ;
+                    $data['isFavorite'] = 1 ;
+ 
                 }
-                $data = null ;
                 $message = trans('api.save') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
@@ -1476,6 +1481,7 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+
 // MakeOrder function by Antonious hosny
     public function MakeOrder(Request $request){
         $token = $request->header('token');
