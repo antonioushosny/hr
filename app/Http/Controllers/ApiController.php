@@ -104,6 +104,7 @@ class ApiController extends Controller
     public function IsRegistered(Request $request){ 
             $rules=array(
                 "mobile"=>"required",
+                // "code"=>"required",
              );
 
             //check the validator true or not
@@ -134,19 +135,33 @@ class ApiController extends Controller
                 $UserCode->save();
                 
                 $message = trans('api.send_code') ;
-                $response = $this->SuccessResponse($message , $code) ;
-                return  $response ;
+                return $this->SuccessResponse($message , $code) ;
+               
+                 
             }
             else
             {
-                // $errors=  trans('api.notfound');
-                // $errors[] =[
-                //     'message' => trans('api.mobile_notfound')
-                // ];
+                $code = rand(100000,999999);
+                $UserCode = PasswordReset::where('email',$request->mobile)->first();
+                if(!$UserCode){
+                    $UserCode = new PasswordReset ;
+                }
+                $UserCode->email = $request->mobile ;
+                $UserCode->token = $code ;
+                $UserCode->save();
+
                 $errors = [] ;
-                $message = trans('api.failed_login') ;
-                $response = $this->FailedResponse($message , $errors) ;
-                return  $response ;
+                $message = trans('api.mobile_notfound') ;
+                // $response = $this->FailedResponse($message , $errors) ;
+                return response()->json([
+                    'success' => 0,
+                    'errors'=>$errors,
+                    'message' =>$message,
+                    'data' => $code,
+        
+                ]);
+
+                  
             }
 
 
@@ -951,6 +966,87 @@ class ApiController extends Controller
                 $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                  
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+// AllWorkers function by Antonious hosny
+    public function AllWorkers(Request $request){
+        $rules=array(
+            "service_id"=>"required",
+            "page"=>"required",
+            "skip"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+ 
+        }
+        if($request->page && $request->page > 0 ){
+            $page = $request->page * $request->skip ;
+        }else{
+            $page = 0 ;
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->count('id');
+                return $technicians ;
+                $servicess = [] ;
+                $i =0 ;
+                if(sizeof($services) > 0 ){
+                    foreach($services as $service){
+                        
+                        $servicess[$i]['service_id'] = $service->id ;    
+                        if($lang == 'ar'){
+                            $servicess[$i]['service_name'] = $service->name_ar ; 
+                        }else{
+                            $servicess[$i]['service_name'] = $service->name_en ; 
+                        }
+                        if($service->image){
+                            $servicess[$i]['image'] = asset('img/').'/'. $service->image;
+                        }else{
+                            $servicess[$i]['image'] = null ;
+                        }
+
+                        $i ++ ;                    
+                        
+                    }
+                }
+                $count = count($user->unreadnotifications) ;
+                $data['services_count'] = $services_count ;
+                $data['services'] = $servicess ;
+                $data['count_notification'] = $count ;
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
             }else{
                 $message = trans('api.logged_out') ;
                 return  $this->LoggedResponse($message ) ;

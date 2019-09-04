@@ -24,9 +24,9 @@ Route::post('Register', 'ApiController@Register')->middleware('localization');
 Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
 Route::get('Logout', 'ApiController@Logout')->middleware('localization');
 Route::get('Services', 'ApiController@Services')->middleware('localization');
+Route::post('AllWorkers', 'ApiController@AllWorkers')->middleware('localization');
 
 
-Route::post('HomePage', 'ApiController@HomePage')->middleware('localization');
 Route::post('MakeOrder', 'ApiController@MakeOrder')->middleware('localization');
 Route::post('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localization');
