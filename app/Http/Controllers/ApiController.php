@@ -985,9 +985,10 @@ class ApiController extends Controller
             "service_id"=>"required",
             "page"=>"required",
             "skip"=>"required",
- 
         );
-
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
         //check the validator true or not
         $validator  = \Validator::make($request->all(),$rules);
         if($validator->fails())
@@ -996,7 +997,7 @@ class ApiController extends Controller
             $transformed = [];
             foreach ($messages->all() as $field => $message) {
                 $transformed[] = [
-                     'message' => $message
+                    'message' => $message
                 ];
             }
             $message = trans('api.failed') ;
@@ -1014,10 +1015,10 @@ class ApiController extends Controller
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-
-                $services = Service::where('status','active')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
-                $services_count = Service::where('status','active')->count('id');
-                // return $containers_count ;
+                
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->count('id');
+                return $technicians ;
                 $servicess = [] ;
                 $i =0 ;
                 if(sizeof($services) > 0 ){
