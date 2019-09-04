@@ -335,4 +335,18 @@ return [
         'brief_technician'=>'Bief About Technician',
         'online'=>'Online',
         'offline'=>'Offline',
+
+        
+        //subscriptions of users pages
+        'subscriptions_tech'=>'Subscriptions',
+        'add_subscription_tech'=>' Add Technical Subscription',
+        'edit_subscription_tech'=>'Edit Technical subscription',
+        'type_subscription'=>'Subscription Type',
+        'deposit'=>'Deposit',
+        'choose_user'=>'Choose Technician Name',
+        'choose_user_num'=>'Choose Technician Mobile',
+        'choose_subscription'=>'Choose Subscription Type',
+        'Choose_deposit'=>'Choose Deposit',
+        'cost'=>'Cost',
+        'date_exp'=>'Expiration date',
 ];

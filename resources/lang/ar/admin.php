@@ -341,6 +341,22 @@ return [
         'brief_technician'=>'نبذة عن الفني',
         'online'=>' متصل',
         'offline'=>'غير متصل',
+
+
+        //subscriptions of users pages
+        'subscriptions_tech'=>' الإشتراكات',
+        'add_subscription_tech'=>' إضافة إشتراك فني',
+        'edit_subscription_tech'=>' تعديل إشتراك فني',
+        'type_subscription'=>'نوع إشتراك',
+        'deposit'=>'صورة الإيداع ',
+        'choose_user'=>'اختر اسم الفني',
+        'choose_user_num'=>'اختر رقم موبايل الفني',
+        'choose_subscription'=>'اختر نوع إشتراك ',
+        'Choose_deposit'=>'اختر صورة الإيداع',
+        'cost'=>'التكلفة',
+        'date_exp'=>'تاريخ الصلاحية',
+
+
  ];
 
 

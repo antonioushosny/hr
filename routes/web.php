@@ -132,6 +132,15 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');
     // Route::get('/users/orders/{id}', 'TechniciansController@orders')->name('userorders');
 
+    //route for subscriptions technicians management
+    Route::get('/technicians/subscriptions', 'SubscriptionController@index')->name('techsubscriptions');
+     Route::get('/technicians/subscriptions/add', 'SubscriptionController@add')->name('addtechsubscription');
+     Route::post('/technicians/subscriptions/update/', 'SubscriptionController@store')->name('storeaddtechsubscription');
+    // Route::get('/subscriptions/edit/{id}', 'SubscriptionController@edit')->name('editsubscription');
+    // Route::get('/subscriptions/delete/{id}', 'SubscriptionController@destroy')->name('destroysubscription');
+    // Route::post('/subscriptions/deleteall', 'SubscriptionController@deleteall')->name('subscriptionsdeleteall');
+
+
     //  routes for contact_us management
     Route::get('/contact_us', 'ContactsController@index')->name('contacts');
     Route::get('/contacts/delete/{id}', 'ContactsController@destroy')->name('destroycontact');

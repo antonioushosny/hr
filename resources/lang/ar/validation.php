@@ -182,6 +182,9 @@ return [
         'location.*'               =>'الموقع',
         'nationality_id' =>'الجنسية',
         'service_id' =>'الخدمة',
+        'deposit'=>'صورة الإيداع ',
+        'fannie'=>'الفني',
+        'sub_type'=>'نوع إشتراك',
 
     ],
     

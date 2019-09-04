@@ -385,6 +385,11 @@ body, html {
                     <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  ><i class="zmdi zmdi-accounts-alt"></i> <span> {{trans('admin.technicians')}}</span></a></li>
                     @endcan
 
+                    
+                    @can('subscription_list')                    
+                    <li <?php echo ($page == 'subscriptions_tech') ? "class='active open'" : ""; ?> ><a href="{{ route('techsubscriptions') }}"  ><i class="zmdi zmdi-money-box"></i> <span> {{trans('admin.subscriptions_tech')}}</span></a></li>
+                    @endcan
+
                     @can('contact_list')
                     <li <?php echo ($page == 'contacts') ? "class='active open'" : ""; ?> ><a href="{{ route('contacts') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.contacts')}}</span></a></li>
                     @endcan

@@ -197,6 +197,9 @@ return [
         'location.*'               =>'Location',
         'nationality_id' =>'Nationality',
         'service_id' =>'Service',
+        'deposit'=>'Deposit ',
+        'fannie'=>'Technician',
+        'sub_type'=>'Subscription Type',
     ],
     
 ];
