@@ -134,19 +134,33 @@ class ApiController extends Controller
                 $UserCode->save();
                 
                 $message = trans('api.send_code') ;
-                $response = $this->SuccessResponse($message , $code) ;
-                return  $response ;
+                return $this->SuccessResponse($message , $code) ;
+               
+                 
             }
             else
             {
-                // $errors=  trans('api.notfound');
-                // $errors[] =[
-                //     'message' => trans('api.mobile_notfound')
-                // ];
+                $code = rand(100000,999999);
+                $UserCode = PasswordReset::where('email',$request->mobile)->first();
+                if(!$UserCode){
+                    $UserCode = new PasswordReset ;
+                }
+                $UserCode->email = $request->mobile ;
+                $UserCode->token = $code ;
+                $UserCode->save();
+
                 $errors = [] ;
-                $message = trans('api.failed_login') ;
-                $response = $this->FailedResponse($message , $errors) ;
-                return  $response ;
+                $message = trans('api.mobile_notfound') ;
+                // $response = $this->FailedResponse($message , $errors) ;
+                return response()->json([
+                    'success' => 0,
+                    'errors'=>$errors,
+                    'message' =>$message,
+                    'data' => $code,
+        
+                ]);
+
+                  
             }
 
 
