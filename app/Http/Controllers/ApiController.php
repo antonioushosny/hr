@@ -1499,9 +1499,56 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
                 // return $user ;
+                $favoritess = [] ;
+                $i = 0 ;
                 $favorites = Favorite::where('user_id',$user->id)->with('fannie')->get();
-                 
-                $message = trans('api.save') ;
+                if(sizeOf($favorites) > 0){
+                    foreach($favorites as $favorite){
+                        if($favorite->fannie){
+                            
+                            $ratecount = Rate::where('evaluator_to',$favorite->fannie->id)->count('id');
+                            $sumrates = Rate::where('evaluator_to',$favorite->fannie->id)->sum('rate');
+                            if($ratecount != 0){
+                                $rate =  $sumrates / $ratecount ;
+                            }else{
+                                $rate = 0 ;
+                            }
+                            $favoritess[$i]['worker_id']  =  $favorite->fannie->id;
+                            $favoritess[$i]['worker_name']  =  $favorite->fannie->name;
+                            if( $favorite->fannie->technician){
+                                $favoritess[$i]['available']  = $favorite->fannie->technician->available ; 
+                                if( $favorite->fannie->technician->nationality){
+                                    if($lang == 'ar'){
+                                        $favoritess[$i]['nationality']  =  $favorite->fannie->technician->nationality->name_ar;
+                                    }else{
+                                        $favoritess[$i]['nationality']  =  $favorite->fannie->technician->nationality->name_en;
+                                    }
+                                }else{
+                                    $favoritess[$i]['nationality']  = ' '; 
+                                }
+                            }else{
+                                $favoritess[$i]['nationality']  = ' '; 
+                                $favoritess[$i]['available']  = 0 ;
+                            }
+                            
+                            if($favorite->fannie->image){
+                                $favoritess[$i]['image'] = asset('img/').'/'. $favorite->fannie->image;
+                            }else{
+                                $favoritess[$i]['image'] = null ;
+                            }
+
+                            $favoritess[$i]['rate']  =  $rate ;
+                            if($request->lat && $request->lng){
+                                $distance = $this->GetDistance($request->lat,$favorite->fannie->lat,$request->lng,$favorite->fannie->lng,'k');
+                                $favoritess[$i]['distance'] = round($distance,2). __('api.km'); 
+                            }
+                            $i ++ ;
+                        }
+                    }
+                }
+
+                $data['favorites'] = $favoritess ;
+                $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
