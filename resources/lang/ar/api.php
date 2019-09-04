@@ -51,4 +51,5 @@ return [
 
     'notfoundcenter' => 'لا توجد مراكز توزيع لهذا الخزان ',
     'activate_account'  => 'برجاء تفعيل الحساب',
+    'km' => ' كم ' ,
 ];
