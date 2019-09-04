@@ -1184,6 +1184,8 @@ class ApiController extends Controller
             "service_id"=>"required",
             "time"=>"required",
             "date"=>"required",
+            "skip"=>"required",
+            "page"=>"required",
         );
         $dt = Carbon::now();
         $date  = date('Y-m-d', strtotime($dt));
@@ -1208,7 +1210,7 @@ class ApiController extends Controller
         }else{
             $page = 0 ;
         }
-        
+
         $day  = date('D', strtotime($request->date));
         $time  =  $request->time;
         $service =  $request->service_id;
@@ -1223,7 +1225,13 @@ class ApiController extends Controller
                     $query->where('day', $day)->where('from','<',$time)->where('to','>',$time);
                 })->with('availabledate')->whereHas('technician', function ($query) use ($service) {
                     $query->where('service_id', $service);
-                })->with('technician')->get();
+                })->with('technician')->skip($page)->limit($request->skip)->get();
+
+                $count_technicians = User::where('status','active')->whereHas('availabledate', function ($query) use ($day,$time) {
+                    $query->where('day', $day)->where('from','<',$time)->where('to','>',$time);
+                })->with('availabledate')->whereHas('technician', function ($query) use ($service) {
+                    $query->where('service_id', $service);
+                })->with('technician')->skip($page)->limit($request->skip)->count('id');
                 // return $technicians ;
                 $technicianss = [] ;
                 $i =0 ;
@@ -1271,7 +1279,8 @@ class ApiController extends Controller
                     }
                 }
                 $data['technicians'] = $technicianss ;
-
+                $data['count_technicians'] = $count_technicians ;
+                
                 $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
@@ -1288,6 +1297,127 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// WorkerDetail function by Antonious hosny
+    public function WorkerDetail(Request $request){
+
+        $rules=array(
+            "fannie_id"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technician = User::where('id',$request->fannie_id)->with('technician')->with('rates')->with('fannieorders')->first();
+                // return $technician ;
+                $technicianss = [] ;
+                if($technician ){
+                    $distance = $this->GetDistance($request->lat,$technician->lat,$request->lng,$technician->lng,'k');
+
+
+                    $ratecount = Rate::where('evaluator_to',$technician->id)->count('id');
+                    $sumrates = Rate::where('evaluator_to',$technician->id)->sum('rate');
+                    if($ratecount != 0){
+                        $rate =  $sumrates / $ratecount ;
+                    }else{
+                        $rate = 0 ;
+                    }
+                    $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
+                    if($favorite){
+                        $isFavorate = 1 ;
+                    }else{
+                        $isFavorate = 0 ;
+                    }
+
+                    $technicianss['worker_id'] = $technician->id ;    
+                    $technicianss['worker_name'] = $technician->name ; 
+                    $technicianss['lat'] = $technician->lat ; 
+                    $technicianss['lng'] = $technician->lng ; 
+                    $technicianss['rate'] =   $rate ; 
+                    $technicianss['distance'] =   round($distance,2). __('api.km'); 
+                    $technicianss['isFavorate'] =  $isFavorate; 
+                    $technicianss['count_orders'] = count( $technician->fannieorders ) ;
+                    if($technician->technician->nationality){
+                        if($lang == 'ar'){
+                            $technicianss['nationality'] = $technician->technician->nationality->name_ar ; 
+                        }else{
+                            $technicianss['nationality'] = $technician->technician->nationality->name_en ; 
+                        }
+                    }
+                    $technicianss['available'] = $technician->technician->available ; 
+                    $technicianss['brief'] = $technician->technician->brief ; 
+                    if($technician->image){
+                        $technicianss['image'] = asset('img/').'/'. $technician->image;
+                    }else{
+                        $technicianss['image'] = null ;
+                    }
+                    $ratess = [] ;
+                    $i = 0 ;
+                    if(sizeof($technician->rates) > 0){
+                        foreach($technician->rates as $rate){
+                            if( $rate->evaluator_from){
+                                $ratess[$i]['user_name'] = $rate->evaluator_from->name ;
+                                if($rate->evaluator_from->image){
+                                    $ratess[$i]['image'] = asset('img/').'/'. $rate->evaluator_from->image;
+                                }else{
+                                    $ratess[$i]['image'] = null ;
+                                }
+                            }else{
+                                $ratess[$i]['user_name'] = '' ;
+                                $ratess[$i]['image'] = null ;
+                            }
+                            $ratess[$i]['rate'] = $rate->rate ;
+                            $ratess[$i]['notes'] = $rate->notes ;
+                            $ratess[$i]['date'] = $rate->created_at ;
+                            $i++;
+                        }
+                    }
+                    $technicianss['rates'] = $ratess ;
+                    
+                        
+                }
+                $data['technician'] = $technicianss ;
+                 
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+
 // MakeOrder function by Antonious hosny
     public function MakeOrder(Request $request){
         $token = $request->header('token');

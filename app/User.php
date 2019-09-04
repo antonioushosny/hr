@@ -44,7 +44,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Order', 'fannie_id');
     }
-
+    public function rates()
+    {
+        return $this->hasMany('App\Rate', 'evaluator_to')->with('evaluator_from');
+    }
     public function availabledate()
     {
         // return $this->day ;

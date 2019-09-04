@@ -27,6 +27,7 @@ Route::get('Services', 'ApiController@Services')->middleware('localization');
 Route::post('AllWorkers', 'ApiController@AllWorkers')->middleware('localization');
 Route::post('NearstWorkers', 'ApiController@NearstWorkers')->middleware('localization');
 Route::post('AvailableWorkers', 'ApiController@AvailableWorkers')->middleware('localization');
+Route::post('WorkerDetail', 'ApiController@WorkerDetail')->middleware('localization');
 
 
 Route::post('MakeOrder', 'ApiController@MakeOrder')->middleware('localization');
