@@ -133,9 +133,10 @@ class ApiController extends Controller
                 $UserCode->email = $request->mobile ;
                 $UserCode->token = $code ;
                 $UserCode->save();
-                
+                $data['code'] = $code ;
+                $data['IsRegistered'] = 1 ;
                 $message = trans('api.send_code') ;
-                return $this->SuccessResponse($message , $code) ;
+                return $this->SuccessResponse($message , $data) ;
                
                  
             }
@@ -149,19 +150,12 @@ class ApiController extends Controller
                 $UserCode->email = $request->mobile ;
                 $UserCode->token = $code ;
                 $UserCode->save();
+                $data['code'] = $code ;
+                $data['IsRegistered'] = 0 ;
 
-                $errors = [] ;
                 $message = trans('api.mobile_notfound') ;
-                // $response = $this->FailedResponse($message , $errors) ;
-                return response()->json([
-                    'success' => 0,
-                    'errors'=>$errors,
-                    'message' =>$message,
-                    'data' => $code,
-        
-                ]);
-
-                  
+                return $this->SuccessResponse($message , $data) ;
+    
             }
 
 
@@ -1015,7 +1009,7 @@ class ApiController extends Controller
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                
+                // return $user ;
                 $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
                 $technicians_count = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->count('id');
                 // return $technicians ;
@@ -1023,13 +1017,124 @@ class ApiController extends Controller
                 $i =0 ;
                 if(sizeof($technicians) > 0 ){
                     foreach($technicians as $technician){
-                        
+                        $ratecount = Rate::where('evaluator_to',$technician->hasuser->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$technician->hasuser->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
+                        }
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->hasuser->id)->first();
+                        if($favorite){
+                            $isFavorate = 1 ;
+                        }else{
+                            $isFavorate = 0 ;
+                        }
+
                         $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
                         $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
                         $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
                         $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
-                        $technicianss[$i]['rate'] = 4 ; 
-                        $technicianss[$i]['isFavorate'] = 0; 
+                        $technicianss[$i]['rate'] =   $rate ; 
+                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        if($technician->nationality){
+                            if($lang == 'ar'){
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
+                            }else{
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_en ; 
+                            }
+                        }
+                        $technicianss[$i]['available'] = $technician->available ; 
+                        if($technician->hasuser->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->hasuser->image;
+                        }else{
+                            $technicianss[$i]['image'] = null ;
+                        }
+
+                        $i ++ ;                    
+                        
+                    }
+                }
+                $data['technicians'] = $technicianss ;
+                $data['count_technicians'] = $technicians_count ;
+
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+// NearstWorkers function by Antonious hosny
+    public function NearstWorkers(Request $request){
+        $rules=array(
+            "service_id"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->get();
+                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->count('id');
+                // return $technicians ;
+                $technicianss = [] ;
+                $i =0 ;
+                if(sizeof($technicians) > 0 ){
+                    foreach($technicians as $technician){
+                        $distance = $this->GetDistance($request->lat,$technician->hasuser->lat,$request->lng,$technician->hasuser->lng,'k');
+                        return $distance ;
+                        $ratecount = Rate::where('evaluator_to',$technician->hasuser->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$technician->hasuser->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
+                        }
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->hasuser->id)->first();
+                        if($favorite){
+                            $isFavorate = 1 ;
+                        }else{
+                            $isFavorate = 0 ;
+                        }
+
+                        $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
+                        $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
+                        $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
+                        $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
+                        $technicianss[$i]['rate'] =   $rate ; 
+                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
                         if($technician->nationality){
                             if($lang == 'ar'){
                                 $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
