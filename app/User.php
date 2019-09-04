@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
     public function rates()
     {
-        return $this->hasMany('App\Rate', 'evaluator_to')->with('evaluator_from');
+        return $this->hasMany('App\Rate', 'evaluator_to')->with('evaluatorfrom');
     }
     public function availabledate()
     {

@@ -1039,7 +1039,7 @@ class ApiController extends Controller
                         $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
                         $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
                         $technicianss[$i]['rate'] =   $rate ; 
-                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        $technicianss[$i]['isFavorite'] =  $isFavorate; 
                         if($technician->nationality){
                             if($lang == 'ar'){
                                 $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
@@ -1138,7 +1138,7 @@ class ApiController extends Controller
                             $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
                             $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
                             $technicianss[$i]['rate'] =   $rate ; 
-                            $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                            $technicianss[$i]['isFavorite'] =  $isFavorate; 
                             $technicianss[$i]['distance'] =  round($distance,2). __('api.km'); 
                             if($technician->nationality){
                                 if($lang == 'ar'){
@@ -1258,7 +1258,7 @@ class ApiController extends Controller
                         $technicianss[$i]['lat'] = $technician->lat ; 
                         $technicianss[$i]['lng'] = $technician->lng ; 
                         $technicianss[$i]['rate'] =   $rate ; 
-                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        $technicianss[$i]['isFavorite'] =  $isFavorate; 
                         if($technician->technician->nationality){
                             if($lang == 'ar'){
                                 $technicianss[$i]['nationality'] = $technician->technician->nationality->name_ar ; 
@@ -1358,7 +1358,7 @@ class ApiController extends Controller
                     $technicianss['lng'] = $technician->lng ; 
                     $technicianss['rate'] =   $rate ; 
                     $technicianss['distance'] =   round($distance,2). __('api.km'); 
-                    $technicianss['isFavorate'] =  $isFavorate; 
+                    $technicianss['isFavorite'] =  $isFavorate; 
                     $technicianss['count_orders'] = count( $technician->fannieorders ) ;
                     if($technician->technician->nationality){
                         if($lang == 'ar'){
@@ -1378,10 +1378,11 @@ class ApiController extends Controller
                     $i = 0 ;
                     if(sizeof($technician->rates) > 0){
                         foreach($technician->rates as $rate){
-                            if( $rate->evaluator_from){
-                                $ratess[$i]['user_name'] = $rate->evaluator_from->name ;
-                                if($rate->evaluator_from->image){
-                                    $ratess[$i]['image'] = asset('img/').'/'. $rate->evaluator_from->image;
+                            // return $rate->evaluatorfrom ;
+                            if( $rate->evaluatorfrom){
+                                $ratess[$i]['user_name'] = $rate->evaluatorfrom->name ;
+                                if($rate->evaluatorfrom->image){
+                                    $ratess[$i]['image'] = asset('img/').'/'. $rate->evaluatorfrom->image;
                                 }else{
                                     $ratess[$i]['image'] = null ;
                                 }
@@ -1417,7 +1418,64 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// Favorite function by Antonious hosny
+    public function Favorite(Request $request){
 
+        $rules=array(
+            "fannie_id"=>"required"
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+        }
+
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technician = User::where('id',$request->fannie_id)->first();
+                $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
+                if($favorite){
+                    $favorite->delete() ;
+                }else{
+                    $favorite = new Favorite;
+                    $favorite->user_id = $user->id ;
+                    $favorite->fannie_id = $technician->id ;
+                    $favorite->save ;
+                }
+                $data = null ;
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
 // MakeOrder function by Antonious hosny
     public function MakeOrder(Request $request){
         $token = $request->header('token');

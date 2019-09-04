@@ -10,12 +10,12 @@ class Rate extends Model
         'evaluator_from','evaluator_to','rate','contact_rate','time_rate','work_rate','cost_rate','general_character','date','notes'
     ];
 
-    public function evaluator_from()
+    public function evaluatorfrom()
     {
         return $this->belongsTo('App\User', 'evaluator_from');
     }									
 
-    public function evaluator_to()
+    public function evaluatorto()
     {
         return $this->belongsTo('App\User', 'evaluator_to');
     }
