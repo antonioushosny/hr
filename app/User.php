@@ -10,6 +10,9 @@ class User extends Authenticatable
 {
     use HasRoles;
     use Notifiable;
+    protected $day;
+    protected $from;
+    protected $to;
 
     protected $fillable = [
         'code', 'name','email', 'password','mobile','address','city','area','lat','lng','image','device_token','role','status','lang','type',
@@ -40,6 +43,12 @@ class User extends Authenticatable
     public function fannieorders()
     {
         return $this->hasMany('App\Order', 'fannie_id');
+    }
+
+    public function availabledate()
+    {
+        // return $this->day ;
+        return  $this->hasMany('App\AvailableDay', 'fannie_id')->where('day',$this->day);
     }
  
 }

@@ -55,14 +55,17 @@ class ApiController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    private $objuser;
+    
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
+        $this->objuser = $user ;
         date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
@@ -1176,6 +1179,7 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // AvailableWorkers function by Antonious hosny
     public function AvailableWorkers(Request $request){
+
         $rules=array(
             "service_id"=>"required",
             "time"=>"required",
@@ -1199,7 +1203,11 @@ class ApiController extends Controller
             return  $this->FailedResponse($message , $transformed) ;
 
         }
-        
+        $day  = date('D', strtotime($request->date));
+        $this->objuser->day =  $day; 
+        // return  $this->objuser->day ;
+        $user = $this->objuser::with('availabledate')->get();
+        return $user ;
         $token = $request->header('token');
         $lang = $request->header('lang');
 
