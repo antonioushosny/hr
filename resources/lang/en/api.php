@@ -51,4 +51,5 @@ return [
 
     'notfoundcenter' => 'There are no distribution centers for this container',
     'activate_account'  => 'Please activate account',
+    'km' => ' km ' ,
 ];

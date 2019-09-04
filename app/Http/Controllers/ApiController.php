@@ -55,6 +55,8 @@ class ApiController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    private $objuser;
+    
 
     /**
      * Create a new controller instance.
@@ -63,6 +65,7 @@ class ApiController extends Controller
      */
     public function __construct()
     {
+        
         date_default_timezone_set('Asia/Riyadh');
         $this->middleware('guest')->except('logout');
     }
@@ -133,9 +136,10 @@ class ApiController extends Controller
                 $UserCode->email = $request->mobile ;
                 $UserCode->token = $code ;
                 $UserCode->save();
-                
+                $data['code'] = $code ;
+                $data['IsRegistered'] = 1 ;
                 $message = trans('api.send_code') ;
-                return $this->SuccessResponse($message , $code) ;
+                return $this->SuccessResponse($message , $data) ;
                
                  
             }
@@ -149,19 +153,12 @@ class ApiController extends Controller
                 $UserCode->email = $request->mobile ;
                 $UserCode->token = $code ;
                 $UserCode->save();
+                $data['code'] = $code ;
+                $data['IsRegistered'] = 0 ;
 
-                $errors = [] ;
                 $message = trans('api.mobile_notfound') ;
-                // $response = $this->FailedResponse($message , $errors) ;
-                return response()->json([
-                    'success' => 0,
-                    'errors'=>$errors,
-                    'message' =>$message,
-                    'data' => $code,
-        
-                ]);
-
-                  
+                return $this->SuccessResponse($message , $data) ;
+    
             }
 
 
@@ -1015,35 +1012,155 @@ class ApiController extends Controller
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                
-                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
-                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->count('id');
-                return $technicians ;
-                $servicess = [] ;
+                // return $user ;
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $technicians_count = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->count('id');
+                // return $technicians ;
+                $technicianss = [] ;
                 $i =0 ;
-                if(sizeof($services) > 0 ){
-                    foreach($services as $service){
-                        
-                        $servicess[$i]['service_id'] = $service->id ;    
-                        if($lang == 'ar'){
-                            $servicess[$i]['service_name'] = $service->name_ar ; 
+                if(sizeof($technicians) > 0 ){
+                    foreach($technicians as $technician){
+                        $ratecount = Rate::where('evaluator_to',$technician->hasuser->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$technician->hasuser->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
                         }else{
-                            $servicess[$i]['service_name'] = $service->name_en ; 
+                            $rate = 0 ;
                         }
-                        if($service->image){
-                            $servicess[$i]['image'] = asset('img/').'/'. $service->image;
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->hasuser->id)->first();
+                        if($favorite){
+                            $isFavorate = 1 ;
                         }else{
-                            $servicess[$i]['image'] = null ;
+                            $isFavorate = 0 ;
+                        }
+
+                        $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
+                        $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
+                        $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
+                        $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
+                        $technicianss[$i]['rate'] =   $rate ; 
+                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        if($technician->nationality){
+                            if($lang == 'ar'){
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
+                            }else{
+                                $technicianss[$i]['nationality'] = $technician->nationality->name_en ; 
+                            }
+                        }
+                        $technicianss[$i]['available'] = $technician->available ; 
+                        if($technician->hasuser->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->hasuser->image;
+                        }else{
+                            $technicianss[$i]['image'] = null ;
                         }
 
                         $i ++ ;                    
                         
                     }
                 }
-                $count = count($user->unreadnotifications) ;
-                $data['services_count'] = $services_count ;
-                $data['services'] = $servicess ;
-                $data['count_notification'] = $count ;
+                $data['technicians'] = $technicianss ;
+                $data['count_technicians'] = $technicians_count ;
+
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+// NearstWorkers function by Antonious hosny
+    public function NearstWorkers(Request $request){
+        $rules=array(
+            "service_id"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('hasuser')->with('hasuser')->with('nationality')->orderBy('id', 'desc')->get();
+                 // return $technicians ;
+                $technicianss = [] ;
+                $i =0 ;
+                if(sizeof($technicians) > 0 ){
+                    foreach($technicians as $technician){
+                        $distance = $this->GetDistance($request->lat,$technician->hasuser->lat,$request->lng,$technician->hasuser->lng,'k');
+                        // return $distance ;
+                        if($distance <= 20){
+
+                            $ratecount = Rate::where('evaluator_to',$technician->hasuser->id)->count('id');
+                            $sumrates = Rate::where('evaluator_to',$technician->hasuser->id)->sum('rate');
+                            if($ratecount != 0){
+                                $rate =  $sumrates / $ratecount ;
+                            }else{
+                                $rate = 0 ;
+                            }
+                            $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->hasuser->id)->first();
+                            if($favorite){
+                                $isFavorate = 1 ;
+                            }else{
+                                $isFavorate = 0 ;
+                            }
+    
+                            $technicianss[$i]['worker_id'] = $technician->hasuser->id ;    
+                            $technicianss[$i]['worker_name'] = $technician->hasuser->name ; 
+                            $technicianss[$i]['lat'] = $technician->hasuser->lat ; 
+                            $technicianss[$i]['lng'] = $technician->hasuser->lng ; 
+                            $technicianss[$i]['rate'] =   $rate ; 
+                            $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                            $technicianss[$i]['distance'] =  round($distance,2). __('api.km'); 
+                            if($technician->nationality){
+                                if($lang == 'ar'){
+                                    $technicianss[$i]['nationality'] = $technician->nationality->name_ar ; 
+                                }else{
+                                    $technicianss[$i]['nationality'] = $technician->nationality->name_en ; 
+                                }
+                            }
+                            $technicianss[$i]['available'] = $technician->available ; 
+                            if($technician->hasuser->image){
+                                $technicianss[$i]['image'] = asset('img/').'/'. $technician->hasuser->image;
+                            }else{
+                                $technicianss[$i]['image'] = null ;
+                            }
+    
+                            $i ++ ;                    
+                        }
+                        
+                    }
+                }
+                $data['technicians'] = $technicianss ;
+ 
                 $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
@@ -1060,6 +1177,247 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// AvailableWorkers function by Antonious hosny
+    public function AvailableWorkers(Request $request){
+
+        $rules=array(
+            "service_id"=>"required",
+            "time"=>"required",
+            "date"=>"required",
+            "skip"=>"required",
+            "page"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        if($request->page && $request->page > 0 ){
+            $page = $request->page * $request->skip ;
+        }else{
+            $page = 0 ;
+        }
+
+        $day  = date('D', strtotime($request->date));
+        $time  =  $request->time;
+        $service =  $request->service_id;
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technicians = User::where('status','active')->whereHas('availabledate', function ($query) use ($day,$time) {
+                    $query->where('day', $day)->where('from','<',$time)->where('to','>',$time);
+                })->with('availabledate')->whereHas('technician', function ($query) use ($service) {
+                    $query->where('service_id', $service);
+                })->with('technician')->skip($page)->limit($request->skip)->get();
+
+                $count_technicians = User::where('status','active')->whereHas('availabledate', function ($query) use ($day,$time) {
+                    $query->where('day', $day)->where('from','<',$time)->where('to','>',$time);
+                })->with('availabledate')->whereHas('technician', function ($query) use ($service) {
+                    $query->where('service_id', $service);
+                })->with('technician')->skip($page)->limit($request->skip)->count('id');
+                // return $technicians ;
+                $technicianss = [] ;
+                $i =0 ;
+                if(sizeof($technicians) > 0 ){
+                    foreach($technicians as $technician){
+                        
+
+                        $ratecount = Rate::where('evaluator_to',$technician->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$technician->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
+                        }
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
+                        if($favorite){
+                            $isFavorate = 1 ;
+                        }else{
+                            $isFavorate = 0 ;
+                        }
+
+                        $technicianss[$i]['worker_id'] = $technician->id ;    
+                        $technicianss[$i]['worker_name'] = $technician->name ; 
+                        $technicianss[$i]['lat'] = $technician->lat ; 
+                        $technicianss[$i]['lng'] = $technician->lng ; 
+                        $technicianss[$i]['rate'] =   $rate ; 
+                        $technicianss[$i]['isFavorate'] =  $isFavorate; 
+                        if($technician->technician->nationality){
+                            if($lang == 'ar'){
+                                $technicianss[$i]['nationality'] = $technician->technician->nationality->name_ar ; 
+                            }else{
+                                $technicianss[$i]['nationality'] = $technician->technician->nationality->name_en ; 
+                            }
+                        }
+                        $technicianss[$i]['available'] = $technician->technician->available ; 
+                        if($technician->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->image;
+                        }else{
+                            $technicianss[$i]['image'] = null ;
+                        }
+
+                        $i ++ ;                    
+                      
+                        
+                    }
+                }
+                $data['technicians'] = $technicianss ;
+                $data['count_technicians'] = $count_technicians ;
+                
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+// WorkerDetail function by Antonious hosny
+    public function WorkerDetail(Request $request){
+
+        $rules=array(
+            "fannie_id"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                $technician = User::where('id',$request->fannie_id)->with('technician')->with('rates')->with('fannieorders')->first();
+                // return $technician ;
+                $technicianss = [] ;
+                if($technician ){
+                    $distance = $this->GetDistance($request->lat,$technician->lat,$request->lng,$technician->lng,'k');
+
+
+                    $ratecount = Rate::where('evaluator_to',$technician->id)->count('id');
+                    $sumrates = Rate::where('evaluator_to',$technician->id)->sum('rate');
+                    if($ratecount != 0){
+                        $rate =  $sumrates / $ratecount ;
+                    }else{
+                        $rate = 0 ;
+                    }
+                    $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$technician->id)->first();
+                    if($favorite){
+                        $isFavorate = 1 ;
+                    }else{
+                        $isFavorate = 0 ;
+                    }
+
+                    $technicianss['worker_id'] = $technician->id ;    
+                    $technicianss['worker_name'] = $technician->name ; 
+                    $technicianss['lat'] = $technician->lat ; 
+                    $technicianss['lng'] = $technician->lng ; 
+                    $technicianss['rate'] =   $rate ; 
+                    $technicianss['distance'] =   round($distance,2). __('api.km'); 
+                    $technicianss['isFavorate'] =  $isFavorate; 
+                    $technicianss['count_orders'] = count( $technician->fannieorders ) ;
+                    if($technician->technician->nationality){
+                        if($lang == 'ar'){
+                            $technicianss['nationality'] = $technician->technician->nationality->name_ar ; 
+                        }else{
+                            $technicianss['nationality'] = $technician->technician->nationality->name_en ; 
+                        }
+                    }
+                    $technicianss['available'] = $technician->technician->available ; 
+                    $technicianss['brief'] = $technician->technician->brief ; 
+                    if($technician->image){
+                        $technicianss['image'] = asset('img/').'/'. $technician->image;
+                    }else{
+                        $technicianss['image'] = null ;
+                    }
+                    $ratess = [] ;
+                    $i = 0 ;
+                    if(sizeof($technician->rates) > 0){
+                        foreach($technician->rates as $rate){
+                            if( $rate->evaluator_from){
+                                $ratess[$i]['user_name'] = $rate->evaluator_from->name ;
+                                if($rate->evaluator_from->image){
+                                    $ratess[$i]['image'] = asset('img/').'/'. $rate->evaluator_from->image;
+                                }else{
+                                    $ratess[$i]['image'] = null ;
+                                }
+                            }else{
+                                $ratess[$i]['user_name'] = '' ;
+                                $ratess[$i]['image'] = null ;
+                            }
+                            $ratess[$i]['rate'] = $rate->rate ;
+                            $ratess[$i]['notes'] = $rate->notes ;
+                            $ratess[$i]['date'] = $rate->created_at ;
+                            $i++;
+                        }
+                    }
+                    $technicianss['rates'] = $ratess ;
+                    
+                        
+                }
+                $data['technician'] = $technicianss ;
+                 
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+
 // MakeOrder function by Antonious hosny
     public function MakeOrder(Request $request){
         $token = $request->header('token');

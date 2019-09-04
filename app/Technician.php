@@ -15,7 +15,6 @@ class Technician extends Authenticatable
         'renewal_date', 'available','brief', 'user_id','service_id','country_id','city_id','area_id','nationality_id','identity_photo'
     ];
  
-    
     public function country()
     {
         return $this->belongsTo('App\Country','country_id');
@@ -31,6 +30,10 @@ class Technician extends Authenticatable
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+    public function hasuser()
+    {
+        return $this->belongsTo('App\User', 'user_id')->where('status', 'active');
     }
     public function service()
     {

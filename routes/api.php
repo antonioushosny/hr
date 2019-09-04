@@ -25,6 +25,9 @@ Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localizatio
 Route::get('Logout', 'ApiController@Logout')->middleware('localization');
 Route::get('Services', 'ApiController@Services')->middleware('localization');
 Route::post('AllWorkers', 'ApiController@AllWorkers')->middleware('localization');
+Route::post('NearstWorkers', 'ApiController@NearstWorkers')->middleware('localization');
+Route::post('AvailableWorkers', 'ApiController@AvailableWorkers')->middleware('localization');
+Route::post('WorkerDetail', 'ApiController@WorkerDetail')->middleware('localization');
 
 
 Route::post('MakeOrder', 'ApiController@MakeOrder')->middleware('localization');
@@ -32,6 +35,7 @@ Route::post('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localization');
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
 Route::post('ChangeStatusOrders', 'ApiController@ChangeStatusOrders')->middleware('localization');
+
 Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
 Route::get('TermsConditions', 'ApiController@TermsConditions')->middleware('localization');
 Route::get('AboutUs', 'ApiController@AboutUs')->middleware('localization');
