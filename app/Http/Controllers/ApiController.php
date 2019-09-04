@@ -1016,24 +1016,21 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
                 
-                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $technicians = Technician::whereDate('renewal_date','>=',$date)->where('service_id',$request->service_id)->whereHas('user')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
                 $technicians_count = Technician::whereDate('renewal_date','>=',$date)->count('id');
                 return $technicians ;
-                $servicess = [] ;
+                $technicianss = [] ;
                 $i =0 ;
-                if(sizeof($services) > 0 ){
-                    foreach($services as $service){
-                        
-                        $servicess[$i]['service_id'] = $service->id ;    
-                        if($lang == 'ar'){
-                            $servicess[$i]['service_name'] = $service->name_ar ; 
+                if(sizeof($technicians) > 0 ){
+                    foreach($technicians as $technician){
+                        if($technician->user && $technician->user->status == 'active')
+                        $technicianss[$i]['service_id'] = $technician->id ;    
+                        $technicianss[$i]['service_name'] = $technician->name_ar ; 
+                        $technicianss[$i]['service_name'] = $technician->name_en ; 
+                         if($technician->image){
+                            $technicianss[$i]['image'] = asset('img/').'/'. $technician->image;
                         }else{
-                            $servicess[$i]['service_name'] = $service->name_en ; 
-                        }
-                        if($service->image){
-                            $servicess[$i]['image'] = asset('img/').'/'. $service->image;
-                        }else{
-                            $servicess[$i]['image'] = null ;
+                            $technicianss[$i]['image'] = null ;
                         }
 
                         $i ++ ;                    
