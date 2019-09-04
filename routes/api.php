@@ -29,10 +29,11 @@ Route::post('NearstWorkers', 'ApiController@NearstWorkers')->middleware('localiz
 Route::post('AvailableWorkers', 'ApiController@AvailableWorkers')->middleware('localization');
 Route::post('WorkerDetail', 'ApiController@WorkerDetail')->middleware('localization');
 Route::post('Favorite', 'ApiController@Favorite')->middleware('localization');
+Route::post('MyFavorites', 'ApiController@MyFavorites')->middleware('localization');
+Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localization');
+Route::get('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 
 
-Route::post('MakeOrder', 'ApiController@MakeOrder')->middleware('localization');
-Route::post('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localization');
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
 Route::post('ChangeStatusOrders', 'ApiController@ChangeStatusOrders')->middleware('localization');

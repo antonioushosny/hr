@@ -1367,6 +1367,14 @@ class ApiController extends Controller
                             $technicianss['nationality'] = $technician->technician->nationality->name_en ; 
                         }
                     }
+                    if($technician->technician->service){
+                        $technicianss['service_id'] = $technician->technician->service->id ; 
+                        if($lang == 'ar'){
+                            $technicianss['service'] = $technician->technician->service->name_ar ; 
+                        }else{
+                            $technicianss['service'] = $technician->technician->service->name_en ; 
+                        }
+                    }
                     $technicianss['available'] = $technician->technician->available ; 
                     $technicianss['brief'] = $technician->technician->brief ; 
                     if($technician->image){
@@ -1481,156 +1489,114 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// MyFavorites function by Antonious hosny
+    public function MyFavorites(Request $request){
 
-// MakeOrder function by Antonious hosny
-    public function MakeOrder(Request $request){
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
-        if($token){
 
+        if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                $rules=array(
-                    'container_id'      =>'required',
-                    'num_containers'    => 'required',
-                    'lat'    => 'required',
-                    'lng'    => 'required',
-                    // 'city_id'    => 'required',
-                    // 'area_id'    => 'required',
-                );
-                $validator  = \Validator::make($request->all(),$rules);
-                if($validator->fails())
-                {
-                    $messages = $validator->messages();
-                    $transformed = [];
-        
-                    foreach ($messages->all() as $field => $message) {
-                        $transformed[] = [
-                            'message' => $message
-                        ];
-                    }
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors'  => $transformed,
-                        'message' => trans('api.validation_error'),
-                        'data'    => null ,
-                    ]);
-                }
-                $container = Container::where('id',$request->container_id)->with('centers')->first();
-                $distancess = [] ;
-                $i = 0;
-                if(sizeof($container->centers) > 0){
-
-                    foreach ($container->centers as $center) {
-                       $distance =  $this->GetDistance($request->lat, $center->lat, $request->lng, $center->lng, 'K');
-                       $distancess[$center->id] = $distance  ;
-                       $i++ ;
-                        // print   $distance.' KM ' .'</br>';
-                    }
-                    asort($distancess)  ;
-                    // reset($distancess);
-                    $first_key = key($distancess);
-
-                    $CenterContainer = CenterContainer::where('center_id',$first_key)->where('container_id',$request->container_id)->with('center')->with('container')->first();
-                    //    return $CenterContainer;
-                    $user->city_id = $request->city_id ;
-                    $user->area_id = $request->area_id ;
-                    $user->save();
-                    $order = new Order ;
-                    $order->user_name = $user->name ;
-                    $order->user_mobile = $user->mobile ;
-                    if($user->City)
-                    $order->city = $user->City->name_ar ;
-                    if($user->Area)
-                    $order->area = $user->Area->name_ar ;
-                    $order->lat = $request->lat ;
-                    $order->lng = $request->lng ;
-                    $order->container_name_ar = $CenterContainer->container->name_ar ;
-                    $order->container_name_en = $CenterContainer->container->name_en ;
-                    $order->container_size = $CenterContainer->container->size ;
-                    $order->no_container = $request->num_containers ;
-                    $order->notes = $request->notes ;
-                    $order->user_id = $user->id ;
-                    $order->center_id = $CenterContainer->center->id ;
-                    $order->provider_id = $CenterContainer->center->provider_id ;
-                    $order->container_id = $CenterContainer->container->id ;
-                    $order->price = $CenterContainer->price ;
-                    $order->total = $CenterContainer->price * $request->num_containers ;
-                    $order->status = 'pending' ;
-                    
-                    $order->save();
-                    $ordercenter = new OrderCenter ;
-                    $ordercenter->order_id = $order->id ;
-                    $ordercenter->center_id = $order->center_id ;
-                    $ordercenter->status = 'pending' ;
-                    $ordercenter->save();
-
-                    // $msg = "  لديك طلب جديد من " . $user->name ;
-                    // $title = "  لديك طلب جديد من " . $user->name ;
-                    
-                    $type = "order";
-                    $msg =  [
-                        'en' => "  You have a new request from" . $user->name ." Order number ". $order->id  , 
-                        'ar' =>  "  لديك طلب جديد من " . $user->name ."  رقم الطلب ". $order->id,
-                    ];
-                    $title = [
-                        'en' =>  "  You have a new request from " . $user->name ,
-                        'ar' =>  "  لديك طلب جديد من " . $user->name ,  
-                    ];
-                    $center = User::where('id', $CenterContainer->center->id)->first(); 
-                    $center->notify(new Notifications($msg,$type ));
-                    $device_token = $center->device_token ;
-                    if($device_token){
-                        $this->notification($device_token,$msg,$msg);
-                        $this->webnotification($device_token,$msg,$msg,$type);
-                    }
-                    
-                    $order = Order::where('id',$order->id)->with('center')->with('container')->first();
-                    $orders = [];
-                    if($order){
-                        $orders['container_id'] =   $order->container->id ;
-                        $orders['center_id'] =   $order->center->id ;
-                        $orders['center_name'] =   $order->center->name ;
-                        if($lang == 'ar'){
-                            $orders['container_name'] =   $order->container->name_ar ;
-                        }else{
-                            $orders['container_name'] =   $order->container->name_en ;
-                        }
-                        $orders['container_size'] =   $order->container->size ;
-                        $orders['num_containers'] =   $order->no_container;
-                        $orders['container_price'] =   $order->price ;
-                        $orders['total'] =   $order->total ;
-                        $orders['status'] =   trans('api.'.$order->status) ;
-                    }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.save'),
-                        'data' => $orders ,
-                    ]);
-                }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfoundcenter'),
-                    "message"=>trans('api.notfoundcenter'),
-                    ]);
+                // return $user ;
+                $favorites = Favorite::where('user_id',$user->id)->with('fannie')->get();
+                 
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+
+// RequestOrder function by Antonious hosny
+    public function RequestOrder(Request $request){
+
+        $rules=array(
+            "service_id"=>"required",
+            "fannie_id"=>"required",
+            "lat"=>"required",
+            "lng"=>"required",
+            "address"=>"required",
+         );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+        }
+
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                
+                $order = New Order ;
+                $order->user_id = $user->id ;
+                $order->fannie_id = $request->fannie_id ;
+                $order->service_id = $request->service_id ;
+                $order->lat = $request->lat ;
+                $order->lng = $request->lng ;
+                $order->address = $request->address ;
+                $order->notes = $request->notes ;
+                $order->date = $request->date ;
+                $order->time = $request->time ;
+                $order->status  = 'pending' ;
+                $order->save() ;
+
+                $type = "order";
+                $msg =  [
+                    'en' => "  You have a new request from " . $user->name ." Order number ". $order->id  , 
+                    'ar' =>  "  لديك طلب جديد من " . $user->name ."  رقم الطلب ". $order->id,
+                ];
+                $title = [
+                    'en' =>  "  You have a new request from  " . $user->name ,
+                    'ar' =>  "  لديك طلب جديد من " . $user->name ,  
+                ];
+                $fannie = User::where('id', $request->fannie_id)->first(); 
+                $fannie->notify(new Notifications($msg,$type ));
+                $device_token = $fannie->device_token ;
+                if($device_token){
+                    $this->notification($device_token,$msg,$msg);
+                    $this->webnotification($device_token,$msg,$msg,$type);
+                }
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
 
 
@@ -1638,6 +1604,66 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // MyOrders function by Antonious hosny
     public function MyOrders(Request $request){
+
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                // return $user ;
+                
+                $order = New Order ;
+                $order->user_id = $user->id ;
+                $order->fannie_id = $request->fannie_id ;
+                $order->service_id = $request->service_id ;
+                $order->lat = $request->lat ;
+                $order->lng = $request->lng ;
+                $order->address = $request->address ;
+                $order->notes = $request->notes ;
+                $order->date = $request->date ;
+                $order->time = $request->time ;
+                $order->status  = 'pending' ;
+                $order->save() ;
+
+                $type = "order";
+                $msg =  [
+                    'en' => "  You have a new request from" . $user->name ." Order number ". $order->id  , 
+                    'ar' =>  "  لديك طلب جديد من " . $user->name ."  رقم الطلب ". $order->id,
+                ];
+                $title = [
+                    'en' =>  "  You have a new request from " . $user->name ,
+                    'ar' =>  "  لديك طلب جديد من " . $user->name ,  
+                ];
+                $fannie = User::where('id', $request->fannie_id)->first(); 
+                $fannie->notify(new Notifications($msg,$type ));
+                $device_token = $fannie->device_token ;
+                if($device_token){
+                    $this->notification($device_token,$msg,$msg);
+                    $this->webnotification($device_token,$msg,$msg,$type);
+                }
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+ 
+// MyOrderسs function by Antonious hosny
+    public function MyOrderسs(Request $request){
         $token = $request->header('token');
         $lang = $request->header('lang');
         $dt = Carbon::now();
@@ -2210,8 +2236,8 @@ class ApiController extends Controller
                     $type = "contact";
                     // $title1 = "  مستخدم جديد قام بالتسجيل" ;
                     $msg =  [
-                        'en' => "you have new message from ".  $request->name   ,
-                        'ar' => "  لديك رسالة جديدة من " . $request->name   ,
+                        'en' => "you have new message from ".  $user->name   ,
+                        'ar' => "  لديك رسالة جديدة من " . $user->name   ,
                     ];
                     
                     $admins = User::where('role', 'admin')->get(); 
@@ -2235,7 +2261,8 @@ class ApiController extends Controller
             $message = trans('api.logout') ;
             return   $this->LoggedResponse($message ) ;
         }
-        
+        $message = trans('api.logout') ;
+        return   $this->LoggedResponse($message ) ;
 
     }
 /////////////////////////////////////////////////////
