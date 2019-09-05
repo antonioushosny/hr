@@ -1,0 +1,18 @@
+-------------------- Auto-Git Log --------------------
+		Wed Sep 04 2019 19:10:38 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Favorite.php
+* app/Http/Controllers/ApiController.php
+* routes/api.php
+
+
+Created files:
+* .autogit/logs/log-4-8-2019-18-39-30.txt
+
+
+Deleted files:
+
+
+Renamed files:
