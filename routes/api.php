@@ -29,7 +29,7 @@ Route::post('NearstWorkers', 'ApiController@NearstWorkers')->middleware('localiz
 Route::post('AvailableWorkers', 'ApiController@AvailableWorkers')->middleware('localization');
 Route::post('WorkerDetail', 'ApiController@WorkerDetail')->middleware('localization');
 Route::post('Favorite', 'ApiController@Favorite')->middleware('localization');
-Route::post('MyFavorites', 'ApiController@MyFavorites')->middleware('localization');
+Route::get('MyFavorites', 'ApiController@MyFavorites')->middleware('localization');
 Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localization');
 Route::get('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 
