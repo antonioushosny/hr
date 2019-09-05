@@ -200,6 +200,7 @@ return [
         'deposit'=>'Deposit ',
         'fannie'=>'Technician',
         'sub_type'=>'Subscription Type',
+        'date_exp'=>'Expiration date',
     ],
     
 ];

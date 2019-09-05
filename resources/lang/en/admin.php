@@ -349,4 +349,24 @@ return [
         'Choose_deposit'=>'Choose Deposit',
         'cost'=>'Cost',
         'date_exp'=>'Expiration date',
+
+
+        //orders pages
+        'orders'=>'Orders',
+        'pending'=>'Pending',
+        'accepted'=>'Accepted',
+        'user_rejected'=>'User Rejected',
+        'fannie_rejected'=>'Technician Rejected',
+        'completed'=>'Completed',
+        'deal_done'=>'Deal With',
+        'name_user'=>'User',
+        'mobile_user'=>'User Mobile',
+        'name_tech'=>'Technician',
+        'mobile_tech'=>'Technician Mobile',
+        'client_detail'=>'User Details',
+        'order_detail'=>'Order details',
+        'notes'=>'Notes',
+        'rejected_reason'=>'Reasons for rejection',
+        'time'=>'Time',
+        'date_order'=>'Order Execution Date',
 ];

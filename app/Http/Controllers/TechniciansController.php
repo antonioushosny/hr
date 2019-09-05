@@ -301,6 +301,27 @@ class TechniciansController extends Controller
             return redirect(url('error'));
         }
     }
+    public function orders($id)
+    {
+        $lang = App::getlocale();
+            if(Auth::user()->role != 'admin' ){
+                $role = 'admin';
+                return view('unauthorized',compact('role','admin'));
+            }
+            $title = 'technicians';
+            $user = User::where('id',$id)->orderBy('id', 'DESC')->first();
+            if($user)
+            {
+                $orders = Order::where('fannie_id',$id)->with('user')->with('fannie')->orderBy('id', 'DESC')->get();
+                //return $orders ; 
+                return view('technicians.orders',compact('user','orders','title','lang'));
+                
+            }
+            else
+            {
+                return redirect(url('error'));
+            }
+    }
 
     /**
      * Update the specified resource in storage.

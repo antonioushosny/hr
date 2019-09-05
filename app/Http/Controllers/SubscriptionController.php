@@ -60,11 +60,10 @@ class SubscriptionController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',  
-                'no_month'=>'required',
-                'cost' =>'required',        
-                'status'  =>'required',   
+                'sub_type'  =>'required',           
+                'fannie'  =>'required',
+                //'deposit'=>'required|mimes:jpg,jpeg,png',   
+                'date_exp'=>'required', 
             ];
             
         }     
@@ -74,7 +73,7 @@ class SubscriptionController extends Controller
             [
                 'sub_type'  =>'required',           
                 'fannie'  =>'required',
-                'deposit'=>'required||mimes:jpg,jpeg,png',      
+                'deposit'=>'required|mimes:jpg,jpeg,png',      
             ];
         }
         $validator = \Validator::make($request->all(), $rules);
@@ -83,6 +82,21 @@ class SubscriptionController extends Controller
          }
          if($request->id ){
             $subscription = Subscription::find( $request->id );
+            $subscription->date          = $request->date_exp;
+            if ($request->hasFile('deposit')) {
+                $image = $request->file('deposit');
+                if($subscription->image)
+                {
+                    \File::delete(public_path(). '/img/' . $subscription->image);
+
+                }
+            }
+            $techican=Technician::where('user_id',$request->fannie)->first();
+            if($request->date_exp > $techican->renewal_date)
+            {
+                $techican->renewal_date=$request->date_exp;
+                $techican->save();
+            }
         }
         else{
             $subscription = new Subscription ;
@@ -91,6 +105,7 @@ class SubscriptionController extends Controller
 
         $subscription->subscription_id         = $request->sub_type ;
         $subscription->fannie_id          = $request->fannie ;
+       
         if ($request->hasFile('deposit')) {
     
             $image = $request->file('deposit');
@@ -100,9 +115,52 @@ class SubscriptionController extends Controller
             $subscription->image   = $name;  
         }
         $subscription->save();
-      
         $subscription = Subscription::where('id',$subscription->id)->first();
         return response()->json($subscription);
+        
+    }
+
+    public function edit($id)
+    {
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'subscriptions_tech';
+        $subscription = Subscription::where('id',$id)->with('user')->with('subscription_type')->orderBy('id', 'DESC')->first();
+        if($subscription)
+        {
+            if($subscription->subscription_type)
+            {
+                $number=$subscription->subscription_type->no_month;
+                $new_date = strtotime($number."month", strtotime($subscription->created_at));
+                $new_date=date("Y-m-d", $new_date);
+
+            }
+            else
+            {
+                $new_date = "";
+               
+            }
+
+            if($lang=='ar')
+            {
+                $allsub = SubscriptionType::select('id',DB::raw('name_ar AS name'))->get();
+            }
+            else
+            {
+                $allsub = SubscriptionType::select('id',DB::raw('name_en AS name'))->get();
+            }
+            $types = array_pluck($allsub,'name', 'id');
+              //return $new_date; 
+            return view('subscriptions_tech.edit',compact('subscription','title','lang','new_date','types'));
+            
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
         
     }
 }

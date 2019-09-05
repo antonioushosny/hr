@@ -81,7 +81,7 @@
                             <!-- for image  -->
                             <div class="form-group form-float row"  >
                                         {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
+                                    <div class= "col-md-3 col-xs-3">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:;' >
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         
                                         <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                     </div>

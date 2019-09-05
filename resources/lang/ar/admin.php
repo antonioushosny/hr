@@ -356,7 +356,24 @@ return [
         'cost'=>'التكلفة',
         'date_exp'=>'تاريخ الصلاحية',
 
-
+        //orders pages
+        'orders'=>'الطلبات',
+        'pending'=>'قيد الانتظار',
+        'accepted'=>'قبلت',
+        'user_rejected'=>'رفض المستخدم',
+        'fannie_rejected'=>'رفض الفني',
+        'completed'=>'منتهية',
+        'deal_done'=>'تم الاتفاق',
+        'name_user'=>'المستخدم',
+        'mobile_user'=>'رقم موبايل المستخدم',
+        'name_tech'=>'الفني',
+        'mobile_tech'=>'رقم موبايل الفني',
+        'client_detail'=>'تفاصيل المستخدم',
+        'order_detail'=>'تفاصيل الطلب',
+        'notes'=>'ملاحظات',
+        'rejected_reason'=>'اسباب الرفض',
+        'time'=>'الوقت',
+        'date_order'=>'التاريخ  لتنفيذ الطلب',
  ];
 
 
