@@ -33,7 +33,6 @@ Route::get('MyFavorites', 'ApiController@MyFavorites')->middleware('localization
 Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localization');
 Route::get('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 
-
 Route::post('OrdersHistory', 'ApiController@OrdersHistory')->middleware('localization');
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
 Route::post('ChangeStatusOrders', 'ApiController@ChangeStatusOrders')->middleware('localization');
@@ -42,7 +41,6 @@ Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
 Route::get('TermsConditions', 'ApiController@TermsConditions')->middleware('localization');
 Route::get('AboutUs', 'ApiController@AboutUs')->middleware('localization');
 Route::post('SocialContacts', 'ApiController@SocialContacts')->middleware('localization');
-
 
 Route::get('count_notification','ApiController@count_notification')->middleware('localization');
 Route::get('get_notification','ApiController@get_notification')->middleware('localization');

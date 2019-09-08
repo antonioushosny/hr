@@ -1651,48 +1651,100 @@ class ApiController extends Controller
 //////////////////////////////////////////////////
 // MyOrders function by Antonious hosny
     public function MyOrders(Request $request){
+        $rules=array(
+            "lat"=>"required",
+            "lng"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
 
+        }
         $token = $request->header('token');
         $lang = $request->header('lang');
 
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                // return $user ;
+                $orders = Order::where('user_id',$user->id)->with('fannie')->with('service')->get();
+                // return $orders ;
                 
-                $order = New Order ;
-                $order->user_id = $user->id ;
-                $order->fannie_id = $request->fannie_id ;
-                $order->service_id = $request->service_id ;
-                $order->lat = $request->lat ;
-                $order->lng = $request->lng ;
-                $order->address = $request->address ;
-                $order->notes = $request->notes ;
-                $order->date = $request->date ;
-                $order->time = $request->time ;
-                $order->status  = 'pending' ;
-                $order->save() ;
+                $orderss = [];
+                $i = 0; 
+                if(sizeof($orders) > 0){
+                    foreach($orders as $order){
+                        $orderss[$i]['order_id'] = $order->id ;
+                        $orderss[$i]['status'] = $order->status ;
+                        $orderss[$i]['notes'] = $order->notes ;
+                        $orderss[$i]['created_at'] = $order->created_at->format('Y-d-m H:i:s') ;
+                        if($order->fannie){
+                            $distance = $this->GetDistance($request->lat,$order->fannie->lat,$request->lng,$order->fannie->lng,'k');
+                            
+                            $ratecount = Rate::where('evaluator_to',$order->fannie->id)->count('id');
+                            $sumrates = Rate::where('evaluator_to',$order->fannie->id)->sum('rate');
+                            if($ratecount != 0){
+                                $rate =  $sumrates / $ratecount ;
+                            }else{
+                                $rate = 0 ;
+                            }
 
-                $type = "order";
-                $msg =  [
-                    'en' => "  You have a new request from" . $user->name ." Order number ". $order->id  , 
-                    'ar' =>  "  لديك طلب جديد من " . $user->name ."  رقم الطلب ". $order->id,
-                ];
-                $title = [
-                    'en' =>  "  You have a new request from " . $user->name ,
-                    'ar' =>  "  لديك طلب جديد من " . $user->name ,  
-                ];
-                $fannie = User::where('id', $request->fannie_id)->first(); 
-                $fannie->notify(new Notifications($msg,$type ));
-                $device_token = $fannie->device_token ;
-                if($device_token){
-                    $this->notification($device_token,$msg,$msg);
-                    $this->webnotification($device_token,$msg,$msg,$type);
+                            $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$order->fannie->id)->first();
+                            if($favorite){
+                                $isFavorite = 1 ;
+                            }else{
+                                $isFavorite = 0 ;
+                            }
+                            
+
+                            $orderss[$i]['fannie_id']    =  $order->fannie->id;
+                            $orderss[$i]['fannie_name']  = $order->fannie->name;
+                            $orderss[$i]['fannie_mobile']  = $order->fannie->mobile;
+                            $orderss[$i]['rate']  = $rate;
+                            $orderss[$i]['isFavorite']  = $isFavorite;
+                            $orderss[$i]['distance']     =  round($distance,2). __('api.km'); 
+                            $orderss[$i]['fannie_image'] = asset('img/').'/'.$order->fannie->image;
+                        }else{
+                            $orderss[$i]['fannie_id']    = null;
+                            $orderss[$i]['fannie_name']  = null;
+                            $orderss[$i]['fannie_mobile']  = null;
+                            $orderss[$i]['rate']  = 0 ;
+                            $orderss[$i]['isFavorite']  = 0 ;
+                            $orderss[$i]['distance']     = null ;
+                            $orderss[$i]['fannie_image'] = null;
+                        }
+                        if($order->service){
+                            $orderss[$i]['service_id']   = $order->service->id;
+                            if($lang == 'ar')
+                            $orderss[$i]['service_name'] = $order->service->name_ar;
+                            else
+                            $orderss[$i]['service_name'] = $order->service->name_en;
+    
+                            $orderss[$i]['service_image']= asset('img/').'/'.$order->service->image;
+                        }else{
+                            $orderss[$i]['service_id']   = null;
+                            $orderss[$i]['service_name'] = null;
+                            $orderss[$i]['service_image']= null;
+                        }
+                        $i ++ ;
+                    }
                 }
                 
-                $data['order'] = $order ;
+                $data['orders'] = $orderss ;
 
-                $message = trans('api.save') ;
+                $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
