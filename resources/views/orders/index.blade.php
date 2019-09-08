@@ -22,7 +22,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-money-box"></i> {{__('admin.subscriptions_tech')}}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-group-work"></i> {{__('admin.orders')}}</a></li>
                 </ul>
             </div>
         </div>
@@ -34,25 +34,25 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['subscriptionsdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'subscriptions_form' ])!!}
+                {!! Form::open(['route'=>['usersdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'technicians_form' ])!!}
 
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
-                                @can('subscription_create')
+                                <!-- @can('technical_create')
                                 </li>
-                                    <a href="{{route('addtechsubscription')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_subscription_tech')}}">
-                                        {{trans('admin.add_subscription_tech')}}
+                                    <a href="{{route('addtechnician')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
+                                        {{trans('admin.add_technician')}}
                                     </a>
                                 </li>
                                 @endcan
-                                <!-- @can('subscription_delete')
+                                @can('technical_delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
-                                </li>     
-                                @endcan                            -->
+                                </li>  
+                                @endcan                               -->
                             </ul>
                         </div>
                         <div class="body">
@@ -63,52 +63,61 @@
                             @endif
                                 <thead>
                                     <tr>
-                                        @can('subscription_delete')
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
-                                        </th>@endcan
-                                        <th>{{trans('admin.name')}}</th>
-                                        <th>{{trans('admin.mobile')}}</th>
-                                        <th>{{trans('admin.type_subscription')}}</th>
-                                        <th>{{trans('admin.cost')}}</th>
+                                        </th>
+                                        <th>{{trans('admin.name_user')}}</th>
+                                        <th>{{trans('admin.mobile_user')}}</th>
+                                        <th>{{trans('admin.name_tech')}}</th>
+                                        <th>{{trans('admin.mobile_tech')}}</th>
+                                        <th>{{trans('admin.service')}}</th>
+                                        <!-- <th>{{trans('admin.address')}}</th> -->
                                         <th>{{trans('admin.date')}}</th>
-                                        <th>{{trans('admin.deposit')}}</th>
-                                        <th>{{trans('admin.date_exp')}}</th>
+                                        <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($subscriptions as $data)
+                                    @foreach ($orders as $data)
                                     <tr class="item{{$data->id}}">
-                                        @can('subscription_delete')
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>
-                                        @endcan
                                         <td>{{ $data->user->name }}</td>
                                         <td>{{ $data->user->mobile }}</td>
-                                        @if($lang == 'ar')
-                                        <td>{{ $data->subscription_type->name_ar }}</td>
-                                        @elseif($data->status == 'not_active')
-                                        <td>{{ $data->subscription_type->name_en }}</td>
-                                        @endif
-                                        <td>{{ $data->subscription_type->cost }}</td>
-                                        <td>{{ $data->created_at }}</td>
-                                        @if($data->image)
-                                            <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
-                                        @else 
-                                            <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
-                                        @endif
-                                        <!-- <td>{{ $data->user->technician->renewal_date }}</td> -->
-                                        <td>{{ $data->date }}</td>
+                                        <td>{{ $data->fannie->name }}</td> 
+                                        <td>{{ $data->fannie->mobile }}</td>
+                                        @if($lang=='ar')
+                                        <td>{{ $data->services->name_ar }}</td>   
+                                        @else
+                                        <td>{{ $data->services->name_en }}</td> 
+                                        @endif            
+                                        <!-- <td>{{ $data->address }}</td>  -->
+                                        <td>{{ $data->created_at }}</td> 
                                         <td>
-                                            @can('subscription_edit')
-                                            <a href="{{route('edittechsubscription',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
+                                        @if($data->status=='pending')
+                                        <mark style="    background-color: #f3d513;color: white;border-radius: 7px; font-size: 14px;    font-weight: bold;    padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        @elseif($data->status=="user_rejected" || $data->status=="fannie_rejected")
+                                        <mark style="    background-color: #fb4e4e;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+
+                                        @elseif($data->status=="accepted")
+                                        <mark style="background-color: #2cd29f;color: white;border-radius: 7px; font-size: 14px;       font-weight: bold; padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+
+                                        @elseif($data->status=="completed")
+                                        <mark style="    background-color: #03cb39;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+
+                                        @elseif($data->status=="deal_done")
+                                        <mark style="    background-color: #ffb236;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+
+                                        @endif
+                                        </td> 
+                                        <td>
+                                            
+
+                                            @can('order_list')
+                                            <a href="{{route('ordersdetails',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.show')}}"><i class="zmdi zmdi-eye"></i></a> 
                                             @endcan
-                                            <!-- @can('subscription_delete')
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan -->
                                         </td>
                                     </tr>
                                     
@@ -131,7 +140,7 @@
 <script src="{{ asset('rtl/plugins/iCheck/icheck.min.js') }}"></script> 
 
 <script>
-    
+
     $('input').iCheck({
         checkboxClass: 'icheckbox_square-blue',
         radioClass: 'iradio_square-blue',
@@ -159,7 +168,7 @@
         }
         $('#check-all').iCheck('update');
     });
-
+    //this for delete
     $(document).on('click', '.delete-modal', function() {
 
         titlet ="{{__('admin.alert_title')}}" ;
@@ -189,14 +198,14 @@
             if (isConfirm) {
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo url('/')?>/subscriptions/delete/" + id,
+                    url: "<?php echo url('/')?>/users/delete/" + id,
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
-                        window.location.replace("{{route('services')}}");
+                        location.reload();
                     }
                 });
             } else {
@@ -206,6 +215,7 @@
         // $('#deleteModal').modal('show');
         // id = $('#id_delete').val();
     });
+    //this for delete all selected
     $(document).on('click', '.deleteall-modal', function() {
 
         titlet ="{{__('admin.alert_title')}}" ;
@@ -243,8 +253,8 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("subscriptionsdeleteall") }}',
-                        data:  new FormData($("#subscriptions_form")[0]),
+                        url: '{{ URL::route("usersdeleteall") }}',
+                        data:  new FormData($("#technicians_form")[0]),
                         processData: false,
                         contentType: false,
                         success: function(data) {
@@ -252,7 +262,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal(Deleted, has_been_deleted, "success");
-                            window.location.replace("{{route('subscriptions')}}");
+                            location.reload();
                         },
                     });
                 }

@@ -96,7 +96,8 @@
                                         <label id="nationality_id-error" class="error" for="nationality_id" style="">  </label>
                                 </div>               
                                 <div class= "form-group form-float"> 
-                                <input type="date" class="form-control" value="{{$technical->renewal_date}}" placeholder="{{__('admin.renewal_date')}}" name="renewal_date">
+                                <input placeholder="{{__('admin.renewal_date')}}" value="{{$technical->renewal_date}}" class="textbox-n form-control" type="text" name="renewal_date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" id="date">
+                                <!-- <input type="date" class="form-control" value="{{$technical->renewal_date}}" placeholder="{{__('admin.renewal_date')}}" name="renewal_date"> -->
                                  <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
                                 </div>
 
@@ -107,8 +108,8 @@
                             </div>
 
 
-<!-- for image  -->
-<div class="form-group form-float row" >
+                                <!-- for image  -->
+                                <div class="form-group form-float row" >
                                     {{--  for image  --}}
                                     <div class= "col-md-2 col-xs-3">
                                         <div class="form-group form-float  " >

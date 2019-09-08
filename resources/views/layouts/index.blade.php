@@ -390,6 +390,11 @@ body, html {
                     <li <?php echo ($page == 'subscriptions_tech') ? "class='active open'" : ""; ?> ><a href="{{ route('techsubscriptions') }}"  ><i class="zmdi zmdi-money-box"></i> <span> {{trans('admin.subscriptions_tech')}}</span></a></li>
                     @endcan
 
+
+                    @can('order_list')                    
+                    <li <?php echo ($page == 'orders') ? "class='active open'" : ""; ?> ><a href="{{ route('orders') }}"  ><i class="zmdi zmdi-group-work"></i> <span> {{trans('admin.orders')}}</span></a></li>
+                    @endcan
+
                     @can('contact_list')
                     <li <?php echo ($page == 'contacts') ? "class='active open'" : ""; ?> ><a href="{{ route('contacts') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.contacts')}}</span></a></li>
                     @endcan

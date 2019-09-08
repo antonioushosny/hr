@@ -93,7 +93,8 @@
                                 
 
                                 <div class= "form-group form-float"> 
-                                <input type="date" class="form-control" placeholder="{{__('admin.renewal_date')}}" name="renewal_date">
+                                <input placeholder="{{__('admin.renewal_date')}}" class="textbox-n form-control" type="text" name="renewal_date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" id="date">
+                                <!-- <input type="date" class="form-control" placeholder="{{__('admin.renewal_date')}}" name="renewal_date"> -->
                                  <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
                                 </div>
 

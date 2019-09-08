@@ -176,8 +176,8 @@ public function orders($id)
         $user = User::where('id',$id)->orderBy('id', 'DESC')->first();
         if($user)
         {
-            $orders = Order::where('user_id',$id)->with('user')->orderBy('id', 'DESC')->first();
-            // return $admin ; 
+            $orders = Order::where('user_id',$id)->with('user')->with('fannie')->orderBy('id', 'DESC')->get();
+             //return $orders ; 
             return view('users.orders',compact('user','orders','title','lang'));
             
         }

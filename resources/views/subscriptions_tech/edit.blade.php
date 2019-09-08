@@ -36,7 +36,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('techsubscriptions')}}"><i class="zmdi zmdi-money-box"></i> {{__('admin.add_subscriptions_tech')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('techsubscriptions')}}"><i class="zmdi zmdi-money-box"></i> {{__('admin.subscriptions_tech')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_subscription_tech')}}</a></li>
                     
                 </ul>
@@ -59,35 +59,53 @@
                     <div class="body row">
                         <div class="col-lg-6">
                             {!! Form::open(['route'=>['storeaddtechsubscription'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                            
+                            <div class="form-group form-float">
+                                    <input type="hidden" value="{{$subscription->id}}" name="id" required>
+                                </div>
+                                <div class="form-group form-float">
+                                    <input type="hidden" value="{{$subscription->fannie_id}}" name="fannie" required>
+                                </div>
                             <div class= "form-group form-float"> 
-                                    {!! Form::select('fannie',$usernames
-                                        ,'',['class'=>'select2 form-control show-tick selectpicker','id'=>'user_id1' ,'placeholder' =>trans('admin.choose_user')]) !!}
-                                        <label id="user_id-error" class="error" for="user_id" style="">  </label>
+                                <input type="text" class="form-control" value="{{$subscription->user->name}}" disabled placeholder="{{__('admin.placeholder_name')}}" name="nameof_user" autocomplete="off">
+                                    
                                 </div>
 
                                 <div class= "form-group form-float"> 
-                                    {!! Form::select('fannie2',$usernumber
-                                        ,'',['class'=>'select2 form-control show-tick selectpicker','id'=>'user_id2' ,'placeholder' =>trans('admin.choose_user_num')]) !!}
-                                        <label id="user_id-error2" class="error" for="user_id" style="">  </label>
+                                <input type="text" class="form-control" value="{{$subscription->user->mobile}}" disabled placeholder="{{__('admin.placeholder_mobile')}}" name="mobileof_user" autocomplete="off">
                                 </div>  
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('sub_type',$types
-                                        ,'',['class'=>' form-control show-tick selectpicker','id'=>'sub_type' ,'placeholder' =>trans('admin.choose_subscription'),'required']) !!}
+                                        ,$subscription->subscription_id,['class'=>' form-control show-tick selectpicker','id'=>'sub_type' ,'placeholder' =>trans('admin.choose_subscription'),'required']) !!}
                                         <label id="sub_type-error" class="error" for="sub_type" style="">  </label>
                                 </div>
 
+                                <div class= "form-group form-float"> 
+                                <input type="text" class="form-control" disabled value="{{$subscription->created_at}}" placeholder="{{__('admin.created_at')}}" name="created_at">
+                                </div>
+
+                                <div class= "form-group form-float"> 
+                                @if($subscription->date ==null)
+                                <input placeholder="{{__('admin.date_exp')}}" value="{{$new_date}}" class="textbox-n form-control" type="text" name="date_exp" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" id="date">
                                 
+                                @else
+                                <input placeholder="{{__('admin.date_exp')}}" value="{{$subscription->date}}" disabled  class="textbox-n form-control" type="text" name="date_exp"  id="date1">
+                                <input type="hidden" value="{{$subscription->date}}" name="date_exp" required>
+                                @endif
+                                 <label id="date_exp-error" class="error" for="date_exp" style="">  </label>
+                                </div>
                                 
-                            <!-- for image  -->
-                            <div class="form-group form-float row"  >
-                                        {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
+
+                                    <!-- for image  -->
+                                    <div class="form-group form-float row" >
+                                    {{--  for image  --}}
+                                    <div class= "col-md-3 col-xs-3">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:;' >
                                                     {{trans('admin.Choose_deposit')}}
             
-                                                    {!! Form::file('deposit',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
+                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
                                                 </a>
                                                 &nbsp;
                                                 <div class='label label-primary' id="upload-file-info" ></div>
@@ -96,15 +114,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         
-                                        <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @if($subscription->image)
+                                            <img id="changeimage" src="{{asset('img/'.$subscription->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @else 
+                                            <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                        @endif
                                     </div>
                                 </div>
-
                                
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.add')}}</button>
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.edit')}}</button>
                             
 
                             </form>
@@ -124,55 +145,7 @@
 
 
 <script>
-$('#user_id1').change(function(){
-    console.log($('#user_id1').val());
-    var value = $('#user_id1').val();
-    $('#user_id2').empty();
-    $('#user_id2').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
-// Set selected 
 
-@foreach ($alluser as $data)
-    
-        if(value=="{{$data->id}}")
-        {
-            $('#user_id2').append(`<option value="{{$data->id}}" selected>{{$data->mobile}}</option>`);
-        }
-        else
-        {
-            $('#user_id2').append(`<option value="{{$data->id}}">{{$data->mobile}}</option>`);
-        }
-         
-    
-            
-        @endforeach
-$('#user_id2').selectpicker('refresh');
-    $('#user_id2').selectpicker('render');
-});
-
-$('#user_id2').change(function(){
-    console.log($('#user_id2').val());
-    var value = $('#user_id2').val();
-    $('#user_id1').empty();
-    $('#user_id1').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
-// Set selected 
-
-@foreach ($alluser as $data)
-    
-        if(value=="{{$data->id}}")
-        {
-            $('#user_id1').append(`<option value="{{$data->id}}" selected>{{$data->name}}</option>`);
-        }
-        else
-        {
-            $('#user_id1').append(`<option value="{{$data->id}}">{{$data->name}}</option>`);
-        }
-         
-    
-            
-        @endforeach
-$('#user_id1').selectpicker('refresh');
-    $('#user_id1').selectpicker('render');
-});
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
@@ -205,15 +178,15 @@ $('#user_id1').selectpicker('refresh');
                             $('#deposit-error').css('display', 'inline-block');
                             $('#deposit-error').text(data.errors.deposit);
                         }
-                        if (data.errors.cost) {
-                            $('#cost-error').css('display', 'inline-block');
-                            $('#cost-error').text(data.errors.cost);
+                        if (data.errors.date_exp) {
+                            $('#date_exp-error').css('display', 'inline-block');
+                            $('#date_exp-error').text(data.errors.date_exp);
                         }
                   } 
-                //   else {
-                //         window.location.replace("{{route('techsubscriptions')}}");
+                  else {
+                        window.location.replace("{{route('techsubscriptions')}}");
 
-                //      }
+                     }
             },
           });
         });

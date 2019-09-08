@@ -128,18 +128,27 @@ Route::group(['middleware' => 'auth'], function () {
      Route::get('/technicians/add', 'TechniciansController@add')->name('addtechnician');
      Route::get('/technicians/edit/{id}', 'TechniciansController@edit')->name('edittechnician');
      Route::get('/technicians/techicianstatus/{id}', 'TechniciansController@changestatus')->name('techicianstatus');
+      Route::get('/technicians/orders/{id}', 'TechniciansController@orders')->name('techniciansorders');
     // Route::get('/users/delete/{id}', 'TechniciansController@destroy')->name('destroyuser');
     // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');
-    // Route::get('/users/orders/{id}', 'TechniciansController@orders')->name('userorders');
 
     //route for subscriptions technicians management
     Route::get('/technicians/subscriptions', 'SubscriptionController@index')->name('techsubscriptions');
      Route::get('/technicians/subscriptions/add', 'SubscriptionController@add')->name('addtechsubscription');
      Route::post('/technicians/subscriptions/update/', 'SubscriptionController@store')->name('storeaddtechsubscription');
-    // Route::get('/subscriptions/edit/{id}', 'SubscriptionController@edit')->name('editsubscription');
+     Route::get('/technicians/subscriptions/edit/{id}', 'SubscriptionController@edit')->name('edittechsubscription');
     // Route::get('/subscriptions/delete/{id}', 'SubscriptionController@destroy')->name('destroysubscription');
     // Route::post('/subscriptions/deleteall', 'SubscriptionController@deleteall')->name('subscriptionsdeleteall');
 
+
+      // routes for orders management
+      Route::get('/orders', 'OrderController@index')->name('orders');
+     Route::get('/orders/details/{id}', 'OrderController@show')->name('ordersdetails');
+    //   Route::post('/orders/update/', 'OrderController@store')->name('storenationalitie');
+    //   Route::get('/orders/edit/{id}', 'OrderController@edit')->name('editnationalitie');
+    //   Route::get('/orders/delete/{id}', 'OrderController@destroy')->name('destroynationalitie');
+    //   Route::post('/orders/deleteall', 'OrderController@deleteall')->name('ordersdeleteall');
+    //   Route::get('/orders/{id}/areas', 'OrderController@areas')->name('nationalityareas');
 
     //  routes for contact_us management
     Route::get('/contact_us', 'ContactsController@index')->name('contacts');
