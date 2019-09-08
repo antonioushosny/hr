@@ -335,7 +335,7 @@ return [
         'brief_technician'=>'Bief About Technician',
         'online'=>'Online',
         'offline'=>'Offline',
-
+        'show_technician'=>'Show all technicians on the map',
         
         //subscriptions of users pages
         'subscriptions_tech'=>'Subscriptions',
