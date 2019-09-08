@@ -46,11 +46,14 @@
                                     </a>
                                 </li>
                                 @endcan
-                                @can('technical_delete')
+                                @can('technical_edit')
                                 </li>
-                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
-                                        {{trans('admin.deleteall')}}
+                                <a href="{{route('techniciansmaps')}}" class=" add-modal btn btn-primary btn-round" title="{{trans('admin.show_technician')}}">
+                                        {{trans('admin.show_technician')}}
                                     </a>
+                                    <!-- <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
+                                        {{trans('admin.deleteall')}}
+                                    </a> -->
                                 </li>  
                                 @endcan                              
                             </ul>

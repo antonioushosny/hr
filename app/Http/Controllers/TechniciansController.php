@@ -78,9 +78,22 @@ class TechniciansController extends Controller
         //return $countries;
         return view('technicians.add',compact('title','lang','countries','cities','areas','nationalites','services','allcities','allareas','allnationalites','allservices'));
     }
-    public function create()
+    public function maps()
     {
         //
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'technicians';
+        $allcountries = Country::where('id','<>','1')->get();
+        $countries = array_pluck($allcountries,'name_ar', 'id');
+        $allcities = City::where('id','<>','1')->get();
+        $cities = array_pluck($allcities,'name_ar', 'id');
+        $technicians = User::where('role','fannie')->orderBy('id', 'DESC')->get();
+        //return $technicians;
+        return view('technicians.map',compact('technicians','countries','cities','title','lang'));
         
     }
 

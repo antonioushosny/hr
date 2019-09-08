@@ -129,6 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
      Route::get('/technicians/edit/{id}', 'TechniciansController@edit')->name('edittechnician');
      Route::get('/technicians/techicianstatus/{id}', 'TechniciansController@changestatus')->name('techicianstatus');
       Route::get('/technicians/orders/{id}', 'TechniciansController@orders')->name('techniciansorders');
+      Route::get('/technicians/maps','TechniciansController@maps')->name('techniciansmaps');
     // Route::get('/users/delete/{id}', 'TechniciansController@destroy')->name('destroyuser');
     // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');
 

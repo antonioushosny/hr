@@ -341,6 +341,7 @@ return [
         'brief_technician'=>'نبذة عن الفني',
         'online'=>' متصل',
         'offline'=>'غير متصل',
+        'show_technician'=>'عرض جميع الفنيين علي الخريطة ',
 
 
         //subscriptions of users pages
@@ -374,6 +375,7 @@ return [
         'rejected_reason'=>'اسباب الرفض',
         'time'=>'الوقت',
         'date_order'=>'التاريخ  لتنفيذ الطلب',
+       
  ];
 
 
