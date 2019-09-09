@@ -324,7 +324,7 @@ body, html {
     <div class="tab-content">
         <div class="tab-pane stretchRight active" id="dashboard">
             <div class="menu">
-                <ul class="list">
+                <ul class="list" style=" padding-bottom: 51px; ">
                     <li>
                         <div class="user-info">
                             @if(Auth::user()->image != '' || Auth::user()->image != null)
@@ -405,13 +405,14 @@ body, html {
                     @can('static_page_list')
                     <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy'|| $page == 'bank') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">
+                            <li <?php echo ($page == 'bank') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','bank') }}"  > <span> {{trans('admin.banks_accounts')}}</span></a></li>
+
                             <li <?php echo ($page == 'AboutUs') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','about') }}"  > <span> {{trans('admin.AboutUs')}}</span></a></li>
 
                             <li <?php echo ($page == 'Terms') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','term') }}"  > <span> {{trans('admin.Terms')}}</span></a></li>
 
                             <li <?php echo ($page == 'Policy') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','policy') }}"  > <span> {{trans('admin.Policy')}}</span></a></li>
                             
-                            <li <?php echo ($page == 'bank') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','bank') }}"  > <span> {{trans('admin.banks_accounts')}}</span></a></li>
                         </ul>
                     </li> 
                     @endcan

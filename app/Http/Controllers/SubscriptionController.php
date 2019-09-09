@@ -56,7 +56,7 @@ class SubscriptionController extends Controller
     }
     public function store(Request $request)
     {
-        //return $request;
+        // return $request;
         if($request->id ){
             $rules =
             [
@@ -91,7 +91,7 @@ class SubscriptionController extends Controller
 
                 }
             }
-            $techican=Technician::where('user_id',$request->fannie)->first();
+            $techican= Technician::where('user_id',$request->fannie)->first();
             if($request->date_exp > $techican->renewal_date)
             {
                 $techican->renewal_date=$request->date_exp;
