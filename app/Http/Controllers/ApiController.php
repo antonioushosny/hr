@@ -1680,7 +1680,11 @@ class ApiController extends Controller
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                $orders = Order::where('user_id',$user->id)->with('fannie')->with('service')->get();
+                if($user->role == 'user'){
+                    $orders = Order::where('user_id',$user->id)->with('fannie')->with('user')->with('service')->get();
+                }else{
+                    $orders = Order::where('fannie_id',$user->id)->with('fannie')->with('user')->with('service')->get();
+                }
                 // return $orders ;
                 
                 $orderss = [];
@@ -1738,6 +1742,17 @@ class ApiController extends Controller
                             $orderss[$i]['service_id']   = null;
                             $orderss[$i]['service_name'] = null;
                             $orderss[$i]['service_image']= null;
+                        }
+                        if($order->user){
+                            $orderss[$i]['user__id']   = $order->user->id;
+                            $orderss[$i]['user_name'] = $order->user->name;
+                            $orderss[$i]['user_mobile'] = $order->user->mobile;
+                            $orderss[$i]['user_image']= asset('img/').'/'.$order->user->image;
+                        }else{
+                            $orderss[$i]['user__id']   = null;
+                            $orderss[$i]['user_name'] = null;
+                            $orderss[$i]['user_mobile']= null;
+                            $orderss[$i]['user_image']= null;
                         }
                         $i ++ ;
                     }
