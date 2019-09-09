@@ -1979,7 +1979,7 @@ class ApiController extends Controller
             if($user){
                 
                 $Subscription  = new Subscription  ;
-                $Subscription->fannie_id  =  $request->fannie_id ;
+                $Subscription->fannie_id  =  $user->id ;
                 $Subscription->subscription_id  =  $request->subscription_id ;
                 
                 if ($request->hasFile('image')) {

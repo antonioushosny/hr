@@ -100,8 +100,7 @@
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                        <!-- <td>{{ $data->user->technician->renewal_date }}</td> -->
-                                        <td>{{ $data->date }}</td>
+                                         <td>{{ $data->date }}</td>
                                         <td>
                                             @can('subscription_edit')
                                             <a href="{{route('edittechsubscription',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
