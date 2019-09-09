@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reason extends Model
 {
     //
+    protected $fillable = [
+        'title_ar','title_en','status','type'
+    ];
 }

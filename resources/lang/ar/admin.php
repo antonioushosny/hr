@@ -362,6 +362,8 @@ return [
         'pending'=>'قيد الانتظار',
         'accepted'=>'قبلت',
         'user_rejected'=>'رفض المستخدم',
+        'canceled'=>'ألغيت',
+        'rejected'=>'مرفوض',
         'fannie_rejected'=>'رفض الفني',
         'completed'=>'منتهية',
         'deal_done'=>'تم الاتفاق',
@@ -378,6 +380,15 @@ return [
         'rejected_date'=>'تاريخ الرفض',
         'accepted_date'=>'تاريخ القبول',
        
+
+        //reasons pages
+        'reasons'=>'اسباب الرفض',
+        'add_reason'=>' إضافة سبب رفض',
+        'edit_reason'=>' تعديل سبب رفض',
+        'title_ar'=>'العنوان بالعربية',
+        'title_en'=>'العنوان بالانجليزية',
+
+        
  ];
 
 

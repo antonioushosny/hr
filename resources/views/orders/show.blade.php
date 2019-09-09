@@ -170,7 +170,7 @@
                         <h5><strong>{{trans('admin.time')}} :- </strong> {{ $order->time }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
-                        @if($order->status=="user_rejected" || $order->status=="fannie_rejected")
+                        @if($order->status=="rejected" || $order->status=="canceled")
                         <h5><strong>{{ trans('admin.rejected_reason') }} :- </strong>{{ $order->rejected_reason }}   </h5>
                         <h5><strong>{{ trans('admin.rejected_date') }} :- </strong>{{ $order->rejected_date }}   </h5>
                         @endif

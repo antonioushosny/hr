@@ -371,6 +371,9 @@ body, html {
                     <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.services')}}</span></a></li>
                     @endcan
                     
+                    @can('reasons_list')
+                    <li <?php echo ($page == 'reasons') ? "class='active open'" : ""; ?> ><a href="{{ route('reasons') }}"  ><i class="zmdi zmdi-file-text"></i> <span> {{trans('admin.reasons')}}</span></a></li>
+                    @endcan
 
                     @can('subscription_type_list')
                     <li <?php echo ($page == 'subscriptions') ? "class='active open'" : ""; ?> ><a href="{{ route('subscriptions') }}"  ><i class="zmdi zmdi-money"></i> <span> {{trans('admin.subscriptions')}}</span></a></li>

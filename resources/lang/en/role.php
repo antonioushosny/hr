@@ -65,6 +65,10 @@ return [
     'static_page_list' => 'Show Static Pages',
     'static_page_edit' => 'Edit Static Pages', 
     
+    'reasons_list'=>'View Reasons',
+    'reasons_create'=>'Add Reasons',
+    'reasons_edit'=>'Edit Reasons',
+    'reasons_delete'=> 'Delete Reasons',
 
 ];
 
