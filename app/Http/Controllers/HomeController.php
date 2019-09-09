@@ -169,6 +169,9 @@ class HomeController extends Controller
         }else if($type == 'policy'){
             $title = "Policy" ;
             $type = "policy" ;
+        }else if($type == 'bank'){
+            $title = "bank" ;
+            $type = "bank" ;
         }else{
             $title = "Terms" ;
             $type = "terms" ;

@@ -1928,6 +1928,7 @@ class ApiController extends Controller
                         $i ++ ;
                     }
                 }
+                $bank_acconts = Doc::where('type','bank')->first();
                 
                 $data['SubscriptionTypes'] = $SubscriptionTypess ;
 

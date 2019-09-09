@@ -407,6 +407,8 @@ body, html {
                             <li <?php echo ($page == 'Terms') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','term') }}"  > <span> {{trans('admin.Terms')}}</span></a></li>
 
                             <li <?php echo ($page == 'Policy') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','policy') }}"  > <span> {{trans('admin.Policy')}}</span></a></li>
+                            
+                            <li <?php echo ($page == 'bank') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','bank') }}"  > <span> {{trans('admin.banks_accounts')}}</span></a></li>
                         </ul>
                     </li> 
                     @endcan
