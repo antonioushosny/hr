@@ -375,6 +375,8 @@ return [
         'rejected_reason'=>'اسباب الرفض',
         'time'=>'الوقت',
         'date_order'=>'التاريخ  لتنفيذ الطلب',
+        'rejected_date'=>'تاريخ الرفض',
+        'accepted_date'=>'تاريخ القبول',
        
  ];
 

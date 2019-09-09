@@ -369,4 +369,6 @@ return [
         'rejected_reason'=>'Reasons for rejection',
         'time'=>'Time',
         'date_order'=>'Order Execution Date',
+        'rejected_date'=>'Rejected Date',
+        'accepted_date'=>'Accepted Date',
 ];
