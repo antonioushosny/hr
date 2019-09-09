@@ -1629,8 +1629,7 @@ class ApiController extends Controller
                 $device_token = $fannie->device_token ;
                 if($device_token){
                     $this->notification($device_token,$msg,$msg);
-                    $this->webnotification($device_token,$msg,$msg,$type);
-                }
+                 }
                 
                 $data['order'] = $order ;
 
@@ -1875,8 +1874,7 @@ class ApiController extends Controller
                         $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$msg,$msg,$type);
-                        }
+                         }
                     }
                 }
                 
@@ -2084,8 +2082,7 @@ class ApiController extends Controller
                         $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$msg,$msg,$type);
-                        }
+                         }
                     }
                 }
                 
@@ -2154,8 +2151,7 @@ class ApiController extends Controller
                         $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$msg,$msg,$type);
-                        }
+                         }
                     }
                 }
                 
@@ -2223,8 +2219,7 @@ class ApiController extends Controller
                         $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
-                            $this->webnotification($device_token,$msg,$msg,$type);
-                        }
+                         }
                     }
                 }
                 
