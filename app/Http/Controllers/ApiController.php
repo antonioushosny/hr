@@ -2107,6 +2107,145 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// DealDone function by Antonious hosny
+    public function DealDone(Request $request){
+        $rules=array(
+            "order_id"=>"required", 
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $order = Order::where('id',$request->order_id)->first();
+                if($order){
+                    $order->status = 'deal_done' ;
+                     
+                    $order->save();
+                    $type = "order";
+                    $msg =  [
+                        'en' =>  "  Request No. " . $order->id." was agreed"    , 
+                        'ar' =>  "تم الاتفاق علي الطلب رقم  ". $order->id  , 
+                    ];
+                    
+                    $fannie = User::where('id', $order->fannie_id)->first(); 
+                    if($fannie){
+
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
+                        }
+                    }
+                }
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+// CompleteOrder function by Antonious hosny
+    public function CompleteOrder(Request $request){
+        $rules=array(
+            "order_id"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $order = Order::where('id',$request->order_id)->first();
+                if($order){
+                    $order->status = 'completed' ;
+                     
+                    $order->save();
+                    $type = "order";
+                    $msg =  [
+                        'en' =>  $user->name ."  complete the order"  ." number ". $order->id  , 
+                        'ar' =>   $user->name ."  قام بانهاء الطلب"   ." رقم ". $order->id  , 
+                    ];
+                    
+                    $fannie = User::where('id', $order->user_id)->first(); 
+                    if($fannie){
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
+                        }
+                    }
+                }
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
 // OrderDetail function by Antonious hosny
     public function OrderDetail(Request $request){
         $rules=array(
@@ -2154,62 +2293,32 @@ class ApiController extends Controller
                     if($order->fannie){
                         $distance = $this->GetDistance($order->lat,$order->fannie->lat,$order->lng,$order->fannie->lng,'k');
                         if($order->status == 'accepted'){
-                            $orderss['expected_time'] = (round($distance,0) / 10) * 60   ;
-                            $orderss['accepted_date'] = $order->accepted_date ;
-
+                             $orderss['accepted_date'] = $order->accepted_date ;
+                            $expected_time = (round($distance,0) / 10) * 60  ;
                             // Declare and define two dates 
                             $date1 = strtotime($date);  
                             $date2 = strtotime($order->accepted_date);  
                             
-                            // Formulate the Difference between two dates 
                             $diff = abs($date2 - $date1);  
-                            
-                            
-                            // To get the year divide the resultant date into 
-                            // total seconds in a year (365*60*60*24) 
                             $years = floor($diff / (365*60*60*24));  
-                            
-                            
-                            // To get the month, subtract it with years and 
-                            // divide the resultant date into 
-                            // total seconds in a month (30*60*60*24) 
-                            $months = floor(($diff - $years * 365*60*60*24) 
-                                                        / (30*60*60*24));  
-                            
-                            
-                            // To get the day, subtract it with years and  
-                            // months and divide the resultant date into 
-                            // total seconds in a days (60*60*24) 
-                            $days = floor(($diff - $years * 365*60*60*24 -  
-                                        $months*30*60*60*24)/ (60*60*24)); 
-                            
-                            
-                            // To get the hour, subtract it with years,  
-                            // months & seconds and divide the resultant 
-                            // date into total seconds in a hours (60*60) 
-                            $hours = floor(($diff - $years * 365*60*60*24  
-                                - $months*30*60*60*24 - $days*60*60*24) 
-                                                            / (60*60));  
-                            
-                            
-                            // To get the minutes, subtract it with years, 
-                            // months, seconds and hours and divide the  
-                            // resultant date into total seconds i.e. 60 
-                            $minutes = floor(($diff - $years * 365*60*60*24  
-                                    - $months*30*60*60*24 - $days*60*60*24  
-                                                    - $hours*60*60)/ 60);  
-                            
-                            
-                            // To get the minutes, subtract it with years, 
-                            // months, seconds, hours and minutes  
-                            $seconds = floor(($diff - $years * 365*60*60*24  
-                                    - $months*30*60*60*24 - $days*60*60*24 
-                                            - $hours*60*60 - $minutes*60));  
-                            
-                            // Print the result 
-                            printf("%d years, %d months, %d days, %d hours, "
-                                . "%d minutes, %d seconds", $years, $months, 
-                                    $days, $hours, $minutes, $seconds);
+                            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));  
+                            $days = floor(($diff - $years * 365*60*60*24 -  $months*30*60*60*24)/ (60*60*24)); 
+                            $hours = floor(($diff - $years * 365*60*60*24  - $months*30*60*60*24 - $days*60*60*24) / (60*60));  
+                            $minutes = floor(($diff - $years * 365*60*60*24  - $months*30*60*60*24 - $days*60*60*24  - $hours*60*60)/ 60);  
+                            $seconds = floor(($diff - $years * 365*60*60*24  - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60));  
+
+                            if($years == 0 && $months == 0  && $days == 0){
+                                $allminutes = $hours * 60 + $minutes  ;
+                                // printf("%d allminutes : " ,$allminutes);
+                                if( $expected_time  >= $allminutes){
+                                    $orderss['expected_time'] =    $expected_time - $allminutes ;
+                                }else{
+                                    $orderss['expected_time'] =  0 ;
+                                }
+                            }
+                            else{
+                                $orderss['accepted_date'] = 0 ;
+                            }
                         }
                         $ratecount = Rate::where('evaluator_to',$order->fannie->id)->count('id');
                         $sumrates = Rate::where('evaluator_to',$order->fannie->id)->sum('rate');
