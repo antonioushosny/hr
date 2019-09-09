@@ -63,7 +63,12 @@ return [
     'area_delete' => 'حذف المناطق',
 
     'static_page_list' => 'عرض الصفحات الثابتة',   
-    'static_page_edit' => 'تعديل الصفحات الثابتة',  
+    'static_page_edit' => 'تعديل الصفحات الثابتة', 
+    
+    'reasons_list'=>'عرض الاسباب',
+    'reasons_create'=>'اضافة الاسباب',
+    'reasons_edit'=>'تعديل الاسباب',
+    'reasons_delete'=> 'حذف الاسباب', 
     
 
 ];

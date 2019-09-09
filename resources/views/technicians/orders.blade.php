@@ -95,7 +95,7 @@
                                         <td>
                                         @if($data->status=='pending')
                                         <mark style="    background-color: #f3d513;color: white;border-radius: 7px; font-size: 14px;    font-weight: bold;    padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
-                                        @elseif($data->status=="user_rejected" || $data->status=="fannie_rejected")
+                                        @elseif($data->status=="canceled" || $data->status=="rejected")
                                         <mark style="    background-color: #fb4e4e;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
 
                                         @elseif($data->status=="accepted")

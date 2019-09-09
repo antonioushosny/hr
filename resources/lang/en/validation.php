@@ -201,6 +201,8 @@ return [
         'fannie'=>'Technician',
         'sub_type'=>'Subscription Type',
         'date_exp'=>'Expiration date',
+        'title_ar'=>'Arabic Title',
+        'title_en'=>'English Title',
     ],
     
 ];

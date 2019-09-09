@@ -104,11 +104,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall');
     Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
     
+
+    // routes for reasons management
+    Route::get('/reasons', 'ReasonController@index')->name('reasons');
+    Route::get('/reasons/add/', 'ReasonController@add')->name('addreason');
+    Route::post('/reasons/update/', 'ReasonController@store')->name('storereason');
+    Route::get('/reasons/status/{id}', 'ReasonController@changestatus')->name('reasonstatus');
+    Route::get('/reasons/edit/{id}', 'ReasonController@edit')->name('editreason');
+    // Route::get('/services/delete/{id}', 'ReasonController@destroy')->name('destroyservice');
+    // Route::post('/services/deleteall', 'ReasonController@deleteall')->name('servicesdeleteall');
+    // Route::get('/services/{id}/areas', 'ReasonController@areas')->name('serviceareas');
+
+
     //route for subscriptions management
     Route::get('/subscriptions', 'SubscriptionTypeController@index')->name('subscriptions');
     Route::get('/subscriptions/add/', 'SubscriptionTypeController@add')->name('addsubscription');
     Route::post('/subscriptions/update/', 'SubscriptionTypeController@store')->name('storeaddsubscription');
     Route::get('/subscriptions/edit/{id}', 'SubscriptionTypeController@edit')->name('editsubscription');
+    Route::get('/subscriptions/status/{id}', 'SubscriptionTypeController@changestatus')->name('subscriptionstatus');
     Route::get('/subscriptions/delete/{id}', 'SubscriptionTypeController@destroy')->name('destroysubscription');
     Route::post('/subscriptions/deleteall', 'SubscriptionTypeController@deleteall')->name('subscriptionsdeleteall');
 

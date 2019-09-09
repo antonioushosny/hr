@@ -355,6 +355,8 @@ return [
         'orders'=>'Orders',
         'pending'=>'Pending',
         'accepted'=>'Accepted',
+        'canceled'=>'Canceled',
+        'rejected'=>'Rejected',
         'user_rejected'=>'User Rejected',
         'fannie_rejected'=>'Technician Rejected',
         'completed'=>'Completed',
@@ -371,4 +373,12 @@ return [
         'date_order'=>'Order Execution Date',
         'rejected_date'=>'Rejected Date',
         'accepted_date'=>'Accepted Date',
+
+
+         //reasons pages
+         'reasons'=>'Reasons Rejection',
+         'add_reason'=>'Add Reason',
+        'edit_reason'=>'Edit Reason',
+        'title_ar'=>'Arabic Title',
+        'title_en'=>'English Title',
 ];
