@@ -403,7 +403,7 @@ body, html {
                     @endcan
 
                     @can('static_page_list')
-                    <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
+                    <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy'|| $page == 'bank') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">
                             <li <?php echo ($page == 'AboutUs') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','about') }}"  > <span> {{trans('admin.AboutUs')}}</span></a></li>
 

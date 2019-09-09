@@ -87,7 +87,7 @@
                                     @foreach ($roles as $key => $role)
                                 
                                     <tr class="item{{$role->id}}">
-                                        @if($role->id != '1')
+                                        {{--  @if($role->id != '1')  --}}
                                             <td> 
                                                 <input type="checkbox" name="ids[]" value={{$role->id}} class="check icheck">
                                             </td>
@@ -103,7 +103,7 @@
                                                     <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$role->id}}" ><i class="zmdi zmdi-delete"></i></a>
                                                 @endcan
                                             </td>
-                                        @endif
+                                        {{--  @endif  --}}
                                 
                                     </tr>
                                 

@@ -299,6 +299,8 @@ return [
         'Policy'  =>' Policy' ,
         'add_setting'  => 'Add Form',
         'edit_setting' => 'Edit Form',
+        'banks_accounts' => 'Bank Accounts',
+        'bank' => 'Bank Accounts',
     //end settings and static pages  
 
     'You cannot access this page!'  => 'You cannot access this page!' ,
