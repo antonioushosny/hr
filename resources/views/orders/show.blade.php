@@ -162,16 +162,22 @@
                         @else   
                             <h5><strong>{{trans('admin.service')}} :- </strong> {{ $order->services->name_en }}  </h5>
                         @endif
-                        <h5><strong>{{trans('admin.name_tech')}} :- </strong> {{ __('admin.'.$order->fannie->name) }}  </h5>
-                        <h5><strong>{{trans('admin.mobile_tech')}} :- </strong> {{ __('admin.'.$order->fannie->mobile) }}  </h5>
+                        <h5><strong>{{trans('admin.name_tech')}} :- </strong> {{$order->fannie->name}}  </h5>
+                        <h5><strong>{{trans('admin.mobile_tech')}} :- </strong> {{$order->fannie->mobile}}  </h5>
                         <h5><strong>{{trans('admin.address')}} :- </strong> {{ $order->address }}  </h5>
                         <h5><strong>{{trans('admin.date')}} :- </strong> {{ $order->created_at }}  </h5>
                         <h5><strong>{{trans('admin.date_order')}} :- </strong> {{ $order->date }}  </h5>
                         <h5><strong>{{trans('admin.time')}} :- </strong> {{ $order->time }}  </h5>
                         <h5><strong>{{trans('admin.notes')}} :- </strong> {{ $order->notes }}  </h5>
                         <h5><strong>{{ trans('admin.status') }} :- </strong> {{ trans('admin.'.$order->status) }}  </h5>
+                        @if($order->status=="user_rejected" || $order->status=="fannie_rejected")
                         <h5><strong>{{ trans('admin.rejected_reason') }} :- </strong>{{ $order->rejected_reason }}   </h5>
-                  
+                        <h5><strong>{{ trans('admin.rejected_date') }} :- </strong>{{ $order->rejected_date }}   </h5>
+                        @endif
+
+                        @if($order->status=='accepted'|| $order->status=='completed')
+                        <h5><strong>{{ trans('admin.accepted_date') }} :- </strong>{{ $order->accepted_date }}   </h5>
+                        @endif
                         
                             
                         
