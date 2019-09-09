@@ -1807,40 +1807,42 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
-// CanceledOrders function by Antonious hosny
+// CanceleOrder function by Antonious hosny
     public function CanceleOrder(Request $request){
+        $rules=array(
+            "order_id"=>"required",
+            "reason"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
+
         if($token){
             $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'user'){
-                $rules=array(
-                    'order_id'      =>'required',
-                );
-                $validator  = \Validator::make($request->all(),$rules);
-                if($validator->fails())
-                {
-                    $messages = $validator->messages();
-                    $transformed = [];
-        
-                    foreach ($messages->all() as $field => $message) {
-                        $transformed[] = [
-                            'message' => $message
-                        ];
-                    }
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors'  => $transformed,
-                        'message' => trans('api.validation_error'),
-                        'data'    => null ,
-                    ]);
-                }
+            if($user){
                 $order = Order::where('id',$request->order_id)->first();
                 if($order){
                     $order->status = 'canceled' ;
+                    $order->rejected_reason = $request->reason ;
+                    $order->rejected_date = $date ;
+                    
                     $order->save();
                     $type = "order";
                     $msg =  [
@@ -1851,43 +1853,34 @@ class ApiController extends Controller
                         'en' =>  $user->name ."  canceled the order"  ,
                         'ar' =>   $user->name ."  قام بالغاء الطلب"  , 
                     ];
-                    $center = User::where('id', $order->center_id)->first(); 
-                    if($center){
+                    $fannie = User::where('id', $order->fannie_id)->first(); 
+                    if($fannie){
 
-                        $center->notify(new Notifications($msg,$type ));
-                        $device_token = $center->device_token ;
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
                             $this->webnotification($device_token,$msg,$msg,$type);
                         }
                     }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.canceled'),
-                        'data' => null ,
-                    ]);
                 }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
+
+
     }
 //////////////////////////////////////////////////
 // OrdersHistory function by Antonious hosny

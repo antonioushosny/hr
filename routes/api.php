@@ -33,8 +33,8 @@ Route::get('MyFavorites', 'ApiController@MyFavorites')->middleware('localization
 Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localization');
 Route::get('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::get('CancelationReason', 'ApiController@CancelationReason')->middleware('localization');
-
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
+
 Route::post('ChangeStatusOrders', 'ApiController@ChangeStatusOrders')->middleware('localization');
 
 Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
