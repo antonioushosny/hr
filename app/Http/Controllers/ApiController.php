@@ -1929,8 +1929,17 @@ class ApiController extends Controller
                     }
                 }
                 $bank_acconts = Doc::where('type','bank')->first();
-                
+                $banks_accounts = [] ;
+                if($lang == 'ar') {
+                    $banks_accounts['title'] =  $bank_acconts->title_ar ;
+                    $banks_accounts['disc'] =  $bank_acconts->disc_ar ;
+                }else{
+                    $banks_accounts['title'] =  $bank_acconts->title_en ;
+                    $banks_accounts['disc'] =  $bank_acconts->disc_en ;
+                }
+
                 $data['SubscriptionTypes'] = $SubscriptionTypess ;
+                $data['banks_accounts'] = $banks_accounts ;
 
                 $message = trans('api.fetch') ;
                 return  $this->SuccessResponse($message,$data ) ;

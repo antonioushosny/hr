@@ -308,6 +308,8 @@ return [
         'Policy'  =>' سياسة الخصوصية' ,
         'add_setting'  => 'الإضافة ',
         'edit_setting'  => 'التعديل   ',
+        'banks_accounts' => 'الحسابات البنكية',
+        'bank'          =>  'الحسابات البنكية',
     //end settings and static pages  
         'You cannot access this page!'  => ' !لا يمكنك الوصول إلى هذه الصفحة ',
         'Forgot Password Or First Login ?'  => 'نسيت كلمة المرور ؟',
