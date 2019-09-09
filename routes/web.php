@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/services/delete/{id}', 'ServicesController@destroy')->name('destroyservice');
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall');
     Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
+    Route::get('/services/technicians/{id}', 'ServicesController@showtechnicians')->name('serviceshowtechnicians');
     
 
     // routes for reasons management

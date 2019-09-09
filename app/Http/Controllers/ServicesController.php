@@ -130,6 +130,28 @@ class ServicesController extends Controller
         }
     }
 
+
+    public function showtechnicians($id)
+    {
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'services';
+        $service = Service::where('id',$id)->with('fannies')->orderBy('id', 'DESC')->first();
+        if($service)
+        {
+             //return $service ; 
+            return view('services.technicians',compact('service','title','lang'));
+
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
+    }
+
     public function update(Request $request, $id)
     {
 

@@ -368,7 +368,7 @@ body, html {
                     @endcan
                     
                     @can('service_list')
-                    <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.services')}}</span></a></li>
+                    <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-washing-machine"></i> <span> {{trans('admin.services')}}</span></a></li>
                     @endcan
                     
                     @can('reasons_list')

@@ -18,7 +18,7 @@ class Service extends Model
 
     public function fannies()
     {
-        return $this->hasMany('App\fannie','service_id');
+        return $this->hasMany('App\Technician','service_id')->with('user');
     }
     
 }

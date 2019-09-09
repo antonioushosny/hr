@@ -320,6 +320,7 @@ return [
         'services'=>'الخدمات',
         'add_service'=>'إضافة خدمة',
         'edit_service'=>'تعديل خدمة',
+        'showtechnicians'=>'عرض الفنيين',
         //end services pages
      
         //subscriptions pages
