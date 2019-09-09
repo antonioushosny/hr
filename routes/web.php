@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/subscriptions/add/', 'SubscriptionTypeController@add')->name('addsubscription');
     Route::post('/subscriptions/update/', 'SubscriptionTypeController@store')->name('storeaddsubscription');
     Route::get('/subscriptions/edit/{id}', 'SubscriptionTypeController@edit')->name('editsubscription');
+    Route::get('/subscriptions/status/{id}', 'SubscriptionTypeController@changestatus')->name('subscriptionstatus');
     Route::get('/subscriptions/delete/{id}', 'SubscriptionTypeController@destroy')->name('destroysubscription');
     Route::post('/subscriptions/deleteall', 'SubscriptionTypeController@deleteall')->name('subscriptionsdeleteall');
 

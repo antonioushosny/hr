@@ -46,13 +46,13 @@
                                     </a>
                                 </li>
                                 @endcan
-                                @can('subscription_delete')
+                                <!-- @can('subscription_delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
                                 </li>     
-                                @endcan                           
+                                @endcan                            -->
                             </ul>
                         </div>
                         <div class="body">
@@ -84,19 +84,41 @@
                                         @endcan
                                         <td>{{ $data->name_ar }}</td>
                                         <td>{{ $data->name_en }}</td>
+                                        @can('subscription_delete')
                                         @if($data->status == 'active')
-                                        <td style="text-align:center"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
+                                            <td style="text-align:user">
+                                                <a href="{{route('subscriptionstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
+                                                
+                                            </td> 
                                         @elseif($data->status == 'not_active')
-                                        <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
+                                            <td style="text-align:user">
+                                                <a href="{{route('subscriptionstatus',$data->id)}}" class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></a>
+                                                
+                                            </td> 
                                         @endif
+
+                                        @else
+                                            @if($data->status == 'active')
+                                                <td style="text-align:user">
+                                                    <mark class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></mark>
+                                                    
+                                                </td> 
+                                            @elseif($data->status == 'not_active')
+                                                <td style="text-align:user">
+                                                    <mark class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></mark>
+                                                    
+                                                </td> 
+                                            @endif
+
+                                        @endcan
 
                                         <td>
                                             @can('subscription_type_edit')
                                             <a href="{{route('editsubscription',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
                                             @endcan
-                                            @can('subscription_delete')
+                                            <!-- @can('subscription_delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
+                                            @endcan -->
                                         </td>
                                     </tr>
                                     
@@ -184,7 +206,7 @@
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
-                        window.location.replace("{{route('services')}}");
+                        window.location.replace("{{route('subscriptions')}}");
                     }
                 });
             } else {

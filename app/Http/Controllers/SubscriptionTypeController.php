@@ -94,7 +94,25 @@ class SubscriptionTypeController extends Controller
         return response()->json($subscription);
 
     }
-
+    public function changestatus($id)
+    {
+            $title =  'subscriptions' ;
+            $subscription = SubscriptionType::where('id',$id)->first();
+            if($subscription){
+                if($subscription->status == 'active'){
+                    $subscription->status = 'not_active' ;
+                }
+                else{
+                    $subscription->status = 'active' ;                    
+                }
+                $subscription->save();
+                return redirect()->route('subscriptions');
+            }
+            else
+            {
+                return redirect(url('error'));
+            }
+    }
     public function edit($id)
     {
         $lang = App::getlocale();
