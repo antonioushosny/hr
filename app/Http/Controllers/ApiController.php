@@ -2037,8 +2037,200 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// AcceptOrder function by Antonious hosny
+    public function AcceptOrder(Request $request){
+        $rules=array(
+            "order_id"=>"required",
+         );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $order = Order::where('id',$request->order_id)->first();
+                if($order){
+                    $order->status = 'accepted' ;
+                     $order->accepted_date = $date ;
+                    
+                    $order->save();
+                    $type = "order";
+                    $msg =  [
+                        'en' =>  $user->name ."  Accepted the order"  ." number ". $order->id  , 
+                        'ar' =>   $user->name ."  قام بقبول الطلب"   ." رقم ". $order->id  , 
+                    ];
+                    
+                    $fannie = User::where('id', $order->user_id)->first(); 
+                    if($fannie){
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
+                        }
+                    }
+                }
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
 
 
+    }
+//////////////////////////////////////////////////
+// OrderDetail function by Antonious hosny
+    public function OrderDetail(Request $request){
+        $rules=array(
+            "order_id"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $order = Order::where('id',$request->order_id)->with('fannie')->with('user')->with('service')->first();
+                $orderss = [];
+                if($order){
+                    $orderss['order_id'] = $order->id ;
+                    $orderss['status'] = $order->status ;
+                    $orderss['notes'] = $order->notes ;
+                    $orderss['date'] = $order->date ;
+                    $orderss['time'] = $order->time ;
+                    $orderss['created_at'] = $order->created_at->format('Y-d-m H:i:s') ;
+                    if($order->status == 'canceled' || $order->status == 'rejected'){
+                        $orderss['rejected_reason'] = $order->rejected_reason ;
+                    }
+                    
+                   
+                    if($order->fannie){
+                        $distance = $this->GetDistance($order->lat,$order->fannie->lat,$order->lng,$order->fannie->lng,'k');
+                        if($order->status == 'accepted'){
+                            $orderss['expected_time'] = $order->rejected_reason ;
+                        }
+                        $ratecount = Rate::where('evaluator_to',$order->fannie->id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$order->fannie->id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
+                        }
+
+                        $favorite = Favorite::where('user_id',$user->id)->where('fannie_id',$order->fannie->id)->first();
+                        if($favorite){
+                            $isFavorite = 1 ;
+                        }else{
+                            $isFavorite = 0 ;
+                        }
+                        
+
+                        $orderss['fannie_id']    =  $order->fannie->id;
+                        $orderss['fannie_name']  = $order->fannie->name;
+                        $orderss['fannie_mobile']  = $order->fannie->mobile;
+                        $orderss['rate']  = $rate;
+                        $orderss['isFavorite']  = $isFavorite;
+                        $orderss['distance']     =  round($distance,2). __('api.km'); 
+                        $orderss['fannie_image'] = asset('img/').'/'.$order->fannie->image;
+                    }else{
+                        $orderss['fannie_id']    = null;
+                        $orderss['fannie_name']  = null;
+                        $orderss['fannie_mobile']  = null;
+                        $orderss['rate']  = 0 ;
+                        $orderss['isFavorite']  = 0 ;
+                        $orderss['distance']     = null ;
+                        $orderss['fannie_image'] = null;
+                    }
+                    if($order->service){
+                        $orderss['service_id']   = $order->service->id;
+                        if($lang == 'ar')
+                        $orderss['service_name'] = $order->service->name_ar;
+                        else
+                        $orderss['service_name'] = $order->service->name_en;
+
+                        $orderss['service_image']= asset('img/').'/'.$order->service->image;
+                    }else{
+                        $orderss['service_id']   = null;
+                        $orderss['service_name'] = null;
+                        $orderss['service_image']= null;
+                    }
+                    if($order->user){
+                        $orderss['user__id']   = $order->user->id;
+                        $orderss['user_name'] = $order->user->name;
+                        $orderss['user_mobile'] = $order->user->mobile;
+                        $orderss['user_image']= asset('img/').'/'.$order->user->image;
+                    }else{
+                        $orderss['user__id']   = null;
+                        $orderss['user_name'] = null;
+                        $orderss['user_mobile']= null;
+                        $orderss['user_image']= null;
+                    }
+                }
+                
+                $data['order'] = $orderss ;
+
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
 
  
 
