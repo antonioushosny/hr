@@ -25,6 +25,7 @@ use App\Technician;
 use App\Service;
 use App\Rate;
 use App\Nationality;
+use App\Reason;
 
 use Carbon\Carbon;
 use App\Notifications\Notifications;
@@ -1679,7 +1680,11 @@ class ApiController extends Controller
         if($token){
             $user = User::where('remember_token',$token)->first();
             if($user){
-                $orders = Order::where('user_id',$user->id)->with('fannie')->with('service')->get();
+                if($user->role == 'user'){
+                    $orders = Order::where('user_id',$user->id)->with('fannie')->with('user')->with('service')->get();
+                }else{
+                    $orders = Order::where('fannie_id',$user->id)->with('fannie')->with('user')->with('service')->get();
+                }
                 // return $orders ;
                 
                 $orderss = [];
@@ -1738,6 +1743,17 @@ class ApiController extends Controller
                             $orderss[$i]['service_name'] = null;
                             $orderss[$i]['service_image']= null;
                         }
+                        if($order->user){
+                            $orderss[$i]['user__id']   = $order->user->id;
+                            $orderss[$i]['user_name'] = $order->user->name;
+                            $orderss[$i]['user_mobile'] = $order->user->mobile;
+                            $orderss[$i]['user_image']= asset('img/').'/'.$order->user->image;
+                        }else{
+                            $orderss[$i]['user__id']   = null;
+                            $orderss[$i]['user_name'] = null;
+                            $orderss[$i]['user_mobile']= null;
+                            $orderss[$i]['user_image']= null;
+                        }
                         $i ++ ;
                     }
                 }
@@ -1760,220 +1776,88 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
- 
-// MyOrderسs function by Antonious hosny
-    public function MyOrderسs(Request $request){
+// CancelationReason function by Antonious hosny
+    public function CancelationReason(Request $request){
+       
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
-        if($request->page && $request->page >= 1 ){
-            $skip = $request->page.'0' ;
-            // return $skip ;
-        }else{
-            $skip = 0 ;
-        }
-        
+
         if($token){
             $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'user'){
-                // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                // $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
-                $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->get();
-                $count_orders = Order::where('user_id',$user->id)->with('center')->with('container')->count('id');
-                $count = count($user->unreadnotifications) ;
-                if(sizeof($orderss) > 0){
-                    $orders = [];
-                    $i = 0 ;
-                    foreach($orderss as $order){
-                        $orders[$i]['order_id'] =   $order->id ;
-                        
-                        if($order->center){
-                            
-                            $orders[$i]['center_id'] =   $order->center->id ;
-                            $orders[$i]['center_name'] =   $order->center->name ;
-                        }else{
-                             $orders[$i]['center_id'] =   ' '  ;
-                            $orders[$i]['center_name'] =  ' ' ;
-                        }
-                         
-                        $orders[$i]['num_containers'] =   $order->no_container;
-                        $orders[$i]['container_price'] =   $order->price ;
-                        if($order->container){
-                            $orders[$i]['container_id'] =   $order->container->id ;
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container->name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container->name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container->size ;
-                            if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
-                            }else{
-                                $orders[$i]['image'] = null ;
-                            }
-                        }else{
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container_name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container_name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container_size ;
-                             $orders[$i]['image'] = null ;
-                        }
-                        $orders[$i]['total'] =   $order->total ;
-                        // $orders[$i]['status'] =   trans('api.'.$order->status) ;
-                        $orders[$i]['status'] =   $order->status;
-                        $orders[$i]['created_at'] =   $order->created_at;
-                        $i++;
-                    }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.fetch'),
-                        'data' => [
-                            'order' => $orders  , 
-                            'count_orders' => $count_orders,
-                            'count_notifications' => $count,
-                        ]
-                    ]);
-                }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
+            if($user){
+                $reasons = Reason::where('type','reason')->where('status','active')->get();
+                // return $orders ;
                 
-            }
-            else if($user && $user->role == 'driver'){
-                // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                // $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
-                $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->get();
-                $count_orders = Order::where('driver_id',$user->id)->with('center')->with('container')->count('id');
-                 $count = count($user->unreadnotifications) ;
-                if(sizeof($orderss) > 0){
-                    $orders = [];
-                    $i = 0 ;
-                    foreach($orderss as $order){
-                        $orders[$i]['order_id'] =   $order->id ;
-                        $orders[$i]['user_id'] =   $order->user_id ;
-                        $orders[$i]['user_name'] =   $order->user_name ;
-                        $orders[$i]['mobile'] =   $order->user_mobile ;
-                        $orders[$i]['lat'] =   $order->lat ;
-                        $orders[$i]['lng'] =   $order->lng ;
-                        $orders[$i]['city'] =   $order->city ;
-                        $orders[$i]['area'] =   $order->area ;
-                        
-                        if($order->center){
-                            
-                            $orders[$i]['center_id'] =   $order->center->id ;
-                            $orders[$i]['center_name'] =   $order->center->name ;
-                        }else{
-                             $orders[$i]['center_id'] =   ' '  ;
-                            $orders[$i]['center_name'] =  ' ' ;
-                        }
-                       
-                       
-                        $orders[$i]['num_containers'] =   $order->no_container;
-                        $orders[$i]['container_price'] =   $order->price ;
-                        if($order->container){
-                            $orders[$i]['container_id'] =   $order->container->id ;
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container->name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container->name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container->size ;
-                            if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
-                            }else{
-                                $orders[$i]['image'] = null ;
-                            }
+                $reasonss = [];
+                $i = 0; 
+                if(sizeof($reasons) > 0){
+                    foreach($reasons as $reason){
+                        if($lang == 'ar'){
+
+                            $reasonss[$i]['title'] = $reason->title_ar;
                         }
                         else{
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container_name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container_name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container_size ;
-                             $orders[$i]['image'] = null ;
+
+                            $reasonss[$i]['title'] = $reason->title_en;
                         }
-                        $orders[$i]['total'] =   $order->total ;
-                        // $orders[$i]['status'] =   trans('api.'.$order->status) ;
-                        $orders[$i]['status'] =   $order->status;
-                        $orders[$i]['created_at'] =   $order->created_at;
-                        $i++;
+                        $i ++ ;
                     }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.fetch'),
-                        'data' => [
-                            'order' => $orders  , 
-                            'count_orders' => $count_orders,
-                            'count_notifications' => $count,
-                        ]
-                    ]);
                 }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
                 
+                $data['reasons'] = $reasonss ;
+
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
-            else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
-            }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
+
+
     }
 //////////////////////////////////////////////////
-// CanceledOrders function by Antonious hosny
+// CanceleOrder function by Antonious hosny
     public function CanceleOrder(Request $request){
+        $rules=array(
+            "order_id"=>"required",
+            "reason"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
+
         if($token){
             $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'user'){
-                $rules=array(
-                    'order_id'      =>'required',
-                );
-                $validator  = \Validator::make($request->all(),$rules);
-                if($validator->fails())
-                {
-                    $messages = $validator->messages();
-                    $transformed = [];
-        
-                    foreach ($messages->all() as $field => $message) {
-                        $transformed[] = [
-                            'message' => $message
-                        ];
-                    }
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors'  => $transformed,
-                        'message' => trans('api.validation_error'),
-                        'data'    => null ,
-                    ]);
-                }
+            if($user){
                 $order = Order::where('id',$request->order_id)->first();
                 if($order){
                     $order->status = 'canceled' ;
+                    $order->rejected_reason = $request->reason ;
+                    $order->rejected_date = $date ;
+                    
                     $order->save();
                     $type = "order";
                     $msg =  [
@@ -1984,316 +1868,169 @@ class ApiController extends Controller
                         'en' =>  $user->name ."  canceled the order"  ,
                         'ar' =>   $user->name ."  قام بالغاء الطلب"  , 
                     ];
-                    $center = User::where('id', $order->center_id)->first(); 
-                    if($center){
+                    $fannie = User::where('id', $order->fannie_id)->first(); 
+                    if($fannie){
 
-                        $center->notify(new Notifications($msg,$type ));
-                        $device_token = $center->device_token ;
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
                         if($device_token){
                             $this->notification($device_token,$msg,$msg);
                             $this->webnotification($device_token,$msg,$msg,$type);
                         }
                     }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.canceled'),
-                        'data' => null ,
-                    ]);
                 }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
+                
+                $data['order'] = $order ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
+
+
     }
 //////////////////////////////////////////////////
-// OrdersHistory function by Antonious hosny
-    public function OrdersHistory(Request $request){
-        $token = $request->header('token');
-        $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
-        if($token){
-            $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'user'){
-                $orderss = Order::where('user_id',$user->id)->with('center')->where('status','delivered')->Orwhere('status','canceled')->with('container')->get();
-                if(sizeof($orderss) > 0){
-                    $orders = [];
-                    $i = 0 ;
-                    foreach($orderss as $order){
-                        $orders[$i]['order_id'] =   $order->id ;
-                        $orders[$i]['container_id'] =   $order->container->id ;
-                        $orders[$i]['center_id'] =   $order->center->id ;
-                        $orders[$i]['center_name'] =   $order->center->name ;
-                        if($lang == 'ar'){
-                            $orders[$i]['container_name'] =   $order->container->name_ar ;
-                        }else{
-                            $orders[$i]['container_name'] =   $order->container->name_en ;
-                        }
-                        $orders[$i]['container_size'] =   $order->container->size ;
-                        $orders[$i]['num_containers'] =   $order->no_container;
-                        $orders[$i]['container_price'] =   $order->price ;
-                        $orders[$i]['total'] =   $order->total ;
-                        $orders[$i]['status'] =   trans('api.'.$order->status) ;
-                        $i++;
-                    }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.fetch'),
-                        'data' => $orders ,
-                    ]);
-                }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
-                
-            }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
-            }
-        }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
-        }
-    }
-//////////////////////////////////////////////////
-// ChangeStatusOrders function by Antonious hosny
-    public function ChangeStatusOrders(Request $request){
-        $token = $request->header('token');
-        $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
-        if($token){
-            $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'driver'){
-                $rules=array(
-                    'status'      =>'required',
-                    'order_id'      =>'required',
-                );
-                $validator  = \Validator::make($request->all(),$rules);
-                if($validator->fails())
-                {
-                    $messages = $validator->messages();
-                    $transformed = [];
+// SubscriptionTypes function by Antonious hosny
+    public function SubscriptionTypes(Request $request){
         
-                    foreach ($messages->all() as $field => $message) {
-                        $transformed[] = [
-                            'message' => $message
-                        ];
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $SubscriptionTypes = SubscriptionType::where('status','active')->get();
+                // return $orders ;
+                
+                $SubscriptionTypess = [];
+                $i = 0; 
+                if(sizeof($SubscriptionTypes) > 0){
+                    foreach($SubscriptionTypes as $SubscriptionType){
+                        $SubscriptionTypess[$i]['id'] = $SubscriptionType->id;
+
+                        if($lang == 'ar'){
+                            $SubscriptionTypess[$i]['title'] = $SubscriptionType->name_ar;
+                        }
+                        else{
+                            $SubscriptionTypess[$i]['title'] = $SubscriptionType->name_en;
+                        }
+                        $SubscriptionTypess[$i]['no_month'] = $SubscriptionType->no_month;
+                        $SubscriptionTypess[$i]['cost'] = $SubscriptionType->	cost;
+
+                        $i ++ ;
                     }
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors'  => $transformed,
-                        'message' => trans('api.validation_error'),
-                        'data'    => null ,
-                    ]);
                 }
-                $order = Order::where('id',$request->order_id)->first();
-                $dt = Carbon::now();
-                $date  = date('Y-m-d H:i:s', strtotime($dt));
-                if($order){
-                    if($request->status == 'accept'){
-                        $user->available = 2 ;
-                        $user->save();
-                        $order->status = 'assigned' ;
-                        $order->save();
-                        $orderdriver = OrderDriver::where('order_id',$order->id)->where('driver_id',$user->id)->orderBy('id',"Desc")->first();
-                        if($orderdriver){
-                            $orderdriver->status = 'accept' ;
-                            $orderdriver->accept_date  = $date ;
-                            $orderdriver->save(); 
-                        }
-                        $type = "order";
-                        $msg =  [
-                            'en' =>  $user->name ."  agreed to deliver the request "  ." number ". $order->id  , 
-                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب" ." رقم ". $order->id  ,  
-                        ];
-                        $title = [
-                            'en' =>  $user->name ."  agreed to deliver the request"  ,
-                            'ar' =>   $user->name ."  قام بالموافقة علي توصيل الطلب"  ,
-                        ];
-                        $center = User::where('id', $order->center_id)->first(); 
-                        if($center){
+                
+                $data['SubscriptionTypes'] = $SubscriptionTypess ;
 
-                            $center->notify(new Notifications($msg,$type ));
-                            $device_token = $center->device_token ;
-                            if($device_token){
-                                $this->notification($device_token,$msg,$msg);
-                                $this->webnotification($device_token,$title,$msg,$type);
-                            }
-                        }
-                        $msg =  [
-                            'en' =>  "  Your order status has changed"  ." number ". $order->id  , 
-                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ." رقم ". $order->id  , 
-                        ];
-                        $title = [
-                            'en' =>  "  Your order status has changed" ." number ". $order->id   ,
-                            'ar' =>   " تم تغيير حالة الطلب الخاص بك "  ." رقم ". $order->id  , 
-                        ];
-                        $center = User::where('id', $order->user_id)->first(); 
-                        if($center){
-
-                            $center->notify(new Notifications($msg,$type ));
-                            $device_token = $center->device_token ;
-                            if($device_token){
-                                $this->notification($device_token,$title,$msg);
-                                $this->webnotification($device_token,$title,$msg,$type);
-                            }
-                        }
-                        return response()->json([
-                            'success' => 'success',
-                            'errors' => null ,
-                            'message' => trans('api.success'),
-                            'data' => null ,
-                        ]);
-                    }
-                    else if($request->status == 'decline'){
-                        $user->available = 1 ;
-                        $user->save();
-                        $order->status = 'accepted' ;
-                        $order->driver_id = null ;
-                        $order->save();
-                        $orderdriver = OrderDriver::where('order_id',$order->id)->where('driver_id',$user->id)->orderBy('id',"Desc")->first();
-                        if($orderdriver){
-                            $orderdriver->status = 'decline' ;
-                            $orderdriver->reason = $request->reason ;
-                            $orderdriver->decline_date  = $date ;
-                            $orderdriver->save(); 
-                        }
-                        $type = "order";
-                        $msg =  [
-                            'en' =>  $user->name ."  declined  to deliver the request"  ." number ". $order->id   ,
-                            'ar' =>   $user->name ."  رفض تسليم الطلب"   ." رقم ". $order->id   ,
-                        ];
-                        $title = [
-                            'en' =>  $user->name ."  declined  to deliver the request"   ." number ". $order->id   ,
-                            'ar' =>   $user->name ."  رفض تسليم الطلب"   ." رقم ". $order->id   ,
-                        ];
-                        $center = User::where('id', $order->center_id)->first(); 
-                        if($center){
-
-                            $center->notify(new Notifications($msg,$type ));
-                            $device_token = $center->device_token ;
-                            if($device_token){
-                                $this->notification($device_token,$title,$msg);
-                                $this->webnotification($device_token,$title,$msg,$type);
-                            }
-                        }
-
-                        return response()->json([
-                            'success' => 'success',
-                            'errors' => null ,
-                            'message' => trans('api.success'),
-                            'data' => null ,
-                        ]);
-                    }
-                    else if($request->status == 'delivered'){
-                        $user->available = 1 ;
-                        $user->save();
-                        $order->status = 'delivered' ;
-                        $order->save();
-                        $orderdriver = OrderDriver::where('order_id',$order->id)->where('driver_id',$user->id)->orderBy('id',"Desc")->first();
-                        if($orderdriver){
-                            $orderdriver->status = 'accept' ;
-                            $orderdriver->accept_date  = $date ;
-                            $orderdriver->save(); 
-                        }
-                        $type = "order";
-                        $msg =  [
-                            'en' =>  "  The request has been delivered"  ." number ". $order->id   ,
-                            'ar' =>   "  تم توصيل الطلب"  ." رقم ". $order->id   ,
-                        ];
-                        $title = [
-                            'en' =>  "  The request has been delivered" ." number ". $order->id   ,
-                            'ar' =>   "  تم توصيل الطلب"  ." رقم ". $order->id   ,
-                        ];
-                        $center = User::where('id', $order->center_id)->first(); 
-                        if($center){
-
-                            $center->notify(new Notifications($msg,$type ));
-                            $device_token = $center->device_token ;
-                            if($device_token){
-                                $this->notification($device_token,$title,$msg);
-                                $this->webnotification($device_token,$title,$msg,$type);
-                            }
-                        }
-                        $center = User::where('id', $order->user_id)->first(); 
-                        if($center){
-
-                            $center->notify(new Notifications($msg,$type ));
-                            $device_token = $center->device_token ;
-                            if($device_token){
-                                $this->notification($device_token,$title,$msg);
-                                $this->webnotification($device_token,$title,$msg,$type);
-                            }
-                        }
-                        return response()->json([
-                            'success' => 'success',
-                            'errors' => null ,
-                            'message' => trans('api.success'),
-                            'data' => null ,
-                        ]);
-                    }
-
-                    return response()->json([
-                        'success' => 'failed',
-                        'errors' => null ,
-                        'message' => trans('api.notfound'),
-                        'data' => null ,
-                    ]);
-                    
-                }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
                 
             }else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
+
+
+    }
+//////////////////////////////////////////////////
+// RenewSubscription function by Antonious hosny
+    public function RenewSubscription(Request $request){
+        $rules=array(
+            "subscription_id"=>"required",
+            "image"=>"required",
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                
+                $Subscription  = new Subscription  ;
+                $Subscription->fannie_id  =  $user->id ;
+                $Subscription->subscription_id  =  $request->subscription_id ;
+                
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $name = md5($image->getClientOriginalName() . time()) . "." . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/img');
+                    $image->move($destinationPath, $name);
+                    $Subscription->image   = $name;  
+                 }
+                $Subscription->save();
+                
+                $type = "subscription";
+                $msg =  [
+                    'en' =>  $user->name ."  He has made a renewal subscription"  ." number ". $Subscription->id  , 
+                    'ar' =>   $user->name ." لقد قام بتجديد الاشتراك  "   ." رقم ". $Subscription->id  , 
+                ];
+                
+                $admins = User::where('role', 'admin')->get(); 
+                foreach($admins as $admin){
+                    if($admin){
+                        $admin->notify(new Notifications($msg,$type ));
+                        $device_token = $admin->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                            $this->webnotification($device_token,$msg,$msg,$type);
+                        }
+                    }
+                }
+
+                $data['Subscription'] = $Subscription ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
     }
 //////////////////////////////////////////////////
 
 
+
+ 
 
 /////////////////////////////////////////////////////
 // ContactUs function by Antonious hosny
