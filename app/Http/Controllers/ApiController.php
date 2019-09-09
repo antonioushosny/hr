@@ -2147,13 +2147,69 @@ class ApiController extends Controller
                     $orderss['created_at'] = $order->created_at->format('Y-d-m H:i:s') ;
                     if($order->status == 'canceled' || $order->status == 'rejected'){
                         $orderss['rejected_reason'] = $order->rejected_reason ;
+                        $orderss['rejected_date'] = $order->rejected_date ;
                     }
                     
                    
                     if($order->fannie){
                         $distance = $this->GetDistance($order->lat,$order->fannie->lat,$order->lng,$order->fannie->lng,'k');
                         if($order->status == 'accepted'){
-                            $orderss['expected_time'] = $order->rejected_reason ;
+                            $orderss['expected_time'] = (round($distance,0) / 10) * 60   ;
+                            $orderss['accepted_date'] = $order->accepted_date ;
+
+                            // Declare and define two dates 
+                            $date1 = strtotime($date);  
+                            $date2 = strtotime($order->accepted_date);  
+                            
+                            // Formulate the Difference between two dates 
+                            $diff = abs($date2 - $date1);  
+                            
+                            
+                            // To get the year divide the resultant date into 
+                            // total seconds in a year (365*60*60*24) 
+                            $years = floor($diff / (365*60*60*24));  
+                            
+                            
+                            // To get the month, subtract it with years and 
+                            // divide the resultant date into 
+                            // total seconds in a month (30*60*60*24) 
+                            $months = floor(($diff - $years * 365*60*60*24) 
+                                                        / (30*60*60*24));  
+                            
+                            
+                            // To get the day, subtract it with years and  
+                            // months and divide the resultant date into 
+                            // total seconds in a days (60*60*24) 
+                            $days = floor(($diff - $years * 365*60*60*24 -  
+                                        $months*30*60*60*24)/ (60*60*24)); 
+                            
+                            
+                            // To get the hour, subtract it with years,  
+                            // months & seconds and divide the resultant 
+                            // date into total seconds in a hours (60*60) 
+                            $hours = floor(($diff - $years * 365*60*60*24  
+                                - $months*30*60*60*24 - $days*60*60*24) 
+                                                            / (60*60));  
+                            
+                            
+                            // To get the minutes, subtract it with years, 
+                            // months, seconds and hours and divide the  
+                            // resultant date into total seconds i.e. 60 
+                            $minutes = floor(($diff - $years * 365*60*60*24  
+                                    - $months*30*60*60*24 - $days*60*60*24  
+                                                    - $hours*60*60)/ 60);  
+                            
+                            
+                            // To get the minutes, subtract it with years, 
+                            // months, seconds, hours and minutes  
+                            $seconds = floor(($diff - $years * 365*60*60*24  
+                                    - $months*30*60*60*24 - $days*60*60*24 
+                                            - $hours*60*60 - $minutes*60));  
+                            
+                            // Print the result 
+                            printf("%d years, %d months, %d days, %d hours, "
+                                . "%d minutes, %d seconds", $years, $months, 
+                                    $days, $hours, $minutes, $seconds);
                         }
                         $ratecount = Rate::where('evaluator_to',$order->fannie->id)->count('id');
                         $sumrates = Rate::where('evaluator_to',$order->fannie->id)->sum('rate');

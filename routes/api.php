@@ -34,6 +34,8 @@ Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localizat
 Route::get('MyOrders', 'ApiController@MyOrders')->middleware('localization');
 Route::get('CancelationReason', 'ApiController@CancelationReason')->middleware('localization');
 Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
+Route::post('AcceptOrder', 'ApiController@AcceptOrder')->middleware('localization');
+Route::post('OrderDetail', 'ApiController@OrderDetail')->middleware('localization');
 Route::get('SubscriptionTypes', 'ApiController@SubscriptionTypes')->middleware('localization');
 Route::post('RenewSubscription', 'ApiController@RenewSubscription')->middleware('localization');
 
