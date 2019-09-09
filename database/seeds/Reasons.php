@@ -21,7 +21,6 @@ class Reasons extends Seeder
     
         ];
         
-
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }

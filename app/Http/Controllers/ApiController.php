@@ -25,6 +25,7 @@ use App\Technician;
 use App\Service;
 use App\Rate;
 use App\Nationality;
+use App\Reason;
 
 use Carbon\Carbon;
 use App\Notifications\Notifications;
@@ -1760,184 +1761,50 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
- 
-// MyOrderسs function by Antonious hosny
-    public function MyOrderسs(Request $request){
+// CancelationReason function by Antonious hosny
+    public function CancelationReason(Request $request){
+       
         $token = $request->header('token');
         $lang = $request->header('lang');
-        $dt = Carbon::now();
-        $date  = date('Y-m-d', strtotime($dt));
-        $time  = date('H:i:s', strtotime($dt));
-        if($request->page && $request->page >= 1 ){
-            $skip = $request->page.'0' ;
-            // return $skip ;
-        }else{
-            $skip = 0 ;
-        }
-        
+
         if($token){
             $user = User::where('remember_token',$token)->first();
-            if($user && $user->role == 'user'){
-                // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                // $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
-                $orderss = Order::where('user_id',$user->id)->with('center')->with('container')->get();
-                $count_orders = Order::where('user_id',$user->id)->with('center')->with('container')->count('id');
-                $count = count($user->unreadnotifications) ;
-                if(sizeof($orderss) > 0){
-                    $orders = [];
-                    $i = 0 ;
-                    foreach($orderss as $order){
-                        $orders[$i]['order_id'] =   $order->id ;
-                        
-                        if($order->center){
-                            
-                            $orders[$i]['center_id'] =   $order->center->id ;
-                            $orders[$i]['center_name'] =   $order->center->name ;
-                        }else{
-                             $orders[$i]['center_id'] =   ' '  ;
-                            $orders[$i]['center_name'] =  ' ' ;
-                        }
-                         
-                        $orders[$i]['num_containers'] =   $order->no_container;
-                        $orders[$i]['container_price'] =   $order->price ;
-                        if($order->container){
-                            $orders[$i]['container_id'] =   $order->container->id ;
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container->name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container->name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container->size ;
-                            if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
-                            }else{
-                                $orders[$i]['image'] = null ;
-                            }
-                        }else{
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container_name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container_name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container_size ;
-                             $orders[$i]['image'] = null ;
-                        }
-                        $orders[$i]['total'] =   $order->total ;
-                        // $orders[$i]['status'] =   trans('api.'.$order->status) ;
-                        $orders[$i]['status'] =   $order->status;
-                        $orders[$i]['created_at'] =   $order->created_at;
-                        $i++;
-                    }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.fetch'),
-                        'data' => [
-                            'order' => $orders  , 
-                            'count_orders' => $count_orders,
-                            'count_notifications' => $count,
-                        ]
-                    ]);
-                }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
+            if($user){
+                $reasons = Reason::where('type','reason')->get();
+                // return $orders ;
                 
-            }
-            else if($user && $user->role == 'driver'){
-                // $orderss = Order::where('user_id',$user->id)->with('center')->where('status','<>','delivered')->Where('status','<>','canceled')->with('container')->get();
-                // $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->skip($skip)->limit(10)->get();
-                $orderss = Order::where('driver_id',$user->id)->with('center')->with('container')->get();
-                $count_orders = Order::where('driver_id',$user->id)->with('center')->with('container')->count('id');
-                 $count = count($user->unreadnotifications) ;
-                if(sizeof($orderss) > 0){
-                    $orders = [];
-                    $i = 0 ;
-                    foreach($orderss as $order){
-                        $orders[$i]['order_id'] =   $order->id ;
-                        $orders[$i]['user_id'] =   $order->user_id ;
-                        $orders[$i]['user_name'] =   $order->user_name ;
-                        $orders[$i]['mobile'] =   $order->user_mobile ;
-                        $orders[$i]['lat'] =   $order->lat ;
-                        $orders[$i]['lng'] =   $order->lng ;
-                        $orders[$i]['city'] =   $order->city ;
-                        $orders[$i]['area'] =   $order->area ;
-                        
-                        if($order->center){
-                            
-                            $orders[$i]['center_id'] =   $order->center->id ;
-                            $orders[$i]['center_name'] =   $order->center->name ;
-                        }else{
-                             $orders[$i]['center_id'] =   ' '  ;
-                            $orders[$i]['center_name'] =  ' ' ;
-                        }
-                       
-                       
-                        $orders[$i]['num_containers'] =   $order->no_container;
-                        $orders[$i]['container_price'] =   $order->price ;
-                        if($order->container){
-                            $orders[$i]['container_id'] =   $order->container->id ;
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container->name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container->name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container->size ;
-                            if($order->container->image){
-                                $orders[$i]['image'] = asset('img/').'/'. $order->container->image;
-                            }else{
-                                $orders[$i]['image'] = null ;
-                            }
+                $reasonss = [];
+                $i = 0; 
+                if(sizeof($reasons) > 0){
+                    foreach($reasons as $reason){
+                        if($lang == 'ar'){
+
+                            $reasonss[$i]['title'] = $reason->title_ar;
                         }
                         else{
-                            if($lang == 'ar'){
-                                $orders[$i]['container_name'] =   $order->container_name_ar ;
-                            }else{
-                                $orders[$i]['container_name'] =   $order->container_name_en ;
-                            }
-                            $orders[$i]['container_size'] =   $order->container_size ;
-                             $orders[$i]['image'] = null ;
+
+                            $reasonss[$i]['title'] = $reason->title_en;
                         }
-                        $orders[$i]['total'] =   $order->total ;
-                        // $orders[$i]['status'] =   trans('api.'.$order->status) ;
-                        $orders[$i]['status'] =   $order->status;
-                        $orders[$i]['created_at'] =   $order->created_at;
-                        $i++;
+                        $i ++ ;
                     }
-                    return response()->json([
-                        'success' => 'success',
-                        'errors' => null ,
-                        'message' => trans('api.fetch'),
-                        'data' => [
-                            'order' => $orders  , 
-                            'count_orders' => $count_orders,
-                            'count_notifications' => $count,
-                        ]
-                    ]);
                 }
-                return response()->json([
-                    'success' => 'failed',
-                    'errors' => trans('api.notfound'),
-                    "message"=>trans('api.notfound'),
-                    ]);
                 
+                $data['reasons'] = $reasonss ;
+
+                $message = trans('api.fetch') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
             }
-            else{
-                return response()->json([
-                    'success' => 'logged',
-                    'errors' => trans('api.logout'),
-                    "message"=>trans('api.logout'),
-                    ]);
-            }
+            
         }else{
-            return response()->json([
-                'success' => 'logged',
-                'errors' => trans('api.logout'),
-                "message"=>trans('api.logout'),
-                ]);
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
         }
+
+
     }
 //////////////////////////////////////////////////
 // CanceledOrders function by Antonious hosny
