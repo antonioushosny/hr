@@ -323,6 +323,7 @@ return [
         'add_service'=>'إضافة خدمة',
         'edit_service'=>'تعديل خدمة',
         'showtechnicians'=>'عرض الفنيين',
+        'counttechnicians'=>'عدد الفنيين',
         //end services pages
      
         //subscriptions pages

@@ -315,6 +315,7 @@ return [
         'add_service'=>'Add Service',
         'edit_service'=>'Edit Service',
         'showtechnicians'=>'Show Technicians',
+        'counttechnicians'=>'Count Technicians',
         //end services pages
 
 

@@ -71,6 +71,7 @@
                                         <th>{{trans('admin.name_en')}}</th>
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
+                                        <th>{{trans('admin.counttechnicians')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
@@ -96,6 +97,7 @@
                                         <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
                                         @endif
 
+                                        <td>{{count($data->fannies)}}</td>
                                         <td>
                                             @can('service_edit')
                                             <a href="{{route('editservice',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
