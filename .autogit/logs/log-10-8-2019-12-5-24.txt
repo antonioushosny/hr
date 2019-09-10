@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Tue Sep 10 2019 12:05:24 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Subscription.php
+
+
+Created files:
+* database/migrations/2019_09_10_095803_add_votes_to_subscriptions_table.php
+
+
+Deleted files:
+
+
+Renamed files:

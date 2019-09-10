@@ -10,6 +10,7 @@ use App\Subscription;
 use Auth;
 use App;
 use DB;
+use Carbon\Carbon;
 class SubscriptionController extends Controller
 {
     //
@@ -154,6 +155,49 @@ class SubscriptionController extends Controller
             }
             $types = array_pluck($allsub,'name', 'id');
               //return $new_date; 
+            return view('subscriptions_tech.edit',compact('subscription','title','lang','new_date','types'));
+            
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
+        
+    }
+
+    public function accept($id)
+    {
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'subscriptions_tech';
+        $subscription = Subscription::where('id',$id)->with('user')->with('subscription_type')->orderBy('id', 'DESC')->first();
+       
+        if($subscription)
+        {
+            if($subscription->subscription_type)
+            { 
+                $number=$subscription->subscription_type->no_month;
+                if($subscription->user->technician->renewal_date <= $date ){
+                    $new_date = strtotime($number."month", strtotime($date));
+                }else{
+                    $new_date = strtotime($number."month", strtotime($subscription->user->technician->renewal_date));
+                }
+                $new_date=date("Y-m-d", $new_date);
+                $techican = Technician::where('user_id',$subscription->user->id)->first() ;
+                $techican->renewal_date =   $new_date ;
+                $techican->save() ;
+
+                print($techican."</br>") ;
+                print($subscription->subscription_type->no_month."</br>");
+                print(   $new_date."</br>");
+                return   $subscription->user->technician->renewal_date ;
+            }
+            
             return view('subscriptions_tech.edit',compact('subscription','title','lang','new_date','types'));
             
         }

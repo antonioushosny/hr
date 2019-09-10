@@ -152,6 +152,8 @@ Route::group(['middleware' => 'auth'], function () {
      Route::get('/technicians/subscriptions/add', 'SubscriptionController@add')->name('addtechsubscription');
      Route::post('/technicians/subscriptions/update/', 'SubscriptionController@store')->name('storeaddtechsubscription');
      Route::get('/technicians/subscriptions/edit/{id}', 'SubscriptionController@edit')->name('edittechsubscription');
+     Route::get('/technicians/subscriptions/accept/{id}', 'SubscriptionController@accept')->name('accepttechsubscription');
+     Route::get('/technicians/subscriptions/reject/{id}', 'SubscriptionController@reject')->name('rejecttechsubscription');
     // Route::get('/subscriptions/delete/{id}', 'SubscriptionController@destroy')->name('destroysubscription');
     // Route::post('/subscriptions/deleteall', 'SubscriptionController@deleteall')->name('subscriptionsdeleteall');
 

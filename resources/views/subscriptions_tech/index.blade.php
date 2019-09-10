@@ -73,7 +73,7 @@
                                         <th>{{trans('admin.cost')}}</th>
                                         <th>{{trans('admin.date')}}</th>
                                         <th>{{trans('admin.deposit')}}</th>
-                                        <th>{{trans('admin.date_exp')}}</th>
+                                        <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
@@ -96,18 +96,20 @@
                                         <td>{{ $data->subscription_type->cost }}</td>
                                         <td>{{ $data->created_at }}</td>
                                         @if($data->image)
-                                            <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
+                                            <td><a href="{{asset('img/').'/'.$data->image }}" target="_blank"> <img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"> </a> </td>
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                         <td>{{ $data->date }}</td>
+                                         <td>{{ __('admin.'.$data->status)  }}</td>
                                         <td>
+                                            @if($data->status == 'pending')
                                             @can('subscription_edit')
-                                            <a href="{{route('edittechsubscription',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
+                                            <a href="{{route('accepttechsubscription',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.accept')}}">  {{trans('admin.accept')}} </a>
                                             @endcan
-                                            <!-- @can('subscription_delete')
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan -->
+                                            @can('subscription_edit')
+                                            <a href="{{route('rejecttechsubscription',$data->id)}}" class="btn btn-warning waves-effect waves-float waves-green btn-round " title="{{trans('admin.reject')}}">  {{trans('admin.reject')}}</a>
+                                            @endcan 
+                                            @endif
                                         </td>
                                     </tr>
                                     

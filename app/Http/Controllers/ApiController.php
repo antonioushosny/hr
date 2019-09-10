@@ -1993,6 +1993,7 @@ class ApiController extends Controller
                 $Subscription  = new Subscription  ;
                 $Subscription->fannie_id  =  $user->id ;
                 $Subscription->subscription_id  =  $request->subscription_id ;
+                $Subscription->status  =  'pending' ;
                 
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
