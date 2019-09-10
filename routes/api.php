@@ -42,6 +42,7 @@ Route::get('SubscriptionTypes', 'ApiController@SubscriptionTypes')->middleware('
 Route::post('RenewSubscription', 'ApiController@RenewSubscription')->middleware('localization');
 Route::post('RateFannie', 'ApiController@RateFannie')->middleware('localization');
 Route::post('RateUser', 'ApiController@RateUser')->middleware('localization');
+Route::get('MakeAvailable', 'ApiController@MakeAvailable')->middleware('localization');
 
 
 Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');

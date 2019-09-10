@@ -2564,13 +2564,16 @@ public function MakeAvailable(Request $request){
         if($user){
             $fannie = Technician::where('user_id', $user->id)->first(); 
             if($fannie){
-                $fannie->evaluator_from = $user->id ;
+                if($fannie->available == 0){
+                    $fannie->available = 1 ;
+                }else{
+                    $fannie->available = 0 ;
+                }
                 $fannie->save() ;
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$fannie ) ;
             }
 
-            
-            $message = trans('api.save') ;
-            return  $this->SuccessResponse($message,$data ) ;
             
         }else{
             $message = trans('api.logged_out') ;
