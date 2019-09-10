@@ -2552,8 +2552,6 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////
 // ContactUs function by Antonious hosny
     public function ContactUs(Request $request){
         $lang = $request->header('lang');
