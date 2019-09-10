@@ -353,7 +353,8 @@ return [
         'Choose_deposit'=>'Choose Deposit',
         'cost'=>'Cost',
         'date_exp'=>'Expiration date',
-
+        'accept' => 'accept',
+        'reject' => 'reject',
 
         //orders pages
         'orders'=>'Orders',

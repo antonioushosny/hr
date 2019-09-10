@@ -11,6 +11,10 @@ use Auth;
 use App;
 use DB;
 use Carbon\Carbon;
+use App\Notifications\Notifications;
+
+use Illuminate\Support\Facades\Redirect;
+
 class SubscriptionController extends Controller
 {
     //
@@ -191,14 +195,29 @@ class SubscriptionController extends Controller
                 $techican = Technician::where('user_id',$subscription->user->id)->first() ;
                 $techican->renewal_date =   $new_date ;
                 $techican->save() ;
+                $subscription->status = "accepted" ;
+                $subscription->save() ;
 
-                print($techican."</br>") ;
-                print($subscription->subscription_type->no_month."</br>");
-                print(   $new_date."</br>");
-                return   $subscription->user->technician->renewal_date ;
+                $type = "subscription";
+                $msg =  [
+                    'en' =>  " The renewal application number " . $subscription->id . " was approved, The next renewal date is " .  $techican->renewal_date, 
+                    'ar' =>  " تم الموافقة علي طلب تجديد الاشتراك رقم  " . $subscription->id . " واصبح ميعاد التجديد القادم " .  $techican->renewal_date, 
+                ];
+                
+                $fannie = User::where('id', $subscription->user->id)->first(); 
+                if($fannie){
+
+                    $fannie->notify(new Notifications($msg,$type ));
+                    $device_token = $fannie->device_token ;
+                    if($device_token){
+                        $this->notification($device_token,$msg,$msg);
+                    }
+                }
+                return redirect()->route('techsubscriptions');
+                // return Redirect::route('techsubscriptions') ;
             }
             
-            return view('subscriptions_tech.edit',compact('subscription','title','lang','new_date','types'));
+            return redirect(url('error'));
             
         }
         else
@@ -207,4 +226,47 @@ class SubscriptionController extends Controller
         }
         
     }
+
+    public function reject($id)
+    {
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'subscriptions_tech';
+        $subscription = Subscription::where('id',$id)->with('user')->with('subscription_type')->orderBy('id', 'DESC')->first();
+       
+        if($subscription)
+        {
+            $subscription->status = "rejected" ;
+            $subscription->save() ;
+            $type = "subscription";
+            $msg =  [
+                'en' =>  " The renewal application number " . $subscription->id . " was rejected, Please communicate with the application management "  , 
+                'ar' =>  " تم رفض طلب تجديد الاشتراك رقم  " . $subscription->id . " نرجو التواصل مع ادراة التطبيق "  , 
+            ];
+            
+            $fannie = User::where('id', $subscription->user->id)->first(); 
+            if($fannie){
+
+                $fannie->notify(new Notifications($msg,$type ));
+                $device_token = $fannie->device_token ;
+                if($device_token){
+                    $this->notification($device_token,$msg,$msg);
+                }
+            }
+            return redirect()->route('techsubscriptions');
+            
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
+        
+    }
+
+
 }

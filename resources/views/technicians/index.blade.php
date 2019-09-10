@@ -74,6 +74,7 @@
                                         <th>{{trans('admin.email')}}</th>
                                         <!-- <th>{{trans('admin.city')}}</th>
                                         <th>{{trans('admin.area')}}</th> -->
+                                        <th>{{trans('admin.renewal_date')}}</th>
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
@@ -107,7 +108,7 @@
                                         @else 
                                             <td> </td> 
                                         @endif -->
-
+                                        <td>{{ $data->technician->renewal_date }}</td>   
                                         @if($data->image)
                                             <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
                                         @else 

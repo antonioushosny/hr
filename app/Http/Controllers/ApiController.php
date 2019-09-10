@@ -2553,6 +2553,38 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// MakeAvailable function by Antonious hosny
+public function MakeAvailable(Request $request){
+ 
+    $token = $request->header('token');
+    $lang = $request->header('lang');
+
+    if($token){
+        $user = User::where('remember_token',$token)->first();
+        if($user){
+            $fannie = Technician::where('user_id', $user->id)->first(); 
+            if($fannie){
+                $fannie->evaluator_from = $user->id ;
+                $fannie->save() ;
+            }
+
+            
+            $message = trans('api.save') ;
+            return  $this->SuccessResponse($message,$data ) ;
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+        
+    }else{
+        $message = trans('api.logged_out') ;
+        return  $this->LoggedResponse($message ) ;
+    }
+
+
+}
+//////////////////////////////////////////////////
 // ContactUs function by Antonious hosny
     public function ContactUs(Request $request){
         $lang = $request->header('lang');

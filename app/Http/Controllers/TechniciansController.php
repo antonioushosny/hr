@@ -34,7 +34,7 @@ class TechniciansController extends Controller
         $countries = array_pluck($allcountries,'name_ar', 'id');
         $allcities = City::where('id','<>','1')->get();
         $cities = array_pluck($allcities,'name_ar', 'id');
-        $technicians = User::where('role','fannie')->orderBy('id', 'DESC')->get();
+        $technicians = User::where('role','fannie')->with('technician')->orderBy('id', 'DESC')->get();
         return view('technicians.index',compact('technicians','countries','cities','title','lang'));
     }
 

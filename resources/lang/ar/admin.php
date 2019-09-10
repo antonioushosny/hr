@@ -360,7 +360,8 @@ return [
         'Choose_deposit'=>'اختر صورة الإيداع',
         'cost'=>'التكلفة',
         'date_exp'=>'تاريخ الصلاحية',
-
+        'accept' => 'قبول',
+        'reject' => 'رفض',
         //orders pages
         'orders'=>'الطلبات',
         'pending'=>'قيد الانتظار',
