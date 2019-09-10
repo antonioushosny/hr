@@ -102,9 +102,7 @@
                                 </div>
 
                                 <div class="form-group">
-                             <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}">
-                             {{$technical->brief}}
-                             </textarea>
+                                    <textarea class="form-control" id="brief" rows="6" name="brief" placeholder="{{__('admin.brief_technician')}}">{{$technical->brief}}</textarea>
                             </div>
 
 
