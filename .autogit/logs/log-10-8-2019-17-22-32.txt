@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Tue Sep 10 2019 17:22:32 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app/Http/Controllers/HomeController.php
+* resources/views/home.blade.php
+
+
+Created files:
+
+
+Deleted files:
+
+
+Renamed files:
