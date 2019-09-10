@@ -534,6 +534,7 @@ class ApiController extends Controller
                 }
  
                 $fannie->brief = $request->brief ;
+                $fannie->available = 0 ;
 
                 if ($request->hasFile('identity_photo')) {
                     $image = $request->file('identity_photo');
@@ -902,12 +903,15 @@ class ApiController extends Controller
            
         }  
         // $token = $request->header('access_token');
-        $user = User::where('remember_token',$token)->first();
+        $user = User::where('remember_token',$token)->with('technician')->first();
         if ($user) {
             $user->remember_token = null;
             $user->device_token = null;
              $user->save();
-
+             if($user->technician){
+                $user->technician->available = 0 ;
+                $user->technician->save();
+             }
             $message = trans('api.logout') ;
             return  $this->SuccessResponse($message , $user) ;
           
@@ -2391,8 +2395,163 @@ class ApiController extends Controller
 
     }
 //////////////////////////////////////////////////
+// RateFannie function by Antonious hosny
+    public function RateFannie(Request $request){
+        $rules=array(
+            "fannie_id"=>"required", 
+            "time_rate"=>"required", 
+            "work_rate"=>"required", 
+            "cost_rate"=>"required", 
+            "general_character"=>"required", 
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
 
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $totlarate = ($request->time_rate + $request->work_rate + $request->cost_rate + $request->general_character ) / 4 ;
+                // return  round($totlarate,0) ;
+                $rate = new Rate ;
+                $rate->evaluator_from = $user->id ;
+                $rate->evaluator_to = $request->fannie_id ;
+                $rate->rate = round($totlarate,0) ;
+                $rate->time_rate = $request->time_rate ;
+                $rate->work_rate = $request->work_rate ;
+                $rate->cost_rate = $request->cost_rate ;
+                $rate->general_character = $request->general_character ;
+                $rate->notes = $request->notes ;
+                $rate->save() ;
+
+                if($rate){
  
+                    $type = "rate";
+                    $msg =  [
+                        'en' => $user->name.  " rated you  "    , 
+                        'ar' =>  " قام " . $user->name . " بتقييمك "  , 
+                    ];
+                    
+                    $fannie = User::where('id', $request->fannie_id)->first(); 
+                    if($fannie){
+
+                        $fannie->notify(new Notifications($msg,$type ));
+                        $device_token = $fannie->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                        }
+                    }
+                }
+                
+                $data['rate'] = $rate ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
+// RateUser function by Antonious hosny
+    public function RateUser(Request $request){
+        $rules=array(
+            "user_id"=>"required", 
+            "rate"=>"required", 
+        );
+        $dt = Carbon::now();
+        $date  = date('Y-m-d H:i:s', strtotime($dt));
+        // return $date ;
+        //check the validator true or not
+        $validator  = \Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            $messages = $validator->messages();
+            $transformed = [];
+            foreach ($messages->all() as $field => $message) {
+                $transformed[] = [
+                    'message' => $message
+                ];
+            }
+            $message = trans('api.failed') ;
+            return  $this->FailedResponse($message , $transformed) ;
+
+        }
+        $token = $request->header('token');
+        $lang = $request->header('lang');
+
+        if($token){
+            $user = User::where('remember_token',$token)->first();
+            if($user){
+                $rate = new Rate ;
+                $rate->evaluator_from = $user->id ;
+                $rate->evaluator_to = $request->user_id ;
+                $rate->rate = $request->rate  ;
+                $rate->notes = $request->notes ;
+                $rate->save() ;
+
+                if($rate){
+
+                    $type = "rate";
+                    $msg =  [
+                        'en' => $user->name.  " rated you  "    , 
+                        'ar' =>  " قام " . $user->name . " بتقييمك "  , 
+                    ];
+                    
+                    $client = User::where('id', $request->user_id)->first(); 
+                    if($client){
+
+                        $client->notify(new Notifications($msg,$type ));
+                        $device_token = $client->device_token ;
+                        if($device_token){
+                            $this->notification($device_token,$msg,$msg);
+                        }
+                    }
+                }
+                
+                $data['rate'] = $rate ;
+
+                $message = trans('api.save') ;
+                return  $this->SuccessResponse($message,$data ) ;
+                
+            }else{
+                $message = trans('api.logged_out') ;
+                return  $this->LoggedResponse($message ) ;
+            }
+            
+        }else{
+            $message = trans('api.logged_out') ;
+            return  $this->LoggedResponse($message ) ;
+        }
+
+
+    }
+//////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // ContactUs function by Antonious hosny

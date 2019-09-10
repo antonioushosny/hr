@@ -40,6 +40,8 @@ Route::post('CompleteOrder', 'ApiController@CompleteOrder')->middleware('localiz
 Route::post('OrderDetail', 'ApiController@OrderDetail')->middleware('localization');
 Route::get('SubscriptionTypes', 'ApiController@SubscriptionTypes')->middleware('localization');
 Route::post('RenewSubscription', 'ApiController@RenewSubscription')->middleware('localization');
+Route::post('RateFannie', 'ApiController@RateFannie')->middleware('localization');
+Route::post('RateUser', 'ApiController@RateUser')->middleware('localization');
 
 
 Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
