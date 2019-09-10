@@ -19,3 +19,5 @@ class Subscription extends Model
         return $this->belongsTo('App\User','fannie_id')->with('technician');
     } 
 }
+
+
