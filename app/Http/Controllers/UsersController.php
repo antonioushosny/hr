@@ -8,7 +8,7 @@ use App\User;
 use App\Country;
 use App\City; 
 use App\Order; 
-
+use App\Rate; 
 use Auth;
 use App;
 class UsersController extends Controller
@@ -68,6 +68,27 @@ class UsersController extends Controller
                 }
                 $user->save();
                 return redirect()->route('users');
+            }
+            else
+            {
+                return redirect(url('error'));
+            }
+    }
+    public function ratings($id)
+    {
+        $lang = App::getlocale();
+            if(Auth::user()->role != 'admin' ){
+                $role = 'admin';
+                return view('unauthorized',compact('role','admin'));
+            }
+            $title = 'users';
+            $user = User::where('id',$id)->orderBy('id', 'DESC')->first();
+            if($user)
+            {
+                $ratings = Rate::where('evaluator_to',$id)->with('evaluatorfrom')->orderBy('id', 'DESC')->get();
+                //return $ratings ; 
+                return view('users.ratings',compact('user','ratings','title','lang'));
+                
             }
             else
             {

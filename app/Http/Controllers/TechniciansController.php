@@ -11,6 +11,7 @@ use App\Order;
 use App\Technician;
 use App\Nationality;
 use App\Service;
+use App\Rate;
 use Auth;
 use App;
 use DB;
@@ -336,6 +337,27 @@ class TechniciansController extends Controller
             }
     }
 
+    public function ratings($id)
+    {
+        $lang = App::getlocale();
+            if(Auth::user()->role != 'admin' ){
+                $role = 'admin';
+                return view('unauthorized',compact('role','admin'));
+            }
+            $title = 'technicians';
+            $user = User::where('id',$id)->orderBy('id', 'DESC')->first();
+            if($user)
+            {
+                $ratings = Rate::where('evaluator_to',$id)->with('evaluatorfrom')->orderBy('id', 'DESC')->get();
+                //return $ratings ; 
+                return view('technicians.ratings',compact('user','ratings','title','lang'));
+                
+            }
+            else
+            {
+                return redirect(url('error'));
+            }
+    }
     /**
      * Update the specified resource in storage.
      *

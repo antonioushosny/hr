@@ -386,4 +386,15 @@ return [
         'edit_reason'=>'Edit Reason',
         'title_ar'=>'Arabic Title',
         'title_en'=>'English Title',
+
+        'time_rate'=>'Arrive on time',
+        'work_rate'=>'Workmanship',
+        'cost_rate'=>'Cost of work',
+        'general_character'=>'General',
+        'contact_rate'=>'Communication',
+        'av_rate'=>'Average Rating',
+        'rating_technician'=>'Technicians Rates',
+        'ratings'=>'Ratings',
+        'rate'=>'Rates',
+        'rating_user'=>'User Rates',
 ];

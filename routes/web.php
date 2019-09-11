@@ -135,15 +135,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/delete/{id}', 'UsersController@destroy')->name('destroyuser');
     Route::post('/users/deleteall', 'UsersController@deleteall')->name('usersdeleteall');
     Route::get('/users/orders/{id}', 'UsersController@orders')->name('userorders');
+    Route::get('/users/ratings/{id}','UsersController@ratings')->name('usersratings');
 
     //technicians
     Route::get('/technicians', 'TechniciansController@index')->name('technicians');
     Route::post('/technicians/update/', 'TechniciansController@store')->name('storetechnician');
-     Route::get('/technicians/add', 'TechniciansController@add')->name('addtechnician');
-     Route::get('/technicians/edit/{id}', 'TechniciansController@edit')->name('edittechnician');
-     Route::get('/technicians/techicianstatus/{id}', 'TechniciansController@changestatus')->name('techicianstatus');
-      Route::get('/technicians/orders/{id}', 'TechniciansController@orders')->name('techniciansorders');
-      Route::get('/technicians/maps','TechniciansController@maps')->name('techniciansmaps');
+    Route::get('/technicians/add', 'TechniciansController@add')->name('addtechnician');
+    Route::get('/technicians/edit/{id}', 'TechniciansController@edit')->name('edittechnician');
+    Route::get('/technicians/techicianstatus/{id}', 'TechniciansController@changestatus')->name('techicianstatus');
+    Route::get('/technicians/orders/{id}', 'TechniciansController@orders')->name('techniciansorders');
+    Route::get('/technicians/maps','TechniciansController@maps')->name('techniciansmaps');
+    Route::get('/technicians/ratings/{id}','TechniciansController@ratings')->name('techniciansratings');
     // Route::get('/users/delete/{id}', 'TechniciansController@destroy')->name('destroyuser');
     // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');
 
