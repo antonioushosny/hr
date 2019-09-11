@@ -86,8 +86,15 @@ class UsersController extends Controller
             if($user)
             {
                 $ratings = Rate::where('evaluator_to',$id)->with('evaluatorfrom')->orderBy('id', 'DESC')->get();
+                $ratecount = Rate::where('evaluator_to',$id)->count('id');
+                $sumrates = Rate::where('evaluator_to',$id)->sum('rate');
+                if($ratecount != 0){
+                    $rate =  $sumrates / $ratecount ;
+                }else{
+                    $rate = 0 ;
+                }
                 //return $ratings ; 
-                return view('users.ratings',compact('user','ratings','title','lang'));
+                return view('users.ratings',compact('user','ratings','rate','title','lang'));
                 
             }
             else

@@ -349,8 +349,16 @@ class TechniciansController extends Controller
             if($user)
             {
                 $ratings = Rate::where('evaluator_to',$id)->with('evaluatorfrom')->orderBy('id', 'DESC')->get();
-                //return $ratings ; 
-                return view('technicians.ratings',compact('user','ratings','title','lang'));
+                
+                $ratecount = Rate::where('evaluator_to',$id)->count('id');
+                        $sumrates = Rate::where('evaluator_to',$id)->sum('rate');
+                        if($ratecount != 0){
+                            $rate =  $sumrates / $ratecount ;
+                        }else{
+                            $rate = 0 ;
+                        }
+                //return $rate ; 
+                return view('technicians.ratings',compact('user','ratings','rate','title','lang'));
                 
             }
             else

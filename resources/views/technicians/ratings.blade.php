@@ -1,12 +1,16 @@
 @extends('layouts.index')
 @section('style')
 <link rel="stylesheet" href="{{ asset('rtl/plugins/iCheck/square/blue.css') }}">
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script> -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <style>
 .checked {
   color: orange;
+}
+ .profile-image img {
+    border-radius: 50%;
+    width: 180px;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 </style>
 @endsection
@@ -35,22 +39,60 @@
         </div>
     </div>
 
-     
     <div class="container-fluid">
-        <!-- Exportable Table -->
         <div class="row clearfix">
-            <div class="col-lg-12">
-                <div class="card">
-                
-
-                        <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.rating_technician')}} ({{$user->name}})</h2>
-                            <ul class="header-dropdown">
-                                                            
-                            </ul>
+            <div class="col-lg-4 col-md-12">
+                <div class="card profile-header">
+                    <div class="body text-center">
+                        <div class="profile-image"> 
+                        
+                        @if($user->image)
+                        
+                        <img src="{{asset('img/').'/'.$user->image }}" alt="">
+                        @else
+                        <img src="{{asset('images/default.png') }}" alt="">
+                        @endif
+                        
+                         </div>
+                        <div>
+                            <h4 class="m-b-0"><strong>{{$user->name}}</strong></h4>
+                            <span class="job_post">{{$user->email}}</span><br>
+                            <span class="job_post">{{$user->mobile}}</span>
+                            <p>{{$user->address}}<br></p>
+                            <small class="text-muted">{{trans('admin.av_rate')}}</small>
+                            <p>
+                            @foreach(range(1,5) as $i)
+                            @if($rate >0)
+                                @if($rate >0.5)
+                                <i class="zmdi zmdi-star checked"></i>
+                                @else
+                                    <i class="zmdi zmdi-star-half-o"></i>
+                                @endif
+                            @else
+                            <i class="zmdi zmdi-star-outline"></i>
+                            @endif
+                            <?php $rate--; ?>
+                            @endforeach 
+                            </p>
                         </div>
-                        <div class="body">
-                            @if($lang == 'ar')
+                        
+                       
+                    </div>                    
+                </div>                               
+
+                             
+            </div>
+            <div class="col-lg-8 col-md-12">
+            <div class="card">
+                    <div class="header">
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.rating_technician')}}</h2>
+                        <ul class="header-dropdown">
+                            
+                        </ul>
+                    </div>
+                    <div class="body user_activity">
+                        <div class="streamline b-accent table-responsive">
+                        @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
                             @else 
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -68,6 +110,7 @@
                                         <th>{{trans('admin.cost_rate')}}</th>
                                         <th>{{trans('admin.general_character')}}</th>
                                         <th>{{trans('admin.notes')}}</th>
+                                        <th>{{trans('admin.date')}}</th>
                                     </tr>
                                 </thead>
 
@@ -75,7 +118,7 @@
                                     @foreach ($ratings as $data)
                                     <tr class="item{{$data->id}}">
                                        
-                                        @if($data->image)
+                                        @if($data->evaluatorfrom->image)
                                             <td><img src="{{asset('img/').'/'.$data->evaluatorfrom->image }}" width="50px" height="50px"></td>
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
@@ -86,12 +129,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->rate >0)
                                                 @if($data->rate >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->rate--; ?>
                                             @endforeach 
@@ -102,12 +145,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->contact_rate >0)
                                                 @if($data->contact_rate >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->contact_rate--; ?>
                                             @endforeach 
@@ -117,12 +160,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->time_rate >0)
                                                 @if($data->time_rate >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->time_rate--; ?>
                                             @endforeach
@@ -134,12 +177,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->work_rate >0)
                                                 @if($data->work_rate >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->work_rate--; ?>
                                             @endforeach
@@ -150,12 +193,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->cost_rate >0)
                                                 @if($data->cost_rate >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->cost_rate--; ?>
                                             @endforeach
@@ -167,12 +210,12 @@
                                         @foreach(range(1,5) as $i)
                                             @if($data->general_character >0)
                                                 @if($data->general_character >0.5)
-                                                    <i class="fa fa-star checked"></i>
+                                                    <i class="zmdi zmdi-star checked"></i>
                                                 @else
-                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="zmdi zmdi-star-half-o"></i>
                                                 @endif
                                             @else
-                                                <i class="fa  fa-star-o"></i>
+                                                <i class="zmdi zmdi-star-outline"></i>
                                             @endif
                                             <?php $data->general_character--; ?>
                                             @endforeach
@@ -181,17 +224,17 @@
                                         
                                         </td>
                                         <td>{{$data->notes}}</td>
-                                        
+                                        <td>{{$data->created_at}}</td>
                                     </tr>
                                     
                                     @endforeach
                                 </tbody>
                             </table>
+                                                  
                         </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-  
+        </div>        
     </div>
 </section>
   
