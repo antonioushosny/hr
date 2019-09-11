@@ -2,7 +2,13 @@
 @section('style')
 <link rel="stylesheet" href="{{ asset('rtl/plugins/iCheck/square/blue.css') }}">
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script> -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+<style>
+.checked {
+  color: orange;
+}
+</style>
 @endsection
  @section('content')
 <!-- Main Content -->
@@ -21,9 +27,10 @@
                 <div class="col-lg-7 col-md-7 col-sm-12 text-right">
                 <ul class="breadcrumb float-md-right">
                 @endif
-                    <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
-                </ul>
+                <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('users')}}"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
+      <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.rating_user')}}</a></li>
+              </ul>
             </div>
         </div>
     </div>
@@ -34,25 +41,12 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['usersdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'userss_form' ])!!}
+                
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
+                            <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.rating_user')}} ({{$user->name}})</h2>
                             <ul class="header-dropdown">
-                                @can('user_create')
-                                </li>
-                                    <a href="{{route('adduser')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
-                                        {{trans('admin.add_user')}}
-                                    </a>
-                                </li>
-                                @endcan
-                                @can('user-delete')
-                                </li>
-                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
-                                        {{trans('admin.deleteall')}}
-                                    </a>
-                                </li>  
-                                @endcan                              
+                                                            
                             </ul>
                         </div>
                         <div class="body">
@@ -63,106 +57,50 @@
                             @endif
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <input type="checkbox" class="checkbox icheck" id="check-all" />
-                                        </th>
-                                        <th>{{trans('admin.name')}}</th>
-                                        <th>{{trans('admin.mobile')}}</th>
-                                        <th>{{trans('admin.email')}}</th>
-                                        <!-- <th>{{trans('admin.city')}}</th>
-                                        <th>{{trans('admin.area')}}</th> -->
+                                        
                                         <th>{{trans('admin.image')}}</th>
-                                        <th>{{trans('admin.status')}}</th>
-                                        <th>{{trans('admin.actions')}}</th>
+                                        <th>{{trans('admin.name_tech')}}</th>
+                                        <th>{{trans('admin.rate')}}</th>
+                                        <th>{{trans('admin.notes')}}</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($users as $data)
+                                    @foreach ($ratings as $data)
                                     <tr class="item{{$data->id}}">
-                                        <td> 
-                                            <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
-                                        </td>
-                                        <td>{{ $data->name }}</td>
-                                        <td>{{ $data->mobile }}</td>
-                                        <td>{{ $data->email }}</td>          
-                                        <!-- @if($data->City)
-                                            @if($lang == 'ar')
-                                                <td>{{ $data->City->name_ar }}</td> 
-                                            @else 
-                                                <td>{{ $data->City->name_en }}</td> 
-                                            @endif
-                                        @else 
-                                            <td> </td> 
-                                        @endif
-                                        @if($data->Area)
-                                            @if($lang == 'ar')
-                                                <td>{{ $data->Area->name_ar }}</td> 
-                                            @else 
-                                                <td>{{ $data->Area->name_en }}</td> 
-                                            @endif
-                                        @else 
-                                            <td> </td> 
-                                        @endif -->
-
+                                       
                                         @if($data->image)
-                                            <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
+                                            <td><img src="{{asset('img/').'/'.$data->evaluatorfrom->image }}" width="50px" height="50px"></td>
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                        @can('user_edit')
-                                        @if($data->status == 'active')
-                                            <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
-                                                
-                                            </td> 
-                                        @elseif($data->status == 'not_active')
-                                            <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></a>
-                                                
-                                            </td> 
-                                        @endif
-
-                                        @else
-                                            @if($data->status == 'active')
-                                                <td style="text-align:user">
-                                                    <mark class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></mark>
-                                                    
-                                                </td> 
-                                            @elseif($data->status == 'not_active')
-                                                <td style="text-align:user">
-                                                    <mark class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></mark>
-                                                    
-                                                </td> 
-                                            @endif
-
-                                        @endcan
+                                        <td>{{ $data->evaluatorfrom->name }}</td>
                                         <td>
-                                            @can('user_edit')
-                                            <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
-                                            @endcan
-
-                                            @can('order_list')
-                                            <a href="{{route('userorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
-                                            @endcan
-                                            
-                                            
-                                            @can('rate_list')
-                                            <a href="{{route('usersratings',$data->id)}}" class="btn btn-warning waves-effect waves-float waves-green btn-round " title="{{trans('admin.ratings')}}"><i class="zmdi zmdi-star"></i></a>  
-                                            @endcan
-                                            
-                                            
-                                            @can('user-delete')
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
+                                        
+                                        @foreach(range(1,5) as $i)
+                                            @if($data->rate >0)
+                                                @if($data->rate >0.5)
+                                                    <i class="fa fa-star checked"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa  fa-star-o"></i>
+                                            @endif
+                                            <?php $data->rate--; ?>
+                                            @endforeach 
+                                        
+                                        
                                         </td>
+                                    
+                                        <td>{{$data->notes}}</td>
+                                        
                                     </tr>
                                     
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -175,6 +113,7 @@
 @section('script')
 
 <script src="{{ asset('rtl/plugins/iCheck/icheck.min.js') }}"></script> 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script> -->
 
 <script>
 
@@ -291,7 +230,7 @@
                     $.ajax({
                         type: 'POST',
                         url: '{{ URL::route("usersdeleteall") }}',
-                        data:  new FormData($("#userss_form")[0]),
+                        data:  new FormData($("#technicians_form")[0]),
                         processData: false,
                         contentType: false,
                         success: function(data) {

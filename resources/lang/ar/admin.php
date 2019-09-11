@@ -393,7 +393,17 @@ return [
         'title_ar'=>'العنوان بالعربية',
         'title_en'=>'العنوان بالانجليزية',
 
-        
+
+        'time_rate'=>'وصول في الوقت المحدد',
+        'work_rate'=>'جودة العمل',
+        'cost_rate'=>'تكلفة العمل',
+        'general_character'=>'صفة عامة',
+        'contact_rate'=>'التواصل',
+        'av_rate'=>'متوسط التقييم',
+        'rating_technician'=>'تقيمات الفني',
+        'ratings'=>'التقيمات',
+        'rate'=>'التقييم',
+        'rating_user'=>'تقيمات المستخدم',
  ];
 
 

@@ -149,6 +149,10 @@
                                             @can('order_list')
                                             <a href="{{route('techniciansorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
                                             @endcan
+
+                                            @can('rate_list')
+                                            <a href="{{route('techniciansratings',$data->id)}}" class="btn btn-warning waves-effect waves-float waves-green btn-round " title="{{trans('admin.ratings')}}"><i class="zmdi zmdi-star"></i></a>  
+                                            @endcan
                                             @can('user-delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
                                             @endcan
