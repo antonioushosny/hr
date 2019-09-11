@@ -102,7 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/services/edit/{id}', 'ServicesController@edit')->name('editservice')->middleware('permission:service_edit');
     Route::get('/services/delete/{id}', 'ServicesController@destroy')->name('destroyservice')->middleware('permission:service_edit');
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall')->middleware('permission:service_edit');
-    Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas')
+    Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
     Route::get('/services/technicians/{id}', 'ServicesController@showtechnicians')->name('serviceshowtechnicians');
     
 
