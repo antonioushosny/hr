@@ -925,11 +925,7 @@ class ApiController extends Controller
 // Services function by Antonious hosny
     public function Services(Request $request){
 
-        if($request->page && $request->page > 0 ){
-            $page = $request->page * $request->skip ;
-        }else{
-            $page = 0 ;
-        }
+        
         $token = $request->header('token');
         $lang = $request->header('lang');
     
@@ -937,7 +933,7 @@ class ApiController extends Controller
             $user = User::where('remember_token',$token)->first();
             if($user){
 
-                $services = Service::where('status','active')->orderBy('id', 'desc')->skip($page)->limit($request->skip)->get();
+                $services = Service::where('status','active')->orderBy('id', 'desc')->get();
                 $services_count = Service::where('status','active')->count('id');
                 // return $containers_count ;
                 $servicess = [] ;
