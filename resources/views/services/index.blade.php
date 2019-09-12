@@ -46,7 +46,7 @@
                                     </a>
                                 </li>
                                 @endcan
-                                @can('service_delete')
+                                @can('service_edit')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
@@ -63,7 +63,7 @@
                             @endif
                                 <thead>
                                     <tr>
-                                        @can('service_delete')
+                                        @can('service_edit')
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>@endcan
@@ -79,7 +79,7 @@
                                 <tbody>
                                     @foreach ($services as $data)
                                     <tr class="item{{$data->id}}">
-                                        @can('service_delete')
+                                        @can('service_edit')
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>

@@ -291,6 +291,11 @@ return [
         'file_is_safe'        => 'Element is safe',
         'no_elemnet_selected' => 'No elements selected ',
         'error'               => 'Error',
+        'alert_text2'        => 'You will  be able to restore this element!',
+        'confirmButtonText2'   => 'Yes, restore it!',
+        'Restored!'            => 'Restored!' ,
+        'has_been_restored'    => 'Element has been restored',
+        'restoreall'          =>'Restore All',
     //end alerts 
 
     //settings and static pages  

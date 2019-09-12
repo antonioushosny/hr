@@ -62,6 +62,18 @@ class ServicesController extends Controller
         return response()->json($id);
         //return redirect ('services');
     }
+    public function restoreall(Request $request)
+    {
+        
+        
+        if($request->ids){
+            foreach($request->ids as $id){
+                $id = Service::find($id);
+            }
+            $ids = Service::whereIn('id',$request->ids)->restore();
+        }
+        return response()->json($request->ids);
+    }
    
     public function add()
     {

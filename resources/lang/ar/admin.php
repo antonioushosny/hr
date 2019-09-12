@@ -304,6 +304,7 @@ return [
         'confirmButtonText2'   => 'نعم استعادته!',
         'Restored!'            => 'تم الاستعادة!' ,
         'has_been_restored'    => 'تم استعادة العنصر',
+        'restoreall'          =>'استعادة الكل',
     //end alerts 
 
     //settings and static pages  

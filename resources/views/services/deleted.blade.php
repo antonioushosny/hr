@@ -35,12 +35,18 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['servicesdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'servicess_form' ])!!}
+                {!! Form::open(['route'=>['servicesrestoreall'],'method'=>'post','autocomplete'=>'off', 'id'=>'servicess_form' ])!!}
 
                         <div class="header">
                             <h2><strong>{{__('admin.services')}}</strong> {{trans('admin.'.$title)}}</h2>
                             <ul class="header-dropdown">
-                                                          
+                            @can('service_edit')
+                                </li>
+                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-success btn-round" title="{{trans('admin.restoreall')}}">
+                                        {{trans('admin.restoreall')}}
+                                    </a>
+                                </li>     
+                                @endcan                   
                             </ul>
                         </div>
                         <div class="body">
@@ -51,7 +57,7 @@
                             @endif
                                 <thead>
                                     <tr>
-                                        @can('service_delete')
+                                        @can('service_edit')
                                         <th>
                                             <input type="checkbox" class="checkbox icheck" id="check-all" />
                                         </th>@endcan
@@ -68,7 +74,7 @@
                                 <tbody>
                                     @foreach ($services as $data)
                                     <tr class="item{{$data->id}}">
-                                        @can('service_delete')
+                                        @can('service_edit')
                                         <td> 
                                             <input type="checkbox" name="ids[]" value={{$data->id}} class="check icheck">
                                         </td>
@@ -196,14 +202,13 @@
         // id = $('#id_delete').val();
     });
     $(document).on('click', '.deleteall-modal', function() {
-
         titlet ="{{__('admin.alert_title')}}" ;
-        textt ="{{__('admin.alert_text')}}" ;
+        textt ="{{__('admin.alert_text2')}}" ;
         typet ="{{__('admin.warning')}}" ;
-        confirmButtonTextt ="{{__('admin.confirmButtonText')}}" ;
+        confirmButtonTextt ="{{__('admin.confirmButtonText2')}}" ;
         cancelButtonTextt ="{{__('admin.cancelButtonText')}}" ;
-        Deleted ="{{__('admin.Deleted!')}}" ;
-        has_been_deleted = "{{__('admin.has_been_deleted')}}" ;
+        Deleted ="{{__('admin.Restored!')}}" ;
+        has_been_deleted = "{{__('admin.has_been_restored')}}" ;
         success ="{{__('admin.success')}}" ;
         Cancelled ="{{__('admin.Cancelled')}}" ;
         file_is_safe ="{{__('admin.file_is_safe')}}" ;
@@ -232,7 +237,7 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("servicesdeleteall") }}',
+                        url: '{{ URL::route("servicesrestoreall") }}',
                         data:  new FormData($("#servicess_form")[0]),
                         processData: false,
                         contentType: false,
