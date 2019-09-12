@@ -368,7 +368,16 @@ body, html {
                     @endcan
                     
                     @can('service_list')
-                    <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-washing-machine"></i> <span> {{trans('admin.services')}}</span></a></li>
+                    <!-- <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-washing-machine"></i> <span> {{trans('admin.services')}}</span></a></li> -->
+                    <li <?php echo ($page == 'services' || $page == 'services_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-washing-machine"></i><span>{{trans('admin.services')}}</span> </a>
+                        <ul class="ml-menu">
+                            <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services','services') }}"  > <span> {{trans('admin.services')}}</span></a></li>
+
+                            <li <?php echo ($page == 'services_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('services','#') }}"  > <span> {{trans('admin.services_deleted')}}</span></a></li>
+                            </ul>
+                    </li>
+                    
+                    
                     @endcan
                     
                     @can('reasons_list')

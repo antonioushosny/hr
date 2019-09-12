@@ -43,7 +43,7 @@
      
     <div class="container-fluid">
         <div class="row clearfix">
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-3 col-md-12">
                 <div class="card profile-header">
                     <div class="body text-center">
                         <div class="profile-image"> 
@@ -84,7 +84,7 @@
 
                              
             </div>
-            <div class="col-lg-8 col-md-12">
+            <div class="col-lg-9 col-md-12">
             <div class="card">
                     <div class="header">
                         <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.rating_user')}}</h2>

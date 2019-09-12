@@ -103,6 +103,9 @@
                                             <a href="{{route('editservice',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
                                            
                                             <a href="{{route('serviceshowtechnicians',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showtechnicians')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
+                                            
+                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
+                                            
                                             @endcan
                                         </td>
                                     </tr>

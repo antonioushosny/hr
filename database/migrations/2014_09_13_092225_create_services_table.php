@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('name_en')->nullable($value = true);
             $table->string('image')->nullable($value = true);
             $table->string('status')->nullable($value = true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

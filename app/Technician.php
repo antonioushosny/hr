@@ -6,11 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\MailResetPasswordNotification;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Technician extends Authenticatable
 {
     use HasRoles;
     use Notifiable;
-
+    use SoftDeletes;
     protected $fillable = [
         'renewal_date', 'available','brief', 'user_id','service_id','country_id','city_id','area_id','nationality_id','identity_photo'
     ];

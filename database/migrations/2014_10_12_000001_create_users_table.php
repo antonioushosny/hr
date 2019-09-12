@@ -27,7 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('device_token')->nullable($value = true);
             $table->enum('role', ['admin','user','fannie']);    
             $table->string('status');        
-            $table->tinyInteger('type')->nullable($value = true);       
+            $table->tinyInteger('type')->nullable($value = true); 
+            $table->softDeletes();      
             $table->string('lang')->nullable($value = 'ar'); 
 
              $table->rememberToken();

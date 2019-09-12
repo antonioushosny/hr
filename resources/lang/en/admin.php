@@ -316,6 +316,7 @@ return [
         'edit_service'=>'Edit Service',
         'showtechnicians'=>'Show Technicians',
         'counttechnicians'=>'Count Technicians',
+        'services_deleted'=>'Trash Box',
         //end services pages
 
 

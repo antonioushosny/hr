@@ -324,6 +324,7 @@ return [
         'edit_service'=>'تعديل خدمة',
         'showtechnicians'=>'عرض الفنيين',
         'counttechnicians'=>'عدد الفنيين',
+        'services_deleted'=>'سلة المهملات',
         //end services pages
      
         //subscriptions pages
