@@ -349,6 +349,7 @@ class ApiController extends Controller
                     $users['name'] = $user->name ;
                     $users['email'] = $user->email ;
                     $users['mobile'] = $user->mobile ;
+                    $users['mobileCode'] = $user->code ;
                     $users['address'] = $user->address ;
                     if($user->technician){
 
@@ -456,6 +457,8 @@ class ApiController extends Controller
 // register function by Antonious hosny
     public function Register(Request $request) {
         // return $request;
+        $dt = Carbon::now();
+        $date  = date('Y-m-d', strtotime($dt));
         $lang = $request->header('lang');
         // $this->validateLogin($request);
         $rules=array(   
@@ -503,6 +506,7 @@ class ApiController extends Controller
             $user = new User;
 
             $user->name          = $request->name ;
+            $user->code          = $request->mobileCode ;
             $user->email         = $request->email ;
             $user->mobile        = $request->mobile ;
             $user->address       = $request->address ;
@@ -535,6 +539,7 @@ class ApiController extends Controller
  
                 $fannie->brief = $request->brief ;
                 $fannie->available = 0 ;
+                $fannie->renewal_date = $date;
 
                 if ($request->hasFile('identity_photo')) {
                     $image = $request->file('identity_photo');
@@ -576,6 +581,7 @@ class ApiController extends Controller
                 $users['name'] = $user->name ;
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
+                $users['mobileCode'] = $user->code ;
                 $users['address'] = $user->address ;
                 if($user->technician){
 
@@ -796,6 +802,7 @@ class ApiController extends Controller
                 $users['name'] = $user->name ;
                 $users['email'] = $user->email ;
                 $users['mobile'] = $user->mobile ;
+                $users['mobileCode'] = $user->code ;
                 $users['address'] = $user->address ;
                 if($user->technician){
 
