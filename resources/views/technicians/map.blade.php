@@ -198,16 +198,15 @@ var infoWindowContent = [
 @foreach($technicians as $data)
 if("{{$data->image}}")
 {
-    markers.push(["{{$data->address}}","{{$data->lat}}","{{$data->lng}}","{{asset('img/'.$data->image)}}"]);
+    markers.push(["{{$data->name}}","{{$data->lat}}","{{$data->lng}}","{{asset('img/'.$data->image)}}"]);
 
 }
 else
 {
-    markers.push(["{{$data->address}}","{{$data->lat}}","{{$data->lng}}","{{asset('images/person.png')}}"]);
+    markers.push(["{{$data->name}}","{{$data->lat}}","{{$data->lng}}","{{asset('images/person.png')}}"]);
 }
-infoWindowContent.push(['<div class="info_content">' +
-    '<h3>{{$data->name}}</h3>' +
-    '<p>{{$data->address}}</p>' +'</div>']);
+infoWindowContent.push(['<div class="info_content" style="padding-top:5px ;">' +
+     '<p>{{$data->address}}</p>' +'</div>']);
 @endforeach
                      
 
@@ -229,6 +228,7 @@ for( i = 0; i < markers.length; i++ ) {
         position: position,
         icon:icon,
         map: map,
+        label:   markers[i][0] ,
         title: markers[i][0]
     });
      
