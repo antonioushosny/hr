@@ -300,6 +300,10 @@ return [
         'file_is_safe'        => 'العنصر آمن',
         'no_elemnet_selected' => 'لا توجد عناصر محددة',
         'error'               => 'خطأ',
+        'alert_text2'        => ' تكون قادرًا على استعادة هذا العنصر!',
+        'confirmButtonText2'   => 'نعم استعادته!',
+        'Restored!'            => 'تم الاستعادة!' ,
+        'has_been_restored'    => 'تم استعادة العنصر',
     //end alerts 
 
     //settings and static pages  
@@ -325,6 +329,8 @@ return [
         'showtechnicians'=>'عرض الفنيين',
         'counttechnicians'=>'عدد الفنيين',
         'services_deleted'=>'سلة المهملات',
+        'restore'=>'استعادة',
+        'deleted_at'=>'تم حذفها',
         //end services pages
      
         //subscriptions pages

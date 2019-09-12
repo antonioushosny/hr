@@ -35,6 +35,33 @@ class ServicesController extends Controller
 
     }
 
+
+    public function deleted()
+    {
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'services_deleted';
+ 
+        $services = service::orderBy('id', 'DESC')->onlyTrashed()->get();
+        //return $services ; 
+        return view('services.deleted',compact('services','title','lang'));
+
+    }
+    public function restore($id) 
+    { 
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'services_deleted';
+        $service = service::withTrashed()->find($id)->restore();
+        return response()->json($id);
+        //return redirect ('services');
+    }
    
     public function add()
     {

@@ -104,7 +104,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/services/deleteall', 'ServicesController@deleteall')->name('servicesdeleteall')->middleware('permission:service_edit');
     Route::get('/services/{id}/areas', 'ServicesController@areas')->name('serviceareas');
     Route::get('/services/technicians/{id}', 'ServicesController@showtechnicians')->name('serviceshowtechnicians');
-    
+    Route::get('/services/deleted','ServicesController@deleted')->name('servicesdeletedtechnicians')->middleware('permission:service_edit');
+    Route::get('/services/restore/{id}', 'ServicesController@restore')->name('restoreservice')->middleware('permission:service_edit');
 
     // routes for reasons management
     Route::get('/reasons', 'ReasonController@index')->name('reasons')->middleware('permission:reasons_list');

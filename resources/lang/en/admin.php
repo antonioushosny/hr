@@ -317,6 +317,8 @@ return [
         'showtechnicians'=>'Show Technicians',
         'counttechnicians'=>'Count Technicians',
         'services_deleted'=>'Trash Box',
+        'restore'=>'Restore',
+        'deleted_at'=>'Deleted At',
         //end services pages
 
 
