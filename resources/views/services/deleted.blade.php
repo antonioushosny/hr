@@ -86,8 +86,8 @@
                                         @else 
                                         <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                        @if($data->status == 'active')
-                                        <td style="text-align:center"><span  class="col-green">{{ trans('admin.active')}}</span></td> 
+                                        @if($data->status == 'deleted')
+                                        <td style="text-align:center"><span  class="col-green">{{ trans('admin.deleted')}}</span></td> 
                                         @elseif($data->status == 'not_active')
                                         <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
                                         @endif

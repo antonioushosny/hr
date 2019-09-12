@@ -271,7 +271,11 @@ public function orders($id)
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'users_deleted';
+      
         $user = User::withTrashed()->find($id)->restore();
+        $user1 = User::find($id);
+        $user1->status='not_active';
+        $user1->save();
         return response()->json($id);
         //return redirect ('users');
     }
@@ -282,8 +286,14 @@ public function orders($id)
         if($request->ids){
             foreach($request->ids as $id){
                 $id = User::find($id);
+            
             }
             $ids = User::whereIn('id',$request->ids)->restore();
+            foreach($request->ids as $id){
+                $id = User::find($id);
+                $id->status='not_active';
+                $id->save();
+            }
         }
         return response()->json($request->ids);
     }
@@ -297,6 +307,8 @@ public function orders($id)
         }
         $id = User::find( $id );
         $imageName =  $id->image; 
+        $id->status='deleted';
+        $id->save();
         //\File::delete(public_path(). '/img/' . $imageName);
         $id ->delete();
 
@@ -313,6 +325,8 @@ public function orders($id)
             foreach($request->ids as $id){
                 $id = User::find($id);
                 $imageName =  $id->image; 
+                $id->status='deleted';
+                $id->save();
                 //\File::delete(public_path(). '/img/' . $imageName);
             }
             $ids = User::whereIn('id',$request->ids)->delete();

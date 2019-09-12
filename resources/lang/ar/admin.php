@@ -356,6 +356,7 @@ return [
         'offline'=>'غير متصل',
         'show_technician'=>'عرض جميع الفنيين علي الخريطة ',
         'technicians_deleted'     =>'سلة المهملات',
+        'deleted'=>'محذوف',
 
 
         //subscriptions of users pages

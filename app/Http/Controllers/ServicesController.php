@@ -59,6 +59,9 @@ class ServicesController extends Controller
         }
         $title = 'services_deleted';
         $service = service::withTrashed()->find($id)->restore();
+        $service1 = service::find($id);
+        $service1->status='not_active';
+        $service1->save();
         return response()->json($id);
         //return redirect ('services');
     }
@@ -71,6 +74,11 @@ class ServicesController extends Controller
                 $id = Service::find($id);
             }
             $ids = Service::whereIn('id',$request->ids)->restore();
+            foreach($request->ids as $id){
+                $id = Service::find($id);
+                $id->status='not_active';
+                $id->save();
+            }
         }
         return response()->json($request->ids);
     }
@@ -206,6 +214,8 @@ class ServicesController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $id = Service::find( $id );
+        $id->status='deleted';
+        $id->save();
         $id ->delete();
         return response()->json($id);
     }
@@ -217,6 +227,8 @@ class ServicesController extends Controller
         if($request->ids){
             foreach($request->ids as $id){
                 $id = Service::find($id);
+                $id->status='deleted';
+                $id->save();
             }
             $ids = Service::whereIn('id',$request->ids)->delete();
         }

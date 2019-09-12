@@ -85,33 +85,11 @@
                                         @else 
                                             <td><img src="{{asset('images/default.png') }}" width="50px" height="50px"></td>
                                         @endif
-                                        @can('user_edit')
-                                        @if($data->status == 'active')
-                                            <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></a>
-                                                
-                                            </td> 
+                                        @if($data->status == 'deleted')
+                                        <td style="text-align:center"><span  class="col-green">{{ trans('admin.deleted')}}</span></td> 
                                         @elseif($data->status == 'not_active')
-                                            <td style="text-align:user">
-                                                <a href="{{route('userstatus',$data->id)}}" class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></a>
-                                                
-                                            </td> 
+                                        <td style="text-align:center"><span  class="col-red">{{ trans('admin.not_active')}}</span></td> 
                                         @endif
-
-                                        @else
-                                            @if($data->status == 'active')
-                                                <td style="text-align:user">
-                                                    <mark class="btn btn-success waves-effect waves-float waves-green  " title="{{trans('admin.active')}}"><span  >{{ trans('admin.active')}}</span></mark>
-                                                    
-                                                </td> 
-                                            @elseif($data->status == 'not_active')
-                                                <td style="text-align:user">
-                                                    <mark class="btn btn-danger waves-effect waves-float waves-green  "title="{{trans('admin.active')}}"><span >{{ trans('admin.not_active')}}</span></mark>
-                                                    
-                                                </td> 
-                                            @endif
-
-                                        @endcan
                                         <td>{{$data->deleted_at}}</td>
                                         <td>
                                             @can('user_edit')
@@ -204,6 +182,7 @@
                         '_token': $('input[name=_token]').val(),
                     },
                     success: function(data) {
+                        console.log(data);
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
                         window.location.replace("{{route('users')}}");

@@ -394,7 +394,8 @@ class TechniciansController extends Controller
         $id = User::find( $id );
         //$imageName =  $id->image; 
         //\File::delete(public_path(). '/img/' . $imageName);
-    
+        $id->status='deleted';
+        $id->save();
         $id ->delete();
 
         //session()->flash('alert-danger', trans('admin.record_deleted'));   
@@ -409,6 +410,8 @@ class TechniciansController extends Controller
                 $id = User::find($id);
                 $imageName =  $id->image; 
                 //\File::delete(public_path(). '/img/' . $imageName);
+                $id->status='deleted';
+                $id->save();
             }
             $ids = User::whereIn('id',$request->ids)->delete();
         }
@@ -441,7 +444,9 @@ class TechniciansController extends Controller
         }
         $title = 'technicians_deleted';
         $user = User::withTrashed()->find($id)->restore();
-       
+        $user1 = User::find($id);
+        $user1->status='not_active';
+        $user1->save();
         return response()->json($id);
         //return redirect ('users');
     }
@@ -454,7 +459,11 @@ class TechniciansController extends Controller
                 $id = User::find($id);
             }
             $ids = User::whereIn('id',$request->ids)->restore();
-           
+            foreach($request->ids as $id){
+                $id = User::find($id);
+                $id->status='not_active';
+                $id->save();
+            }
         }
         return response()->json($request->ids);
     }

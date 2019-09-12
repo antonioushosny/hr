@@ -350,7 +350,7 @@ return [
         'offline'=>'Offline',
         'show_technician'=>'Show all technicians on the map',
         'technicians_deleted'     =>'Trash Box',
-        
+        'deleted'=>'Deleted',
         //subscriptions of users pages
         'subscriptions_tech'=>'Subscriptions',
         'add_subscription_tech'=>' Add Technical Subscription',
