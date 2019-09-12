@@ -79,7 +79,46 @@
         .hidden{
             display: none;
         }
+        .marker-pin {
+            width: 30px;
+            height: 30px;
+            border-radius: 50% 50% 50% 0;
+            background: #c30b82;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -15px 0 0 -15px;
+          }
+          // to draw white circle
+          .marker-pin::after {
+              content: '';
+              width: 24px;
+              height: 24px;
+              margin: 3px 0 0 3px;
+              background: #fff;
+              position: absolute;
+              border-radius: 50%;
+           }
+          // to align icon
+          .custom-div-icon i {
+             position: absolute;
+             width: 22px;
+             font-size: 22px;
+             left: 0;
+             right: 0;
+             margin: 10px auto;
+             text-align: center;
+          }
     </style>
+    @foreach($technicians as $data)
+    <style>
+        img[src="{{$data->image}}"]{
+            border-radius:16px;
+            border:1px solid #000 !important;
+          }
+    </style>
+    @endforeach
 @endsection
  @section('content')
 <!-- Main Content -->
@@ -207,6 +246,8 @@ else
 }
 infoWindowContent.push(['<div class="info_content" style="padding-top:5px ;">' +
      '<p>{{$data->address}}</p>' +'</div>']);
+
+
 @endforeach
                      
 
@@ -219,11 +260,12 @@ for( i = 0; i < markers.length; i++ ) {
     var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
     bounds.extend(position);
     var icon = {
-    url: markers[i][3], // url
-    scaledSize: new google.maps.Size(50, 50), // scaled size
-    origin: new google.maps.Point(0,0), // origin
-    anchor: new google.maps.Point(0, 0) // anchor
-};
+        url: markers[i][3], // url
+        scaledSize: new google.maps.Size(34, 34), // scaled size
+         shape:{coords:[17,11,18],type:'circle'},
+         optimized:false 
+    };
+   
     marker = new google.maps.Marker({
         position: position,
         icon:icon,
