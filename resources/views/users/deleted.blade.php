@@ -21,8 +21,9 @@
                 <div class="col-lg-7 col-md-7 col-sm-12 text-right">
                 <ul class="breadcrumb float-md-right">
                 @endif
-                    <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
+                <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
+                <li class="breadcrumb-item"><a href="{{route('users')}}"><i class="zmdi zmdi-accounts"></i> {{__('admin.users')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.users_deleted')}}</a></li>
                 </ul>
             </div>
         </div>
@@ -34,25 +35,18 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['usersdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'userss_form' ])!!}
+                {!! Form::open(['route'=>['usersrestoreall'],'method'=>'post','autocomplete'=>'off', 'id'=>'users_form' ])!!}
 
                         <div class="header">
-                            <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
+                            <h2><strong>{{__('admin.users')}}</strong> {{trans('admin.'.$title)}}</h2>
                             <ul class="header-dropdown">
-                                @can('user_create')
+                            @can('service_edit')
                                 </li>
-                                    <a href="{{route('adduser')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
-                                        {{trans('admin.add_user')}}
+                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-success btn-round" title="{{trans('admin.restoreall')}}">
+                                        {{trans('admin.restoreall')}}
                                     </a>
-                                </li>
-                                @endcan
-                                @can('user_edit')
-                                </li>
-                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
-                                        {{trans('admin.deleteall')}}
-                                    </a>
-                                </li>  
-                                @endcan                              
+                                </li>     
+                                @endcan                   
                             </ul>
                         </div>
                         <div class="body">
@@ -69,10 +63,9 @@
                                         <th>{{trans('admin.name')}}</th>
                                         <th>{{trans('admin.mobile')}}</th>
                                         <th>{{trans('admin.email')}}</th>
-                                        <!-- <th>{{trans('admin.city')}}</th>
-                                        <th>{{trans('admin.area')}}</th> -->
                                         <th>{{trans('admin.image')}}</th>
                                         <th>{{trans('admin.status')}}</th>
+                                        <th>{{trans('admin.deleted_at')}}</th>
                                         <th>{{trans('admin.actions')}}</th>
                                     </tr>
                                 </thead>
@@ -86,25 +79,7 @@
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->mobile }}</td>
                                         <td>{{ $data->email }}</td>          
-                                        <!-- @if($data->City)
-                                            @if($lang == 'ar')
-                                                <td>{{ $data->City->name_ar }}</td> 
-                                            @else 
-                                                <td>{{ $data->City->name_en }}</td> 
-                                            @endif
-                                        @else 
-                                            <td> </td> 
-                                        @endif
-                                        @if($data->Area)
-                                            @if($lang == 'ar')
-                                                <td>{{ $data->Area->name_ar }}</td> 
-                                            @else 
-                                                <td>{{ $data->Area->name_en }}</td> 
-                                            @endif
-                                        @else 
-                                            <td> </td> 
-                                        @endif -->
-
+                                        
                                         @if($data->image)
                                             <td><img src="{{asset('img/').'/'.$data->image }}" width="50px" height="50px"></td>
                                         @else 
@@ -137,21 +112,12 @@
                                             @endif
 
                                         @endcan
+                                        <td>{{$data->deleted_at}}</td>
                                         <td>
                                             @can('user_edit')
-                                            <a href="{{route('edituser',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
-                                            
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
+                                            <a href="javascript:void(0);" class=" delete-modal btn btn-success waves-effect waves-float waves-red btn-round " title="{{trans('admin.restore')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-time-restore"></i></a>
+                                             @endcan
 
-                                            @can('order_list')
-                                            <a href="{{route('userorders',$data->id)}}" class="btn btn-secondary waves-effect waves-float waves-green btn-round " title="{{trans('admin.showorders')}}"><i class="zmdi zmdi-format-list-numbered"></i></a> 
-                                            @endcan
-                                            
-                                            
-                                            @can('rate_list')
-                                            <a href="{{route('usersratings',$data->id)}}" class="btn btn-warning waves-effect waves-float waves-green btn-round " title="{{trans('admin.ratings')}}"><i class="zmdi zmdi-star"></i></a>  
-                                            @endcan
                                             
                                         </td>
                                     </tr>
@@ -175,7 +141,7 @@
 <script src="{{ asset('rtl/plugins/iCheck/icheck.min.js') }}"></script> 
 
 <script>
-
+    
     $('input').iCheck({
         checkboxClass: 'icheckbox_square-blue',
         radioClass: 'iradio_square-blue',
@@ -203,16 +169,16 @@
         }
         $('#check-all').iCheck('update');
     });
-    //this for delete
+
     $(document).on('click', '.delete-modal', function() {
 
         titlet ="{{__('admin.alert_title')}}" ;
-        textt ="{{__('admin.alert_text')}}" ;
+        textt ="{{__('admin.alert_text2')}}" ;
         typet ="{{__('admin.warning')}}" ;
-        confirmButtonTextt ="{{__('admin.confirmButtonText')}}" ;
+        confirmButtonTextt ="{{__('admin.confirmButtonText2')}}" ;
         cancelButtonTextt ="{{__('admin.cancelButtonText')}}" ;
-        Deleted ="{{__('admin.Deleted!')}}" ;
-        has_been_deleted = "{{__('admin.has_been_deleted')}}" ;
+        Deleted ="{{__('admin.Restored!')}}" ;
+        has_been_deleted = "{{__('admin.has_been_restored')}}" ;
         success ="{{__('admin.success')}}" ;
         Cancelled ="{{__('admin.Cancelled')}}" ;
         file_is_safe ="{{__('admin.file_is_safe')}}" ;
@@ -233,7 +199,7 @@
             if (isConfirm) {
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo url('/')?>/users/delete/" + id,
+                    url: "<?php echo url('/')?>/users/restore/" + id,
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
@@ -250,16 +216,14 @@
         // $('#deleteModal').modal('show');
         // id = $('#id_delete').val();
     });
-    //this for delete all selected
     $(document).on('click', '.deleteall-modal', function() {
-
         titlet ="{{__('admin.alert_title')}}" ;
-        textt ="{{__('admin.alert_text')}}" ;
+        textt ="{{__('admin.alert_text2')}}" ;
         typet ="{{__('admin.warning')}}" ;
-        confirmButtonTextt ="{{__('admin.confirmButtonText')}}" ;
+        confirmButtonTextt ="{{__('admin.confirmButtonText2')}}" ;
         cancelButtonTextt ="{{__('admin.cancelButtonText')}}" ;
-        Deleted ="{{__('admin.Deleted!')}}" ;
-        has_been_deleted = "{{__('admin.has_been_deleted')}}" ;
+        Deleted ="{{__('admin.Restored!')}}" ;
+        has_been_deleted = "{{__('admin.has_been_restored')}}" ;
         success ="{{__('admin.success')}}" ;
         Cancelled ="{{__('admin.Cancelled')}}" ;
         file_is_safe ="{{__('admin.file_is_safe')}}" ;
@@ -288,8 +252,8 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("usersdeleteall") }}',
-                        data:  new FormData($("#userss_form")[0]),
+                        url: '{{ URL::route("usersrestoreall") }}',
+                        data:  new FormData($("#users_form")[0]),
                         processData: false,
                         contentType: false,
                         success: function(data) {
@@ -297,7 +261,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal(Deleted, has_been_deleted, "success");
-                            location.reload();
+                            window.location.replace("{{route('users')}}");
                         },
                     });
                 }

@@ -34,7 +34,7 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['usersdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'technicians_form' ])!!}
+                {!! Form::open(['route'=>['techniciansdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'technicians_form' ])!!}
 
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
@@ -51,9 +51,9 @@
                                 <a href="{{route('techniciansmaps')}}" class=" add-modal btn btn-primary btn-round" title="{{trans('admin.show_technician')}}">
                                         {{trans('admin.show_technician')}}
                                     </a>
-                                    <!-- <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
+                                    <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
-                                    </a> -->
+                                    </a>
                                 </li>  
                                 @endcan                              
                             </ul>
@@ -144,6 +144,8 @@
                                         <td>
                                             @can('technical_edit')
                                             <a href="{{route('edittechnician',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a> 
+                                            
+                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
                                             @endcan
 
                                             @can('order_list')
@@ -153,9 +155,7 @@
                                             @can('rate_list')
                                             <a href="{{route('techniciansratings',$data->id)}}" class="btn btn-warning waves-effect waves-float waves-green btn-round " title="{{trans('admin.ratings')}}"><i class="zmdi zmdi-star"></i></a>  
                                             @endcan
-                                            @can('user-delete')
-                                            <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan
+                                            
                                         </td>
                                     </tr>
                                     
@@ -236,14 +236,15 @@
             if (isConfirm) {
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo url('/')?>/users/delete/" + id,
+                    url: "<?php echo url('/')?>/technicians/delete/" + id,
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
-                        location.reload();
+                        //location.reload();
+                        window.location.replace("{{route('technicians')}}");
                     }
                 });
             } else {
@@ -291,7 +292,7 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("usersdeleteall") }}',
+                        url: '{{ URL::route("techniciansdeleteall") }}',
                         data:  new FormData($("#technicians_form")[0]),
                         processData: false,
                         contentType: false,

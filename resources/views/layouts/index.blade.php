@@ -389,12 +389,32 @@ body, html {
                     @endcan
 
                     @can('user_list')                    
-                    <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li>
+                    <!-- <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li> -->
+                    
+                    <li <?php echo ($page == 'users' || $page == 'users_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts"></i><span>{{trans('admin.users')}}</span> </a>
+                        <ul class="ml-menu">
+                            <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  > <span> {{trans('admin.users')}}</span></a></li>
+
+                            <li <?php echo ($page == 'users_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('usersdeleted') }}"  > <span> {{trans('admin.users_deleted')}}</span></a></li>
+                            </ul>
+                    </li>
+                    
+                    
                     @endcan
 
                     
                     @can('technical_list')                    
-                    <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  ><i class="zmdi zmdi-accounts-alt"></i> <span> {{trans('admin.technicians')}}</span></a></li>
+                    <!-- <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  ><i class="zmdi zmdi-accounts-alt"></i> <span> {{trans('admin.technicians')}}</span></a></li> -->
+                    
+                    <li <?php echo ($page == 'technicians' || $page == 'technicians_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts-alt"></i><span>{{trans('admin.technicians')}}</span> </a>
+                        <ul class="ml-menu">
+                            <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  > <span> {{trans('admin.technicians')}}</span></a></li>
+
+                            <li <?php echo ($page == 'technicians_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('techniciansdeleted') }}"  > <span> {{trans('admin.technicians_deleted')}}</span></a></li>
+                            </ul>
+                    </li>
+                    
+                    
                     @endcan
 
                     

@@ -249,6 +249,44 @@ public function orders($id)
       
     }
 
+    public function deleted()
+    {
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'users_deleted';
+ 
+        $users = User::where('role','user')->orderBy('id', 'DESC')->onlyTrashed()->get();
+        //return $users ; 
+        return view('users.deleted',compact('users','title','lang'));
+
+    }
+    public function restore($id) 
+    { 
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'users_deleted';
+        $user = User::withTrashed()->find($id)->restore();
+        return response()->json($id);
+        //return redirect ('users');
+    }
+    public function restoreall(Request $request)
+    {
+        
+        
+        if($request->ids){
+            foreach($request->ids as $id){
+                $id = User::find($id);
+            }
+            $ids = User::whereIn('id',$request->ids)->restore();
+        }
+        return response()->json($request->ids);
+    }
 
     public function destroy($id)
     {
@@ -259,10 +297,10 @@ public function orders($id)
         }
         $id = User::find( $id );
         $imageName =  $id->image; 
-        \File::delete(public_path(). '/img/' . $imageName);
+        //\File::delete(public_path(). '/img/' . $imageName);
         $id ->delete();
 
-        session()->flash('alert-danger', trans('admin.record_deleted'));   
+        //session()->flash('alert-danger', trans('admin.record_deleted'));   
         return response()->json($id);
         // return view('admin.index',compact('admins','title'));
     }
@@ -275,7 +313,7 @@ public function orders($id)
             foreach($request->ids as $id){
                 $id = User::find($id);
                 $imageName =  $id->image; 
-                \File::delete(public_path(). '/img/' . $imageName);
+                //\File::delete(public_path(). '/img/' . $imageName);
             }
             $ids = User::whereIn('id',$request->ids)->delete();
         }

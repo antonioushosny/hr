@@ -32,7 +32,6 @@ class CreateTechniciansTable extends Migration
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null'); 
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null'); 
             $table->foreign('nationality_id')->references('id')->on('nationalities')->onDelete('set null'); 
-            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

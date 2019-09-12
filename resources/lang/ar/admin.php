@@ -176,6 +176,7 @@ return [
         'add_user'          => ' إضافة مستخدم ',
         'edit_user'         => ' تعديل مستخدم ',
         'delete_user'       => '  حذف مستخدم',
+        'users_deleted'     =>'سلة المهملات',
         
     //end users page
 
@@ -354,6 +355,7 @@ return [
         'online'=>' متصل',
         'offline'=>'غير متصل',
         'show_technician'=>'عرض جميع الفنيين علي الخريطة ',
+        'technicians_deleted'     =>'سلة المهملات',
 
 
         //subscriptions of users pages

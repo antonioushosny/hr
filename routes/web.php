@@ -107,6 +107,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/services/deleted','ServicesController@deleted')->name('servicesdeletedtechnicians')->middleware('permission:service_edit');
     Route::get('/services/restore/{id}', 'ServicesController@restore')->name('restoreservice')->middleware('permission:service_edit');
     Route::post('/services/restoreall', 'ServicesController@restoreall')->name('servicesrestoreall')->middleware('permission:service_edit');
+    
+    
+    
+    
     // routes for reasons management
     Route::get('/reasons', 'ReasonController@index')->name('reasons')->middleware('permission:reasons_list');
     Route::get('/reasons/add/', 'ReasonController@add')->name('addreason')->middleware('permission:reasons_create');
@@ -133,11 +137,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/add', 'UsersController@add')->name('adduser')->middleware('permission:user_create');
     Route::get('/users/edit/{id}', 'UsersController@edit')->name('edituser')->middleware('permission:user_edit');
     Route::get('/users/userstatus/{id}', 'UsersController@changestatus')->name('userstatus');
-    Route::get('/users/delete/{id}', 'UsersController@destroy')->name('destroyuser')->middleware('permission:user_delete');
-    Route::post('/users/deleteall', 'UsersController@deleteall')->name('usersdeleteall')->middleware('permission:user_delete');
+    Route::get('/users/delete/{id}', 'UsersController@destroy')->name('destroyuser')->middleware('permission:user_edit');
+    Route::post('/users/deleteall', 'UsersController@deleteall')->name('usersdeleteall')->middleware('permission:user_edit');
     Route::get('/users/orders/{id}', 'UsersController@orders')->name('userorders');
     Route::get('/users/ratings/{id}','UsersController@ratings')->name('usersratings');
+    Route::get('/users/deleted','UsersController@deleted')->name('usersdeleted')->middleware('permission:user_edit');
+    Route::get('/users/restore/{id}', 'UsersController@restore')->name('restoreuser')->middleware('permission:user_edit');
+    Route::post('/users/restoreall', 'UsersController@restoreall')->name('usersrestoreall')->middleware('permission:user_edit');
+  
 
+
+    
     //technicians
     Route::get('/technicians', 'TechniciansController@index')->name('technicians')->middleware('permission:technical_list');
     Route::post('/technicians/update/', 'TechniciansController@store')->name('storetechnician')->middleware('permission:technical_create');
@@ -147,8 +157,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/technicians/orders/{id}', 'TechniciansController@orders')->name('techniciansorders');
     Route::get('/technicians/maps','TechniciansController@maps')->name('techniciansmaps');
     Route::get('/technicians/ratings/{id}','TechniciansController@ratings')->name('techniciansratings');
-    // Route::get('/users/delete/{id}', 'TechniciansController@destroy')->name('destroyuser');
-    // Route::post('/users/deleteall', 'TechniciansController@deleteall')->name('usersdeleteall');
+    Route::get('/technicians/delete/{id}', 'TechniciansController@destroy')->name('destroytechnician');
+    Route::post('/technicians/deleteall', 'TechniciansController@deleteall')->name('techniciansdeleteall');
+    Route::get('/technicians/deleted','TechniciansController@deleted')->name('techniciansdeleted')->middleware('permission:technical_edit');
+    Route::get('/technicians/restore/{id}', 'TechniciansController@restore')->name('restoretechnician')->middleware('permission:technical_edit');
+    Route::post('/technicians/restoreall', 'TechniciansController@restoreall')->name('techniciansrestoreall')->middleware('permission:technical_edit');
+  
 
     //route for subscriptions technicians management
     Route::get('/technicians/subscriptions', 'SubscriptionController@index')->name('techsubscriptions')->middleware('permission:subscription_list');

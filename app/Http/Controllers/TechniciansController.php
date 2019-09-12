@@ -387,5 +387,75 @@ class TechniciansController extends Controller
     public function destroy($id)
     {
         //
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $id = User::find( $id );
+        //$imageName =  $id->image; 
+        //\File::delete(public_path(). '/img/' . $imageName);
+    
+        $id ->delete();
+
+        //session()->flash('alert-danger', trans('admin.record_deleted'));   
+        return response()->json($id);
+    }
+    public function deleteall(Request $request)
+    {
+        
+        
+        if($request->ids){
+            foreach($request->ids as $id){
+                $id = User::find($id);
+                $imageName =  $id->image; 
+                //\File::delete(public_path(). '/img/' . $imageName);
+            }
+            $ids = User::whereIn('id',$request->ids)->delete();
+        }
+        return response()->json($request->ids);
+        session()->flash('alert-danger', trans('admin.record_selected_deleted'));
+        // return redirect()->route('users');
+      
+    }
+
+    public function deleted()
+    {
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'technicians_deleted';
+ 
+        $technicians = User::where('role','fannie')->orderBy('id', 'DESC')->onlyTrashed()->get();
+        //return $technicians ; 
+        return view('technicians.deleted',compact('technicians','title','lang'));
+
+    }
+    public function restore($id) 
+    { 
+        $lang = App::getlocale();
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $title = 'technicians_deleted';
+        $user = User::withTrashed()->find($id)->restore();
+       
+        return response()->json($id);
+        //return redirect ('users');
+    }
+    public function restoreall(Request $request)
+    {
+        
+        
+        if($request->ids){
+            foreach($request->ids as $id){
+                $id = User::find($id);
+            }
+            $ids = User::whereIn('id',$request->ids)->restore();
+           
+        }
+        return response()->json($request->ids);
     }
 }

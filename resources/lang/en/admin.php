@@ -164,6 +164,7 @@ return [
         'add_user'          => ' Add User',
         'edit_user'         => ' Edit User',
         'delete_user'       => ' Delete User',
+        'users_deleted'     =>'Trash Box',
     //end users page
 
     //statics page 
@@ -348,6 +349,7 @@ return [
         'online'=>'Online',
         'offline'=>'Offline',
         'show_technician'=>'Show all technicians on the map',
+        'technicians_deleted'     =>'Trash Box',
         
         //subscriptions of users pages
         'subscriptions_tech'=>'Subscriptions',
