@@ -40,12 +40,13 @@
 <!-- Bootstrap Select Css -->
 <link href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
+<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
 
 
 
 @yield('style')  
 <style>
-
+    
     .select2{
         width: 100%  !important ;
         
@@ -113,10 +114,12 @@
 <style>
 @import url(https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900&subset=arabic,latin,latin-ext);
 body, html { 
-    font-family: 'Cairo', sans-serif !important ;
+    {{-- font-family: 'Cairo', sans-serif !important ; --}}
+    font-family: 'DroidArabicKufiBold' !important ; 
 }
 .sidebar { 
-    font-family: 'Cairo', sans-serif !important ;
+    {{-- font-family: 'Cairo', sans-serif !important ; --}}
+    font-family: 'DroidArabicKufiBold' !important ; 
     font-weight: bold !important ;
 }
 
@@ -202,107 +205,7 @@ body, html {
                 {{--  <li class="footer"> <a href="javascript:void(0);">View All</a> </li>  --}}
             </ul>
         </li>
-        <!-- <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="zmdi zmdi-flag"></i>
-            <div class="notify">
-                <span class="heartbit"></span>
-                <span class="point"></span>
-            </div>
-            </a>
-            <ul class="dropdown-menu pullDown">
-                <li class="header">Project</li>
-                <li class="body">
-                    <ul class="menu tasks list-unstyled">
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-primary">
-                                    <span class="progress-badge">eCommerce Website</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="width: 86%;">
-                                            <span class="progress-value">86%</span>
-                                        </div>
-                                    </div>                        
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar2.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar3.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar4.jpg') }}" alt="Avatar">
-                                        </li>                            
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-info">
-                                    <span class="progress-badge">iOS Game Dev</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                                            <span class="progress-value">45%</span>
-                                        </div>
-                                    </div>
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar10.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar9.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar8.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar7.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar6.jpg') }}" alt="Avatar">
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-warning">
-                                    <span class="progress-badge">Home Development</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="width: 29%;">
-                                            <span class="progress-value">29%</span>
-                                        </div>
-                                    </div>
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar5.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar2.jpg') }}" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/images/xs/avatar7.jpg') }}" alt="Avatar">
-                                        </li>                            
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>                    
-                    </ul>
-                </li>
-                <li class="footer"><a href="javascript:void(0);">View All</a></li>
-            </ul>
-        </li> -->
-        <!-- <li class="hidden-sm-down">
-            <div class="input-group">                
-                <input type="text" class="form-control" placeholder="Search...">
-                <span class="input-group-addon">
-                    <i class="zmdi zmdi-search"></i>
-                </span>
-            </div>
-        </li>  -->
+    
         <li class="float-right">
             <!-- <a href="javascript:void(0);" class="fullscreen hidden-sm-down" data-provide="fullscreen" data-close="true"><i class="zmdi zmdi-fullscreen"></i></a> -->
             <!-- <a href="{{route('logout')}}" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a> -->
@@ -318,8 +221,8 @@ body, html {
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i>{{__('fannie')}} </a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user"><i class="zmdi zmdi-account m-r-5"></i> {{Auth::user()->name}} </a></li>
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i> {{ __('Fannie') }}  </a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user"><i class="zmdi zmdi-account m-r-5"></i> {{ __('Profile')  }}</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane stretchRight active" id="dashboard">

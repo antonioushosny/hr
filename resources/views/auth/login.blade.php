@@ -39,7 +39,7 @@ h5>a.link
 }
 span.input-group-addon
 {
-    color:#cccccc!important;
+    color:#cccccc !important;
 }
 .authentication .card-plain.card-plain .form-control,.authentication .card-plain.card-plain .form-control:focus
 {
@@ -49,26 +49,51 @@ span.input-group-addon
 {
     color: #e73d4a;
 }
+body, .page-header{
+    background-color: #364150   !important;
+}
+.delete-border{
+    border-radius: 0px !important; 
+}
+.authentication .card-plain.card-plain .input-group-addon {
+
+    background-color: #dde3ec !important; 
+     border-color: rgb(255, 255, 255) !important;
+    color: #fff;
+
+}
 </style>
 @endsection
 @section('content')
 <div class="page-header-image" ></div>
-<div class="container">
-    <div class="col-md-12 content-center card-plain" >
+
+<div class="container" style="padding :20px ;">
+        {{-- <div class="col-md-12    " style=position: relative;
+        ; ">
+                <div class="logo-container" style="position: relative; top: 0%;
+                width: 20%;
+                left:40%;" >
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                    </div>  
+            </div> --}}
+
+    <div class="col-md-12 content-center card-plain"  style="top: 50%;">
         <!-- <div class="card-plain"> -->
                 <form action="{{ route('login') }}" method="POST" class="form" id="loginform" autocomplete="off">
                     @csrf
+                    
                         <div class="header" >
-
+                            <div class="logo-container"   >
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                            </div>  
                             @if (session('status'))
                                 <div class="alert alert-success">
                                     {{ session('status') }}
                                 </div>
                             @endif
-                            <div class="logo-container" >
-                                <img src="{{ asset('assets/images/logo.png') }}" alt="">
-                            </div>
+                           
                             <br>
+
                         <h5 style="color: #0046B0;">{{__(('admin.sign'))}}</h5>
                         </div>
                         @if(Session::has('error'))
@@ -85,10 +110,10 @@ span.input-group-addon
                         
 
                         
-                            <div class="input-group input-lg">
-                                <input type="text" name="email" class="form-control" placeholder="{{trans('admin.placeholder_email')}}" value="{{ old('email') }}"  autofocus>
+                            <div class="input-group  ">
+                                <input type="text" name="email" class="form-control delete-border" placeholder="{{trans('admin.placeholder_email')}}" value="{{ old('email') }}"  autofocus>
                                 <!-- <input type="text" class="form-control" placeholder="Enter User Name" value="{{ old('email') }}"  autofocus> -->
-                                <span class="input-group-addon">
+                                <span class="input-group-addon delete-border">
                                     <i class="zmdi zmdi-account"></i>
                                 </span>
                                 
@@ -100,9 +125,9 @@ span.input-group-addon
                             @endif
                             
                             <div class="input-group input-lg">
-                                <input type="password"  placeholder="{{trans('admin.placeholder_password')}}" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" >
+                                <input type="password"  placeholder="{{trans('admin.placeholder_password')}}" class="delete-border form-control{{ $errors->has('password') ? ' is-invalid' : '' }} " name="password" >
                                 <!-- <input type="password" placeholder="Password" class="form-control" /> -->
-                                <span class="input-group-addon">
+                                <span class="input-group-addon delete-border">
                                     <i class="zmdi zmdi-lock"></i>
                                 </span>
                                 
@@ -115,7 +140,7 @@ span.input-group-addon
                         </div>
                         <div class="footer text-center">
                             <!-- <a href="index.html" class="btn btn-primary btn-round btn-lg btn-block ">SIGN IN</a> -->
-                            <button type="submit" class="btn btn-primary  btn-round btn-lg btn-block">{{trans('admin.sign')}}</button>
+                            <button type="submit" class="btn btn-primary  btn-round btn-lg btn-block delete-border">{{trans('admin.sign')}}</button>
                         <h5><a href="{{Url('password/reset')}}" class="link">{{__('admin.Forgot Password Or First Login ?')}}</a></h5>
                         </div>
                 </form>
