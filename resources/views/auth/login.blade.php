@@ -1,22 +1,75 @@
 @extends('layouts.auth')
+@section('style')
+<style>
+    .page-header-image
+    {
+        background-color: #364150!important;
+    }
+    body
+    {
+        font-family: 'DroidArabicKufiBold';  
+    }
+    .card-plain
+    {
+        background-color:#eceef1;
+         /* padding: 20px; */
+    }
+    .form-control:active,.form-control:focus {
+    border: 1px solid #c3ccda;
+}
+.form-control {
+    background-color: #dde3ec;
+    height: 43px;
+    color: #8290a3;
+    border: 1px solid #dde3ec;
+}
+.btn.btn-primary{
+    background-color:#0046B0;
+    color: #FFF;
+    font-family: 'DroidArabicKufiBold';  
+}
+/* .btn.btn-primary:hover{
+    color: #FFF;
+    background-color: #1f858e;
+    border-color: #18666d;
+} */
+h5>a.link
+{
+    color:black!important;
+}
+span.input-group-addon
+{
+    color:#cccccc!important;
+}
+.authentication .card-plain.card-plain .form-control,.authentication .card-plain.card-plain .form-control:focus
+{
+    color: #8290a3;
+}
+.invalid-feedback
+{
+    color: #e73d4a;
+}
+</style>
+@endsection
 @section('content')
-<div class="page-header-image" style="background-image:url(assets/images/login.jpg)"></div>
+<div class="page-header-image" ></div>
 <div class="container">
-    <div class="col-md-12 content-center">
-        <div class="card-plain">
+    <div class="col-md-12 content-center card-plain" >
+        <!-- <div class="card-plain"> -->
                 <form action="{{ route('login') }}" method="POST" class="form" id="loginform" autocomplete="off">
                     @csrf
-                        <div class="header">
+                        <div class="header" >
 
                             @if (session('status'))
                                 <div class="alert alert-success">
                                     {{ session('status') }}
                                 </div>
                             @endif
-                            <div class="logo-container">
+                            <div class="logo-container" >
                                 <img src="{{ asset('assets/images/logo.png') }}" alt="">
                             </div>
-                        <h5>{{__(('admin.sign'))}}</h5>
+                            <br>
+                        <h5 style="color: #0046B0;">{{__(('admin.sign'))}}</h5>
                         </div>
                         @if(Session::has('error'))
 
@@ -27,12 +80,16 @@
                                 <strong>{{ Session::get('error') }}</strong>
                             </span>  --}}
                         @endif
-                        <div class="content">                                                
+                        <div class="content">   
+                                
+                        
+
+                        
                             <div class="input-group input-lg">
                                 <input type="text" name="email" class="form-control" placeholder="{{trans('admin.placeholder_email')}}" value="{{ old('email') }}"  autofocus>
                                 <!-- <input type="text" class="form-control" placeholder="Enter User Name" value="{{ old('email') }}"  autofocus> -->
                                 <span class="input-group-addon">
-                                    <i class="zmdi zmdi-account-circle"></i>
+                                    <i class="zmdi zmdi-account"></i>
                                 </span>
                                 
                             </div>
@@ -62,7 +119,7 @@
                         <h5><a href="{{Url('password/reset')}}" class="link">{{__('admin.Forgot Password Or First Login ?')}}</a></h5>
                         </div>
                 </form>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 @endsection 

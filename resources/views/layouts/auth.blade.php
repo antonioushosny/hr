@@ -15,6 +15,27 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/authentication.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/color_skins.css') }}">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
+    @yield('style')
+    <style>
+        ::-webkit-input-placeholder { /* Edge */
+  color: #a19ca3;
+  font-family: 'DroidArabicKufiRegular'; 
+  text-align: right;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #a19ca3;
+  font-family: 'DroidArabicKufiRegular';
+  text-align: right;  
+}
+
+::placeholder {
+  color: #a19ca3;
+  font-family: 'DroidArabicKufiRegular'; 
+  text-align: right; 
+}
+    </style>  
 </head>
 
 <body class="theme-purple authentication sidebar-collapse">
