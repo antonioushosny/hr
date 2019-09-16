@@ -38,7 +38,7 @@
                 <div class="card">
                
                     <div class="header">
-                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.add_role')}}  </h2>
+                        <h2><strong>{{trans('admin.'.$title)}}</strong> {{trans('admin.edit_role')}}  </h2>
                         
                     </div> 
                     @if (count($errors) > 0)

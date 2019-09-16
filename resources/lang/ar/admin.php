@@ -271,6 +271,10 @@ return [
     //end reports page
 
     //messages 
+        'messages'              => ' ارسال رسائل' ,
+        'all_users'            => 'كل المستخدمين',
+        'all_fannies'            =>  'كل  الفنيين',
+        'clients'               => 'اختر ',
         'send_spec'             =>'ارسال لأشخاص معينين',
         'sendforall'            => 'ارسال للكل  ',
         'send'                  => 'ارسال',
