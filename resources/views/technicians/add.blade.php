@@ -126,6 +126,32 @@
                                     </div>
                                 </div>
 
+
+
+                                 <!-- for identity phone  -->
+                                 <div class="form-group form-float row"  >
+                                    {{--  for identity phone  --}}
+                                    <div class= "col-md-3 col-xs-3">
+                                        <div class="form-group form-float  " >
+                                            <div style="position:relative; ">
+                                                <a class='btn btn-primary' href='javascript:;' >
+                                                    {{trans('admin.Choose_identity')}}
+            
+                                                    {!! Form::file('identity',['class'=>'form-control','id' => 'identity_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeidentity");' ]) !!}
+                                                </a>
+                                                &nbsp;
+                                                <div class='label label-primary' id="upload-file-info" ></div>
+                                                <span style="color: red " id="identity-error" class="image text-user hidden"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        
+                                            <img id="changeidentity" src="{{asset('images/vcard.png')}}" width="50px" height="50px" alt=" {{trans('admin.image')}}" />
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="status" id="active" class="with-gap" value="active" checked="">
@@ -138,7 +164,7 @@
                                 </div>
 
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="radio inlineblock m-r-20">
                                         <input type="radio" name="available" id="online" class="with-gap" value="1" checked="">
                                         <label for="online">{{__('admin.online')}}</label>
@@ -147,7 +173,7 @@
                                         <input type="radio" name="available" id="offline" class="with-gap" value="0"  >
                                         <label for="offline">{{__('admin.offline')}}</label>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                             </div> <!--col-6-->
@@ -203,29 +229,6 @@
 
                                
 
-                                 <!-- for identity phone  -->
-                                 <div class="form-group form-float row"  >
-                                    {{--  for identity phone  --}}
-                                    <div class= "col-md-3 col-xs-3">
-                                        <div class="form-group form-float  " >
-                                            <div style="position:relative; ">
-                                                <a class='btn btn-primary' href='javascript:;' >
-                                                    {{trans('admin.Choose_identity')}}
-            
-                                                    {!! Form::file('identity',['class'=>'form-control','id' => 'identity_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeidentity");' ]) !!}
-                                                </a>
-                                                &nbsp;
-                                                <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " id="identity-error" class="image text-user hidden"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-9">
-                                        
-                                        <img id="changeidentity" src="{{asset('images/vcard.png')}}" width="50px" height="50px" alt=" {{trans('admin.image')}}" />
-                                    </div>
-                                </div>
 
                                 
                             </div> <!--col-6-->
@@ -484,7 +487,7 @@ $('#city_info').change(function(){
             },
         });
     });
-    $('.select2').select2();
+    // $('.select2').select2();
    
 </script>
 @endsection
