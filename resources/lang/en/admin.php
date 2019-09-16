@@ -257,6 +257,10 @@ return [
     //end contact_us page
     
     //messages 
+        'messages'              => 'Send Messages' ,
+        'all_users'            => 'Send to all Users',
+        'all_fannies'            => 'Send to all Technicians',
+        'clients'               => 'Choose ',
         'send_spec'             =>'Send to specific people',
         'sendforall'            => 'Send to all',
         'send'                  => 'Send',

@@ -256,12 +256,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
+    
 function initMap() {
 @if($technical->user->lat != null &&  $technical->user->lng != null)    
     var lat1 = {{$technical->user->lat}};
     var lng1 = {{$technical->user->lng}}
     var haightAshbury = {lat: lat1 , lng:lng1 };
-    console.log(haightAshbury) ;
+     console.log(haightAshbury) ;
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 18,
         center: haightAshbury,
