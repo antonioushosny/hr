@@ -1,352 +1,186 @@
 @extends('layouts.index')
-
- @section('content')
-    <section class="content-header">
-        <h1>
-            {{trans('admin.messages')}}
-        <small>{{trans('admin.Control_panel')}}</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> {{trans('admin.home')}}</a></li>
-          <li class="active"><a href="{{ route('messages') }}">{{trans('admin.messages')}}</a></li>
-        </ol>
-    </section>
-    
-    <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-          @if(Session::has('alert-' . $msg))
-          @section('script')
-                <script>
-                    toastr.success('{{ Session::get('alert-' . $msg) }}', '{{trans('admin.Success_Alert')}}', {timeOut: 5000});
-                </script>
-            @endsection
-          <!-- <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p> -->
-          @endif
-        @endforeach
-    </div>
-   
-    
-    <!-- Main content -->
-     <?php $msg = trans('admin.confirm_delete') ; ?> 
-      {!! Form::open(['route'=>['send_messages'],'method'=>'post','autocomplete'=>'off', 'id'=>'messagess_form' ])!!}
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="panel panel-green">
-                  <div class="panel-heading">
-                 
-                    <section class="content-header" style="padding:17px !important;">
-                        
-                          <h1>
-                             <i class="fa fa-cog"></i> {{trans('admin.messages')}}
-                          
-                          </h1>
-      
-                    </section>
-
-                  </div>
-                  <div class="panel-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    <!-- <p class="alert alert-danger">{{ $error }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p> -->
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                        <div class="row">
-
-                            <div class="col-md-2"> </div>
-
-                                <div class="form-group col-md-8">
-                                  <span style="color: black ; width:100%"> *
-                                      {!!Form::label('title',trans('admin.title')) !!}
-                                      {!! Form::text('title','',['class'=>'form-control','id' => 'title_field','placeholder' => trans('admin.placeholder_title')]) !!}
-                                  </span>
-                                  <span style="color: red " class="title text-center hidden"></span>
-                                </div> <br/> 
-                            <div class="col-md-2"> </div>
-                        </div>
-                    
-                        <div class="row">
-                            <div class="col-md-2"> </div>
-                                <div class="form-group col-md-8">
-                                  <span style="color: black ; width:100%"> *
-                                      {!!Form::label('message',trans('admin.message')) !!}
-                                      {!! Form::textarea('message','',['class'=>'form-control','rows'=>'4','id' => 'message_field','placeholder' => trans('admin.placeholder_message')]) !!}
-                                  </span>
-                                  <span style="color: red " class="message text-center hidden"></span>
-                                </div> <br/>
-                            <div class="col-md-2"> </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2"> </div>
-                                <div class="form-group col-md-8">
-                                  <span style="color: black ; width:100% "> 
-    
-                                        {!!Form::label('send_points',trans('admin.send_points')) !!}
-        
-                                        <input class="form-control" type="checkbox" name="send_points" id="send_points_field"  value="send_points">
-                                    
-                                  </span>
-                                  <span style="color: red " class="send_points text-center hidden"></span>
-                                </div> <br/>
-                            <div class="col-md-2"> </div>
-                        </div>
-
-                        {{--  for  points  --}}
-                        <div class=" points_field hidden" >
-                            <div class="row">
-                                <div class="col-md-2"> </div>
-                                <div class="form-group col-md-8">
-                                    <span style="color: black ; width:100%"> *
-                                        {!!Form::label('points',trans('admin.points')) !!}
-                                        {!! Form::text('points','',['class'=>'form-control ','id' => 'points_field','onkeypress'=>'isNumber(event); ','placeholder' => trans('admin.placeholder_points')]) !!}
-                                    </span>
-                                    <span style="color: red " class="points text-center hidden"></span>
-                                </div>
-                                <div class="col-md-2"> </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2"> </div>
-                                <div class="form-group col-md-8">
-                                    <span style="color: black ; width:100%"> *
-                                        {!!Form::label('coupons',trans('admin.coupons')) !!}
-                                        {!! Form::text('coupons','',['class'=>'form-control ','id' => 'coupons_field','onkeypress'=>'isNumber(event); ','placeholder' => trans('admin.placeholder_coupons')]) !!}
-                                    </span>
-                                    <span style="color: red " class="coupons text-center hidden"></span>
-                                </div>
-                                <div class="col-md-2"> </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2"> </div>
-                                <div class="form-group col-md-8">
-                                  <span style="color: black ; width:100% "> 
-    
-                                        {!!Form::label('for',trans('admin.sendforall')) !!}
-        
-                                        <input class="form-control" type="radio" name="for" id="sendforall_field" value="all" checked>
-                                        
-                                        {!!Form::label('for',trans('admin.send_spec')) !!}
-                                        <input class="form-control" type="radio" name="for" id="send_field" value="not_all">
-
-                                        {!!Form::label('for',trans('admin.for_country')) !!}
-                                        <input class="form-control" type="radio" name="for" id="for_country" value="for_country">
-
-                                        {!!Form::label('for',trans('admin.for_city')) !!}
-                                        <input class="form-control" type="radio" name="for" id="for_city" value="for_city">
-
-
-                                  </span>
-                                  <span style="color: red " class="message text-center hidden"></span>
-                                </div> <br/>
-                            <div class="col-md-2"> </div>
-                        </div>
-                        <div class="row clients hidden" >
-                            <div class="col-md-2"> </div>
-                              <div class="form group col-md-8">
-                                  <span style="color: black "> 
-                                  {!! Form::label('ids',trans('admin.choose')) !!}*
-                                  {!! Form::select('ids[]',[]
-                                      ,'',['class'=>'form-control select2' ,'id' => 'selectmulty','multiple'=>true]) !!}
-
-                                      
-                                  </span>
-                                  <span style="color: red " class="status1 text-center hidden"></span>
-                              </div><br/>  
-                        </div>
-                        <div class="row countries hidden" >
-                            <div class="col-md-2"> </div>
-                              <div class="form group col-md-8">
-                                  <span style="color: black "> 
-                                  {!! Form::label('countries',trans('admin.choose')) !!}*
-                                  {!! Form::select('countries[]',[]
-                                      ,'',['class'=>'form-control select2' ,'id' => 'selectcountries','multiple'=>true]) !!}
-
-                                      
-                                  </span>
-                                  <span style="color: red " class="status1 text-center hidden"></span>
-                              </div><br/>  
-                        </div>
-                        <div class="row cities hidden" >
-                            <div class="col-md-2"> </div>
-                              <div class="form group col-md-8">
-                                  <span style="color: black "> 
-                                  {!! Form::label('cities',trans('admin.choose')) !!}*
-                                  {!! Form::select('cities[]',[]
-                                      ,'',['class'=>'form-control select2' ,'id' => 'selectcities','multiple'=>true]) !!}
-
-                                      
-                                  </span>
-                                  <span style="color: red " class="status1 text-center hidden"></span>
-                              </div><br/>  
-                        </div>
-                        <button type="submit" class="btn btn-primary add" >
-                                <span class='glyphicon glyphicon-check'></span> {{trans('admin.send')}}
-                        </button>
-
-                  </div>
-                </div>
-              </div>
-              <!-- /.box -->
-            </div>
-            <!-- /.col -->
-          </div>
-        <!-- /.row -->
-    </section>
-</form>
-
-
-   
-@endsection 
 @section('style')
-  <style> 
-    /* .hidden{
+<style>
+    .hidden{
         display:none;
-    } */
-
-    .panel-body{
-        min-height: 35em !important;
     }
-    .panel-heading {
-        padding: 0;
-    }
-    .panel-heading ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-    .panel-heading li {
-        float: left;
-        border-right:1px solid #bbb;
-        display: block;
-        padding: 14px 16px;
-        text-align: center;
-    }
-    .panel-heading li:last-child:hover {
-        background-color: #ccc;
-    }
-    .panel-heading li:last-child {
-        border-right: none;
-    }
-    .panel-heading li a:hover {
-        text-decoration: none;
-    }
-
-    .table.table-bordered tbody td {
-        vertical-align: baseline;
-    }
-    /* icheck checkboxes */
-    .iradio_flat-yellow {
-        background: url(https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/yellow.png) no-repeat;
-    }
-
-  </style>
+</style>
 @endsection
+ @section('content')
+<!-- Main Content -->
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>{{__('admin.dashboard')}}
+                <small>{{__('admin.Welcome to fannie')}}</small>
+                </h2>
+            </div>            
+                @if($lang =='ar')
+                <div class="col-lg-7 col-md-7 col-sm-12 text-left">
+                <ul class="breadcrumb float-md-left" style=" padding: 0.6rem; direction: ltr; ">
+                @else 
+                <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+                <ul class="breadcrumb float-md-right">
+                @endif
+                    <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
+                    <li class="breadcrumb-item "><a href="javascript:void(0);">{{  __('admin.messages') }} </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
 
-@section('script1')
+     
+    <div class="container-fluid">
+        
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+               
 
-  <script>
+                        <div class="header">
+                            <h2><strong>{{  __('admin.messages') }}  </h2>
+                            
+                        </div>
+                        <div class="body">
+                            {!! Form::open(['route'=>['send_messages'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
-        jQuery(document).ready(function($){
+                                <div class="row">
+                                    <div class="col-md-1">{{ __('admin.title') }}</div>
+                                    <div class="col-md-11">
+                                        <!-- for title -->
+                                        <div class="form-group form-float">
+                                            <input type="text"  class="form-control" placeholder="{{__('admin.placeholder_title')}}" name="title" required>
+                                            <label id="title-error" class="error" for="title" style="">  </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-1">{{ __('admin.message') }}</div>
 
-            @foreach($clients as $client)
+                                    <div class="col-md-11">
+                                        <div class="form-group form-float">
+                                            <textarea name="message" cols="30" rows="5" placeholder="{{__('admin.placeholder_message')}}" class="form-control no-resize" required></textarea>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <div class="radio inlineblock m-r-20">
+                                        <input type="radio" name="for" id="sendforall_field" class="with-gap" value="all" checked > 
+                                        <label for="sendforall_field">{{__('admin.sendforall')}}</label>
+                                    </div>
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="for" id="all_fannies" class="with-gap" value="all_fannies" <?php echo ( isset($data->status) && $data->status == 'all_fannies') ? "checked=''" : ""; ?> >
+                                        <label for="all_fannies">{{__('admin.all_fannies')}}</label>
+                                    </div>
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="for" id="all_users" class="with-gap" value="all_users" <?php echo ( isset($data->status) && $data->status == 'all_users') ? "checked=''" : ""; ?> >
+                                        <label for="all_users">{{__('admin.all_users')}}</label>
+                                    </div>                                 
+                                    <div class="radio inlineblock">
+                                        <input type="radio" name="for" id="send_field" class="with-gap" value="not_all" <?php echo ( isset($data->status) && $data->status == 'not_active') ? "checked=''" : ""; ?> >
+                                        <label for="send_field">{{__('admin.send_spec')}}</label>
+                                    </div>
 
-                $("#selectmulty").append($('<option>', {
-                        value: {{$client->id}},
-                        text: '{{$client->name}}'
-                    }));
-            @endforeach
-            @foreach($countries as $country)
+                                    
+                                </div>
+                                <div class="row  clients hidden">
+                                    <div class="col-md-1">{{ __('admin.clients') }}</div>
+                                    <div class= "form-group form-float col-md-11">
+                                        {!! Form::select('ids[]',[],'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose'),'id' => 'clients','multiple'=>true]) !!}
+                                            <label id="ids-error" class="error" for="ids[]" style="">  </label>
+                                    </div> 
+                                </div> 
+                                 
 
-                $("#selectcountries").append($('<option>', {
-                        value: {{$country->id}},
-                        text: '{{$country->name_ar}}'
-                    }));
-            @endforeach
-            @foreach($cities as $city)
 
-                $("#selectcities").append($('<option>', {
-                        value: {{$city->id}},
-                        text: '{{$city->name_ar}}'
-                    }));
-            @endforeach
-            $('#send_field').on('ifChecked', function(event) {
-                $('.clients').removeClass('hidden'); 
-            });
-            $('#send_field').on('ifUnchecked', function(event) {
-                $('.clients').addClass('hidden');
-            });
-            $('#send_points_field').on('ifChecked', function(event) {
-                $('.points_field').removeClass('hidden');
-            });
-            $('#send_points_field').on('ifUnchecked', function(event) {
-                $('.points_field').addClass('hidden');
-            });
-            
-            $('#for_country').on('ifChecked', function(event) {
-                $('.countries').removeClass('hidden'); 
-            });
-            $('#for_country').on('ifUnchecked', function(event) {
-                $('.countries').addClass('hidden');
-            });
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.send')}}</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+  
+    </div>
 
-            $('#for_city').on('ifChecked', function(event) {
-                $('.cities').removeClass('hidden'); 
-            });
-            $('#for_city').on('ifUnchecked', function(event) {
-                $('.cities').addClass('hidden');
-            });
-      });
-      jQuery(function($){
+</section>
+  
+@endsection 
 
-        $('.multipleSelect').fastselect();
-         
-       
-        $(document).on('click', '.delete-modal', function() {
-            console.log ();
-          $('.modal-title').text('{{trans('admin.delete')}}');
-          $('#id_delete').val($(this).data('id'));
-          $('#deleteModal').modal('show');
-          id = $('#id_delete').val();
+@section('script')
+
+
+<script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/js/pages/forms/editors.js') }}"></script>
+
+
+<script>
+        @foreach($clients as $client)
+
+            $("#clients").append($('<option>', {
+                    value: {{$client->id}},
+                    text: '{{$client->name}}'
+                }));
+        @endforeach
+ 
+
+        $('#send_field').on('click', function(event) {
+            $('.clients').removeClass('hidden'); 
         });
-
-        // this for delete record
-        $('.modal-footer').on('click', '.delete', function() {
+        $('#sendforall_field').on('click', function(event) {
+            $('.clients').addClass('hidden');
+        });
+        $('#all_fannies').on('click', function(event) {
+            $('.clients').addClass('hidden');
+        });
+        $('#all_users').on('click', function(event) {
+            $('.clients').addClass('hidden');
+        });
+        
+    //this for add new record
+    $("#form_validation").submit(function(e){
+           {{--  $('#addModal').modal('hide');  --}}
+           $('.add').disabled =true;
+          e.preventDefault();
+          var form = $(this);
+        //    openModal();
           $.ajax({
-              type: 'GET',
-              url: "<?php echo url('/')?>/home/messages/delete/" + id,
-              data: {
-                  '_token': $('input[name=_token]').val(),
-              },
+              type: 'POST',
+              url: '{{ URL::route("send_messages") }}',
+              data:  new FormData($("#form_validation")[0]),
+              processData: false,
+              contentType: false,
+               
               success: function(data) {
-           
-                  toastr.success('{{trans('admin.successfully_deleted')}}', '{{trans('admin.Success_Alert')}}', {timeOut: 5000});
-                  $('.item' + data['id']).remove();
-              }
+                  if ((data.errors)) {                        
+                        if (data.errors.title) {
+                            $('#title-error').css('display', 'inline-block');
+                            $('#title-error').text(data.errors.title);
+                        }
+                        if (data.errors.message) {
+                            $('#message-error').css('display', 'inline-block');
+                            $('#message-error').text(data.errors.message);
+                        }
+                        if (data.errors.for) {
+                            $('#for-error').css('display', 'inline-block');
+                            $('#for-error').text(data.errors.for);
+                        }
+                        
+                  } else {
+                    location.reload();
+
+                     }
+            },
           });
         });
 
-     });
-
-      function isNumber(e){
-            var key = e.charCode;  
-            if( key <48 || key >57 )
-            {
-				if (key != 0)
-				{
-                e.preventDefault();   
-				}
-				          
-            }
-        }
-
-
-  </script>
+</script>
+    
 @endsection

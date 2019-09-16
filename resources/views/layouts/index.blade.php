@@ -107,6 +107,11 @@
         .pac-container {
             font-family: Roboto;
         }
+
+        ::placeholder {
+            color: #a19ca3 !important;
+            
+        }
 </style>
 <!-- Custom Css -->
 @if($lang=='ar')
@@ -121,6 +126,11 @@ body, html {
     {{-- font-family: 'Cairo', sans-serif !important ; --}}
     font-family: 'DroidArabicKufiBold' !important ; 
     font-weight: bold !important ;
+}
+::placeholder {
+    color: #a19ca3 !important;
+    font-family: 'DroidArabicKufiRegular';
+    text-align: right;
 }
 
 </style>
@@ -333,7 +343,9 @@ body, html {
                     @can('contact_list')
                     <li <?php echo ($page == 'contacts') ? "class='active open'" : ""; ?> ><a href="{{ route('contacts') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.contacts')}}</span></a></li>
                     @endcan
-
+                    @can('send_message')
+                    <li <?php echo ($page == 'messages') ? "class='active open'" : ""; ?> ><a href="{{ route('messages') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.messages')}}</span></a></li>
+                    @endcan
                     @can('static_page_list')
                     <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy'|| $page == 'bank') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">

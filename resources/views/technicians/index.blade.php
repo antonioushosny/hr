@@ -39,6 +39,12 @@
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
                             <ul class="header-dropdown">
+                                </li>
+                                    <a href="{{route('techniciansmaps')}}" class=" add-modal btn btn-primary btn-round" title="{{trans('admin.show_technician')}}">
+                                        {{trans('admin.show_technician')}}
+                                    </a>
+                                </li>
+
                                 @can('technical_create')
                                 </li>
                                     <a href="{{route('addtechnician')}}" class=" add-modal btn btn-success btn-round" title="{{trans('admin.add_user')}}">
@@ -48,9 +54,6 @@
                                 @endcan
                                 @can('technical_edit')
                                 </li>
-                                <a href="{{route('techniciansmaps')}}" class=" add-modal btn btn-primary btn-round" title="{{trans('admin.show_technician')}}">
-                                        {{trans('admin.show_technician')}}
-                                    </a>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>

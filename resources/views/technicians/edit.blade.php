@@ -586,7 +586,7 @@ $('#city_info').change(function(){
             },
         });
     });
-    $('.select2').select2();
+    {{-- $('.select2').select2(); --}}
    
 </script>
 @endsection

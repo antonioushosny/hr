@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Order;
 use App\User;
+use App\City;
 use App\Country;
 use App\Service;
 use App\Doc;
@@ -307,14 +308,17 @@ class HomeController extends Controller
 
     public function messages()
     {
+        $lang = App::getlocale();
         $title = 'messages';
         // $clients = User::where('role','client')->get();
         $clients = User::where('role','<>','admin')->get();
-        $countries = Country::where('id','<>','1')->get();
-        $cities = City::where('id','<>','1')->get();
+        $countries = Country::where('status','active')->get();
+        $cities = City::where('status','active')->get();
+        $fannies = User::where('role','fannie')->where('status','active')->get();
+        $users = User::where('role','user')->where('status','active')->get();
         // $users = User::where('role','user')->get();
 
-        return view('messages.index',compact('clients','cities','countries','title'));
+        return view('messages.index',compact('clients','users','cities','countries','title','lang'));
     }
 
     public function send(Request $request)
@@ -335,11 +339,11 @@ class HomeController extends Controller
         if($request->for == "all"){
             $clients =  User::where('role','<>','admin')->get();
         }
-        else if($request->for == "for_country"){
-            $clients =  User::whereIn('country_id',$request->countries)->get();
+        else if($request->for == "all_users"){
+            $clients =  User::where('role','user')->get();
         }
-        else if($request->for == "for_city"){
-            $clients =  User::whereIn('city_id',$request->cities)->get();
+        else if($request->for == "all_fannies"){
+            $clients =  User::where('role','fannie')->get();
         }
         else{
             $clients =  User::whereIn('id',$request->ids)->get();
@@ -348,36 +352,26 @@ class HomeController extends Controller
 
             foreach($clients as $client){
                 if($client){
-    
+                    $msg =  [
+                        'en' => $request->message ,
+                        'ar' =>$request->message ,
+                    ];
+                    $title = [
+                        'en' =>   $request->title  ,
+                        'ar' => $request->title  ,  
+                    ];
                     $type = "message";
-                    $msg =  $request->message ;
+                    // $msg =  $request->message ;
                     $client->notify(new Notifications($msg,$type ));
                     $device_id = $client->device_token;
-                    $title = $request->title ; 
+                    // $title = $request->title ; 
                     if($device_id){
                         $this->notification($device_id,$title,$msg,$id);
                     }
                 }
             }
         }
-        if($request->send_points){
-            if($request->send_points == 'send_points'){
-                $validatedData = $request->validate([
-                    'points' => 'required',
-                    'coupons' => 'required',
-                ]);
-                if(sizeof($clients) > 0){
-                    foreach($clients as $client){
-                        if($client){
-                            $client->points += $request->points ;
-                            $client->coupons += $request->coupons ;
-                            $client->save();
-                        
-                        }
-                    }
-                }
-            }
-        }
+        
         session()->flash('alert-success', trans('admin.successfully_send'));
         return redirect()->route('messages');
     }
