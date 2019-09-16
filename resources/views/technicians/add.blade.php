@@ -148,7 +148,7 @@
 
                                     <div class="col-md-9">
                                         
-                                            <img id="changeidentity" src="{{asset('images/vcard.png')}}" width="50px" height="50px" alt=" {{trans('admin.image')}}" />
+                                    <img id="changeidentity" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                     </div>
                                 </div>
 
