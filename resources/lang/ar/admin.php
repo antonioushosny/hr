@@ -138,7 +138,7 @@ return [
         'placeholder_name'              => 'من فضلك أدخل الاسم',
         'placeholder_user_name'         => 'من فضلك أدخل اسم المستخدم',
         'placeholder_email'             => ' البريد الإلكتروني',
-        'placeholder_password'          => 'من فضلك ادخل كلمة المرور',
+        'placeholder_password'          => 'كلمة المرور',
         'placeholder_password_confirmation'          => 'من فضلك ادخل  تاكيد كلمة المرور',
         'placeholder_mobile'            => 'من فضلك ادخل رقم التليفون',
         'placeholder_location'          => 'من فضلك ادخل الموقع', 

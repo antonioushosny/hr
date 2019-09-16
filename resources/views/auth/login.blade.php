@@ -15,53 +15,58 @@
          /* padding: 20px; */
     }
     .form-control:active,.form-control:focus {
-    border: 1px solid #c3ccda;
-}
-.form-control {
-    background-color: #dde3ec;
-    height: 43px;
-    color: #8290a3;
-    border: 1px solid #dde3ec;
-}
-.btn.btn-primary{
-    background-color:#0046B0;
-    color: #FFF;
-    font-family: 'DroidArabicKufiBold';  
-}
-/* .btn.btn-primary:hover{
-    color: #FFF;
-    background-color: #1f858e;
-    border-color: #18666d;
-} */
-h5>a.link
-{
-    color:black!important;
-}
-span.input-group-addon
-{
-    color:#cccccc !important;
-}
-.authentication .card-plain.card-plain .form-control,.authentication .card-plain.card-plain .form-control:focus
-{
-    color: #8290a3;
-}
-.invalid-feedback
-{
-    color: #e73d4a;
-}
-body, .page-header{
-    background-color: #364150   !important;
-}
-.delete-border{
-    border-radius: 0px !important; 
-}
-.authentication .card-plain.card-plain .input-group-addon {
+        border: 1px solid #c3ccda;
+    }
+    .form-control {
+        background-color: #dde3ec;
+        height: 43px;
+        color: #8290a3;
+        border: 1px solid #dde3ec;
+    }
+    .btn.btn-primary{
+        background-color:#0046B0;
+        color: #FFF;
+        font-family: 'DroidArabicKufiBold';  
+    }
+    /* .btn.btn-primary:hover{
+        color: #FFF;
+        background-color: #1f858e;
+        border-color: #18666d;
+    } */
+    h5>a.link
+    {
+        color:black!important;
+    }
+    span.input-group-addon
+    {
+        color:#cccccc !important;
+    }
+    .authentication .card-plain.card-plain .form-control,.authentication .card-plain.card-plain .form-control:focus
+    {
+        color: #000;
+    }
+    .invalid-feedback
+    {
+        color: #e73d4a;
+    }
+    body, .page-header{
+        background-color: #364150   !important;
+    }
+    .delete-border{
+        border-radius: 0px !important; 
+    }
+    .authentication .card-plain.card-plain .input-group-addon {
 
-    background-color: #dde3ec !important; 
-     border-color: rgb(255, 255, 255) !important;
-    color: #fff;
+        background-color: #dde3ec !important; 
+        border-color: rgb(255, 255, 255) !important;
+        color: #fff;
 
-}
+    }
+    ::placeholder {
+        color: #a19ca3 !important;
+        font-family: 'DroidArabicKufiRegular';
+        text-align: right;
+    }
 </style>
 @endsection
 @section('content')

@@ -850,7 +850,7 @@
 .btn,.navbar .navbar-nav>a.btn {
  border-width:2px;
  font-weight:400;
- font-size:.8571em;
+ font-size:.61em;
  line-height:1.35em;
  margin:5px 1px;
  border:none;
@@ -1215,7 +1215,7 @@
  background-color:transparent
 }
 .btn-lg {
- font-size:1em;
+ font-size:.8em;
  border-radius:.25rem;
  padding:15px 48px
 }
@@ -1276,7 +1276,7 @@
  border-radius:30px;
  color:#2c2c2c;
  line-height:normal;
- font-size:.8571em;
+ font-size:.771em;
  -webkit-transition:color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
  -moz-transition:color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
  -o-transition:color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -1868,7 +1868,7 @@ h3,.h3 {
  line-height:1.4em
 }
 h4,.h4 {
- font-size:1em;
+ font-size:.75em;
  line-height:1.45em;
  margin-top:30px;
  margin-bottom:15px
@@ -1877,7 +1877,7 @@ h4+.category,h4.title+.category,.h4+.category,.h4.title+.category {
  margin-top:-10px
 }
 h5,.h5 {
- font-size:1.57em;
+ font-size:0.95em;
  line-height:1.4em;
  margin-bottom:15px
 }
@@ -11725,7 +11725,7 @@ img {
  transform:scale(1)
 }
 .navbar-header .navbar-brand {
- font-size:18px
+ font-size:14px;
 }
 .navbar-header .bars {
  float:left;
@@ -13793,13 +13793,13 @@ img {
 }
 .block-header h2 {
  margin:0 !important;
- font-size:20px
+ font-size:17px;
 }
 .block-header h2 small {
  display:block;
  margin-top:8px;
  color:#616161;
- font-size:13px
+ font-size:11px;
 }
 .block-header h2 small a {
  color:#e0e0e0
@@ -14616,7 +14616,7 @@ section small {
  padding:15px !important
 }
 .card .body {
- font-size:14px;
+ font-size:12px;
  color:#424242;
  padding:20px;
  font-weight:400

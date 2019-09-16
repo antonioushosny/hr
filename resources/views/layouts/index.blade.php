@@ -148,7 +148,7 @@ body, html {
         <li>
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('assets/images/logo.png') }}" width="30" alt="fannie"><span class="m-l-10">fannie</span></a>
+                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('/images/logo_0.png') }}" width="30" alt="fannie"><span class="m-l-10">fannie</span></a>
             </div>
         </li>
         <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>

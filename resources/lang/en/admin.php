@@ -131,7 +131,7 @@ return [
         'placeholder_name'              => 'Please Enter Name ', 
         'placeholder_user_name'         => 'Please Enter User Name ',
         'placeholder_email'             => ' Email ',
-        'placeholder_password'          => 'Please Enter Password ',
+        'placeholder_password'          => '  Password ',
         'placeholder_password_confirmation'          =>  'Please Enter Password Confirmation ',
 
         'placeholder_mobile'            => 'Please Enter Mobile ',
