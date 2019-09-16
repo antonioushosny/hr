@@ -1,6 +1,6 @@
 <?php
 return [
-    'role_list' => 'View roles',
+    'role_list' => 'View Roles',
     'role_create' => 'Add Role',
     'role_edit' => 'Edit Role',
     'role_delete' => 'Delete Role',

@@ -21,7 +21,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('roles.index')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.roles')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('roles.index')}}"><i class="zmdi zmdi-layers"></i> {{__('admin.roles')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_role')}}</a></li>
                     
                 </ul>
@@ -52,7 +52,7 @@
                         </div>
                     @endif
                     <div class="body row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             {!! Form::open(['route'=>['roles.store'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                             
                                 <div class="form-group form-float">
@@ -72,17 +72,20 @@
                                         <strong>{{__('admin.permissions')}}:</strong>
                                         <br/>
                                         <label id="permission-error" class="error" for="name" style="">  </label>
-                                    <table>
-                                        @foreach($permission->chunk(4) as $chunk)
-                                        <tr>
+                                    <table class="table">
 
+                                       
+                                        @foreach($permission->chunk(4) as $chunk)
+
+                                        <tr>
                                             @foreach($chunk as $value)
-                                            <td>
+                                        <td>
                                                 <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name check icheck')) }}
                                                 {{ __('role.'.$value->name) }}</label>
                                             </td>
+                                            
                                             @endforeach
-                                        </tr>
+                                            </tr>
                                         @endforeach
                                     </table>
                                     </div>

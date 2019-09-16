@@ -73,8 +73,8 @@ class CitiesController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190', 
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190', 
                 'country_id'  =>'required',           
                 'status'  =>'required',   
             ];
@@ -84,8 +84,8 @@ class CitiesController extends Controller
         else{
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',              
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',              
                 // 'image'  =>'required',           
                 'country_id'  =>'required',     
                 'status'  =>'required'      
@@ -134,15 +134,23 @@ class CitiesController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'cities';
-        $allcountries = Country::all();
-        if($lang == 'ar'){
-            $countries = array_pluck($allcountries,'name_ar', 'id'); 
-        }else{
-            $countries = array_pluck($allcountries,'name_en', 'id');
-        }
         $citie = City::where('id',$id)->with('country')->orderBy('id', 'DESC')->first();
-        // return $admin ; 
-        return view('cities.edit',compact('citie','countries','title','lang'));
+        if($citie)
+        {
+            $allcountries = Country::all();
+            if($lang == 'ar'){
+                $countries = array_pluck($allcountries,'name_ar', 'id'); 
+            }else{
+                $countries = array_pluck($allcountries,'name_en', 'id');
+            }
+            // return $admin ; 
+            return view('cities.edit',compact('citie','countries','title','lang'));
+
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     public function update(Request $request, $id)

@@ -47,7 +47,7 @@ return [
         'showorders'                    =>'Show Orders',
         'delete'                        => 'Delete ',
         'more'                          => 'More' ,
-        'deleteall'                     => 'delete selected',
+        'deleteall'                     => 'Delete Selected',
         'choose'                        => 'Choose ' ,
         'email_notfound'                => 'Email Not Found ',
         'allowed_access'                => 'you are not allowed to access this. ',
@@ -221,13 +221,13 @@ return [
  
 
     //roles page 
-        'roles'                       => ' roles', 
-        'role'                        => ' role', 
+        'roles'                       => ' Roles', 
+        'role'                        => ' Role', 
         'Name'                        => ' Name',
         'no'                        => ' No', 
-        'add_role'                    => ' Add role'  ,
-        'edit_role'                   => ' Edit role'  ,
-        'delete_role'                 =>  ' Delete role'  ,
+        'add_role'                    => ' Add Role'  ,
+        'edit_role'                   => ' Edit Role'  ,
+        'delete_role'                 =>  ' Delete Role'  ,
         'check_all'                 => 'Check All', 
         'permissions'                 => 'Permissions', 
 

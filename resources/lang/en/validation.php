@@ -203,6 +203,7 @@ return [
         'date_exp'=>'Expiration date',
         'title_ar'=>'Arabic Title',
         'title_en'=>'English Title',
+        'permission'=>'Permissions',
     ],
     
 ];

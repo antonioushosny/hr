@@ -257,11 +257,11 @@ body, html {
                     <li <?php echo ($page == 'home') ? "class='active open'" : ""; ?> ><a href="{{ route('home') }}"  ><i class="zmdi zmdi-home"></i> <span> {{trans('admin.dashboard')}}</span></a></li>
                     
                     @can('role_list')
-                    <li <?php echo ($page == 'roles') ? "class='active open'" : ""; ?> ><a href="{{ route('roles.index') }}"  ><i class="zmdi zmdi-accounts-add"></i> <span> {{trans('admin.roles')}}</span></a></li>
+                    <li <?php echo ($page == 'roles') ? "class='active open'" : ""; ?> ><a href="{{ route('roles.index') }}"  ><i class="zmdi zmdi-layers"></i> <span> {{trans('admin.roles')}}</span></a></li>
                     @endcan
 
                     @can('admin_list')
-                    <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-accounts-add"></i> <span> {{trans('admin.admins')}}</span></a></li>
+                    <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-face"></i> <span> {{trans('admin.admins')}}</span></a></li>
                     @endcan
 
                     @can('country_list')
@@ -269,7 +269,7 @@ body, html {
                     @endcan
 
                     @can('city_list')
-                    <li <?php echo ($page == 'cities') ? "class='active open'" : ""; ?> ><a href="{{ route('cities') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.cities')}}</span></a></li>
+                    <li <?php echo ($page == 'cities') ? "class='active open'" : ""; ?> ><a href="{{ route('cities') }}"  ><i class="zmdi zmdi-city-alt"></i> <span> {{trans('admin.cities')}}</span></a></li>
                     @endcan
 
                     @can('area_list')
@@ -277,7 +277,7 @@ body, html {
                     @endcan  
 
                     @can('nationality_list')
-                    <li <?php echo ($page == 'nationalities') ? "class='active open'" : ""; ?> ><a href="{{ route('nationalities') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.nationalities')}}</span></a></li>
+                    <li <?php echo ($page == 'nationalities') ? "class='active open'" : ""; ?> ><a href="{{ route('nationalities') }}"  ><i class="zmdi zmdi-blur-circular"></i> <span> {{trans('admin.nationalities')}}</span></a></li>
                     @endcan
                     
                     @can('service_list')

@@ -99,8 +99,8 @@ class ServicesController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',           
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',           
                 'status'  =>'required',   
             ];
             
@@ -109,8 +109,8 @@ class ServicesController extends Controller
         else{
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',              
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',              
                 'image'  =>'required',           
                 'status'  =>'required'      
             ];
