@@ -20,7 +20,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('admins')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.admins')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('admins')}}"><i class="zmdi zmdi-face"></i> {{__('admin.admins')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_admin')}}</a></li>
                     
                 </ul>

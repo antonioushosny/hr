@@ -240,7 +240,7 @@ class TechniciansController extends Controller
             $technical->user_id   = $user->id; 
 
             $technical->renewal_date   = $request->renewal_date; 
-            $technical->available   = $request->available; 
+            //$technical->available   = $request->available; 
             $technical->brief   = $request->brief; 
             $technical->service_id   = $request->service_id; 
             $technical->city_id   = $request->city_id;

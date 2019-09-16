@@ -21,7 +21,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('roles.index')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.roles')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('roles.index')}}"><i class="zmdi zmdi-layers"></i> {{__('admin.roles')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_role')}}</a></li>
                     
                 </ul>
@@ -52,7 +52,7 @@
                         </div>
                     @endif
                     <div class="body row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             {!! Form::open(['route'=>['roles.store'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
                             {!! Form::hidden('id', $role->id, array('placeholder' => '','class' => 'form-control')) !!}
                             
@@ -72,7 +72,7 @@
                                         <strong>{{__('admin.permissions')}}:</strong>
                                         <br/>
                                         <label id="permission-error" class="error" for="name" style="">  </label>
-                                    <table>
+                                    <table class="table">
                                         @foreach($permission->chunk(4) as $chunk)
                                         <tr>
 

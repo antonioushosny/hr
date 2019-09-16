@@ -51,8 +51,8 @@ class NationalitiesController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',           
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',           
                 'status'  =>'required',   
             ];
             
@@ -61,8 +61,8 @@ class NationalitiesController extends Controller
         else{
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',              
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',              
      
                 'status'  =>'required'      
             ];
@@ -106,10 +106,18 @@ class NationalitiesController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $title = 'nationalities';
         $nationalitie = Nationality::where('id',$id)->orderBy('id', 'DESC')->first();
-        // return $admin ; 
-        return view('nationalities.edit',compact('nationalitie','title','lang'));
+        if($nationalitie)
+        {
+            $title = 'nationalities';
+            // return $admin ; 
+            return view('nationalities.edit',compact('nationalitie','title','lang'));
+
+        }
+        else
+        {
+            return redirect(url('error'));
+        }
     }
 
     public function update(Request $request, $id)

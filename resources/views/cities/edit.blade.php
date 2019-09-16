@@ -20,7 +20,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('cities')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.cities')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('cities')}}"><i class="zmdi zmdi-city-alt"></i> {{__('admin.cities')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.edit_citie')}}</a></li>
                     
                 </ul>
@@ -109,7 +109,11 @@
                
               success: function(data) {
                   if ((data.errors)) {       
-                        $(':input[type="submit"]').prop('disabled', false);                 
+                        $(':input[type="submit"]').prop('disabled', false);
+                        if (data.errors.country_id) {
+                            $('#country_id-error').css('display', 'inline-block');
+                            $('#country_id-error').text(data.errors.country_id);
+                        }                    
                         if (data.errors.name_ar) {
                             $('#name-ar-error').css('display', 'inline-block');
                             $('#name-ar-error').text(data.errors.name_ar);

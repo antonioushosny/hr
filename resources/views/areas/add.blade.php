@@ -30,7 +30,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('areas')}}"><i class="zmdi zmdi-accounts-add"></i> {{__('admin.areas')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('areas')}}"><i class="zmdi zmdi-pin"></i> {{__('admin.areas')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_area')}}</a></li>
                     
                 </ul>
@@ -53,6 +53,11 @@
                     <div class="body row">
                         <div class="col-lg-6">
                             {!! Form::open(['route'=>['storearea'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
+                                <div class= "form-group form-float"> 
+                                    {!! Form::select('city_id',$cities
+                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
+                                        <label id="city-id-error" class="error" for="city_id" style="">  </label>
+                                </div>
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_ar')}}" name="name_ar" required>
                                     <label id="name-ar-error" class="error" for="name_ar" style="">  </label>
@@ -60,11 +65,6 @@
                                 <div class="form-group form-float">
                                     <input type="text" class="form-control" placeholder="{{__('admin.placeholder_name_en')}}" name="name_en" required>
                                     <label id="name-en-error" class="error" for="name_en" style="">  </label>
-                                </div>
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('city_id',$cities
-                                        ,'',['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_city'),'required']) !!}
-                                        <label id="city-id-error" class="error" for="city_id" style="">  </label>
                                 </div>
                             
                                 <div class="form-group">

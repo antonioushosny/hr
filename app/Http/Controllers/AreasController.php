@@ -55,8 +55,8 @@ class AreasController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',  
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',  
                 'city_id'  =>'required',     
                 'status'  =>'required',   
             ];
@@ -66,8 +66,8 @@ class AreasController extends Controller
         else{
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',              
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',              
                 // 'image'  =>'required',           
                 'city_id'  =>'required',     
                 'status'  =>'required'      
@@ -117,13 +117,21 @@ class AreasController extends Controller
         $title = 'areas';
         $area = Area::where('id',$id)->orderBy('id', 'DESC')->first();
         // return $admin ; 
-        $allcities = City::all();
-        if($lang == 'ar'){
-            $cities = array_pluck($allcities,'name_ar', 'id'); 
-        }else{
-            $cities = array_pluck($allcities,'name_en', 'id');
+        if($area)
+        {
+            $allcities = City::all();
+            if($lang == 'ar'){
+                $cities = array_pluck($allcities,'name_ar', 'id'); 
+            }else{
+                $cities = array_pluck($allcities,'name_en', 'id');
+            }
+            return view('areas.edit',compact('area','cities','title','lang'));
         }
-        return view('areas.edit',compact('area','cities','title','lang'));
+        else
+        {
+            return redirect(url('error'));
+        }
+        
     }
 
     public function update(Request $request, $id)
