@@ -363,7 +363,7 @@ return [
         'deleted'=>'محذوف',
 
 
-        //subscriptions of users pages
+    //subscriptions of users pages
         'subscriptions_tech'=>' الإشتراكات',
         'add_subscription_tech'=>' إضافة إشتراك فني',
         'edit_subscription_tech'=>' تعديل إشتراك فني',
@@ -377,7 +377,7 @@ return [
         'date_exp'=>'تاريخ الصلاحية',
         'accept' => 'قبول',
         'reject' => 'رفض',
-        //orders pages
+    //orders pages
         'orders'=>'الطلبات',
         'pending'=>'قيد الانتظار',
         'accepted'=>'قبلت',
@@ -399,8 +399,13 @@ return [
         'date_order'=>'التاريخ  لتنفيذ الطلب',
         'rejected_date'=>'تاريخ الرفض',
         'accepted_date'=>'تاريخ القبول',
-       
+        'This_Month_orders'   => "طلبات هذا الشهر",
+        'This_Year_orders'   => "طلبات هذا العام",
+        'This_Week_orders'   => "طلبات هذا الأسبوع",
+        'Today_orders'   => "طلبات اليوم",
 
+        
+ 
         //reasons pages
         'reasons'=>'اسباب الرفض',
         'add_reason'=>' إضافة سبب رفض',

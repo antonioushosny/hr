@@ -46,10 +46,41 @@ class HomeController extends Controller
             $technicians    = User::where('role','fannie')->count('id');
             $services      = Service::count('id');
             $orders      = Order::count('id');
-
-            
             $title = 'home' ;
-            return view('home',compact('lang','title','technicians','services','drivers','users','orders'));
+
+            $yesterday      = Carbon::now()->subDays(1)->toDateString();
+            $one_week_ago   = Carbon::now()->subWeeks(1)->toDateString();
+            $one_month_ago  = Carbon::now()->subMonths(1)->toDateString();
+            $one_year_ago   = Carbon::now()->subYears(1)->toDateString();
+
+            $this_year = Order::whereDate('created_at','>=',$one_year_ago)->whereDate('created_at','<=',$date)->count('id');
+            $this_month = Order::whereDate('created_at','>=',$one_month_ago)->whereDate('created_at','<=',$date)->count('id');
+            $this_week = Order::whereDate('created_at','>=',$one_week_ago)->whereDate('created_at','<=',$date)->count('id');
+            $this_day = Order::whereDate('created_at','=',$date)->count('id');
+
+            for($i=0 ;$i <=6 ; $i++){
+                $year = Carbon::now()->subYears($i+1)->toDateString();
+                $lastyear = Carbon::now()->subYears($i)->toDateString();
+                $last_sex_years[$i]['period'] = date('Y', strtotime($lastyear));
+                $last_sex_years[$i]['sales'] = Order::whereDate('created_at','>=',$year)->whereDate('created_at','<=',$lastyear)->count('id');
+                $last_sex_years[$i]['orders'] = Order::whereDate('created_at','>=',$year)->whereDate('created_at','<=',$lastyear)->count('id');
+            }
+            for($i=0 ;$i <=11 ; $i++){
+                $month = Carbon::now()->subMonths($i+1)->toDateString();
+                $lastmonth = Carbon::now()->subMonths($i)->toDateString();
+                $sales_for_year[$i]['period'] = date('Y-M-d', strtotime($lastmonth));
+                $sales_for_year[$i]['sales'] = Order::whereDate('created_at','>=',$month)->whereDate('created_at','<=',$lastmonth)->count('id');
+                $sales_for_year[$i]['orders'] = Order::whereDate('created_at','>=',$month)->whereDate('created_at','<=',$lastmonth)->count('id');
+            }
+
+            for($i=0 ;$i <=7 ; $i++){
+                $day = Carbon::now()->subDays($i+1)->toDateString();
+                $lastday = Carbon::now()->subDays($i)->toDateString();
+                $sales_for_week[$i]['period'] = date('D', strtotime($lastday));
+                $sales_for_week[$i]['sales'] = Order::whereDate('created_at','>=',$day)->whereDate('created_at','<=',$lastday)->count('id');
+                $sales_for_week[$i]['orders'] = Order::whereDate('created_at','>=',$day)->whereDate('created_at','<=',$lastday)->count('id');
+            }
+            return view('home',compact('lang','title','technicians','services','drivers','users','orders','sales','this_day','this_week','this_month','this_year','last_sex_years','sales_for_year','sales_for_week'));
         
     }
 

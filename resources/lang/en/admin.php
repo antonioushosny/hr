@@ -392,7 +392,10 @@ return [
         'date_order'=>'Order Execution Date',
         'rejected_date'=>'Rejected Date',
         'accepted_date'=>'Accepted Date',
-
+        'This_Month_orders'   => "This Month's Orders",
+        'This_Year_orders'   => "This Year's Orders",
+        'This_Week_orders'   => "This Week's Orders",
+        'Today_orders'   => "Today's Orders",
 
          //reasons pages
          'reasons'=>'Reasons Rejection',
