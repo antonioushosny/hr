@@ -36,7 +36,7 @@
                 <ul class="breadcrumb float-md-right">
                 @endif
                     <li class="breadcrumb-item active"><a href="{{route('home')}}"><i class="zmdi zmdi-home"></i>{{__('admin.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('techsubscriptions')}}"><i class="zmdi zmdi-money-box"></i> {{__('admin.add_subscriptions_tech')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('techsubscriptions')}}"><i class="zmdi zmdi-money-box"></i> {{__('admin.subscriptions_tech')}}</a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0);">{{__('admin.add_subscription_tech')}}</a></li>
                     
                 </ul>

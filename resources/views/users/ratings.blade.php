@@ -50,7 +50,7 @@
                         
                         @if($user->image)
                         
-                        <img src="{{asset('img/').'/'.$user->image }}" alt="">
+                        <img src="{{asset('img/').'/'.$user->image }}" alt="" style="    height: 180px;">
                         @else
                         <img src="{{asset('images/default.png') }}" alt="">
                         @endif
