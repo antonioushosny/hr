@@ -47,8 +47,8 @@ class ReasonController extends Controller
         if($request->id ){
             $rules =
             [
-                'title_ar'  =>'required|max:190',           
-                'title_en'  =>'required|max:190',           
+                'title_ar'  =>'required|arabic|max:190',           
+                'title_en'  =>'required|english|max:190',           
                 'status'  =>'required',   
             ];
             
@@ -57,8 +57,8 @@ class ReasonController extends Controller
         else{
             $rules =
             [
-                'title_ar'  =>'required|max:190',           
-                'title_en'  =>'required|max:190',                       
+                'title_ar'  =>'required|arabic|max:190',           
+                'title_en'  =>'required|english|max:190',                       
                 'status'  =>'required'      
             ];
         }

@@ -48,8 +48,8 @@ class SubscriptionTypeController extends Controller
         if($request->id ){
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',  
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',  
                 'no_month'=>'required',
                 'cost' =>'required',        
                 'status'  =>'required',   
@@ -60,8 +60,8 @@ class SubscriptionTypeController extends Controller
         else{
             $rules =
             [
-                'name_ar'  =>'required|max:190',           
-                'name_en'  =>'required|max:190',
+                'name_ar'  =>'required|arabic|max:190',           
+                'name_en'  =>'required|english|max:190',
                 'no_month'=>'required',
                 'cost' =>'required',                        
                 'status'  =>'required'      
