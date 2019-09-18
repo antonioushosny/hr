@@ -44,9 +44,9 @@ class SubscriptionController extends Controller
             return view('unauthorized',compact('role','admin'));
         }
         $title = 'subscriptions_tech';
-        $alluser= User::where('role','fannie')->orderBy('id', 'DESC')->get();
-        $usernames = array_pluck($alluser,'name', 'id');
-        $usernumber = array_pluck($alluser,'mobile', 'id');
+        $alluser= User::where('role','fannie')->select('id',DB::raw('CONCAT(name, " - ", mobile) AS user_mobile'))->orderBy('id', 'DESC')->get();
+        $usernames = array_pluck($alluser,'user_mobile', 'id');
+        //$usernumber = array_pluck($alluser,'mobile', 'id');
         if($lang=='ar')
         {
             $allsub = SubscriptionType::select('id',DB::raw('name_ar AS name'))->get();
@@ -57,7 +57,7 @@ class SubscriptionController extends Controller
         }
         $types = array_pluck($allsub,'name', 'id');
         //return $usernumber;
-        return view('subscriptions_tech.add',compact('usernames','usernumber','alluser','allsub','types','title','lang'));
+        return view('subscriptions_tech.add',compact('usernames','alluser','allsub','types','title','lang'));
     }
     public function store(Request $request)
     {
@@ -105,6 +105,7 @@ class SubscriptionController extends Controller
         }
         else{
             $subscription = new Subscription ;
+            $subscription->status = "accepted" ;
 
         }
 

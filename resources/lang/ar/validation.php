@@ -167,7 +167,7 @@ return [
         'birth_date'                   => 'تاريخ الميلاد',
         'country_id'  =>'الدولة',           
         'city_id'  =>'المدينة',           
-        'area_id'  =>'المدينة',           
+        'area_id'  =>'المنطقة',           
         'device_type'               => 'نوع الجهاز',
         'company_name'                    => 'اسم الشركة ',
         'responsible_name'                => 'اسم المسئول ',

@@ -69,33 +69,39 @@
                                 </div>
                                 <!-- for email -->
                                 <div class="form-group form-float">
+                                <label  for="name" style=""> {{trans('admin.name')}} </label>
                                     <input type="text" class="form-control" value="{{$technical->user->name}}" placeholder="{{__('admin.placeholder_name')}}" name="name" autocomplete="off" required>
                                     <label id="name-error" class="error" for="name" style=""></label>
                                 </div>
 
                                 <div class="form-group form-float">
+                                <label  for="email" style=""> {{trans('admin.email')}} </label>
                                     <input type="email" class="form-control"  value="{{$technical->user->email}}"  placeholder="{{__('admin.placeholder_email')}}" name="email" autocomplete="off" required>
                                     <label id="email-error" class="error" for="email" style=""></label>
                                 </div>
 
                                 <div class="form-group form-float">
+                                <label  for="mobile" style=""> {{trans('admin.mobile')}} </label>
                                     <input type="text" class="form-control" value="{{$technical->user->mobile}}" placeholder="{{__('admin.placeholder_mobile')}}" name="mobile" maxlength= 14 onkeypress="isNumber(event);" autocomplete="off" required>
                                     <label id="mobile-error" class="error" for="mobile" style=""></label>
                                 </div>
                                 
                                 <div class= "form-group form-float"> 
+                                <label  for="service_id" style=""> {{trans('admin.service')}} </label>
                                     {!! Form::select('service_id',$services
                                         ,$technical->service_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_service'),'required']) !!}
                                         <label id="service_id-error" class="error" for="service_id" style="">  </label>
                                 </div> 
 
 
-                                <div class= "form-group form-float"> 
+                                <div class= "form-group form-float">
+                                <label  for="nationality_id" style=""> {{trans('admin.nationality')}} </label> 
                                     {!! Form::select('nationality_id',$nationalites
                                         ,$technical->nationality_id,['class'=>'form-control show-tick' ,'placeholder' =>trans('admin.choose_nationality'),'required']) !!}
                                         <label id="nationality_id-error" class="error" for="nationality_id" style="">  </label>
                                 </div>               
                                 <div class= "form-group form-float"> 
+                                <label  for="renewal_date" style=""> {{trans('admin.renewal_date')}} </label>
                                 <input placeholder="{{__('admin.renewal_date')}}" value="{{$technical->renewal_date}}" class="textbox-n form-control" type="text" name="renewal_date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" id="date">
                                 <!-- <input type="date" class="form-control" value="{{$technical->renewal_date}}" placeholder="{{__('admin.renewal_date')}}" name="renewal_date"> -->
                                  <label id="renewal_date-error" class="error" for="renewal_date" style="">  </label>
@@ -188,18 +194,21 @@
 
                             <div class="col-lg-6">
                                 <div class= "form-group form-float"> 
+                                <label  for="country_id" style=""> {{trans('admin.country')}} </label> 
                                     {!! Form::select('country_id',$countries
                                         ,$technical->country_id,['class'=>'form-control show-tick','id'=>'country_info' ,'placeholder' =>trans('admin.choose_country')]) !!}
                                         <label id="country_id-error" class="error" for="country_id" style="">  </label>
                                 </div>
 
                                 <div class= "form-group form-float"> 
+                                <label  for="city_id" style=""> {{trans('admin.city')}} </label> 
                                     {!! Form::select('city_id',[]
                                         ,'',['class'=>'form-control selectpicker  show-tick ','id'=>'city_info' ,'placeholder' =>trans('admin.choose_city')]) !!}
                                         <label id="city_id-error" class="error" for="city_id" style="">  </label>
                                 </div>
 
                                 <div class= "form-group form-float"> 
+                                <label  for="area_id" style=""> {{trans('admin.area')}} </label> 
                                     {!! Form::select('area_id',[]
                                         ,'',['class'=>'form-control show-tick','id'=>'area_info' ,'placeholder' =>trans('admin.choose_area')]) !!}
                                         <label id="area_id-error" class="error" for="area_id" style="">  </label>
@@ -207,6 +216,7 @@
 
 
                                 <div class="form-group form-float">
+                                <label  for="address" style=""> {{trans('admin.address')}} </label>
                                     <input type="text" class="form-control" id="address-field1"  value="{{$technical->user->address}}" placeholder="{{__('admin.placeholder_address')}}" name="address"  autocomplete="off">
                                     <label id="address-error" class="error" for="address" style=""></label>
                                 </div>      

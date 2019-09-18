@@ -11,6 +11,8 @@ use App\Order;
 use App\Rate; 
 use Auth;
 use App;
+use DateTime;
+use DateTimeZone;
 class UsersController extends Controller
 {
     /**
@@ -259,6 +261,19 @@ public function orders($id)
         $title = 'users_deleted';
  
         $users = User::where('role','user')->orderBy('id', 'DESC')->onlyTrashed()->get();
+        foreach($users as $user)
+        {
+            // $servertime = ini_get('Africa/Cairo');
+            // $time = strtotime($user->deleted_at . $servertime);
+            // $dateInLocal = date("Y-m-d H:i:s", $time);
+
+            $IST = new DateTime($user->deleted_at);
+
+            // change the timezone of the object without changing it's time
+            $IST->setTimezone(new DateTimeZone('Africa/Cairo'));
+  
+            $user->deleted_at=$IST->format('Y-m-d H:i:s');
+        }
         //return $users ; 
         return view('users.deleted',compact('users','title','lang'));
 

@@ -65,11 +65,11 @@
                                         <label id="user_id-error" class="error" for="user_id" style="">  </label>
                                 </div>
 
-                                <div class= "form-group form-float"> 
-                                    {!! Form::select('fannie2',$usernumber
+                                <!-- <div class= "form-group form-float"> 
+                                    {!! Form::select('fannie2',$usernames
                                         ,'',['class'=>'select2 form-control show-tick selectpicker','id'=>'user_id2' ,'placeholder' =>trans('admin.choose_user_num')]) !!}
                                         <label id="user_id-error2" class="error" for="user_id" style="">  </label>
-                                </div>  
+                                </div>   -->
                                 <div class= "form-group form-float"> 
                                     {!! Form::select('sub_type',$types
                                         ,'',['class'=>' form-control show-tick selectpicker','id'=>'sub_type' ,'placeholder' =>trans('admin.choose_subscription'),'required']) !!}
@@ -124,55 +124,55 @@
 
 
 <script>
-$('#user_id1').change(function(){
-    console.log($('#user_id1').val());
-    var value = $('#user_id1').val();
-    $('#user_id2').empty();
-    $('#user_id2').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
-// Set selected 
+// $('#user_id1').change(function(){
+//     console.log($('#user_id1').val());
+//     var value = $('#user_id1').val();
+//     $('#user_id2').empty();
+//     $('#user_id2').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
+// // Set selected 
 
-@foreach ($alluser as $data)
+// @foreach ($alluser as $data)
     
-        if(value=="{{$data->id}}")
-        {
-            $('#user_id2').append(`<option value="{{$data->id}}" selected>{{$data->mobile}}</option>`);
-        }
-        else
-        {
-            $('#user_id2').append(`<option value="{{$data->id}}">{{$data->mobile}}</option>`);
-        }
+//         if(value=="{{$data->id}}")
+//         {
+//             $('#user_id2').append(`<option value="{{$data->id}}" selected>{{$data->mobile}}</option>`);
+//         }
+//         else
+//         {
+//             $('#user_id2').append(`<option value="{{$data->id}}">{{$data->mobile}}</option>`);
+//         }
          
     
             
-        @endforeach
-$('#user_id2').selectpicker('refresh');
-    $('#user_id2').selectpicker('render');
-});
+//         @endforeach
+// $('#user_id2').selectpicker('refresh');
+//     $('#user_id2').selectpicker('render');
+// });
 
-$('#user_id2').change(function(){
-    console.log($('#user_id2').val());
-    var value = $('#user_id2').val();
-    $('#user_id1').empty();
-    $('#user_id1').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
-// Set selected 
+// $('#user_id2').change(function(){
+//     console.log($('#user_id2').val());
+//     var value = $('#user_id2').val();
+//     $('#user_id1').empty();
+//     $('#user_id1').append(`<option value="">{{trans('admin.choose_user_num')}}</option>`); 
+// // Set selected 
 
-@foreach ($alluser as $data)
+// @foreach ($alluser as $data)
     
-        if(value=="{{$data->id}}")
-        {
-            $('#user_id1').append(`<option value="{{$data->id}}" selected>{{$data->name}}</option>`);
-        }
-        else
-        {
-            $('#user_id1').append(`<option value="{{$data->id}}">{{$data->name}}</option>`);
-        }
+//         if(value=="{{$data->id}}")
+//         {
+//             $('#user_id1').append(`<option value="{{$data->id}}" selected>{{$data->name}}</option>`);
+//         }
+//         else
+//         {
+//             $('#user_id1').append(`<option value="{{$data->id}}">{{$data->name}}</option>`);
+//         }
          
     
             
-        @endforeach
-$('#user_id1').selectpicker('refresh');
-    $('#user_id1').selectpicker('render');
-});
+//         @endforeach
+// $('#user_id1').selectpicker('refresh');
+//     $('#user_id1').selectpicker('render');
+// });
     //this for add new record
     $("#form_validation").submit(function(e){
            {{--  $('#addModal').modal('hide');  --}}
