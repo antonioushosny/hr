@@ -127,4 +127,29 @@ class ReasonController extends Controller
             return redirect(url('error'));
         }
     }
+
+    public function destroy($id)
+    {
+       
+        if(Auth::user()->role != 'admin' ){
+            $role = 'admin';
+            return view('unauthorized',compact('role','admin'));
+        }
+        $id = Reason::find( $id );
+        $id ->delete();
+        return response()->json($id);
+    }
+
+    public function deleteall(Request $request)
+    {
+        
+        
+        if($request->ids){
+            foreach($request->ids as $id){
+                $id = Reason::find($id);
+            }
+            $ids = Reason::whereIn('id',$request->ids)->delete();
+        }
+        return response()->json($request->ids);
+    }
 }

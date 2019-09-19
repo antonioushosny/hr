@@ -160,7 +160,7 @@
 
                                     <div class="col-md-9">
                                     @if($technical->identity_photo)
-                                            <img id="changeidentity" src="{{asset('img/'.$technical->identity_photo)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                           <a target="_blank" href="{{asset('img/'.$technical->identity_photo)}}"> <img id="changeidentity" src="{{asset('img/'.$technical->identity_photo)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}"  /></a>
                                         @else 
                                             <img id="changeidentity" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @endif

@@ -2,7 +2,11 @@
 @section('style')
 <link rel="stylesheet" href="{{ asset('rtl/plugins/iCheck/square/blue.css') }}">
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script> -->
-
+<style>
+.zmdi {
+    font-size: 15px !important;
+}
+</style>
 @endsection
  @section('content')
 <!-- Main Content -->
@@ -62,6 +66,7 @@
                             </ul>
                         </div>
                         <div class="body">
+                            <div class="table-responsive">
                             @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
                             @else 
@@ -165,6 +170,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </form>
                 </div>

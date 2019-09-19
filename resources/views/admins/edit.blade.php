@@ -64,7 +64,7 @@
                                         <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
                                     </div>
                                     <div class="form-group form-float">
-                                           
+                                    <label  for="roles" style=""> {{trans('admin.roles')}} </label>
                                         {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
                                         
                                         <label id="roles-error" class="error" for="roles" style=""></label>

@@ -9,6 +9,8 @@ use App\Area;
 use App\Service;
 use Auth;
 use App;
+use DateTime;
+use DateTimeZone;
 class ServicesController extends Controller
 {
     /**
@@ -46,6 +48,19 @@ class ServicesController extends Controller
         $title = 'services_deleted';
  
         $services = service::orderBy('id', 'DESC')->onlyTrashed()->get();
+        foreach($services as $user)
+        {
+            // $servertime = ini_get('Africa/Cairo');
+            // $time = strtotime($user->deleted_at . $servertime);
+            // $dateInLocal = date("Y-m-d H:i:s", $time);
+
+            $IST = new DateTime($user->deleted_at);
+
+            // change the timezone of the object without changing it's time
+            $IST->setTimezone(new DateTimeZone('Asia/Riyadh'));
+  
+            $user->deleted_at=$IST->format('Y-m-d H:i:s');
+        }
         //return $services ; 
         return view('services.deleted',compact('services','title','lang'));
 
@@ -111,7 +126,8 @@ class ServicesController extends Controller
             [
                 'name_ar'  =>'required|arabic|max:190',           
                 'name_en'  =>'required|english|max:190',              
-                'image'  =>'required',           
+                //'image'  =>'required',
+                'image'=>'required|mimes:jpg,jpeg,png',           
                 'status'  =>'required'      
             ];
         }

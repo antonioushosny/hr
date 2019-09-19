@@ -48,6 +48,7 @@
                             </ul>
                         </div>
                         <div class="body">
+                        <div class="table-responsive">
                             @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
                             @else 
@@ -88,6 +89,7 @@
                                         @endforeach
                                   </tbody>
                             </table>
+                            </div>
                         </div>
                     </form>
                 </div>

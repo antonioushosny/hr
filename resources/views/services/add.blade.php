@@ -65,7 +65,7 @@
                                                 </a>
                                                 &nbsp;
                                                 <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-center hidden"></span>
+                                                <span style="color: red " id="image-error" class="image text-user hidden"></span>
                                             </div>
                                             
                                         </div>
@@ -122,6 +122,7 @@
               contentType: false,
                
               success: function(data) {
+                  console.log(data);
                   if ((data.errors)) {              
                     $(':input[type="submit"]').prop('disabled', false);          
                         if (data.errors.name_ar) {
@@ -131,6 +132,10 @@
                         if (data.errors.name_en) {
                             $('#name-en-error').css('display', 'inline-block');
                             $('#name-en-error').text(data.errors.name_en);
+                        }
+                        if (data.errors.image) {
+                            $('#image-error').css('display', 'inline-block');
+                            $('#image-error').text(data.errors.image);
                         }
                   } else {
                         window.location.replace("{{route('services')}}");

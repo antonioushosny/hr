@@ -117,8 +117,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reasons/update/', 'ReasonController@store')->name('storereason')->middleware('permission:reasons_create');
     Route::get('/reasons/status/{id}', 'ReasonController@changestatus')->name('reasonstatus');
     Route::get('/reasons/edit/{id}', 'ReasonController@edit')->name('editreason')->middleware('permission:reasons_edit');
-    // Route::get('/services/delete/{id}', 'ReasonController@destroy')->name('destroyservice');
-    // Route::post('/services/deleteall', 'ReasonController@deleteall')->name('servicesdeleteall');
+    Route::get('/reasons/delete/{id}', 'ReasonController@destroy')->name('destroyreason')->middleware('permission:reasons_delete');
+    Route::post('/reasons/deleteall', 'ReasonController@deleteall')->name('reasonsdeleteall')->middleware('permission:reasons_delete');
     // Route::get('/services/{id}/areas', 'ReasonController@areas')->name('serviceareas');
 
 

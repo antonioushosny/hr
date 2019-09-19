@@ -15,6 +15,8 @@ use App\Rate;
 use Auth;
 use App;
 use DB;
+use DateTime;
+use DateTimeZone;
 class TechniciansController extends Controller
 {
     /**
@@ -431,6 +433,19 @@ class TechniciansController extends Controller
         $title = 'technicians_deleted';
  
         $technicians = User::where('role','fannie')->orderBy('id', 'DESC')->onlyTrashed()->get();
+        foreach($technicians as $user)
+        {
+            // $servertime = ini_get('Africa/Cairo');
+            // $time = strtotime($user->deleted_at . $servertime);
+            // $dateInLocal = date("Y-m-d H:i:s", $time);
+
+            $IST = new DateTime($user->deleted_at);
+
+            // change the timezone of the object without changing it's time
+            $IST->setTimezone(new DateTimeZone('Asia/Riyadh'));
+  
+            $user->deleted_at=$IST->format('Y-m-d H:i:s');
+        }
         //return $technicians ; 
         return view('technicians.deleted',compact('technicians','title','lang'));
 

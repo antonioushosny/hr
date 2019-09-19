@@ -358,18 +358,18 @@ class HomeController extends Controller
             'title' => 'required',
             'message' => 'required',
             'for' => 'required',
-        ]);
-        $user = User::where('role','admin')->first();
+            ]);
+            $user = User::where('role','admin')->first();
             if($user){
                 $id = $user->id ;
             }
             else{
                 $id ='1' ;
             }
-        
-        if($request->for == "all"){
-            $clients =  User::where('role','<>','admin')->get();
-        }
+            
+            if($request->for == "all"){
+                $clients =  User::where('role','<>','admin')->get();
+            }
         else if($request->for == "all_users"){
             $clients =  User::where('role','user')->get();
         }
@@ -380,7 +380,7 @@ class HomeController extends Controller
             $clients =  User::whereIn('id',$request->ids)->get();
         }
         if(sizeof($clients) > 0){
-
+            
             foreach($clients as $client){
                 if($client){
                     $msg =  [
@@ -403,10 +403,11 @@ class HomeController extends Controller
             }
         }
         
-        session()->flash('alert-success', trans('admin.successfully_send'));
-        return redirect()->route('messages');
+        return response()->json([ 'success' => trans('admin.successfully_send'), 'message' => trans('admin.successfully_send')], 200);
+        // session()->flash('success', trans('admin.successfully_send'));
+        // return redirect()->route('messages');
     }
-     
+    
 
     public function contact_us(Request $request)
     {

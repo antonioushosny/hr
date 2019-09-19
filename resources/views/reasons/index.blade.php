@@ -34,7 +34,7 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card">
-                {!! Form::open(['route'=>['servicesdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'servicess_form' ])!!}
+                {!! Form::open(['route'=>['reasonsdeleteall'],'method'=>'post','autocomplete'=>'off', 'id'=>'servicess_form' ])!!}
 
                         <div class="header">
                             <h2><strong>{{trans('admin.'.$title)}}</strong> </h2>
@@ -46,16 +46,17 @@
                                     </a>
                                 </li>
                                 @endcan
-                                <!-- @can('reasons_delete')
+                                @can('reasons_delete')
                                 </li>
                                     <a href="javascript:void(0);" class=" deleteall-modal btn btn-danger btn-round" title="{{trans('admin.deleteall')}}">
                                         {{trans('admin.deleteall')}}
                                     </a>
                                 </li>     
-                                @endcan                            -->
+                                @endcan                           
                             </ul>
                         </div>
                         <div class="body">
+                        <div class="table-responsive">
                             @if($lang == 'ar')
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable-ar">
                             @else 
@@ -116,15 +117,16 @@
                                             @can('reasons_edit')
                                             <a href="{{route('editreason',$data->id)}}" class="btn btn-info waves-effect waves-float waves-green btn-round " title="{{trans('admin.edit')}}"><i class="zmdi zmdi-edit"></i></a>
                                             @endcan
-                                            <!-- @can('reasons_delete')
+                                            @can('reasons_delete')
                                             <a href="javascript:void(0);" class=" delete-modal btn btn-danger waves-effect waves-float waves-red btn-round " title="{{trans('admin.delete')}}" data-id="{{$data->id}}" ><i class="zmdi zmdi-delete"></i></a>
-                                            @endcan -->
+                                            @endcan
                                         </td>
                                     </tr>
                                     
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -199,14 +201,14 @@
             if (isConfirm) {
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo url('/')?>/services/delete/" + id,
+                    url: "<?php echo url('/')?>/reasons/delete/" + id,
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
                     success: function(data) {
                         $('.item' + data['id']).remove();
                         swal(Deleted, has_been_deleted, "success");
-                        window.location.replace("{{route('services')}}");
+                        window.location.replace("{{route('reasons')}}");
                     }
                 });
             } else {
@@ -253,7 +255,7 @@
                     var form = $(this);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ URL::route("servicesdeleteall") }}',
+                        url: '{{ URL::route("reasonsdeleteall") }}',
                         data:  new FormData($("#servicess_form")[0]),
                         processData: false,
                         contentType: false,
@@ -262,7 +264,7 @@
                                 $('.item' + data[i]).remove();
                             }
                             swal(Deleted, has_been_deleted, "success");
-                            window.location.replace("{{route('services')}}");
+                            window.location.replace("{{route('reasons')}}");
                         },
                     });
                 }

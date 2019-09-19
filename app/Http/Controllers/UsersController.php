@@ -270,7 +270,7 @@ public function orders($id)
             $IST = new DateTime($user->deleted_at);
 
             // change the timezone of the object without changing it's time
-            $IST->setTimezone(new DateTimeZone('Africa/Cairo'));
+            $IST->setTimezone(new DateTimeZone('Asia/Riyadh'));
   
             $user->deleted_at=$IST->format('Y-m-d H:i:s');
         }

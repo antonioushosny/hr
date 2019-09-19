@@ -112,6 +112,9 @@
             color: #a19ca3 !important;
             
         }
+        .btn{
+            font-size:11px;
+        }
 </style>
 <!-- Custom Css -->
 @if($lang=='ar')

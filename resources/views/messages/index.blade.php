@@ -44,7 +44,17 @@
                             <h2><strong>{{  __('admin.messages') }}  </h2>
                             
                         </div>
+                        <div class="col-md-12">
+                                    @if(Session::has('message'))
+                                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                                @endif
+                                @if(Session::has('alert-danger'))
+                                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('alert-danger') }}</p>
+                                @endif
+                                <div class="messages"></div>
+                                </div>
                         <div class="body">
+                        
                             {!! Form::open(['route'=>['send_messages'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                 <div class="row">
@@ -159,6 +169,14 @@
               contentType: false,
                
               success: function(data) {
+                var messages = $('.messages');
+
+                var successHtml = '<div class="alert alert-success">'+
+                '<strong><i class="glyphicon glyphicon-ok-sign push-5-r"></</strong> '+ data.message +
+                '</div>';
+
+                $(messages).html(successHtml);
+                  console.log(data);
                   if ((data.errors)) {                        
                         if (data.errors.title) {
                             $('#title-error').css('display', 'inline-block');
@@ -173,8 +191,9 @@
                             $('#for-error').text(data.errors.for);
                         }
                         
-                  } else {
-                    location.reload();
+                  } 
+                  else {
+                    window.location.replace("{{route('messages')}}");
 
                      }
             },
