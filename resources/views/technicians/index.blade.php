@@ -4,7 +4,7 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script> -->
 <style>
 .zmdi {
-    font-size: 15px !important;
+    font-size: 10px !important;
 }
 </style>
 @endsection

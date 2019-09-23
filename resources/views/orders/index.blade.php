@@ -98,18 +98,18 @@
                                         <td>{{ $data->created_at }}</td> 
                                         <td>
                                         @if($data->status=='pending')
-                                        <mark style="    background-color: #f3d513;color: white;border-radius: 7px; font-size: 14px;    font-weight: bold;    padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        <mark style="    background-color: #f3d513;color: white;border-radius: 7px; font-size: 0.8vw;    font-weight: bold;    padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
                                         @elseif($data->status=="canceled" || $data->status=="rejected")
-                                        <mark style="    background-color: #fb4e4e;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        <mark style="    background-color: #fb4e4e;color: white;border-radius: 7px; font-size: 0.8vw;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
 
                                         @elseif($data->status=="accepted")
-                                        <mark style="background-color: #2cd29f;color: white;border-radius: 7px; font-size: 14px;       font-weight: bold; padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        <mark style="background-color: #2cd29f;color: white;border-radius: 7px; font-size: 0.8vw;       font-weight: bold; padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
 
                                         @elseif($data->status=="completed")
-                                        <mark style="    background-color: #03cb39;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        <mark style="    background-color: #03cb39;color: white;border-radius: 7px; font-size: 0.8vw;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
 
                                         @elseif($data->status=="deal_done")
-                                        <mark style="    background-color: #ffb236;color: white;border-radius: 7px; font-size: 14px;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
+                                        <mark style="    background-color: #ffb236;color: white;border-radius: 7px; font-size: 0.8vw;     font-weight: bold;   padding: 5px;">{{trans('admin.'.$data->status)}}</mark>
 
                                         @endif
                                         </td> 

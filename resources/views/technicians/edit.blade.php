@@ -115,7 +115,7 @@
                                 <!-- for image  -->
                                 <div class="form-group form-float row" >
                                     {{--  for image  --}}
-                                    <div class= "col-md-2 col-xs-3">
+                                    <div class= "col-md-3">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:;' >
@@ -130,10 +130,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         
                                         @if($technical->user->image)
-                                            <img id="changeimage" src="{{asset('img/'.$technical->user->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                            <img id="changeimage" class="img-fluid" src="{{asset('img/'.$technical->user->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @else 
                                             <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @endif
@@ -143,7 +143,7 @@
                                  <!-- for identity phone  -->
                                  <div class="form-group form-float row"  >
                                     {{--  for identity phone  --}}
-                                    <div class= "col-md-3 col-xs-3">
+                                    <div class= "col-md-3">
                                         <div class="form-group form-float  " >
                                             <div style="position:relative; ">
                                                 <a class='btn btn-primary' href='javascript:;' >
@@ -160,7 +160,7 @@
 
                                     <div class="col-md-9">
                                     @if($technical->identity_photo)
-                                           <a target="_blank" href="{{asset('img/'.$technical->identity_photo)}}"> <img id="changeidentity" src="{{asset('img/'.$technical->identity_photo)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}"  /></a>
+                                            <a target="_blank" href="{{asset('img/'.$technical->identity_photo)}}" style="color:#0348b1;"> <img class="img-fluid" id="changeidentity" src="{{asset('img/'.$technical->identity_photo)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}"  /> {{trans('admin.show_id')}}</a>
                                         @else 
                                             <img id="changeidentity" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @endif

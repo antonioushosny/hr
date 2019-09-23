@@ -414,4 +414,5 @@ return [
         'ratings'=>'Ratings',
         'rate'=>'Rates',
         'rating_user'=>'User Rates',
+        'show_id'=>'Show ID',
 ];

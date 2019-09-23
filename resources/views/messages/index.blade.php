@@ -193,7 +193,10 @@
                         
                   } 
                   else {
-                    window.location.replace("{{route('messages')}}");
+                    setTimeout(function() {
+                        window.location.replace("{{route('messages')}}");
+                        }, 700);
+                   // window.location.replace("{{route('messages')}}");
 
                      }
             },

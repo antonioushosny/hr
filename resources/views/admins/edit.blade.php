@@ -1,6 +1,29 @@
 @extends('layouts.index')
 @section('style')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+<style>
+.select2-selection.select2-selection--multiple {
+    display: block;
+    width: 100% !important;
+background-color: transparent;
+    border: 1px solid #888888;
+    border-radius: 30px;
+    color: #2c2c2c;
+    line-height: normal;
+    font-size: 1.1em;
+    /* -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out; */
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    
+}
 
+
+
+</style>
 @endsection
  @section('content')
 <!-- Main Content -->
@@ -65,7 +88,7 @@
                                     </div>
                                     <div class="form-group form-float">
                                     <label  for="roles" style=""> {{trans('admin.roles')}} </label>
-                                        {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                                        {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control select2','multiple')) !!}
                                         
                                         <label id="roles-error" class="error" for="roles" style=""></label>
                                     </div>
@@ -128,7 +151,7 @@
 
 @section('script')
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script>
      //this for add new record
     $("#form_validation").submit(function(e){
@@ -168,7 +191,9 @@
             },
           });
         });
-
+        $('.select2').select2({
+    placeholder: "{{trans('admin.choose')}}"
+});
 </script>
     
 @endsection

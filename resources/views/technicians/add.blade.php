@@ -262,13 +262,13 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
 function initMap() {
-    $('form').on('keyup keypress', function(e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) {
-            e.preventDefault();
-            return false;
-        }
-    });
+    // $('form').on('keyup keypress', function(e) {
+    //     var keyCode = e.keyCode || e.which;
+    //     if (keyCode === 13) {
+    //         e.preventDefault();
+    //         return false;
+    //     }
+    // });
  var map = new google.maps.Map(document.getElementById('map'), {
      center: {lat: 29.967176910157654, lng: 31.21215951392594},
      zoom: 18,
