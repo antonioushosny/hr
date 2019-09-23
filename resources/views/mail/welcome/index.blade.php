@@ -2,7 +2,7 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
-           {{$user->name}} Welcome in Bunyan
+           {{$user->name}} Welcome in Fannie
         @endcomponent
     @endslot
 {{-- Body --}}
@@ -24,7 +24,7 @@
 {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} Bunyan.!
+            © {{ date('Y') }} Fannie 4U.!
         @endcomponent
     @endslot
 @endcomponent

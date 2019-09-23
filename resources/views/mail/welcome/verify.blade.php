@@ -3,7 +3,7 @@
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
          
-         {{trans('admin.Welcome to Khazan')}}
+         {{trans('admin.Welcome to fannie')}}
         @endcomponent
     @endslot
 {{-- Body --}}
@@ -24,7 +24,7 @@
 {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} Khazan.!
+            © {{ date('Y') }} Fannie 4U.!
         @endcomponent
     @endslot
 @endcomponent

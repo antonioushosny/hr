@@ -42,7 +42,7 @@ class verify_code extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('info@khazanapp.com', 'Admin')
+            ->from('info@fanie4U.com', 'Admin')
             ->subject('Verification code ')
             ->markdown('mail.welcome.verify', ['code' => $this->code]);
     }

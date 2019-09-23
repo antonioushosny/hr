@@ -112,9 +112,9 @@ class Controller extends BaseController
         $fields =array('to'=>$key,
             'notification' => array("title" => $title,
             "body" => $type  ,
-            "click_action"=>"khazan/home",
+            "click_action"=>"fannie/home",
             "sound"=>"default",
-            "icon"=>"khazan/public/images/logo.png" ), 'data' => array('type' => $type ,"title" => $title,
+            "icon"=>"fannie/public/images/logo.png" ), 'data' => array('type' => $type ,"title" => $title,
             "message" => $message ,"date" => $date   ),
 
         );

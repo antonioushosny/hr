@@ -1550,6 +1550,7 @@ class ApiController extends Controller
                                 $distance = $this->GetDistance($request->lat,$favorite->fannie->lat,$request->lng,$favorite->fannie->lng,'k');
                                 $favoritess[$i]['distance'] = round($distance,2). __('api.km'); 
                             }
+                            $favoritess[$i]['isFavorite'] = 1 ;
                             $i ++ ;
                         }
                     }

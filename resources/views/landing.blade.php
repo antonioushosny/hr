@@ -21,10 +21,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="Khazan App .">
+<meta name="description" content="Fannie 4U App .">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href='https://fonts.googleapis.com/css?family=Reem+Kufi:400&subset=arabic,latin' rel='stylesheet' type='text/css'>
-  <title>:: Khazan ::</title>
+  <title>:: Fannie 4U ::</title>
  <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
