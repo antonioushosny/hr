@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notifications\emailnotify;
 use App\User;
-use Spatie\Permission\Models\Role;
 use Auth;
 use App;
 use DB;

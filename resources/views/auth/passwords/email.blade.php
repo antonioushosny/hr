@@ -7,7 +7,7 @@
     }
     body
     {
-        font-family: 'DroidArabicKufiBold';  
+        {{-- font-family: 'DroidArabicKufiBold';   --}}
     }
     .card-plain
     {
@@ -26,7 +26,7 @@
     .btn.btn-primary{
         background-color:#0046B0;
         color: #FFF;
-        font-family: 'DroidArabicKufiBold';  
+        {{-- font-family: 'DroidArabicKufiBold';   --}}
     }
     /* .btn.btn-primary:hover{
         color: #FFF;
@@ -64,7 +64,7 @@
     }
     ::placeholder {
         color: #a19ca3 !important;
-        font-family: 'DroidArabicKufiRegular';
+        {{-- font-family: 'DroidArabicKufiRegular'; --}}
         text-align: right;
     }
 </style>
@@ -84,7 +84,7 @@
                         </div>
                     @endif
                     <div class="logo-container">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                        <img src="{{ asset('images/logo.png') }}" alt="">
                     </div>
                     <h5 style="color: #0046b0;">{{__('admin.Enter your e-mail address below to reset your password.')}}</h5>
                 </div>

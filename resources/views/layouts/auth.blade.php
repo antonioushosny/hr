@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: {{__('admin.fannie')}} ::</title>
+    <title>:: {{__('admin.hr')}} ::</title>
     <!-- Favicon-->
     <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"> -->
     <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >
@@ -15,26 +15,26 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/authentication.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/color_skins.css') }}">
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
+    {{-- <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/> --}}
     @yield('style')
     <style>
         ::-webkit-input-placeholder { /* Edge */
-  color: #a19ca3;
-  font-family: 'DroidArabicKufiRegular'; 
-  text-align: right;
-}
+            color: #a19ca3;
+            {{-- font-family: 'DroidArabicKufiRegular';  --}}
+            text-align: left;
+        }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #a19ca3;
-  font-family: 'DroidArabicKufiRegular';
-  text-align: right;  
-}
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #a19ca3;
+        {{-- font-family: 'DroidArabicKufiRegular'; --}}
+        text-align: left;  
+        }
 
-::placeholder {
-  color: #a19ca3;
-  font-family: 'DroidArabicKufiRegular'; 
-  text-align: right; 
-}
+        ::placeholder {
+        color: #a19ca3;
+        {{-- font-family: 'DroidArabicKufiRegular';  --}}
+        text-align: left; 
+        }
     </style>  
 </head>
 

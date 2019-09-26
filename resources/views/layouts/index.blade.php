@@ -1,11 +1,5 @@
 <!doctype html>
 <?php   
-    $lang = session('lang');
-    App::setLocale($lang);
-    $lang = App::getlocale();
-    if($lang == null){
-        $lang ='ar';
-    }
     if($title){
         $page = $title;
     }
@@ -19,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="Fannie 4U .">
+<meta name="description" content="HR.">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>:: fannie ::</title>
@@ -117,29 +111,7 @@
         }
 </style>
 <!-- Custom Css -->
-@if($lang=='ar')
-<link href='https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900&subset=arabic,latin,latin-ext' rel='stylesheet' type='text/css'>
-<style>
-@import url(https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900&subset=arabic,latin,latin-ext);
-body, html { 
-    {{-- font-family: 'Cairo', sans-serif !important ; --}}
-    font-family: 'DroidArabicKufiBold' !important ; 
-}
-.sidebar { 
-    {{-- font-family: 'Cairo', sans-serif !important ; --}}
-    font-family: 'DroidArabicKufiBold' !important ; 
-    font-weight: bold !important ;
-}
-::placeholder {
-    color: #a19ca3 !important;
-    font-family: 'DroidArabicKufiRegular';
-    text-align: right;
-}
-
-</style>
-<link rel="stylesheet" href="{{ asset('assets/css/rtl.css')}}">
-@endif
-
+ 
 <!-- JQuery DataTable Css -->
 <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css') }}">
 </head>
@@ -148,7 +120,7 @@ body, html {
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo_0.png') }}" width="48" height="48" alt="fannie"></div>
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo.png') }}" width="48" height="48" alt="fannie"></div>
         <p>{{__('admin.Please_wait')}}...</p>        
     </div>
 </div>
@@ -161,16 +133,11 @@ body, html {
         <li>
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('/images/logo_0.png') }}" width="30" alt="fannie"><span class="m-l-10">fannie</span></a>
+                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('/images/logo.png') }}" width="30" alt="fannie"><span class="m-l-10">HR</span></a>
             </div>
         </li>
         <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
-        @if($lang == 'ar')
-        <li> <a class="" href=" {{route('setlang',['lang'=>'en'])}}">{{trans('admin.en')}}</a> </li>
-        @else 
-        <li> <a class="" href=" {{route('setlang',['lang'=>'ar'])}}">{{trans('admin.ar')}}</a> </li>
-        @endif
-
+        
         <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle notificaiton" data-toggle="dropdown" role="button" ><i class="zmdi zmdi-notifications"></i>
             <div class="notify"><span class="heartbit" style="color:black;"></span>
                 <span class="point"  id="count" style=" right: -9px; top: -38px;font-size: 8px; color: #3d4c5a;">{{count(auth()->user()->unreadnotifications)}}</span>
@@ -185,15 +152,12 @@ body, html {
                                 <li>
                                     <a href="javascript:void(0);"  class="{{ $note->read_at == null ? 'unread' : '' }}">
                                         <div class="media">
-                                            <img class="media-object notificationimage" src="{{ asset('assets/images/logo.png') }}" alt="">
+                                            <img class="media-object notificationimage" src="{{ asset('images/logo.png') }}" alt="">
                                             <div class="media-body">
                                                 <span class="name"> <span class="time"> {!! $note->created_at  !!} </span></span><br>
                                                 <span class="message">
-                                                    @if($lang == 'ar')
-                                                    {!! $note->data['data']['ar']  !!}  
-                                                    @else 
-                                                    {!! $note->data['data']['en']  !!}  
-                                                    @endif  </span>                                        
+                                                    {!! $note->data['data']  !!}  
+                                                 </span>                                        
                                             </div>
                                         </div>
                                     </a>
@@ -204,7 +168,7 @@ body, html {
                             <li>
                                 <a href="javascript:void(0);">
                                     <div class="media">
-                                        <img class="media-object notificationimage" src="{{ asset('assets/images/logo.png') }}" alt="">
+                                        <img class="media-object notificationimage" src="{{ asset('images/logo.png') }}" alt="">
                                         <div class="media-body">
                                             {{--  <span class="name">Sophia <span class="time"> </span></span>  --}}
                                             <span class="message">{{__('admin.no_notification_found')}}</span>                                        
@@ -246,7 +210,7 @@ body, html {
                             @if(Auth::user()->image != '' || Auth::user()->image != null)
                                 <div class="image"><a href="javascript:void(0);"><img src="{{ asset('img/'.Auth::user()->image) }}" alt="{{Auth::user()->name}}"></a></div>
                             @else 
-                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
+                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
                             @endif
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
@@ -258,55 +222,10 @@ body, html {
                     <!-- <li class="header">MAIN</li> -->
                     
                     <li <?php echo ($page == 'home') ? "class='active open'" : ""; ?> ><a href="{{ route('home') }}"  ><i class="zmdi zmdi-home"></i> <span> {{trans('admin.dashboard')}}</span></a></li>
-                    
-                    @can('role_list')
-                    <li <?php echo ($page == 'roles') ? "class='active open'" : ""; ?> ><a href="{{ route('roles.index') }}"  ><i class="zmdi zmdi-layers"></i> <span> {{trans('admin.roles')}}</span></a></li>
-                    @endcan
-
-                    @can('admin_list')
+           
                     <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-face"></i> <span> {{trans('admin.admins')}}</span></a></li>
-                    @endcan
-
-                    @can('country_list')
-                    <li <?php echo ($page == 'countries') ? "class='active open'" : ""; ?> ><a href="{{ route('countries') }}"  ><i class="zmdi zmdi-city"></i> <span> {{trans('admin.countries')}}</span></a></li>
-                    @endcan
-
-                    @can('city_list')
-                    <li <?php echo ($page == 'cities') ? "class='active open'" : ""; ?> ><a href="{{ route('cities') }}"  ><i class="zmdi zmdi-city-alt"></i> <span> {{trans('admin.cities')}}</span></a></li>
-                    @endcan
-
-                    @can('area_list')
-                    <li <?php echo ($page == 'areas') ? "class='active open'" : ""; ?> ><a href="{{ route('areas') }}"  ><i class="zmdi zmdi-pin"></i> <span> {{trans('admin.areas')}}</span></a></li>
-                    @endcan  
-
-                    @can('nationality_list')
-                    <li <?php echo ($page == 'nationalities') ? "class='active open'" : ""; ?> ><a href="{{ route('nationalities') }}"  ><i class="zmdi zmdi-blur-circular"></i> <span> {{trans('admin.nationalities')}}</span></a></li>
-                    @endcan
                     
-                    @can('service_list')
-                    <!-- <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  ><i class="zmdi zmdi-washing-machine"></i> <span> {{trans('admin.services')}}</span></a></li> -->
-                    <li <?php echo ($page == 'services' || $page == 'services_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-washing-machine"></i><span>{{trans('admin.services')}}</span> </a>
-                        <ul class="ml-menu">
-                            <li <?php echo ($page == 'services') ? "class='active open'" : ""; ?> ><a href="{{ route('services') }}"  > <span> {{trans('admin.services')}}</span></a></li>
 
-                            <li <?php echo ($page == 'services_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('servicesdeletedtechnicians') }}"  > <span> {{trans('admin.services_deleted')}}</span></a></li>
-                            </ul>
-                    </li>
-                    
-                    
-                    @endcan
-                    
-                    @can('reasons_list')
-                    <li <?php echo ($page == 'reasons') ? "class='active open'" : ""; ?> ><a href="{{ route('reasons') }}"  ><i class="zmdi zmdi-file-text"></i> <span> {{trans('admin.reasons')}}</span></a></li>
-                    @endcan
-
-                    @can('subscription_type_list')
-                    <li <?php echo ($page == 'subscriptions') ? "class='active open'" : ""; ?> ><a href="{{ route('subscriptions') }}"  ><i class="zmdi zmdi-money"></i> <span> {{trans('admin.subscriptions')}}</span></a></li>
-                    @endcan
-
-                    @can('user_list')                    
-                    <!-- <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  ><i class="zmdi zmdi-accounts"></i> <span> {{trans('admin.users')}}</span></a></li> -->
-                    
                     <li <?php echo ($page == 'users' || $page == 'users_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts"></i><span>{{trans('admin.users')}}</span> </a>
                         <ul class="ml-menu">
                             <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  > <span> {{trans('admin.users')}}</span></a></li>
@@ -314,14 +233,7 @@ body, html {
                             <li <?php echo ($page == 'users_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('usersdeleted') }}"  > <span> {{trans('admin.users_deleted')}}</span></a></li>
                             </ul>
                     </li>
-                    
-                    
-                    @endcan
-
-                    
-                    @can('technical_list')                    
-                    <!-- <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  ><i class="zmdi zmdi-accounts-alt"></i> <span> {{trans('admin.technicians')}}</span></a></li> -->
-                    
+  
                     <li <?php echo ($page == 'technicians' || $page == 'technicians_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts-alt"></i><span>{{trans('admin.technicians')}}</span> </a>
                         <ul class="ml-menu">
                             <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  > <span> {{trans('admin.technicians')}}</span></a></li>
@@ -331,25 +243,11 @@ body, html {
                     </li>
                     
                     
-                    @endcan
-
+ 
                     
-                    @can('subscription_list')                    
-                    <li <?php echo ($page == 'subscriptions_tech') ? "class='active open'" : ""; ?> ><a href="{{ route('techsubscriptions') }}"  ><i class="zmdi zmdi-money-box"></i> <span> {{trans('admin.subscriptions_tech')}}</span></a></li>
-                    @endcan
-
-
-                    @can('order_list')                    
-                    <li <?php echo ($page == 'orders') ? "class='active open'" : ""; ?> ><a href="{{ route('orders') }}"  ><i class="zmdi zmdi-group-work"></i> <span> {{trans('admin.orders')}}</span></a></li>
-                    @endcan
-
-                    @can('contact_list')
-                    <li <?php echo ($page == 'contacts') ? "class='active open'" : ""; ?> ><a href="{{ route('contacts') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.contacts')}}</span></a></li>
-                    @endcan
-                    @can('send_message')
+                    
                     <li <?php echo ($page == 'messages') ? "class='active open'" : ""; ?> ><a href="{{ route('messages') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.messages')}}</span></a></li>
-                    @endcan
-                    @can('static_page_list')
+                    
                     <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy'|| $page == 'bank') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">
                             <li <?php echo ($page == 'bank') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','bank') }}"  > <span> {{trans('admin.banks_accounts')}}</span></a></li>
@@ -362,8 +260,7 @@ body, html {
                             
                         </ul>
                     </li> 
-                    @endcan
-
+ 
 
                     
                 </ul>
@@ -377,19 +274,12 @@ body, html {
                             @if(Auth::user()->image != '' || Auth::user()->image != null)
                                 <div class="image"><a href="javascript:void(0);"><img src="{{ asset('img/'.Auth::user()->image) }}" alt="{{Auth::user()->name}}"></a></div>
                             @else 
-                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('assets/images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
+                                <div class="image"><a href="javascript:void(0);"><img src="{{ asset('images/logo.png') }}" alt="{{Auth::user()->name}}"></a></div>
                             @endif
                             <div class="detail">
                                 <h4>{{Auth::user()->name}}</h4>
-                                @if(Auth::user()->role == 'provider')
-                                <h4>{{Auth::user()->company_name}}</h4>  
-                                @endif
                                 <small>{{Auth::user()->email}}</small>  
                                              
-                                @if(Auth::user()->role == 'provider')
-                                <p class="text-muted">{{Auth::user()->address}}</p>
-                                @endif
-                            
                             </div>
                         </div>
                     </li>
@@ -480,12 +370,9 @@ body, html {
 <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
 
 <!-- // for form validations  -->
-@if($lang=='ar')
-<script src="{{ asset('assets/plugins/jquery-validation/jquery.validate-ar.js') }}"></script> <!-- Jquery Validation Plugin Css --> 
-@else 
+ 
 <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.js') }}"></script> <!-- Jquery Validation Plugin Css --> 
-@endif
-<script src="{{ asset('assets/plugins/jquery-steps/jquery.steps.js') }}"></script> <!-- JQuery Steps Plugin Js --> 
+ <script src="{{ asset('assets/plugins/jquery-steps/jquery.steps.js') }}"></script> <!-- JQuery Steps Plugin Js --> 
 <script src="{{ asset('assets/js/pages/forms/form-validation.js') }}"></script> 
   <!-- //for  dialogs  -->
 <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script> <!-- SweetAlert Plugin Js --> 
@@ -574,6 +461,7 @@ body, html {
         function generate() {
             myform.password.value = randomPassword(6);
         }
+
         $("#form_validations").submit(function(e){
             $('.add').disabled =true;
             e.preventDefault();
@@ -620,78 +508,6 @@ body, html {
     
 
     @yield('script')
-    <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase.js"></script>
-    <script>
-        
-        var config = {
-            apiKey: "AIzaSyB7plMdLEI9IkHEYQIYHI_btxj5sYElhn8",
-            authDomain: "elsalamapp.firebaseapp.com",
-            databaseURL: "https://elsalamapp.firebaseio.com",
-            projectId: "elsalamapp",
-            storageBucket: "elsalamapp.appspot.com",
-            messagingSenderId: "844700117021",
-            appId: "1:844700117021:web:afdaf9090454799d"
-        };
-        firebase.initializeApp(config);
-        const messaging = firebase.messaging();
-        messaging
-            .requestPermission()
-            .then(function () {
-                {{--  console.log("Notification permission granted.");  --}}
-                // get the token in the form of promise
-                return messaging.getToken()
-            })
-            .then(function(token) {
-                {{--  console.log("token is : " + token);  --}}
-                if(token){
-                    $.ajax({
-                        url: "<?php echo url('/')?>/token/"+token,
-                        success: data => {
-                        }
-                    })
-                }
-            })
-            .catch(function (err) {
-                console.log("Unable to get permission to notify.", err);
-            });
-            messaging.onMessage(function(payload) {
-                c = parseInt(count.html());
-                count.html(c+1);
-                var start = Date.now();
-                    ShowDiv.prepend(`<li>
-                            <a href="javascript:void(0);"  class="unread">
-                                <div class="media">
-                                    <img class="media-object notificationimage" src="{{ asset('assets/images/logo.png') }}" alt="">
-                                    <div class="media-body">
-                                        <span class="name"> <span class="time"> `+payload.data.date +`  </span></span><br>
-                                        <span class="message"> `+payload.data.message +  ` </span>                                        
-                                    </div>
-                                </div>
-                            </a>
-                        </li> `);
-             
 
-            });
-
-    </script>
-    <script>
-        table =  $('.js-exportable-ar').DataTable({
-            "language": {
-                "url": "{{asset('datatablelang.json')}}"
-            },
-            dom: 'Bfrtip',
-            // dom: 'Blfrtip',
-            buttons: [
-                'copy', {
-                    extend: 'csv',
-                    text: 'csv',
-                    charset: 'utf-8',
-                    extension: '.csv',
-                    filename: 'export',
-                    bom: true
-                }, 'excel', 'pdf', 'print'
-            ],   
-        });
-     </script>
 </body>
 </h4>

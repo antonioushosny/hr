@@ -1,13 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Order;
 use App\User;
-use App\City;
-use App\Country;
-use App\Service;
 use App\Doc;
-use App\ContactUs;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -36,51 +31,20 @@ class HomeController extends Controller
 
     public function index()
     {
-  
+
             $lang = App::getlocale();
             $dt = Carbon::now();
             $date = $dt->toDateString();
             $time  = date('H:i:s', strtotime($dt));
             
-            $users        = User::where('role','user')->count('id');
-            $technicians    = User::where('role','fannie')->count('id');
-            $services      = Service::count('id');
-            $orders      = Order::count('id');
+            $hrs        = User::where('role','hr')->count('id');
+            $admins    = User::where('role','admin')->count('id');
+            $employees    = User::where('role','employee')->count('id');
+      
             $title = 'home' ;
 
-            $yesterday      = Carbon::now()->subDays(1)->toDateString();
-            $one_week_ago   = Carbon::now()->subWeeks(1)->toDateString();
-            $one_month_ago  = Carbon::now()->subMonths(1)->toDateString();
-            $one_year_ago   = Carbon::now()->subYears(1)->toDateString();
-
-            $this_year = Order::whereDate('created_at','>=',$one_year_ago)->whereDate('created_at','<=',$date)->count('id');
-            $this_month = Order::whereDate('created_at','>=',$one_month_ago)->whereDate('created_at','<=',$date)->count('id');
-            $this_week = Order::whereDate('created_at','>=',$one_week_ago)->whereDate('created_at','<=',$date)->count('id');
-            $this_day = Order::whereDate('created_at','=',$date)->count('id');
-
-            for($i=0 ;$i <=6 ; $i++){
-                $year = Carbon::now()->subYears($i+1)->toDateString();
-                $lastyear = Carbon::now()->subYears($i)->toDateString();
-                $last_sex_years[$i]['period'] = date('Y', strtotime($lastyear));
-                $last_sex_years[$i]['sales'] = Order::whereDate('created_at','>=',$year)->whereDate('created_at','<=',$lastyear)->count('id');
-                $last_sex_years[$i]['orders'] = Order::whereDate('created_at','>=',$year)->whereDate('created_at','<=',$lastyear)->count('id');
-            }
-            for($i=0 ;$i <=11 ; $i++){
-                $month = Carbon::now()->subMonths($i+1)->toDateString();
-                $lastmonth = Carbon::now()->subMonths($i)->toDateString();
-                $sales_for_year[$i]['period'] = date('Y-M-d', strtotime($lastmonth));
-                $sales_for_year[$i]['sales'] = Order::whereDate('created_at','>=',$month)->whereDate('created_at','<=',$lastmonth)->count('id');
-                $sales_for_year[$i]['orders'] = Order::whereDate('created_at','>=',$month)->whereDate('created_at','<=',$lastmonth)->count('id');
-            }
-
-            for($i=0 ;$i <=7 ; $i++){
-                $day = Carbon::now()->subDays($i+1)->toDateString();
-                $lastday = Carbon::now()->subDays($i)->toDateString();
-                $sales_for_week[$i]['period'] = date('D', strtotime($lastday));
-                $sales_for_week[$i]['sales'] = Order::whereDate('created_at','>=',$day)->whereDate('created_at','<=',$lastday)->count('id');
-                $sales_for_week[$i]['orders'] = Order::whereDate('created_at','>=',$day)->whereDate('created_at','<=',$lastday)->count('id');
-            }
-            return view('home',compact('lang','title','technicians','services','drivers','users','orders','sales','this_day','this_week','this_month','this_year','last_sex_years','sales_for_year','sales_for_week'));
+           
+            return view('home',compact('lang','title'));
         
     }
 
@@ -231,15 +195,6 @@ class HomeController extends Controller
         return response()->json($request->ids);
     }
 
-    public function profile($id)
-    {
-
-        $admin = User::where('id',$id)->first();
-        $term  = Term::first();
-        
-        $title = "home" ;
-        return view('profile',compact('admin','title','term'));
-    }
 
     public function editprofile(Request $request)
     {
@@ -326,16 +281,6 @@ class HomeController extends Controller
         return response()->json($user);
 
     }
-    
-    public function savetoken($token)
-    {
-        $user = Auth::user();
-        $user->device_token = $token;
-        $user->save();
-        return response()->json([
-            'msg' => $user
-        ]);
-    }
 
     public function messages()
     {
@@ -348,7 +293,6 @@ class HomeController extends Controller
         $fannies = User::where('role','fannie')->where('status','active')->get();
         $users = User::where('role','user')->where('status','active')->get();
         // $users = User::where('role','user')->get();
-
         return view('messages.index',compact('clients','users','cities','countries','title','lang'));
     }
 
@@ -407,35 +351,5 @@ class HomeController extends Controller
         // session()->flash('success', trans('admin.successfully_send'));
         // return redirect()->route('messages');
     }
-    
-
-    public function contact_us(Request $request)
-    {
-        $contact = new ContactUs ;
-
-        $contact->name = $request->name ;
-        $contact->email = $request->email ;
-        $contact->title = $request->title ;
-        $contact->message = $request->message ;
-        $contact->status = 'new' ;
-        $contact->save();
-        $type = "user";
-         $msg =  [
-            'en' => "you have new message from ".  $request->name   ,
-            'ar' => "  لديك رسالة جديدة من " . $request->name   ,
-        ];
-        
-        $admins = User::where('role', 'admin')->get(); 
-        if(sizeof($admins) > 0){
-            foreach($admins as $admin){
-                $admin->notify(new Notifications($msg,$type ));
-            }
-            $device_token = $admin->device_token ;
-            if($device_token){
-                $this->notification($device_token,$msg,$msg);
-                $this->webnotification($device_token,$msg,$msg,$type);
-            }
-        }
-        return view('landing');
-    }
+   
 }

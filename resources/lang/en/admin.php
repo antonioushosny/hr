@@ -8,12 +8,10 @@ return [
         'dashboard'                     => 'Dashboard',    
         'home'                          =>  'Home',   
         'Control_panel'                 => 'Control Panel',   
-        'fannie'                           => 'Fannie 4U',    
+        'hr'                           => 'HR',    
         'profile'                       => 'Profile',  
         'logout'                        => 'Logout',   
         'notification'                  => 'Notification',   
-        'en'                            => 'English',   
-        'ar'                            => 'عربي',     
         'All_rights'                    => 'All rights reserved.',
         'Copyright'                     => 'Copyright  Codex-global 2018-2019.',   
         'More_info'                     => 'More Info ',
@@ -44,7 +42,6 @@ return [
         'save'                          => 'Save',
         'add'                           => 'Add ',
         'edit'                          => 'Edit ',
-        'showorders'                    =>'Show Orders',
         'delete'                        => 'Delete ',
         'more'                          => 'More' ,
         'deleteall'                     => 'Delete Selected',
@@ -58,7 +55,7 @@ return [
         'your_new_password'             => 'your new password ',
         'wellcome'                      =>  'Welcome ',
         'send_password'                 =>  'Your password has been successfully sent to your mail  ',
-        'Welcome to fannie'             => 'Welcome to Fannie 4U ' ,
+        'Welcome to fannie'             => 'Welcome to HR ' ,
         'Close'                         =>'Close',
         'selectall'                     => 'Select All',
         'operations'                    => 'Operations',
@@ -69,14 +66,6 @@ return [
         
 
     //end public 
-
-    //sidebar  
-        'adminsm'                       => 'Admins Management ',  
-        'contactsm'                     => 'Connect us' ,
-        'messages'                      => 'Messages' ,
-        'salesreports'                  => 'Sales Reports',
-
-    //end sidebar
  
     //inputs 
         'password'                      => 'Password ',
@@ -184,78 +173,6 @@ return [
         
     //end countries page
 
-    //nationalities page 
-        'nationalities'                       => ' Nationalities', 
-        'nationality'                       => ' Nationality', 
-        'add_nationality'                    => ' Add Nationality'  ,
-        'add_nationalitie'                    => ' Add Nationality'  ,
-        'edit_nationalitie'                   => '  Edit Nationality'  ,
-        'delete_nationalitie'                 =>  '  Delete Nationality',
-        
-    //end nationalities page
-
-    //services page 
-        'services'                       => ' services', 
-        'service'                       => ' service', 
-        'add_service'                    => ' Add service'  ,
-        'edit_service'                   => '  Edit service'  ,
-        'delete_service'                 =>  '  Delete service',
-    //end services page
-
-    //cities page 
-        'cities'                       => ' Cities', 
-        'city'                       => ' City', 
-        'add_citie'                    =>  ' Add City'  ,
-        'edit_citie'                   => '  Edit City'  ,
-        'delete_citie'                 =>  '  Delete City',
-    //end cities page
-
-    //areas page 
-        'areas'                       => ' Areas', 
-        'area'                        => ' Area', 
-        'add_area'                    => ' Add Area'  ,
-        'edit_area'                   => '  Edit Area'  ,
-        'delete_area'                 =>  '  Delete Area',
-    //end areas page
-
- 
-
-    //roles page 
-        'roles'                       => ' Roles', 
-        'role'                        => ' Role', 
-        'Name'                        => ' Name',
-        'no'                        => ' No', 
-        'add_role'                    => ' Add Role'  ,
-        'edit_role'                   => ' Edit Role'  ,
-        'delete_role'                 =>  ' Delete Role'  ,
-        'check_all'                 => 'Check All', 
-        'permissions'                 => 'Permissions', 
-
-        
-    //end roles page
- 
- 
-    // advertisements page 
-        'advertisements'                       => ' Advertisements', 
-        'add_advertisement'                    => '  Add Advertisement '  ,
-        'edit_advertisement'                   => '  Edit Advertisement '  ,
-        'delete_advertisement'                 => '  Delete Advertisement '  ,
- 
- 
-    // end advertisements page 
-
-    //contact_us page
-        'delete_contact'                => 'Delete Message',
-        'contacts'                      => 'Contact Us',
-        'new'                           => 'new',
-        'solved'                        => 'solved',
-        'not_resolved'                  => 'not resolved ',
-         'show'                            => 'show',
-        'close'                           => 'close',
-         'logo'                     =>'Logo',
-
-    //end contact_us page
-    
     //messages 
         'messages'              => 'Send Messages' ,
         'all_users'            => 'Send to all Users',
@@ -319,100 +236,4 @@ return [
     'Send Password Reset Link'  => 'Send Password Reset Link',
     'Reset Password'            => 'Reset Password',
 
-
-        //services pages
-        'services'=>'Services',
-        'add_service'=>'Add Service',
-        'edit_service'=>'Edit Service',
-        'showtechnicians'=>'Show Technicians',
-        'counttechnicians'=>'Count Technicians',
-        'services_deleted'=>'Trash Box',
-        'restore'=>'Restore',
-        'deleted_at'=>'Deleted At',
-        //end services pages
-
-
-        //subscriptions pages
-        'subscriptions'=>'Subscriptions Types',
-        'add_subscription'=>'Add Subscription Type',
-        'edit_subscription'=>'Edit Subscription Type',
-
-
-        //technicians pages
-        'technicians'=>'Technicians',
-        'add_technician'=>' Add Technician',
-        'edit_technician'=>'Edit Technician',
-        'choose_country'  =>'Choose Country',
-        'choose_city'    =>'Choose City',
-        'choose_area'   =>'Choose Area',
-        'choose_nationality'=>'Choose Nationality',
-        'Choose_identity'=>'Choose Identity Photo',
-        'choose_service'=>'Choose Service',
-        'renewal_date'=>'Renewal Date',
-        'brief_technician'=>'Bief About Technician',
-        'online'=>'Online',
-        'offline'=>'Offline',
-        'show_technician'=>'Show all technicians on the map',
-        'technicians_deleted'     =>'Trash Box',
-        'deleted'=>'Deleted',
-        //subscriptions of users pages
-        'subscriptions_tech'=>'Subscriptions',
-        'add_subscription_tech'=>' Add Technical Subscription',
-        'edit_subscription_tech'=>'Edit Technical subscription',
-        'type_subscription'=>'Subscription Type',
-        'deposit'=>'Deposit',
-        'choose_user'=>'Choose Technician Name',
-        'choose_user_num'=>'Choose Technician Mobile',
-        'choose_subscription'=>'Choose Subscription Type',
-        'Choose_deposit'=>'Choose Deposit',
-        'cost'=>'Cost',
-        'date_exp'=>'Expiration date',
-        'accept' => 'accept',
-        'reject' => 'reject',
-
-        //orders pages
-        'orders'=>'Orders',
-        'pending'=>'Pending',
-        'accepted'=>'Accepted',
-        'canceled'=>'Canceled',
-        'rejected'=>'Rejected',
-        'user_rejected'=>'User Rejected',
-        'fannie_rejected'=>'Technician Rejected',
-        'completed'=>'Completed',
-        'deal_done'=>'Deal With',
-        'name_user'=>'User',
-        'mobile_user'=>'User Mobile',
-        'name_tech'=>'Technician',
-        'mobile_tech'=>'Technician Mobile',
-        'client_detail'=>'User Details',
-        'order_detail'=>'Order details',
-        'notes'=>'Notes',
-        'rejected_reason'=>'Reasons for rejection',
-        'time'=>'Time',
-        'date_order'=>'Order Execution Date',
-        'rejected_date'=>'Rejected Date',
-        'accepted_date'=>'Accepted Date',
-        'This_Month_orders'   => "This Month's Orders",
-        'This_Year_orders'   => "This Year's Orders",
-        'This_Week_orders'   => "This Week's Orders",
-        'Today_orders'   => "Today's Orders",
-
-         //reasons pages
-         'reasons'=>'Reasons Rejection',
-         'add_reason'=>'Add Reason',
-        'edit_reason'=>'Edit Reason',
-        'title_ar'=>'Arabic Title',
-        'title_en'=>'English Title',
-
-        'time_rate'=>'Arrive on time',
-        'work_rate'=>'Workmanship',
-        'cost_rate'=>'Cost of work',
-        'general_character'=>'General',
-        'contact_rate'=>'Communication',
-        'av_rate'=>'Average Rating',
-        'rating_technician'=>'Technicians Rates',
-        'ratings'=>'Ratings',
-        'rate'=>'Rates',
-        'rating_user'=>'User Rates',
-        'show_id'=>'Show ID',
 ];

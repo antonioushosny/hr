@@ -48,8 +48,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         // $this->validateLogin($request);
-        $lang = session('lang');
-        $password = \Hash::make($request->password); 
+         $password = \Hash::make($request->password); 
         //  return $password; 
       
         $this->validate($request, [
@@ -65,7 +64,7 @@ class LoginController extends Controller
             return back()->with('error',trans('admin.email_notfound'));;
         }
 
-        if($user['role'] == 'admin' || $user['role'] == 'provider'|| $user['role'] == 'center' ){
+        if($user['role'] == 'admin' || $user['role'] == 'hr'  ){
             if($user['status'] == 'active'){
                 if ($this->attemptLogin($request)) {
                     $user = $this->guard()->user();
