@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to fannie')}}</small>
+                <small>{{__('admin.Welcome to hr')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -85,14 +85,7 @@
                                         <input type="radio" name="for" id="sendforall_field" class="with-gap" value="all" checked > 
                                         <label for="sendforall_field">{{__('admin.sendforall')}}</label>
                                     </div>
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="for" id="all_fannies" class="with-gap" value="all_fannies" <?php echo ( isset($data->status) && $data->status == 'all_fannies') ? "checked=''" : ""; ?> >
-                                        <label for="all_fannies">{{__('admin.all_fannies')}}</label>
-                                    </div>
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="for" id="all_users" class="with-gap" value="all_users" <?php echo ( isset($data->status) && $data->status == 'all_users') ? "checked=''" : ""; ?> >
-                                        <label for="all_users">{{__('admin.all_users')}}</label>
-                                    </div>                                 
+                                                                   
                                     <div class="radio inlineblock">
                                         <input type="radio" name="for" id="send_field" class="with-gap" value="not_all" <?php echo ( isset($data->status) && $data->status == 'not_active') ? "checked=''" : ""; ?> >
                                         <label for="send_field">{{__('admin.send_spec')}}</label>
@@ -132,7 +125,7 @@
 
 
 <script>
-        @foreach($clients as $client)
+        @foreach($users as $client)
 
             $("#clients").append($('<option>', {
                     value: {{$client->id}},

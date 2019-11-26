@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Notifications\emailnotify;
-use App\User;
+ use App\User;
 use Auth;
 use App;
 use DB;
@@ -43,7 +42,6 @@ class AdminsController extends Controller
             $role = 'admin';
             return view('unauthorized',compact('role','admin'));
         }
-        $roles = Role::pluck('name','name')->all();
         $title = 'admins';
         return view('admins.add',compact('title','lang','roles'));
     }
@@ -81,8 +79,7 @@ class AdminsController extends Controller
         // return $request ;
         if($request->id ){
             $user = User::find( $request->id );
-            DB::table('model_has_roles')->where('model_id',$request->id)->delete();
-            $user->assignRole($request->input('roles'));
+
             if($request->email != $user->email){
                 $rules =
                 [       
@@ -116,7 +113,7 @@ class AdminsController extends Controller
             $user = new User ;
             $password = \Hash::make($request->password);
             $user->password      = $password ;
-            $user->assignRole($request->input('roles'));
+           
         }        
         $user->name          = $request->name ;
         $user->email         = $request->email ;
@@ -164,11 +161,7 @@ class AdminsController extends Controller
         if($admin)
         {
             $title = 'admins';
-            $roles = Role::pluck('name','name')->all();
-    
-            $userRole = $admin->roles->pluck('name','name')->all();
-            // return $admin ; 
-            return view('admins.edit',compact('admin','title','lang','roles','userRole'));
+            return view('admins.edit',compact('admin','title','lang'));
 
         }
         else

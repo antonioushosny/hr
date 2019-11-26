@@ -13,14 +13,14 @@ return [
         'logout'                        => 'Logout',   
         'notification'                  => 'Notification',   
         'All_rights'                    => 'All rights reserved.',
-        'Copyright'                     => 'Copyright  Codex-global 2018-2019.',   
+        'Copyright'                     => 'Copyright  2018-2019.',   
         'More_info'                     => 'More Info ',
         'not_found'                     =>'Not Found' ,
         'Validation_error'              => ' Validation error ',
         'Error_Alert'                   => 'Something went wrong!',
         'successfully_saved'            =>'Saved successfully',
         'successfully_send'             => 'Sended successfully',
-        'user_notactive'                => 'Sorry this user is not currently active Try later',
+        'hr_notactive'                => 'Sorry this hr is not currently active Try later',
         'about_us'                      => 'About Us ',
         'social_accounts'               => 'Social Accounts',
         'policy'                        => 'Policy and Terms', 
@@ -55,12 +55,11 @@ return [
         'your_new_password'             => 'your new password ',
         'wellcome'                      =>  'Welcome ',
         'send_password'                 =>  'Your password has been successfully sent to your mail  ',
-        'Welcome to fannie'             => 'Welcome to HR ' ,
+        'Welcome to hr'             => 'Welcome to HR ' ,
         'Close'                         =>'Close',
         'selectall'                     => 'Select All',
         'operations'                    => 'Operations',
         'resendlink'                    => 'Sorry, you can not complete the task. Try again' ,
-        'notfoundarea'                  => 'There are no areas for this city',
         'edit_profile'                  => 'edit profile',
         'Generate'                      => ' Generate Password',
         
@@ -86,7 +85,7 @@ return [
         'twitter'                       => 'Twitter',
         'id'                            => 'ID ',   
         'name'                          => 'Name ',
-        'user_name'                     => 'User Name ',
+        'hr_name'                     => 'hr Name ',
         'first_name'                    => 'First Name ',
         'last_name'                     => 'Last Name ',
         'email'                         => 'Email ',
@@ -118,9 +117,9 @@ return [
         'placeholder_first_name'        => 'Please Enter First Name ',
         'placeholder_last_name'         => 'Please Enter Last Name ',
         'placeholder_name'              => 'Please Enter Name ', 
-        'placeholder_user_name'         => 'Please Enter User Name ',
+        'placeholder_hr_name'         => 'Please Enter hr Name ',
         'placeholder_email'             => ' Email ',
-        'placeholder_password'          => '  Password ',
+        'placeholder_password'          => ' Password ',
         'placeholder_password_confirmation'          =>  'Please Enter Password Confirmation ',
 
         'placeholder_mobile'            => 'Please Enter Mobile ',
@@ -148,13 +147,59 @@ return [
         'edit_admin'                    => 'Edit Admin ',
         'delete_admin'                  => 'Delete admin',
     //end admin page  
-    //users page 
-        'users'             => ' users ',
-        'add_user'          => ' Add User',
-        'edit_user'         => ' Edit User',
-        'delete_user'       => ' Delete User',
-        'users_deleted'     =>'Trash Box',
-    //end users page
+
+    //hrs page 
+        'hrs'             => ' hrs ',
+        'add_hr'          => ' Add hr',
+        'edit_hr'         => ' Edit hr',
+        'delete_hr'       => ' Delete hr',
+    //end hrs page
+
+    //employees page 
+        'employees'             => ' Employees ',
+        'add_employee'          => ' Add Employee',
+        'edit_employee'         => ' Edit Employee',
+        'delete_employee'       => ' Delete Employee',
+        'national_id'       => ' National ID',
+        'mac_address'       => ' mac address ',
+        'insurance'       => ' insurance ',
+        'cross_salary'       => ' cross salary ',
+        'net_salary'       => ' net salary ',
+        'annual_vacations'       => ' annual vacations ',
+        'accidental_vacations'       => ' accidental vacations ',
+        'department_id'       => ' department ',
+    
+    //end employees page
+
+    //tasks page 
+       'tasks'             => ' tasks ',
+       'add_task'          => ' Add task',
+       'edit_task'         => ' Edit task',
+       'delete_task'       => ' Delete task',
+       'date'       => ' Date',
+       'time'       => ' Time ',
+       'project_name'       => ' Project Name ',
+       'employee_id'       => ' Employee ',
+        
+   
+   //end tasks page
+    //vacatios page 
+        'vacations'             => ' vacations ',
+        'vacation'             => ' vacation ',
+        'changes'             => ' Change Department ',
+        'change'             => ' Change Department',
+        'macs'             => 'Change mac Address ',
+        'mac'             => ' mac Address',
+        'days'          => ' Days',
+        'employee'         => ' Employee',
+        'notes'       => ' Notes ',
+        'action'       => ' Action',
+        'accept'       => ' Accept ',
+        'reject'       => ' Reject ',
+        'department'       => ' Department ',
+        'reason'       => ' Reason ',    
+    //end tasks page
+
 
     //statics page 
 
@@ -163,32 +208,49 @@ return [
         'delete_static'       => '  Delete ',
     //end statics page
 
-    //countries page 
-        'countries'                       => ' Countries', 
-        'country'                       => ' Country', 
-        'add_country'                    => ' Add country'  ,
-        'add_countrie'                    => ' Add country'  ,
-        'edit_countrie'                   => '  Edit country'  ,
-        'delete_countrie'                 =>  '  Delete country',
-        
-    //end countries page
+    //departments page 
+        'departments'                       => ' departments', 
+        'department'                       => ' department', 
+        'add_department'                    => ' Add department'  ,
+        'add_department'                    => ' Add department'  ,
+        'edit_department'                   => '  Edit department'  ,
+        'delete_department'                 =>  '  Delete department',
+    //end departments page
+
+    //discounts page 
+       'discounts'                       => ' discounts', 
+       'discount'                       => ' discount', 
+       'add_discount'                    => ' Add discount'  ,
+       'add_discount'                    => ' Add discount'  ,
+       'edit_discount'                   => '  Edit discount'  ,
+       'delete_discount'                 =>  '  Delete discount',
+       'amount'                          =>'Amount',
+    //end discounts page
+    
+    //attendances 
+        'attendances'   => 'Attendances' ,
+        'check_in'   => 'Check In' ,
+        'check_out'   => 'Check Out' ,
+    //end attendances
+    //awards page 
+        'awards'                       => ' Reawards', 
+        'award'                       => ' Reaward', 
+        'add_award'                    => ' Add Reaward'  ,
+        'add_award'                    => ' Add Reaward'  ,
+        'edit_award'                   => '  Edit Reaward'  ,
+        'delete_award'                 =>  '  Delete Reaward',
+    //end awards page
 
     //messages 
         'messages'              => 'Send Messages' ,
-        'all_users'            => 'Send to all Users',
-        'all_fannies'            => 'Send to all Technicians',
-        'clients'               => 'Choose ',
+        'all_hrs'            => 'Send to all hrs',
+         'clients'               => 'Choose ',
         'send_spec'             =>'Send to specific people',
         'sendforall'            => 'Send to all',
         'send'                  => 'Send',
     //end messages
 
-    //reports page 
-        'reports'                       => 'Reports ',   
-        'report'                        => 'Report ', 
-        'order_no'                      => 'Order number',
-
-    //end reports page
+    
 
     //week days 
         'saturday'              => 'Saturday',
@@ -222,12 +284,8 @@ return [
 
     //settings and static pages  
         'AboutUs'  =>' About Us' ,
-        'Terms'  =>' Terms & Conditions' ,
-        'Policy'  =>' Policy' ,
         'add_setting'  => 'Add Form',
         'edit_setting' => 'Edit Form',
-        'banks_accounts' => 'Bank Accounts',
-        'bank' => 'Bank Accounts',
     //end settings and static pages  
 
     'You cannot access this page!'  => 'You cannot access this page!' ,

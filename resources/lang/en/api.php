@@ -42,14 +42,6 @@ return [
     'savecontact'   =>'Message sent successfully',
     'success'   =>'success',
     'notfound'  => 'data not found',
-
-    'pending'   => 'Pending',
-    'accepted'   => 'Accepted, Waiting for assign driver',
-    'assigned'   => 'Driver assigned to the order, waiting for delivery',
-    'delivered'   => 'Delivered',
-    'canceled'   => 'Canceled',
-
-    'notfoundcenter' => 'There are no distribution centers for this container',
     'activate_account'  => 'Please activate account',
-    'km' => ' km ' ,
+
 ];

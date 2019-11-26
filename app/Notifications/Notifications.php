@@ -29,16 +29,6 @@ class Notifications extends Notification
     }
 
 
- 
-    // public function toDatabase($notifiable)
-    // {
-    //     return [
-    //         'data' => $this->reserv,
-    //         // 'user' => $this->user,
-    //     ];
-    // }
-    
-
     public function toArray($notifiable)
     {
         return [
@@ -46,23 +36,7 @@ class Notifications extends Notification
             'type' => $this->type,
         
         ];
-
-        // if($this->reserv->response == 'accept'){
-        //     return [
-        //         'data' => [
-        //             'ar' => 'دكتور'.' '.$this->reserv->doctor->user->name .' '. 'وافق'.' ' .' علي حجز'.' ' .$this->reserv->patient->name,
-        //             'en' => 'doctor'.' '.$this->reserv->doctor->user->name .' '. 'accept'.' ' .' reservation for'.' ' .$this->reserv->patient->name,
-        //         ]
-        //     ];
-        // }
-        // elseif($this->reserv->response == 'reject'){
-        //     return [
-        //         'data' => [
-        //             'ar' => 'دكتور'.' '.$this->reserv->doctor->user->name .' '. 'رفض'.' ' .'  حجز'.' ' .$this->reserv->patient->name,
-        //             'en' => 'doctor'.' '.$this->reserv->doctor->user->name .' '. 'reject'.' ' .' reservation for'.' ' .$this->reserv->patient->name,
-        //         ]
-        //     ];
-        // }
+ 
         
 
     }

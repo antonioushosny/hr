@@ -16,7 +16,7 @@
 <meta name="description" content="HR.">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>:: fannie ::</title>
+<title>:: hr ::</title>
 <!-- <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">  -->
 <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" >
 
@@ -41,6 +41,10 @@
 @yield('style')  
 <style>
     
+    .footer{
+        background-color:#000;
+    }
+
     .select2{
         width: 100%  !important ;
         
@@ -120,7 +124,7 @@
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo.png') }}" width="48" height="48" alt="fannie"></div>
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ asset('images/logo.png') }}" width="48" height="48" alt="hr"></div>
         <p>{{__('admin.Please_wait')}}...</p>        
     </div>
 </div>
@@ -133,7 +137,7 @@
         <li>
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('/images/logo.png') }}" width="30" alt="fannie"><span class="m-l-10">HR</span></a>
+                <a class="navbar-brand" href="{{route('home')}}"><img src="{{ asset('/images/logo.png') }}" width="30" alt="hr"><span class="m-l-10">HR</span></a>
             </div>
         </li>
         <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
@@ -196,9 +200,9 @@
 </nav>
 
 <!-- Left Sidebar -->
-<aside id="leftsidebar" class="sidebar">
+<aside id="leftsidebar" class="sidebar" >
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i> {{ __('Fannie') }}  </a></li>
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i class="zmdi zmdi-home m-r-5"></i> {{ __('hr') }}  </a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user"><i class="zmdi zmdi-account m-r-5"></i> {{ __('Profile')  }}</a></li>
     </ul>
     <div class="tab-content">
@@ -220,49 +224,37 @@
                         </div>
                     </li>
                     <!-- <li class="header">MAIN</li> -->
-                    
+                   
                     <li <?php echo ($page == 'home') ? "class='active open'" : ""; ?> ><a href="{{ route('home') }}"  ><i class="zmdi zmdi-home"></i> <span> {{trans('admin.dashboard')}}</span></a></li>
-           
-                    <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-face"></i> <span> {{trans('admin.admins')}}</span></a></li>
+                    @if(Auth::user()->role == 'admin')
+                    <li <?php echo ($page == 'admins') ? "class='active open'" : ""; ?> ><a href="{{ route('admins') }}"  ><i class="zmdi zmdi-account-box"></i> <span> Admins </span></a></li>
                     
+                    <li <?php echo ($page == 'hrs') ? "class='active open'" : ""; ?> ><a href="{{ route('hrs') }}"  > <i class="zmdi zmdi-accounts-add"></i><span> Hrs </span></a></li>
+                    @endif
+                    <li <?php echo ($page == 'departments') ? "class='active open'" : ""; ?> ><a href="{{ route('departments') }}"  ><i class="zmdi zmdi-storage"></i> <span> Departments </span></a></li>
 
-                    <li <?php echo ($page == 'users' || $page == 'users_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts"></i><span>{{trans('admin.users')}}</span> </a>
-                        <ul class="ml-menu">
-                            <li <?php echo ($page == 'users') ? "class='active open'" : ""; ?> ><a href="{{ route('users') }}"  > <span> {{trans('admin.users')}}</span></a></li>
+                    <li <?php echo ($page == 'employees') ? "class='active open'" : ""; ?> ><a href="{{ route('employees') }}"  > <i class="zmdi zmdi-accounts-list"></i> <span> Employees </span></a></li>
 
-                            <li <?php echo ($page == 'users_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('usersdeleted') }}"  > <span> {{trans('admin.users_deleted')}}</span></a></li>
-                            </ul>
-                    </li>
-  
-                    <li <?php echo ($page == 'technicians' || $page == 'technicians_deleted') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-accounts-alt"></i><span>{{trans('admin.technicians')}}</span> </a>
-                        <ul class="ml-menu">
-                            <li <?php echo ($page == 'technicians') ? "class='active open'" : ""; ?> ><a href="{{ route('technicians') }}"  > <span> {{trans('admin.technicians')}}</span></a></li>
+                    <li <?php echo ($page == 'tasks') ? "class='active open'" : ""; ?> ><a href="{{ route('tasks') }}"  > <i class="zmdi zmdi-check-square"></i> <span> tasks </span></a></li>
 
-                            <li <?php echo ($page == 'technicians_deleted') ? "class='active open'" : ""; ?> ><a href="{{ route('techniciansdeleted') }}"  > <span> {{trans('admin.technicians_deleted')}}</span></a></li>
-                            </ul>
-                    </li>
+                    <li <?php echo ($page == 'attendances') ? "class='active open'" : ""; ?> ><a href="{{ route('attendances') }}"  > <i class="zmdi zmdi-calendar-check"></i> <span> attendances </span></a></li>
+
+                    <li <?php echo ($page == 'vacations') ? "class='active open'" : ""; ?> ><a href="{{ route('vacations') }}"  > <i class="zmdi zmdi-calendar-alt"></i> <span> vacations </span></a></li>
+
+                    <li <?php echo ($page == 'changes') ? "class='active open'" : ""; ?> ><a href="{{ route('changes') }}"  > <i class="zmdi zmdi-sort-amount-desc"></i> <span> Change Department </span></a></li>
                     
-                    
- 
-                    
-                    
+                    <li <?php echo ($page == 'macs') ? "class='active open'" : ""; ?> ><a href="{{ route('macs') }}"  > <i class="zmdi zmdi-sort-amount-desc"></i> <span> Change Mac Address </span></a></li>
+
                     <li <?php echo ($page == 'messages') ? "class='active open'" : ""; ?> ><a href="{{ route('messages') }}"  ><i class="zmdi zmdi-email"></i> <span> {{trans('admin.messages')}}</span></a></li>
-                    
-                    <li <?php echo ($page == 'AboutUs' || $page == 'Terms' || $page == 'Policy'|| $page == 'bank') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
+                    @if(Auth::user()->role == 'admin')
+                    <li <?php echo ($page == 'AboutUs') ? "class='active open'" : ""; ?> > <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-settings"></i><span>{{trans('admin.settings')}}</span> </a>
                         <ul class="ml-menu">
-                            <li <?php echo ($page == 'bank') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','bank') }}"  > <span> {{trans('admin.banks_accounts')}}</span></a></li>
 
                             <li <?php echo ($page == 'AboutUs') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','about') }}"  > <span> {{trans('admin.AboutUs')}}</span></a></li>
-
-                            <li <?php echo ($page == 'Terms') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','term') }}"  > <span> {{trans('admin.Terms')}}</span></a></li>
-
-                            <li <?php echo ($page == 'Policy') ? "class='active open'" : ""; ?> ><a href="{{ route('settings','policy') }}"  > <span> {{trans('admin.Policy')}}</span></a></li>
-                            
                         </ul>
                     </li> 
+                    @endif
  
-
-                    
                 </ul>
             </div>
         </div>
@@ -306,13 +298,6 @@
                                 </div>
                             </li>
                             <li>
-                                <div>{{__('admin.mobile')}}</div>
-                                <div class="m-t-10 m-b-20">
-                                    <input type="text" value="{{Auth::user()->mobile}}" class="form-control" placeholder="{{__('admin.mobile')}}" name="mobile" >
-                                    <label id="mobiles-error" class="error" for="mobile" style="font-size: 12px;">  </label>
-                                </div>
-                            </li>
-                            <li>
                                 <div>{{__('admin.password')}}</div>
                                 <div class="m-t-10 m-b-20">
                                     <input type="password"  class="form-control" placeholder="{{__('admin.placeholder_password')}}" name="password"  autocomplete="new-password">
@@ -336,14 +321,14 @@
                                                 <span style="color: red " class="image text-center hidden"></span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> 
 
                                     <div class="col-md-5">
                                         
                                         @if(Auth::user()->image)
                                             <img id="changeimages" src="{{asset('img/'.Auth::user()->image)}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @else 
-                                            <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
+                                            <img id="changeimages" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
                                         @endif
                                     </div>
                                 </div>
@@ -504,9 +489,6 @@
         });
    
     </script> 
-
-    
-
     @yield('script')
 
 </body>

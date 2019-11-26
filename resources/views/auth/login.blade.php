@@ -25,7 +25,7 @@
     }
     .btn.btn-primary{
         background-color:#0046B0;
-        color: #FFF;
+        color: #fff;
         {{-- font-family: 'DroidArabicKufiBold';   --}}
     }
     /* .btn.btn-primary:hover{
@@ -70,7 +70,7 @@
 </style>
 @endsection
 @section('content')
-<div class="page-header-image" ></div>
+<div class="page-header-image" >;llrg,lrg</div>
 
 <div class="container" style="padding :20px ;">
         {{-- <div class="col-md-12    " style=position: relative;

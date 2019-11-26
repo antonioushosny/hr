@@ -41,49 +41,29 @@
                             {!! Form::open(['route'=>['storesetting'],'method'=>'post','autocomplete'=>'off', 'id'=>'form_validation', 'enctype'=>'multipart/form-data' ])!!} 
 
                                 <div class="row">
-                                    <div class="col-md-1">{{ __('admin.title_ar') }}</div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-1">{{ __('admin.title') }}</div>
+                                    <div class="col-md-11">
                                         <!-- for title_ar -->
                                         <div class="form-group form-float">
-                                            <input type="text" value="{{ !isset($data->title_ar)?'':$data->title_ar }}" class="form-control" placeholder="{{__('admin.placeholder_title_ar')}}" name="title_ar" required>
-                                            <label id="name-ar-error" class="error" for="title_ar" style="">  </label>
+                                            <input type="text" value="{{ !isset($data->title)?'':$data->title }}" class="form-control" placeholder="{{__('admin.title')}}" name="title" required>
+                                            <label id="title-error" class="error" for="title" style="">  </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-1">{{ __('admin.title_en') }}</div>
-                                    <div class="col-md-5">
-                                        <!-- for title_en -->
-                                        <div class="form-group form-float">
-                                            <input type="text" value="{{ !isset($data->title_en)?null:$data->title_en }}"  class="form-control" placeholder="{{__('admin.placeholder_title_en')}}" name="title_en" required>
-                                            <label id="name-en-error" class="error" for="title_en" style="">  </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">{{ __('admin.desc_ar') }}</div>
+                                   
+                                    <div class="col-md-1">{{ __('admin.disc') }}</div>
                                     <div class="col-md-11">
-                                        <!-- for desc_ar -->
+                                        <!-- for disc -->
                                         <div class="form-group form-float">
                                             @if($data)
-                                            {!! Form::textarea('desc_ar',$data->disc_ar,['class'=>'form-control ','id' => 'disc_ar_field2','rows'=>7,'placeholder' => trans('admin.placeholder_disc_ar')]) !!}
+                                            {!! Form::textarea('disc',$data->disc,['class'=>'form-control ','id' => 'disc_field2','rows'=>7,'placeholder' => trans('admin.disc')]) !!}
                                             @else 
-                                            {!! Form::textarea('desc_ar','',['class'=>'form-control ','id' => 'disc_ar_field2','rows'=>7,'placeholder' => trans('admin.placeholder_disc_ar')]) !!}
+                                            {!! Form::textarea('disc','',['class'=>'form-control ','id' => 'disc_field2','rows'=>7,'placeholder' => trans('admin.disc')]) !!}
                                             @endif
                                             
-                                            <label id="desc-ar-error" class="error" for="desc_ar" style="">  </label>
+                                            <label id="disc-error" class="error" for="disc" style="">  </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-1">{{ __('admin.desc_en') }}</div>
-                                    <div class="col-md-11">
-                                        <!-- for desc_en -->
-                                        <div class="form-group form-float">
-                                            
-
-                                            @if($data)
-                                            {!! Form::textarea('desc_en',$data->disc_en,['class'=>'form-control ','id' => 'disc_en_field2','rows'=>7,'placeholder' => trans('admin.placeholder_desc_en')]) !!}
-                                            @else 
-                                            {!! Form::textarea('desc_en','',['class'=>'form-control ','id' => 'disc_en_field2','rows'=>7,'placeholder' => trans('admin.placeholder_desc_en')]) !!}
-                                            @endif
-                                            <label id="desc-en-error" class="error" for="desc_en" style="">  </label>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 
                                 <!-- for type -->
@@ -97,43 +77,34 @@
                                     {!! Form::hidden('id',!isset($data->id)?null:$data->id ,['class'=>'form-control show-tick']) !!}
                                 </div>
 
-                                <!-- for image  -->
-                                {{--  <div class="form-group form-float row"  >
-                                    <div class= "col-md-2 col-xs-3">
-                                        <div class="form-group form-float  " >
-                                            <div style="position:relative; ">
-                                                <a class='btn btn-primary' href='javascript:;' >
-                                                    {{trans('admin.Choose_Image')}}
-            
-                                                    {!! Form::file('image',['class'=>'form-control','id' => 'image_field', 'accept'=>'image/x-png,image/gif,image/jpeg' ,'style'=>'position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;','size'=> '40' ,'onchange' => 'readURL(this,"changeimage");' ]) !!}
-                                                </a>
-                                                &nbsp;
-                                                <div class='label label-primary' id="upload-file-info" ></div>
-                                                <span style="color: red " class="image text-center hidden"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- {{--  for map      --}}  -->
 
-                                    <div class="col-md-10">
-                                        
-                                        <img id="changeimage" src="{{asset('images/default.png')}}" width="100px" height="100px" alt=" {{trans('admin.image')}}" />
-                                    </div>
-                                </div>  --}}
-                                
+                                <div class="form-group form-float">
+                                            <span style="color: black "> 
+                                        {!! Form::label('location[]',trans('admin.placeholder_location')) !!}
+                                    </span>
+                                    <!-- <label id="location-error" class="error" for="location[]" style=""></label> -->
+                                    <input id="pac-input" class="controls" type="text" placeholder="{{trans('admin.Search_Box')}}">
+
+                                    <div class="col-lg-12" id="map" style="width:100%;height:400px;"></div>
+                                    <label id="lat-error" class="error" for="lat" style="">  </label>
+                                </div><br/>        
+
                                 <div class="form-group">
-                                    <div class="radio inlineblock m-r-20">
-                                        <input type="radio" name="status" id="active" class="with-gap" value="active" checked > 
-                                        <label for="active">{{__('admin.active')}}</label>
-                                    </div>                                 
-                                    <div class="radio inlineblock">
-                                        <input type="radio" name="status" id="not_active" class="with-gap" value="not_active" <?php echo ( isset($data->status) && $data->status == 'not_active') ? "checked=''" : ""; ?> >
-                                        <label for="not_active">{{__('admin.not_active')}}</label>
-                                    </div>
-                                </div>
+                                    {{--  {!! Form::label('lat',trans('admin.lat')) !!}  --}}
+                                    {!! Form::hidden('lat',$data->lat,['class'=>'form-control', 'id' => 'lat','placeholder' => trans('admin.placeholder_lat')]) !!}
+
+                                    {{--  {!! Form::label('lng',trans('admin.lng')) !!}  --}}
+                                    {!! Form::hidden('lng',$data->lng,['class'=>'form-control', 'id' => 'lng','placeholder' => trans('admin.placeholder_lng')]) !!}
+
+                                </div><br/> 
+                                <!-- end map -->
+                                
+                               
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                @can('static_page_edit')
+                               
                                 <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">{{__('admin.save')}}
-                                @endcan
+                               
                                 </button>
                             </form>
                         </div>
@@ -151,14 +122,194 @@
 
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script> <!-- Ckeditor --> 
 <script src="{{ asset('assets/js/pages/forms/editors.js') }}"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-A44M149_C_j4zWAZ8rTCFRwvtZzAOBE&libraries=places&signed_in=true&callback=initMap"></script>
 <script>
-    CKEDITOR.replace('disc_en_field2');
+    
+function initMap() {
+    @if($data->lat != null &&  $data->lng != null)    
+        var lat1 = {{$data->lat}};
+        var lng1 = {{$data->lng}}
+        var haightAshbury = {lat: lat1 , lng:lng1 };
+        console.log(haightAshbury) ;
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: haightAshbury,
+            mapTypeId: 'terrain'
+        });
+        var marker = new google.maps.Marker({
+            position: haightAshbury,
+            map: map
+        });
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+        });
+        map.addListener('click', function(event) {
+            //clear previous marker
+            marker.setMap(null);
+            //set new marker
+            marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map
+            });
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+        return;
+        }
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+        marker.setMap(null);
+        });
+        markers = [];
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+            var address=$( "#pac-input" ).val();
+        $('#address-field1').val(address);
+        console.log(address);
+        var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+        };
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+        }));
+        document.getElementById('lat').value = place.geometry.location.lat();
+        document.getElementById('lng').value = place.geometry.location.lng();
+        if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+        } else {
+        bounds.extend(place.geometry.location);
+        }
+        });
+        map.fitBounds(bounds);
+        });
+    @else 
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 29.967176910157654, lng: 31.21215951392594},
+            zoom: 18,
+            mapTypeId: 'terrain'
+        });
+        var marker = new google.maps.Marker({
+            position: {lat: 29.967176910157654, lng: 31.21215951392594},
+            map: map
+        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        document.getElementById('lat').value = position.coords.latitude;
+        document.getElementById('lng').value = position.coords.longitude;
+        infoWindow.setPosition(pos);    
+
+        infoWindow.setContent('location found');
+        map.setCenter(pos);
+        }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+        });
+        } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+        }
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+        });
+        map.addListener('click', function(event) {
+        //clear previous marker
+        marker.setMap(null);
+        //set new marker
+        marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+        });
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+        });
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+        return;
+        }
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+        marker.setMap(null);
+        });
+        markers = [];
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+        var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+        };
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+        }));
+        document.getElementById('lat').value = place.geometry.location.lat();
+        document.getElementById('lng').value = place.geometry.location.lng();
+        if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+        } else {
+        bounds.extend(place.geometry.location);
+        }
+        });
+        map.fitBounds(bounds);
+        }); 
+    @endif
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+            'The Geolocation service failed.' :
+            'Your browser doesnt support geolocation. ');
+    }
+</script>
+<script>
+    CKEDITOR.replace('disc_field2');
     CKEDITOR.config.height = 300;
 
-    CKEDITOR.replace('disc_ar_field2');
-    CKEDITOR.config.height = 300;
     //this for add new record
     $("#form_validation").submit(function(e){
+        {{--  alert('hkhk');  --}}
            {{--  $('#addModal').modal('hide');  --}}
            $('.add').disabled =true;
            $(':input[type="submit"]').prop('disabled', true);
@@ -174,18 +325,15 @@
               success: function(data) {
                   if ((data.errors)) {    
                     $(':input[type="submit"]').prop('disabled', false);                    
-                        if (data.errors.title_ar) {
-                            $('#name-ar-error').css('display', 'inline-block');
-                            $('#name-ar-error').text(data.errors.title_ar);
+                        if (data.errors.title) {
+                            $('#title-error').css('display', 'inline-block');
+                            $('#title-error').text(data.errors.title);
                         }
-                        if (data.errors.title_en) {
-                            $('#name-en-error').css('display', 'inline-block');
-                            $('#name-en-error').text(data.errors.title_en);
+                        if (data.errors.lat) {
+                            $('#lat-error').css('display', 'inline-block');
+                            $('#lat-error').text(data.errors.lat);
                         }
-                        if (data.errors.city_id) {
-                            $('#city-id-error').css('display', 'inline-block');
-                            $('#city-id-error').text(data.errors.city_id);
-                        }
+                        
                         if (data.errors.image) {
                             $('#image-error').css('display', 'inline-block');
                             $('#image-error').text(data.errors.image);
@@ -200,17 +348,14 @@
                         contentType: false,
                         success: function(data) {
                             if ((data.errors)) {                        
-                                  if (data.errors.title_ar) {
-                                      $('#name-ar-error').css('display', 'inline-block');
-                                      $('#name-ar-error').text(data.errors.title_ar);
+                                  if (data.errors.title) {
+                                      $('#title-error').css('display', 'inline-block');
+                                      $('#title-error').text(data.errors.title);
                                   }
-                                  if (data.errors.title_en) {
-                                      $('#name-en-error').css('display', 'inline-block');
-                                      $('#name-en-error').text(data.errors.title_en);
-                                  }
-                                  if (data.errors.city_id) {
-                                      $('#city-id-error').css('display', 'inline-block');
-                                      $('#city-id-error').text(data.errors.city_id);
+                                   
+                                  if (data.errors.lat) {
+                                      $('#lat-error').css('display', 'inline-block');
+                                      $('#lat-error').text(data.errors.lat);
                                   }
                                   if (data.errors.image) {
                                       $('#image-error').css('display', 'inline-block');

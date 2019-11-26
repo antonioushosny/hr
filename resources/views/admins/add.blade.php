@@ -5,17 +5,12 @@
 .select2-selection.select2-selection--multiple {
     display: block;
     width: 100% !important;
-background-color: transparent;
+    background-color: transparent;
     border: 1px solid #888888;
     border-radius: 30px;
     color: #2c2c2c;
     line-height: normal;
     font-size: 1.1em;
-    /* -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out; */
     -webkit-box-shadow: none;
     box-shadow: none;
     
@@ -32,7 +27,7 @@ background-color: transparent;
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>{{__('admin.dashboard')}}
-                <small>{{__('admin.Welcome to fannie')}}</small>
+                <small>{{__('admin.Welcome to hr')}}</small>
                 </h2>
             </div>            
                 @if($lang =='ar')
@@ -81,14 +76,7 @@ background-color: transparent;
                                     <label id="password-error" class="error" for="password" style=""></label>
                                     <input type="button" class="btn btn-raised btn-primary btn-round waves-effect" value="{{ __('admin.Generate') }}" onClick="generate();" tabindex="2">
                                 </div>
-                                <div class="form-group form-float">
-                                <label  for="roles" style=""> {{trans('admin.roles')}} </label>
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control select2','multiple')) !!}
-                                  
-                                   
-                                    <label id="roles-error" class="error" for="roles" style=""></label>
-
-                                 </div>
+                                
                                 <div class="form-group form-float row"  >
                                     {{--  for image  --}}
                                     <div class= "col-md-6 col-xs-6">
@@ -163,8 +151,7 @@ background-color: transparent;
                 $('.password').addClass('hidden');
                 $('.image').addClass('hidden');
                 $('.status').addClass('hidden');
-                $('.roles').addClass('hidden');
-                console.log(data);
+                 console.log(data);
                 if ((data.errors)) {                        
                     // toastr.error('{{trans('admin.Validation_error')}}', '{{trans('admin.Error_Alert')}}', {timeOut: 5000});
                     if (data.errors.name) {

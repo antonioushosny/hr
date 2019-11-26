@@ -3,14 +3,14 @@
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
          
-         {{trans('admin.Welcome to fannie')}}
+         Welcome To HR
         @endcomponent
     @endslot
 {{-- Body --}}
    <h3>
  
     </h3> <br>
-    <h4>كود  تاكيد بريدك الالكتروني هو :- </h4> <br> <h3>{{$code}}</h3> 
+    <h4>Verify Code For Your Email Is :- </h4> <br> <h3>{{$code}}</h3> 
 
     
 {{-- Subcopy --}}
@@ -24,7 +24,7 @@
 {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            © {{ date('Y') }} Fannie 4U.!
+            © {{ date('Y') }}  HR.!
         @endcomponent
     @endslot
 @endcomponent

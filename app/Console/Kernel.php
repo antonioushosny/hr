@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\Deals::class,
+        Commands\Tasks::class,
     ];
 
     /**
@@ -27,8 +27,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('deal:close')
-                 ->everyMinute();
+        $schedule->command('command:tasks')
+                ->dailyAt('00:00');
+
+        $schedule->command('command:attendances')
+                ->dailyAt('00:00');
     }
 
     /**
@@ -39,7 +42,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

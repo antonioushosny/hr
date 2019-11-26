@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\User;
 use Carbon\Carbon;
+use App\Employee;
 
 class Controller extends BaseController
 {
@@ -17,18 +18,14 @@ class Controller extends BaseController
     {
         $path_to_fcm='https://fcm.googleapis.com/fcm/send';
 
-        $server_key="AAAAxKwM6B0:APA91bE32WyTg62kem1QQsu0wU0IqqCZmFR5oBjVy2IC4KYr1pgb02oTuXEg0JcKBeLAccBxa2M7U_MtBvNTI1SUkiEUa60Vzos6hDc-lLzuEc4HGeui_yfZOnsbvkmHqt90dz5nfiqX";
+        $server_key="AAAAEs8lujQ:APA91bEUOyRjSowCPLgsaBGYyygoVlo5FpwEJCFKnnxWgnSJk3orjKIGtTykGJnsHOZrHCKoAdnExLTru_fPnqiSqC323HgwHaFeQFgyoLJ--oSvreM3_v6bsBsRxW7qq1ZLvOgGYlpE";
         $key = $device_id;
         $message = $msg;
         $title = $title ;
         $headers = array('Authorization:key=' .$server_key,'Content-Type:application/json');
         $user = User::where('device_token', $device_id)->first();
-        if( $user->lang == 'ar'){
-            $message = $msg['ar'];
-            $title = $title['ar'] ;
-        }else{
-            $message = $msg['en'];
-            $title = $title['en'] ;
+        if(!$user){
+            $user = Employee::where('device_token', $device_id)->first();
         }
         if( $user->type == '1'){
                  $fields = array("to" => $key, "notification"=>  array( "text"=>$message ,"id"=>$id,
@@ -93,17 +90,13 @@ class Controller extends BaseController
         date_default_timezone_set('Africa/Cairo');
         $path_to_fcm='https://fcm.googleapis.com/fcm/send';
 
-        $server_key="AAAAxKwM6B0:APA91bE32WyTg62kem1QQsu0wU0IqqCZmFR5oBjVy2IC4KYr1pgb02oTuXEg0JcKBeLAccBxa2M7U_MtBvNTI1SUkiEUa60Vzos6hDc-lLzuEc4HGeui_yfZOnsbvkmHqt90dz5nfiqX";
+        $server_key="AAAAEs8lujQ:APA91bEUOyRjSowCPLgsaBGYyygoVlo5FpwEJCFKnnxWgnSJk3orjKIGtTykGJnsHOZrHCKoAdnExLTru_fPnqiSqC323HgwHaFeQFgyoLJ--oSvreM3_v6bsBsRxW7qq1ZLvOgGYlpE";
 
         $key = $device_id; 
         $user = User::where('device_token', $device_id)->first();
-        if($user && $user->lang == 'ar'){
-            $message = $msg['ar'];
-            $title = $title['ar'] ;
-        }else{
-            $message = $msg['en'];
-            $title = $title['en'] ;
-        }
+        $message = $msg ;
+        $title = $title ;
+         
         // $message = $msg;
         // $title = $title;
         $headers = array('Authorization:key=' .$server_key,'Content-Type:application/json');

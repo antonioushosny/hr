@@ -26,13 +26,11 @@ class CreateEmployeesTable extends Migration
             $table->string('insurance')->nullable($value = true);
             $table->string('annual_vacations')->nullable($value = true);
             $table->string('accidental_vacations')->nullable($value = true);
-             $table->string('image')->nullable($value = true);
+            $table->string('image')->nullable($value = true);
             $table->string('device_token')->nullable($value = true);
-            $table->enum('role', ['admin','hr']);    
             $table->string('status');        
             $table->tinyInteger('type')->nullable($value = true); 
             $table->softDeletes();      
-            $table->string('lang')->nullable($value = 'ar'); 
             $table->unsignedInteger('department_id')->nullable($value = true);
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null'); 
             $table->rememberToken();

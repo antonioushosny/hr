@@ -16,52 +16,32 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('IsRegistered', 'ApiController@IsRegistered')->middleware('localization');
-Route::post('SendCode', 'ApiController@SendCode')->middleware('localization');
-Route::post('Login', 'ApiController@Login')->middleware('localization');
-Route::post('Countries', 'ApiController@Countries')->middleware('localization');
-Route::post('Register', 'ApiController@Register')->middleware('localization');
-Route::post('EditProfile', 'ApiController@EditProfile')->middleware('localization');
-Route::post('Logout', 'ApiController@Logout')->middleware('localization');
-Route::post('Services', 'ApiController@Services')->middleware('localization');
-Route::post('AllWorkers', 'ApiController@AllWorkers')->middleware('localization');
-Route::post('NearstWorkers', 'ApiController@NearstWorkers')->middleware('localization');
-Route::post('AvailableWorkers', 'ApiController@AvailableWorkers')->middleware('localization');
-Route::post('WorkerDetail', 'ApiController@WorkerDetail')->middleware('localization');
-Route::post('Favorite', 'ApiController@Favorite')->middleware('localization');
-Route::post('MyFavorites', 'ApiController@MyFavorites')->middleware('localization');
-Route::post('RequestOrder', 'ApiController@RequestOrder')->middleware('localization');
-Route::post('MyOrders', 'ApiController@MyOrders')->middleware('localization');
-Route::post('CancelationReason', 'ApiController@CancelationReason')->middleware('localization');
-Route::post('CanceleOrder', 'ApiController@CanceleOrder')->middleware('localization');
-Route::post('AcceptOrder', 'ApiController@AcceptOrder')->middleware('localization');
-Route::post('DealDone', 'ApiController@DealDone')->middleware('localization');
-Route::post('CompleteOrder', 'ApiController@CompleteOrder')->middleware('localization');
-Route::post('OrderDetail', 'ApiController@OrderDetail')->middleware('localization');
-Route::post('SubscriptionTypes', 'ApiController@SubscriptionTypes')->middleware('localization');
-Route::post('RenewSubscription', 'ApiController@RenewSubscription')->middleware('localization');
-Route::post('RateFannie', 'ApiController@RateFannie')->middleware('localization');
-Route::post('RateUser', 'ApiController@RateUser')->middleware('localization');
-Route::post('MakeAvailable', 'ApiController@MakeAvailable')->middleware('localization');
+Route::post('Login', 'ApiController@Login') ;
+Route::post('Logout', 'ApiController@Logout') ;
+Route::post('EditProfile', 'ApiController@EditProfile') ;
+Route::post('ForgetPassword', 'ApiController@ForgetPassword') ;
+Route::post('ResetPassword', 'ApiController@ResetPassword') ;
+Route::post('RequestVacation', 'ApiController@RequestVacation') ;
+Route::post('ChangeDepartment', 'ApiController@ChangeDepartment') ;
+Route::post('Departments', 'ApiController@Departments') ;
+Route::post('ChangeMac', 'ApiController@ChangeMac') ;
+Route::post('Vacations', 'ApiController@Vacations') ;
+Route::post('MyTasks', 'ApiController@MyTasks') ;
+Route::post('ChangeStatus', 'ApiController@ChangeStatus') ;
+Route::post('TaskByDate', 'ApiController@TaskByDate') ;
+Route::post('Attendance', 'ApiController@Attendance') ;
+Route::post('AttendanceByMonth', 'ApiController@AttendanceByMonth') ;
+Route::post('AttendanceByDate', 'ApiController@AttendanceByDate') ;
+Route::post('CheckIn', 'ApiController@CheckIn') ;
+Route::post('CheckOut', 'ApiController@CheckOut') ;
+Route::post('Salary', 'ApiController@Salary') ;
+Route::post('SalaryForMonth', 'ApiController@SalaryForMonth') ;
+Route::post('send', 'ApiController@send') ;
+
+ 
+Route::post('count_notification','ApiController@count_notification') ;
+Route::post('get_notification','ApiController@get_notification') ;
 
 
-Route::post('ContactUs', 'ApiController@ContactUs')->middleware('localization');
-Route::post('TermsConditions', 'ApiController@TermsConditions')->middleware('localization');
-Route::post('AboutUs', 'ApiController@AboutUs')->middleware('localization');
-Route::post('SocialContacts', 'ApiController@SocialContacts')->middleware('localization');
-
-Route::post('count_notification','ApiController@count_notification')->middleware('localization');
-Route::post('get_notification','ApiController@get_notification')->middleware('localization');
-
-Route::post('send_notification','ApiController@send_notification')->middleware('localization');
-
-// for notifications 
-
-Route::Post('make_as_read','ApiController@make_as_read')->middleware('localization');
-/////////
-
-//this for test 
-Route::Post('send_notifications','ApiController@send_notifications');
-Route::Post('webnotifications','ApiController@webnotifications');
 
 

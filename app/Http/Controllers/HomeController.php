@@ -8,7 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use App ;
-use DB ;
+use App\Department ;
+use App\Employee ;
+
 use App\Notifications\Notifications;
 use Notification;
 class HomeController extends Controller
@@ -37,14 +39,15 @@ class HomeController extends Controller
             $date = $dt->toDateString();
             $time  = date('H:i:s', strtotime($dt));
             
+            $departments        = Department::count('id');
             $hrs        = User::where('role','hr')->count('id');
             $admins    = User::where('role','admin')->count('id');
-            $employees    = User::where('role','employee')->count('id');
+            $employees    = Employee::count('id');
       
             $title = 'home' ;
 
            
-            return view('home',compact('lang','title'));
+            return view('home',compact('lang','title','departments','hrs','admins','employees'));
         
     }
 
@@ -54,15 +57,6 @@ class HomeController extends Controller
         if($type == 'about'){
             $title = "AboutUs" ;
             $type = "about" ;
-        }else if($type == 'policy'){
-            $title = "Policy" ;
-            $type = "policy" ;
-        }else if($type == 'bank'){
-            $title = "bank" ;
-            $type = "bank" ;
-        }else{
-            $title = "Terms" ;
-            $type = "terms" ;
         }
         $data      = Doc::where('type',$type)->first();
         // return $about ;
@@ -73,12 +67,6 @@ class HomeController extends Controller
         if($type == 'about'){
             $title = "AboutUs" ;
             $type = "about" ;
-        }else if($type == 'policy'){
-            $title = "Policy" ;
-            $type = "policy" ;
-        }else{
-            $title = "Terms" ;
-            $type = "terms" ;
         }
       
         return view('settings.add',compact('title','lang','type')) ;
@@ -88,12 +76,6 @@ class HomeController extends Controller
         if($type == 'about'){
             $title = "AboutUs" ;
             $type = "about" ;
-        }else if($type == 'policy'){
-            $title = "Policy" ;
-            $type = "policy" ;
-        }else{
-            $title = "Terms" ;
-            $type = "terms" ;
         }
       
         $data = Doc::find($id) ;
@@ -106,10 +88,9 @@ class HomeController extends Controller
         if($request->id ){
             $rules =
             [
-                'title_ar'  =>'required|arabic|max:190',           
-                'title_en'  =>'required|english|max:190',           
+                'title'  =>'required|max:190',           
                 'type'  =>'required',           
-                'status'  =>'required',   
+                'lat'  =>'required',           
             ];
             
         }     
@@ -117,11 +98,10 @@ class HomeController extends Controller
         else{
             $rules =
             [
-                'title_ar'  =>'required|arabic|max:190',           
-                'title_en'  =>'required|english|max:190', 
-                'type'  =>'required',                
-                // 'country_id'  =>'required',     
-                'status'  =>'required'      
+                'title'  =>'required|max:190',           
+                'type'  =>'required', 
+                'lat'  =>'required',           
+
             ];
         }
         
@@ -140,13 +120,13 @@ class HomeController extends Controller
 
         }
 
-        $doc->title_ar          = $request->title_ar ;
-        $doc->title_en         = $request->title_en ;
-        $doc->status        = $request->status ;
+        $doc->title          = $request->title ;
+        $doc->status        = 'active' ;
         $doc->type        = $request->type ;
      
-        $doc->disc_ar        = $request->desc_ar ;
-        $doc->disc_en        = $request->desc_en ;
+        $doc->disc        = $request->disc ;
+        $doc->lat        = $request->lat ;
+        $doc->lng        = $request->lng ;
         $doc->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -161,12 +141,6 @@ class HomeController extends Controller
         if($type == 'about'){
             $title = "AboutUs" ;
             $type = "about" ;
-        }else if($type == 'policy'){
-            $title = "Policy" ;
-            $type = "policy" ;
-        }else{
-            $title = "Terms" ;
-            $type = "terms" ;
         }
       
         $data =  $doc ;
@@ -209,7 +183,7 @@ class HomeController extends Controller
         else{
             $rules =
             [
-                'email'  =>'required|email|unique:users,email|max:190',            
+                //'email'  =>'required|email|unique:users,email|max:190',            
                 'password'  =>'required|min:6|max:190',     
   
             ];
@@ -286,14 +260,10 @@ class HomeController extends Controller
     {
         $lang = App::getlocale();
         $title = 'messages';
-        // $clients = User::where('role','client')->get();
-        $clients = User::where('role','<>','admin')->get();
-        $countries = Country::where('status','active')->get();
-        $cities = City::where('status','active')->get();
-        $fannies = User::where('role','fannie')->where('status','active')->get();
-        $users = User::where('role','user')->where('status','active')->get();
+        
+        $users = Employee::where('status','active')->get();
         // $users = User::where('role','user')->get();
-        return view('messages.index',compact('clients','users','cities','countries','title','lang'));
+        return view('messages.index',compact('users','title','lang'));
     }
 
     public function send(Request $request)
@@ -303,45 +273,27 @@ class HomeController extends Controller
             'message' => 'required',
             'for' => 'required',
             ]);
-            $user = User::where('role','admin')->first();
-            if($user){
-                $id = $user->id ;
-            }
-            else{
-                $id ='1' ;
-            }
+            
             
             if($request->for == "all"){
-                $clients =  User::where('role','<>','admin')->get();
+                $employees =  Employee::where('status','active')->get();
             }
-        else if($request->for == "all_users"){
-            $clients =  User::where('role','user')->get();
-        }
-        else if($request->for == "all_fannies"){
-            $clients =  User::where('role','fannie')->get();
-        }
-        else{
-            $clients =  User::whereIn('id',$request->ids)->get();
-        }
-        if(sizeof($clients) > 0){
+            else{
+                $employees =  Employee::whereIn('id',$request->ids)->get();
+            }
+        if(sizeof($employees) > 0){
             
-            foreach($clients as $client){
-                if($client){
-                    $msg =  [
-                        'en' => $request->message ,
-                        'ar' =>$request->message ,
-                    ];
-                    $title = [
-                        'en' =>   $request->title  ,
-                        'ar' => $request->title  ,  
-                    ];
+            foreach($employees as $employee){
+                if($employee){
+                    $msg = $request->message ;
+                    $title =  $request->title ;
                     $type = "message";
                     // $msg =  $request->message ;
-                    $client->notify(new Notifications($msg,$type ));
-                    $device_id = $client->device_token;
+                    $employee->notify(new Notifications($msg,$type ));
+                    $device_id = $employee->device_token;
                     // $title = $request->title ; 
                     if($device_id){
-                        $this->notification($device_id,$title,$msg,$id);
+                        $this->notification($device_id,$title,$msg,$type);
                     }
                 }
             }

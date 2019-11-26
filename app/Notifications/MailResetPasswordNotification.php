@@ -48,7 +48,7 @@ class MailResetPasswordNotification extends Notification
             $link = url( "/password/reset/" . $this->token );
 
             return ( new MailMessage )
-                ->from('info@fannie4U.com')
+                ->from('info@hr.com')
                 ->subject( 'Reset your password' )
                 ->line( "You are receiving this email because we received a password reset request for your account. " )
                 ->action( 'Reset Password', $link )

@@ -4,21 +4,16 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use App\Notifications\MailResetPasswordNotification;
-use Illuminate\Database\Eloquent\SoftDeletes;
+ use App\Notifications\MailResetPasswordNotification;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
-    use HasRoles;
     use Notifiable;
-    use SoftDeletes;
-    protected $day;
-    protected $from;
-    protected $to;
+    // use SoftDeletes;
 
     protected $fillable = [
-        'code', 'name','email', 'password','mobile','address','city','area','lat','lng','image','device_token','role','status','lang','type',
-    ];
+        'name', 'email', 'password','mobile','image','device_token','role','status','lang','type',
+        ];
 
     public function sendPasswordResetNotification($token)
     {
@@ -34,26 +29,5 @@ class User extends Authenticatable
         $this->save();
         return $this->api_token;
     }
-    public function technician()
-    {
-        return $this->hasOne('App\Technician', 'user_id')->with('nationality')->with('country')->with('city')->with('area')->with('service');
-    }                     
-    public function usersorders()
-    {
-        return $this->hasMany('App\Order', 'user_id');
-    }
-    public function fannieorders()
-    {
-        return $this->hasMany('App\Order', 'fannie_id');
-    }
-    public function rates()
-    {
-        return $this->hasMany('App\Rate', 'evaluator_to')->with('evaluatorfrom');
-    }
-    public function availabledate()
-    {
-        // return $this->day ;
-        return  $this->hasMany('App\AvailableDay', 'fannie_id');
-    }
- 
+    
 }
